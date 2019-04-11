@@ -1,0 +1,228 @@
+<template lang="pug">
+  .wrapper(v-if="isReady")
+    .block.products
+      .content.products__content
+        .devider
+          h1.common-title Клиенты
+          .products__about
+            .products__text(
+              v-html="content.aboutClients.content"
+            )
+            .products__filter(
+              @click="toggleFilter",
+              v-if="isMobile"
+            ) По отраслям
+            nav.works-menu.products-menu(v-show="filterIsActive")
+              ul.works-menu__list.products-menu__list
+                li.works-menu__item.products-menu__item(
+                ) 
+                  span.works-menu__link(
+                    key="all",
+                    :class=" { 'works-menu__link--active' : !filterId} ",
+                    @click="resetFilterId"
+                  ) Всё
+                li.works-menu__item.products-menu__item(
+                  v-for="tag in content.clientsTags",
+                  @click="setFilterId(tag.slug)",
+                )
+                  span.works-menu__link(
+                    :key="tag.slug",
+                    :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
+                  ) 
+                    |{{ tag.title }}
+        .products__img-wrapper.one-work(
+          v-for="client in filteredClients",
+          :key="client.id",
+          @click="setClientFilter(client.slug)"
+        )
+          img.products__img.products__img-color(
+            :src="'http://new.radar-online.mcdir.ru/'+client.logo.path", 
+            :alt="client.title"
+          )
+</template>
+
+<script>
+import api from "../../api/";
+
+export default {
+  name: "Clients",
+  props: {
+    isMobile: {
+      type: Boolean
+    }
+  },
+  data() {
+    return {
+      content: {
+        aboutClients: "",
+        clients: [],
+        clientsTags: []
+      },
+      filterIsActive: true,
+      isReady: false,
+      filterId: this.$route.query.filter,
+    };
+  },
+  computed: {
+    filteredClients() {
+      if (!this.$route.query.filter) {
+        return this.content.clients;
+      }
+      var currentTag = this.content.clientsTags.find(
+        tag => tag.slug === this.$route.query.filter
+      );
+      return this.content.clients.filter(
+        client => client.industry._id == currentTag._id
+      );
+    }
+  },
+  methods: {
+    toggleFilter() {
+      this.filterIsActive = !this.filterIsActive;
+    },
+    setClientFilter(slug) {
+      this.$router.push({
+        path: "/all-works",
+        query: { client: slug }
+      });
+    },
+    setFilterId(slug) {
+      this.filterId = slug;
+      this.$router.push({ path: "/clients", query: { filter: slug } });
+    },
+    resetFilterId() {
+      this.filterId = null;
+      this.$router.push({ path: "/clients" });
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      api.getCollectionByKey("clients").then(clients => {
+        this.content.clients = clients;
+      });
+
+      api.getCollectionByKey("clientsTags").then(clientsTags => {
+        this.content.clientsTags = clientsTags;
+      });
+
+      api.getSingletonsByKey("aboutClients").then(aboutClients => {
+        this.content.aboutClients = aboutClients;
+        this.isReady = true;
+      });
+    });
+  }
+};
+</script>
+
+<style lang="scss">
+.products__content {
+  padding: 120px 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.products__img {
+  width: 100%;
+  filter: grayscale(100%);
+
+  &-wrapper {
+    width: 41%;
+    margin: 0 10px;
+
+    @media screen and (min-width: 680px) {
+      width: 22%;
+    }
+
+    @media screen and (min-width: 1200px) {
+      width: 15%;
+    }
+  }
+}
+
+.products__img-color:hover {
+  filter: grayscale(0%);
+  transition: filter 0.3s linear;
+}
+
+.products__about {
+  display: flex;
+  flex-flow: row wrap;
+
+  @media screen and (min-width: 1200px) {
+    flex-wrap: nowrap;
+    margin-top: 40px;
+  }
+}
+
+.products__text {
+  line-height: 1.3;
+  color: #292e35;
+  margin: 0 10px;
+  /* hide about text on Clients */
+  display: none;
+
+  @media screen and (min-width: 1200px) {
+    max-width: 35%;
+    margin: 0 8% 0 1px;
+  }
+}
+
+.products-menu {
+  margin-top: 20px;
+
+  @media screen and (min-width: 680px) {
+    margin-left: 3px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    display: inline-block;
+    margin-top: 0;
+    /* hide about text on Clients */
+    margin-left: -25px;
+  }
+
+  &.active {
+    display: inline-block;
+  }
+
+  &__list {
+    @media screen and (min-width: 1200px) {
+      margin-left: 16px;
+    }
+  }
+
+  &__item {
+    margin: 0 20px 15px 10px;
+    height: 20px;
+
+    @media screen and (min-width: 1200px) {
+      margin: 0 20px 15px 10px;
+    }
+
+    & span {
+      font-size: 16px;
+    }
+  }
+}
+
+.products__filter {
+  color: #292e35;
+  display: block;
+  height: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-bottom: 1px solid #292e35;
+  /* hide about text on Clients */
+  margin: 10px 0 -15px 8px;
+  /* margin: 30px 0 -15px; uncomment this string*/
+
+  &:hover {
+    border: none;
+  }
+
+  @media screen and (min-width: 680px) {
+    margin-left: 18px;
+  }
+}
+</style>
