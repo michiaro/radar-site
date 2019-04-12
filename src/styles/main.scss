@@ -387,13 +387,17 @@ ul {
 }
 
 .one-work {
-  width: 47%;
+  width: 46%;
   height: auto;
   margin-bottom: 7px;
   position: relative;
   overflow: hidden;
   margin-right: 10px;
   display: block;
+
+  @media screen and (min-width: 670px) {
+    width: 47%;
+  }
 }
 
 .one-work__img {

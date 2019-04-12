@@ -13,8 +13,12 @@
           :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru/' +work.header.path+')'}"
         )
           .slider-content
-            .slider-content__title {{ work.title }}
-            .slider-content__text {{ work.prescription }}
+            .slider-content__title(
+              :class=" { 'dark' : work.isInverse }"
+            ) {{ work.title }}
+            .slider-content__text(
+              :class=" { 'dark' : work.isInverse }"
+            ) {{ work.prescription }}
 
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets(
           slot="pagination",
@@ -80,7 +84,7 @@
             v-if="client.isFeatured",
             :key="client.id"
           )
-            img(:src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", :alt="client.title")
+            img(:src="'http://new.radar-online.mcdir.ru/'+client.logo.path", :alt="client.title")
 
     .block
       .block.big-map
@@ -189,7 +193,7 @@ export default {
         locations: "",
         common: ""
       },
-      filterId: null,
+      filterId: this.$route.query.filter,
       isMoscow: false,
       isChelly: true,
       isReady: false,
@@ -295,6 +299,10 @@ export default {
 .slider-content__text {
   color: #fff;
   font-size: 18px;
+
+  @media screen and (min-width: 1200px) {
+    max-width: 35%;
+  }
 }
 
 @media screen and (min-width: 680px) {
@@ -313,7 +321,7 @@ export default {
   .slider-content__title {
     line-height: 45px;
     margin-bottom: 40px;
-    max-width: 60%;
+    max-width: 35%;
   }
 }
 

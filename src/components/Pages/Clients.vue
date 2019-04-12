@@ -36,7 +36,7 @@
           @click="setClientFilter(client.slug)"
         )
           img.products__img.products__img-color(
-            :src="'http://new.radar-online.mcdir.ru/'+client.logo.path", 
+            :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
             :alt="client.title"
           )
 </template>
@@ -120,6 +120,7 @@ export default {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+  min-height: 100vh;
 }
 
 .products__img {

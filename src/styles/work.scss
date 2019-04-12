@@ -39,7 +39,7 @@
   overflow: hidden;
   position: absolute;
   z-index: 5;
-  
+
   &.full {
     height: auto;
     overflow: visible;
@@ -120,10 +120,10 @@
       color: #000000;
       transition: 0.2s 0.2s;
     }
-    
+
     &::after {
       position: absolute;
-      content: ',';
+      content: ",";
       bottom: 0;
       right: -4px;
     }
@@ -140,19 +140,23 @@
   margin-bottom: 20px;
 }
 
-.tags-link {
-  color: #898989;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.tags-link:hover {
-  color: #000000;
-  transition: 0.2s 0.2s;
-}
-
 .tags {
   margin: 20px 0 45px;
+
+  @media screen and (min-width: 1200px) {
+    max-width: 270px;
+  }
+
+  &__link {
+    color: #898989;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: #000000;
+      transition: 0.2s 0.2s;
+    }
+  }
 }
 
 .share-word {
@@ -191,6 +195,11 @@
 
 .company-description__text {
   width: 100%;
+  margin: 0;
+
+  & p {
+    margin: 0;
+  }
 }
 
 .company-description__text a {
@@ -432,5 +441,79 @@ video {
 
   &.dark {
     color: #292e35;
+  }
+}
+
+.content__row {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.content__col {
+  padding: 0;
+  width: 100%;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.content__col:first-child {
+  padding-left: 0;
+}
+
+.content__col:last-child {
+  padding-right: 0;
+}
+
+@media screen and (min-width: 922px) {
+  .content__col {
+    padding: 0 4px;
+  }
+  .content__col_1-3 {
+    max-width: 37.5%;
+    -ms-flex-preferred-size: 37.5%;
+    flex-basis: 37.5%;
+  }
+  .content__col_1-2 {
+    max-width: 50%;
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+  }
+  .content__col_2-3 {
+    max-width: 62.5%;
+    -ms-flex-preferred-size: 62.5%;
+    flex-basis: 62.5%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .content__col {
+    padding: 0 8px;
+  }
+  .content__col_1-3 {
+    max-width: 444px;
+    -ms-flex-preferred-size: 444px;
+    flex-basis: 444px;
+  }
+  .content__col_2-3 {
+    max-width: 740px;
+    -ms-flex-preferred-size: 740px;
+    flex-basis: 740px;
   }
 }

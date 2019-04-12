@@ -121,4 +121,8 @@ export default {
 [v-cloak] {
   display: none;
 }
+
+#app {
+  position: relative;
+}
 </style>

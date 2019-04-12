@@ -1,5 +1,7 @@
 <template lang="pug">
-  footer.page-footer
+  footer.page-footer(
+    :class=" { 'page-footer--about' : this.isAbout } "
+  )
     .content.page-footer__content
       p.copyright © 2007 — 
         span#year
@@ -52,6 +54,15 @@ export default {
       }
     };
   },
+  computed: {
+    isAbout() {
+      var currentPath = this.$route.path;
+      if (currentPath == "/about") {
+        return true;
+      }
+      return false;
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       api.getSingletonsByKey("common").then(common => {
@@ -65,9 +76,25 @@ export default {
 </script>
 
 <style lang="scss">
-
 .page-footer {
-  background-color: #fff
+  background-color: #fff;
+
+  &--about {
+    background-color: #343434;
+
+    @media screen and (min-width: 680px) {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      right: 0;
+      background: transparent;
+    }
+
+    img {
+      filter: invert(100%);
+    }
+  }
 }
 
 .page-footer.about-footer {
@@ -79,13 +106,16 @@ export default {
   padding: 30px 8px;
 }
 
-.copyright, .footer-link {
+.copyright,
+.footer-link {
   color: #8e8e8d;
   font-size: 12px;
   display: inline-block;
+  margin: 0;
 }
 
-.footer-link, .sn-imgs {
+.footer-link,
+.sn-imgs {
   display: inline-block;
   vertical-align: middle;
 }
@@ -95,7 +125,7 @@ export default {
 }
 
 .sn-imgs.op {
-  opacity: 0.7
+  opacity: 0.7;
 }
 
 .footer-link {
@@ -109,6 +139,10 @@ export default {
 .sn-img {
   margin-left: 15px;
   max-height: 15px;
+  
+  &:hover {
+    opacity: 0.8;
+  } 
 }
 
 .sn-img.nm {

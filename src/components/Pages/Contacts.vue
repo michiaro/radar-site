@@ -286,6 +286,10 @@ export default {
 .bb-sn__img {
   display: inline-block;
   margin-left: 15px;
+  
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .bb-sn__img.nm {
