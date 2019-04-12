@@ -180,6 +180,7 @@ export default {
   padding: 0 0 30px 5px;
   flex-flow: row nowrap;
   display: none;
+  margin-top: 30px;
 
   &-active {
     display: flex;
@@ -187,6 +188,7 @@ export default {
 
   @media screen and (min-width: 680px) {
     padding: 0 0 10px 15px;
+    margin-top: 0;
   }
 
   @media screen and (min-width: 1200px) {

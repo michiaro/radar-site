@@ -22,6 +22,7 @@
         )
       Navigation(
         :isMobile="isMobile",
+        :isMenuOpen="isMenuOpen",
         v-if="isMobile",
         v-show="isMenuOpen"
       )
@@ -54,7 +55,7 @@ const router = new VueRouter({
     { path: "/team", component: Team },
     { path: "/clients", component: Clients },
     { path: "/contacts", component: Contacts },
-    { path: "/all-works/:slug", component: Work },
+    { path: "/all-works/:slug", component: Work }
   ]
 });
 
@@ -96,24 +97,15 @@ export default {
     api.getSingletonsByKey("common").then(common => {
       this.content.common = common;
     });
-    // var worksTags = [this.content.works[0].tags[0]];
-    // eslint-disable-next-line
-    // console.log(worksTags);
-
-    // var filteredWorks =
-    //   this.content.works &&
-    //   worksTags.filter(function(worksTags) {
-    //     return
-    //     worksTags, tag => tag._id === this.currentFilter._id
-    //   });
-
-    // var filteredWorks = Object.keys(this.content.works.work.tags, tag => tag._id === this.currentFilter._id);
-
-    // this.filteredWorks = filteredWorks;
-    // eslint-disable-next-line
-    // console.log(this.filteredWorks);
   },
-  computed: {}
+  watch: {
+    $route() {
+      this.closeMenu();
+      if (!this.$route.query.filter && !this.$route.query.client && !this.$route.query.team) {
+        window.scrollTo(0, 0);
+      }
+    }
+  }
 };
 </script>
 

@@ -3,27 +3,27 @@
     ul.main-menu__list
       li.main-menu__item
         router-link.main-menu__link(
-          to="/all-works"
+          to="/all-works",
         )
           | РАБОТЫ
       li.main-menu__item
         router-link.main-menu__link(
-          to="/about"
+          to="/about",
         )
           | О НАС
       li.main-menu__item
         router-link.main-menu__link(
-          to="/team"
+          to="/team",
         )
           | КОМАНДА
       li.main-menu__item
         router-link.main-menu__link(
-          to="/clients"
+          to="/clients",
         )
           | КЛИЕНТЫ
       li.main-menu__item
         router-link.main-menu__link(
-          to="/contacts"
+          to="/contacts",
         )
           | КОНТАКТЫ
 </template>
@@ -34,7 +34,7 @@ export default {
   props: {
     isMobile: {
       type: Boolean,
-    }
+    },
   },
 }
 </script>

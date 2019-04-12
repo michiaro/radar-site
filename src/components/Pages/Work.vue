@@ -160,9 +160,6 @@ import Cols_1_2 from "../work-components/Cols_1_2.vue";
 
 export default {
   name: "Work",
-  props: {
-    // msg: String
-  },
   components: {
     Picture,
     Slider,

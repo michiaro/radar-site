@@ -295,10 +295,11 @@ ul {
 .works-menu__link {
   font-size: 18px;
   color: #292e35;
-  display: block;
+  // display: block;
   padding-bottom: 5px;
   margin: 0 10px 5px 0;
   cursor: pointer;
+  // height: 20px;
 }
 
 .works-menu__link--active,
@@ -678,15 +679,15 @@ ul {
 .adress {
   text-align: left;
   margin: 20px 10px 20px 0;
+
+  & p {
+    margin: 0;
+  }
 }
 
 .adress,
 .contacts {
   display: none;
-}
-
-.person-msk.visible {
-  display: flex;
 }
 
 .person-chelly {
