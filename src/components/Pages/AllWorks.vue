@@ -1,5 +1,5 @@
 <template lang="pug">
-  .wrapper(v-if="isReady")
+  .wrapper(v-if="worksIsReady && tagsIsReady && clientsIsReady && teamIsReady")
     .block
       .content.page-wrapper
         .devider
@@ -63,8 +63,11 @@ export default {
         clients: [],
         team: []
       },
-      isReady: false,
-      filterId: this.$route.query.filter
+      filterId: this.$route.query.filter,
+      worksIsReady: false,
+      tagsIsReady: false,
+      clientsIsReady: false,
+      teamIsReady: false
     };
   },
   computed: {
@@ -88,9 +91,10 @@ export default {
         var currentClient = this.content.clients.find(
           client => client.slug === this.$route.query.client
         );
-        return this.content.works.filter(
-          work => work.client._id == currentClient._id
-        );
+        if (currentClient)
+          return this.content.works.filter(
+            work => work.client._id == currentClient._id
+          );
       }
       var currentTag = this.content.tags.find(
         tag => tag.slug === this.$route.query.filter
@@ -101,19 +105,16 @@ export default {
     },
     worksTitle() {
       if (!this.$route.query.filter) {
-        if (!this.$route.query.client) {
-          if (!this.$route.query.team) {
-            return "Работы";
-          }
-          var currentTeam = this.content.team.find(
-            member => member.slug === this.$route.query.team
-          );
+        if (!this.$route.query.team) {
+          return "Работы";
+        }
+        var currentTeam = this.content.team.find(
+          member => member.slug === this.$route.query.team
+        );
+        if (currentTeam != undefined) {
           return "Работы с участием " + currentTeam.name;
         }
-        var currentClient = this.content.clients.find(
-          client => client.slug === this.$route.query.client
-        );
-        return currentClient.title;
+        return "Работы";
       }
       var currentTag = this.content.tags.find(
         tag => tag.slug === this.$route.query.filter
@@ -141,19 +142,22 @@ export default {
     this.$nextTick(() => {
       api.getCollectionByKey("works").then(works => {
         this.content.works = works;
+        this.worksIsReady = true;
       });
 
       api.getCollectionByKey("tags").then(tags => {
         this.content.tags = tags;
+        this.tagsIsReady = true;
       });
 
       api.getCollectionByKey("clients").then(clients => {
         this.content.clients = clients;
+        this.clientsIsReady = true;
       });
 
       api.getCollectionByKey("team").then(team => {
         this.content.team = team;
-        this.isReady = true;
+        this.teamIsReady = true;
       });
     });
   }

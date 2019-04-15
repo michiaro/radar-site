@@ -33,11 +33,12 @@
         .products__img-wrapper.one-work(
           v-for="client in filteredClients",
           :key="client.id",
-          @click="setClientFilter(client.slug)"
         )
-          img.products__img.products__img-color(
+          img.products__img(
             :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
-            :alt="client.title"
+            :alt="client.title",
+            :class=" { 'products__img--color' : isActiveClient(client._id) }",
+            @click="isActiveClient(client._id) ? setClientFilter(client.slug) : null"
           )
 </template>
 
@@ -56,11 +57,12 @@ export default {
       content: {
         aboutClients: "",
         clients: [],
-        clientsTags: []
+        clientsTags: [],
+        works: []
       },
       filterIsActive: true,
       isReady: false,
-      filterId: this.$route.query.filter,
+      filterId: this.$route.query.filter
     };
   },
   computed: {
@@ -93,10 +95,18 @@ export default {
     resetFilterId() {
       this.filterId = null;
       this.$router.push({ path: "/clients" });
+    },
+    isActiveClient(id) {
+      return this.content.works.some(work => work.client._id === id);
     }
   },
   mounted() {
     this.$nextTick(() => {
+      api.getSingletonsByKey("aboutClients").then(aboutClients => {
+        this.content.aboutClients = aboutClients;
+        this.isReady = true;
+      });
+
       api.getCollectionByKey("clients").then(clients => {
         this.content.clients = clients;
       });
@@ -105,9 +115,8 @@ export default {
         this.content.clientsTags = clientsTags;
       });
 
-      api.getSingletonsByKey("aboutClients").then(aboutClients => {
-        this.content.aboutClients = aboutClients;
-        this.isReady = true;
+      api.getCollectionByKey("works").then(works => {
+        this.content.works = works;
       });
     });
   }
@@ -126,6 +135,7 @@ export default {
 .products__img {
   width: 100%;
   filter: grayscale(100%);
+  cursor: initial;
 
   &-wrapper {
     width: 41%;
@@ -139,11 +149,12 @@ export default {
       width: 15%;
     }
   }
-}
 
-.products__img-color:hover {
-  filter: grayscale(0%);
-  transition: filter 0.3s linear;
+  &--color:hover {
+    filter: grayscale(0%);
+    transition: filter 0.3s linear;
+    cursor: pointer;
+  }
 }
 
 .products__about {

@@ -167,7 +167,7 @@ export default {
     Audio,
     Col_1_3_2_3,
     Col_2_3_1_3,
-    Cols_1_2,
+    Cols_1_2
   },
   data() {
     return {
@@ -269,7 +269,12 @@ export default {
         this.content.clients = clients;
       });
     });
-  }
+  },
+  // watch: {
+  //   metaImage() {
+  //     this.$route.meta.metaTags[4].content = this.content.works[this.workIndex].logo.path;
+  //   }
+  // }
 };
 </script>
 
