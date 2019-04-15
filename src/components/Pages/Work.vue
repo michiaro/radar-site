@@ -121,7 +121,7 @@
       .content.company-description-content
         .company-description__img
           img(
-            v-if="isReady",
+            v-if="clientsIsReady",
             :src="'http://new.radar-online.mcdir.ru'+clientLogo(content.works[workIndex].client._id)",
             :alt="content.works[workIndex].client.display+ 'Логотип'",
             @click="setClientFilter(content.works[workIndex].client._id)"
@@ -178,7 +178,8 @@ export default {
         clients: []
       },
       fulltext: false,
-      isReady: false
+      isReady: false,
+      clientsIsReady: false,
     };
   },
   computed: {
@@ -267,6 +268,7 @@ export default {
 
       api.getCollectionByKey("clients").then(clients => {
         this.content.clients = clients;
+        this.clientsIsReady = true;
       });
     });
   },
