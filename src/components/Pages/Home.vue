@@ -53,15 +53,13 @@
 
         .works-block
           .works-pack
-            router-link.one-work(
+            a.one-work(
               v-for="work in filteredWorks",
-              :to="'/all-works/' +work.slug",
+              @click="toWork(work)",
               :key="work.slug"
             )
               img.one-work__img(:src="'http://new.radar-online.mcdir.ru/'+work.cover.path", :alt="work.title")
-              a(
-                href="#"
-              )
+              div
                 .one-work__description
                   .desc-text
                     .desc-text__title {{ work.title }}
@@ -196,7 +194,7 @@ export default {
       filterId: this.$route.query.filter,
       isMoscow: false,
       isChelly: true,
-      isReady: false,
+      isReady: false
     };
   },
   computed: {
@@ -204,7 +202,9 @@ export default {
       if (!this.filterId) {
         return this.content.works;
       }
-      var tagId = (this.content.tags.find(tag => tag.slug === this.$route.query.filter));
+      var tagId = this.content.tags.find(
+        tag => tag.slug === this.$route.query.filter
+      );
       return this.content.works.filter(work =>
         work.tags.some(tag => tag._id == tagId._id)
       );
@@ -221,17 +221,23 @@ export default {
     },
     setFilterId(slug) {
       this.filterId = slug;
-      this.$router.push({ path: '/', query: { filter: slug } });
+      this.$router.push({ path: "/", query: { filter: slug } });
     },
     resetFilterId() {
       this.filterId = null;
-      this.$router.push({ path: '/'});
+      this.$router.push({ path: "/" });
     },
     changeZoomIn() {
       this.$refs.mapZoom.zoomIn();
     },
     changeZoomOut() {
       this.$refs.mapZoom.zoomOut();
+    },
+    toWork(work) {
+      this.$router.push({
+        path: "/all-works/" + work.slug,
+      });
+      document.title = "Radar Advertising, " + work.title;
     }
   },
   mounted() {
@@ -300,6 +306,10 @@ export default {
   color: #fff;
   font-size: 18px;
 
+  @media screen and (min-width: 922px) {
+    max-width: 45%;
+  }
+
   @media screen and (min-width: 1200px) {
     max-width: 35%;
   }
@@ -311,6 +321,12 @@ export default {
   }
   .slider-content__text {
     font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .slider-content__title {
+    max-width: 45%;
   }
 }
 

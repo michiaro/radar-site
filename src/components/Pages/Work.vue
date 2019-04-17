@@ -117,6 +117,22 @@
                 :key="tag._id",
                 @click="setFilter(tag._id)"
               ) {{ '#'+workTags(tag._id) }} 
+            .share-block__social Поделиться:
+              social-sharing(
+                :url="'http://new.radar-online.mcdir.ru' +this.$route.fullPath",
+                :title="'Radar Advertising, ' + content.works[workIndex].title",
+                :description="'Radar Advertising, ' + content.works[workIndex].prescription",
+                :hashtags="workHashtags",
+                :media="'http://new.radar-online.mcdir.ru' +content.works[workIndex].logo.path",
+                inline-template
+              )
+                div
+                  network(network="facebook")
+                    i.icon.icon--facebook 
+                  network(network="twitter")
+                    i.icon.icon--twitter 
+                  network(network="vk")
+                    i.icon.icon--vk 
     .block.company-description-block
       .content.company-description-content
         .company-description__img
@@ -129,9 +145,9 @@
         p.company-description__text(
           v-html="content.works[workIndex].clientAbout"
         ) 
-    router-link.next-work(
+    div.next-work(
       v-if="nextWork > -1",
-      :to="'/all-works/' +content.works[nextWork].slug"
+      @click="toNextWork(content.works[nextWork])"
     )
       .next-work__cover(
         :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru' +content.works[nextWork].header.path+')'}"
@@ -141,7 +157,7 @@
       )
         .next-work__title Следующий проект
           .next-work__arrow(
-            :class=" { 'next-work__arrow_dark' : content.works[nextWork].isInverse }"
+            :class=" { 'next-work__arrow--dark' : content.works[nextWork].isInverse }"
           )
         div
           .next-work__content_title {{ content.works[nextWork].title }}
@@ -182,6 +198,7 @@ export default {
       clientsIsReady: false,
     };
   },
+  props: ['title'],
   computed: {
     workIndex() {
       const myWorks = this.content.works;
@@ -204,6 +221,12 @@ export default {
         }
       }
       return -1;
+    },
+    workHashtags() {
+      var tagsArray = this.content.works[this.workIndex].tags.map(
+        tag => tag.display
+      );
+      return tagsArray.join(", ");
     }
   },
   methods: {
@@ -249,6 +272,12 @@ export default {
         path: "/all-works",
         query: { team: currentMember.slug }
       });
+    },
+    toNextWork(work) {
+      this.$router.push({
+        path: "/all-works/" +work.slug,
+      });
+      document.title = 'Radar Advertising, ' +work.title;
     }
   },
   mounted() {
@@ -271,12 +300,9 @@ export default {
         this.clientsIsReady = true;
       });
     });
-  },
-  // watch: {
-  //   metaImage() {
-  //     this.$route.meta.metaTags[4].content = this.content.works[this.workIndex].logo.path;
-  //   }
-  // }
+
+    // document.title = this.
+  }
 };
 </script>
 

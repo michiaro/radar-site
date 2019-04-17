@@ -45,7 +45,6 @@ import Clients from "./components/Pages/Clients.vue";
 import Contacts from "./components/Pages/Contacts.vue";
 import Work from "./components/Pages/Work.vue";
 
-// eslint-disable-next-line
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -205,29 +204,7 @@ const router = new VueRouter({
       path: "/all-works/:slug",
       component: Work,
       meta: {
-        title: "Radar Advertising, Работы",
-        metaTags: [
-          {
-            name: "description",
-            content: "Наше портфолио"
-          },
-          {
-            property: "og:description",
-            content: "Наше портфолио"
-          },
-          {
-            name: "og:title",
-            content: "Radar Advertising, Работы"
-          },
-          {
-            name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/all-works/"
-          },
-          {
-            name: "og:image",
-            content: "http://new.radar-online.mcdir.ru/all-works/"
-          }
-        ]
+        title: "Radar Advertising, Работы"
       }
     }
   ]
@@ -243,6 +220,7 @@ router.beforeEach((to, from, next) => {
     .slice()
     .reverse()
     .find(r => r.meta && r.meta.metaTags);
+  // eslint-disable-next-line
   const previousNearestWithMeta = from.matched
     .slice()
     .reverse()

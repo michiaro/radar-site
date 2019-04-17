@@ -25,15 +25,13 @@
 
         .works-block
           .works-pack
-            router-link.one-work(
+            a.one-work(
               v-for="work in filteredWorks",
-              :to="'/all-works/' +work.slug",
-              :key="work.slug"
+              :key="work.slug",
+              @click="toWork(work)"
             )
               img.one-work__img(:src="'http://new.radar-online.mcdir.ru/'+work.cover.path", :alt="work.title")
-              a(
-                href="#"
-              )
+              div
                 .one-work__description
                   .desc-text
                     .desc-text__title {{ work.title }}
@@ -136,6 +134,12 @@ export default {
     resetFilterId() {
       this.filterId = null;
       this.$router.push({ path: "/all-works" });
+    },
+    toWork(work) {
+      this.$router.push({
+        path: "/all-works/" +work.slug,
+      });
+      document.title = 'Radar Advertising, ' +work.title;
     }
   },
   mounted() {

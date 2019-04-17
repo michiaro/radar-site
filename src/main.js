@@ -1,29 +1,32 @@
-import 'normalize.css';
-import 'swiper/dist/css/swiper.css';
-import './styles/main.scss';
-import '../static/fonts/proximanova.css';
+import "normalize.css";
+import "swiper/dist/css/swiper.css";
+import "./styles/main.scss";
+import "../static/fonts/proximanova.css";
 
-import Vue from 'vue/dist/vue.js'
-import VueRouter from 'vue-router'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import * as VueGoogleMaps from 'vue2-google-maps'
-import App from './App.vue'
- 
-Vue.use(VueRouter)
+import Vue from "vue/dist/vue.js";
+import VueRouter from "vue-router";
+import VueAwesomeSwiper from "vue-awesome-swiper";
+import * as VueGoogleMaps from "vue2-google-maps";
+import SocialSharing from "vue-social-sharing";
+import App from "./App.vue";
+
+
+Vue.use(SocialSharing);
+Vue.use(VueRouter);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA',
-    libraries: 'places',
+    key: "AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA",
+    libraries: "places"
   },
- 
+
   autobindAllEvents: false,
-  installComponents: true,
-})
+  installComponents: true
+});
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.use(VueAwesomeSwiper)
+Vue.use(VueAwesomeSwiper);
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  render: h => h(App)
+}).$mount("#app");

@@ -19,9 +19,6 @@ import api from "../../api/";
 
 export default {
   name: "About",
-  props: {
-    // msg: String
-  },
   data() {
     return {
       content: {
@@ -55,13 +52,19 @@ export default {
 }
 
 .about-content__title {
-  font-size: 36px;
+  font-size: 28px;
   margin: 10px 8px 20px;
   color: #fff;
   font-family: "ProximaNova-Light";
   font-weight: normal;
+  box-sizing: border-box;
+
   @media screen and (min-width: 680px) {
     margin-left: 15px;
+    font-size: 32px;
+  }
+  @media screen and (min-width: 920px) {
+    width: 900px;
   }
   @media screen and (min-width: 1200px) {
     margin-left: 0;
@@ -69,12 +72,7 @@ export default {
 }
 
 .about-content__block {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
   margin: 8px;
   @media screen and (min-width: 680px) {
@@ -88,11 +86,12 @@ export default {
 
 .about-content__text-block {
   color: #fff;
-  font-size: 16px;
+  font-size: 17px;
   display: inline-block;
   width: 435px;
   vertical-align: text-top;
   margin-bottom: 15px;
+  margin-top: 0;
 }
 
 @media screen and (min-width: 680px) {

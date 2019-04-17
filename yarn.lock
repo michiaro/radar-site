@@ -7325,6 +7325,12 @@ vue-router@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.3.tgz#370ca607475c45a1cfab2d9d2ac846feab1c534c"
 
+vue-social-sharing@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/vue-social-sharing/-/vue-social-sharing-2.4.3.tgz#fb69e8bfa1ea60da33e1d10a1c997401c25673be"
+  dependencies:
+    vue "^2.2.4"
+
 vue-style-loader@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -7350,7 +7356,7 @@ vue2-google-maps@^0.10.6:
     babel-runtime "^5.8.0"
     marker-clusterer-plus "^2.1.4"
 
-vue@^2.6.6:
+vue@^2.2.4, vue@^2.6.6:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
 
