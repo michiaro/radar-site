@@ -500,6 +500,8 @@ video {
   .content__col_2-3 {
     max-width: 740px;
     flex-basis: 740px;
+    height: 99%;
+    overflow: hidden;
   }
 }
 

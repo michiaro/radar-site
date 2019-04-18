@@ -1,34 +1,53 @@
 <template lang="pug">
   .contacts-form__right
     .form-wrapper
-      form.contacts-form#feedback(action="")
+      form.contacts-form#feedback(action="", v-if="!form.isSent", @submit.prevent="submit(form, form.url)")
         h2.form-title Оставить заявку
         p.contacts-form__left-text
           | Мы с радостью ответим на ваши вопросы. Заполнение формы займет всего пару минут.
         .contacts-inputs
           .small-input-block
-            p.input-label.star Ваше имя
+            label(
+              for="fullname"
+            )
+              p.input-label.star Ваше имя
             input.small-input(
+              v-model="form.data[0].data",
               name="fullname",
               type="text",
+              id="fullname",
               required
             )
           .small-input-block
-            p.input-label Телефон
+            label(
+              for="phone"
+            )
+              p.input-label Телефон
             input.small-input(
+              v-model="form.data[1].data",
+              id="phone",
               name="phone",
               type="text"
             )
           .small-input-block
-            p.input-label.star Электронная почта
+            label(
+              for="email"
+            )
+              p.input-label.star Электронная почта
             input.small-input(
+              v-model="form.data[2].data",
               name="email",
+              id="email",
               type="text",
               required
             )
         .contacts-textarea
-          p.input-label.star Сообщение
+          label(
+            for="message"
+          )
+            p.input-label.star Сообщение
           textarea.contacts-textarea(
+            v-model="form.data[3].data",
             name="message",
             id="message",
             rows="9",
@@ -38,11 +57,10 @@
           span.contacts-submit__tip * — поля, обязательные для заполнения
           button.contacts-submit__button.submit_btn(
             type="submit",
-            @submit="submit"
             ) ОТПРАВИТЬ
       .form-result#result(v-if="form.isSent")
-        h2.form-title {{ resultName }}
-        | {{ message }}
+        h2.form-title Сообщение отправлено
+        | Ваше сообщение отправлено. Спасибо!
 
 </template>
 
@@ -54,16 +72,13 @@ export default {
   },
   data() {
     return {
-      resultName: "Сообщение отправлено",
-      message: "Ваше сообщение отправлено. Спасибо!",
       form: {
-        // isAgree: false,
-        subject: "Новая заявка с сайта",
+        subject: "Новая заявка с сайта radar-online.ru",
         isSent: false,
         url: "/process.php",
         data: [
           {
-            label: "Ваше имя",
+            label: "Имя",
             data: ""
           },
           {
@@ -83,22 +98,20 @@ export default {
     };
   },
   methods: {
-    submit: function submit(data, url) {
-      var self = this;
-      this.post(data, url, function(result) {
+    submit(form, url) {
+      this.post(form, url, function(result) {
         if (result) {
-          for (var field in self.form.data) {
+          form.data.forEach(function(field) {
             field.data = "";
-          }
-          // self.form.isAgree = false;
-          self.form.isSent = true;
+          })
+          form.isSent = true;
           setTimeout(function() {
-            self.form.isSent = false;
-          }, 3e3);
+            form.isSent = false;
+          }, 4000);
         }
       });
     },
-    post: function post(data, url, success) {
+    post(data, url, success) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, !0);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -272,7 +285,6 @@ textarea {
 }
 
 .form-result {
-  display: none;
   width: 100%;
   margin-top: 10px;
 }

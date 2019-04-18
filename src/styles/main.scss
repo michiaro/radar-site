@@ -16,6 +16,15 @@ ul {
   padding: 0;
 }
 
+*:focus {
+  outline-color: #e30613;
+}
+
+*::selection {
+  color: white;
+  background: #e30613; 
+}
+
 .block {
   width: 100%;
   overflow: hidden;
