@@ -275,7 +275,7 @@ export default {
     },
     toNextWork(work) {
       this.$router.push({
-        path: "/all-works/" +work.slug,
+        path: "/" +work.slug,
       });
       document.title = 'Radar Advertising, ' +work.title;
     }

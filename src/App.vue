@@ -214,13 +214,14 @@ const router = new VueRouter({
       }
     },
     {
-      path: "/all-works/:slug",
+      path: "/:slug",
       component: Work,
       name: "Work",
       meta: {
         title: "Radar Advertising, Работы"
       }
-    }
+    },
+    { path: "*", redirect: { name: "Home" } }
   ]
 });
 
