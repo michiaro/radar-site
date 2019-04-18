@@ -2,7 +2,7 @@
   .wrapper(v-if="isReady")
     .block
       .work-top-block(
-        :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru' +content.works[workIndex].header.path+')'}"
+        :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru/' +content.works[workIndex].header.path+')'}"
       )
       .content.work-top-block__content 
         .slider-content
@@ -87,13 +87,13 @@
             v-show="!fulltext",
             @click="toggleText"
             ) Читать далее
-          span.work-zone__text-block-readmore(
+          span.work-zone__text-block-readmore.work-zone__text-block-readmore--hide(
             v-show="fulltext",
             @click="toggleText"
             ) Скрыть
         .work-zone__slider
           img(
-            :src="'http://new.radar-online.mcdir.ru'+content.works[workIndex].logo.path", :alt="content.works[workIndex].title+ ' Логотип проекта'"
+            :src="'http://new.radar-online.mcdir.ru/'+content.works[workIndex].logo.path", :alt="content.works[workIndex].title+ ' Логотип проекта'"
           )
         component(
           v-for="(layout, layoutIndex) in content.works[workIndex].layout",
@@ -119,11 +119,11 @@
               ) {{ '#'+workTags(tag._id) }} 
             .share-block__social Поделиться:
               social-sharing(
-                :url="'http://new.radar-online.mcdir.ru' +this.$route.fullPath",
+                :url="'http://new.radar-online.mcdir.ru/' +this.$route.fullPath",
                 :title="'Radar Advertising, ' + content.works[workIndex].title",
                 :description="'Radar Advertising, ' + content.works[workIndex].prescription",
                 :hashtags="workHashtags",
-                :media="'http://new.radar-online.mcdir.ru' +content.works[workIndex].logo.path",
+                :media="'http://new.radar-online.mcdir.ru/' +content.works[workIndex].logo.path",
                 inline-template
               )
                 div
@@ -138,7 +138,7 @@
         .company-description__img
           img(
             v-if="clientsIsReady",
-            :src="'http://new.radar-online.mcdir.ru'+clientLogo(content.works[workIndex].client._id)",
+            :src="'http://new.radar-online.mcdir.ru/'+clientLogo(content.works[workIndex].client._id)",
             :alt="content.works[workIndex].client.display+ 'Логотип'",
             @click="setClientFilter(content.works[workIndex].client._id)"
           )
@@ -150,7 +150,7 @@
       @click="toNextWork(content.works[nextWork])"
     )
       .next-work__cover(
-        :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru' +content.works[nextWork].header.path+')'}"
+        :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru/' +content.works[nextWork].header.path+')'}"
       ) 
       .content.next-work__content(
         :class=" { 'dark' : content.works[nextWork].isInverse }"

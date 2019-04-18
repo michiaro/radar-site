@@ -20,7 +20,7 @@ export default {
     settings: {
       type: Object,
       required: true
-    },
+    }
   }
 };
 </script>

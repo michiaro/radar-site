@@ -51,6 +51,7 @@ const router = new VueRouter({
     {
       path: "/",
       component: Home,
+      name: "Home",
       meta: {
         title: "Radar Advertising",
         metaTags: [
@@ -68,7 +69,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/"
+            content: "/"
           }
         ]
       }
@@ -76,6 +77,7 @@ const router = new VueRouter({
     {
       path: "/all-works",
       component: AllWorks,
+      name: "AllWorks",
       meta: {
         title: "Radar Advertising, Работы",
         metaTags: [
@@ -93,7 +95,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/all-works"
+            content: "/all-works"
           }
         ]
       }
@@ -101,6 +103,7 @@ const router = new VueRouter({
     {
       path: "/about",
       component: About,
+      name: "About",
       meta: {
         title: "Radar Advertising, О нас",
         metaTags: [
@@ -118,7 +121,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/about"
+            content: "/about"
           }
         ]
       }
@@ -126,6 +129,7 @@ const router = new VueRouter({
     {
       path: "/team",
       component: Team,
+      name: "Team",
       meta: {
         title: "Radar Advertising, Команда",
         metaTags: [
@@ -143,7 +147,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/team"
+            content: "/team"
           }
         ]
       }
@@ -151,6 +155,7 @@ const router = new VueRouter({
     {
       path: "/clients",
       component: Clients,
+      name: "Clients",
       meta: {
         title: "Radar Advertising, Клиенты",
         metaTags: [
@@ -168,7 +173,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/clients"
+            content: "/clients"
           }
         ]
       }
@@ -176,6 +181,7 @@ const router = new VueRouter({
     {
       path: "/contacts",
       component: Contacts,
+      name: "Contacts",
       meta: {
         title: "Radar Advertising, Контакты",
         metaTags: [
@@ -195,14 +201,22 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "http://new.radar-online.mcdir.ru/contacts"
+            content: "/contacts"
           }
         ]
+      }
+    },
+    { path: "/index.html", redirect: { name: "Home" } },
+    {
+      path: "*.html",
+      redirect: to => {
+        return to.path.replace(".html", "");
       }
     },
     {
       path: "/all-works/:slug",
       component: Work,
+      name: "Work",
       meta: {
         title: "Radar Advertising, Работы"
       }
