@@ -195,10 +195,9 @@ export default {
       },
       fulltext: false,
       isReady: false,
-      clientsIsReady: false,
+      clientsIsReady: false
     };
   },
-  props: ['title'],
   computed: {
     workIndex() {
       const myWorks = this.content.works;
@@ -258,13 +257,23 @@ export default {
       return null;
     },
     setClientFilter(id) {
+      var clientWorks = this.content.works.filter(
+        work => work.client._id == id
+      );
       var currentClient = this.content.clients.find(
         client => client._id === id
       );
-      this.$router.push({
-        path: "/all-works",
-        query: { client: currentClient.slug }
-      });
+      if (clientWorks.length > 1) {
+        this.$router.push({
+          path: "/all-works",
+          query: { client: currentClient.slug }
+        });
+      } else {
+        this.$router.push({
+          path: "/" + clientWorks[0].slug
+        });
+        window.scrollTo(0, 0);
+      }
     },
     setTeamFilter(id) {
       var currentMember = this.content.team.find(member => member._id === id);
@@ -275,9 +284,9 @@ export default {
     },
     toNextWork(work) {
       this.$router.push({
-        path: "/" +work.slug,
+        path: "/" + work.slug
       });
-      document.title = 'Radar Advertising, ' +work.title;
+      document.title = "Radar Advertising, " + work.title;
     }
   },
   mounted() {
@@ -300,8 +309,6 @@ export default {
         this.clientsIsReady = true;
       });
     });
-
-    // document.title = this.
   }
 };
 </script>

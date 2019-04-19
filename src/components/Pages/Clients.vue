@@ -38,7 +38,7 @@
             :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
             :alt="client.title",
             :class=" { 'products__img--color' : isActiveClient(client._id) }",
-            @click="isActiveClient(client._id) ? setClientFilter(client.slug) : null"
+            @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"
           )
 </template>
 
@@ -82,11 +82,20 @@ export default {
     toggleFilter() {
       this.filterIsActive = !this.filterIsActive;
     },
-    setClientFilter(slug) {
-      this.$router.push({
-        path: "/all-works",
-        query: { client: slug }
-      });
+    setClientFilter(slug, id) {
+      var clientWorks = this.content.works.filter(
+        work => work.client._id == id
+      );
+      if (clientWorks.length > 1) {
+        this.$router.push({
+          path: "/all-works",
+          query: { client: slug }
+        });
+      } else {
+        this.$router.push({
+          path: "/" + clientWorks[0].slug
+        });
+      }
     },
     setFilterId(slug) {
       this.filterId = slug;
