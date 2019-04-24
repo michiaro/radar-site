@@ -156,6 +156,7 @@ const router = new VueRouter({
       path: "/clients",
       component: Clients,
       name: "Clients",
+      props: () => ({ isMobile: window.innerWidth < 1200 }),
       meta: {
         title: "Radar Advertising, Клиенты",
         metaTags: [

@@ -231,7 +231,7 @@ export default {
     }
 
     @media screen and (min-width: 1200px) {
-      margin: 0 0 10px 101px;
+      margin: 0 0 10px 106px;
     }
 
     & a {

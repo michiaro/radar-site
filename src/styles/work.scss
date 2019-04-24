@@ -186,7 +186,7 @@
 
   & img {
     cursor: pointer;
-    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -495,14 +495,13 @@ video {
     padding: 0 8px;
   }
   .content__col_1-3 {
-    max-width: 444px;
-    flex-basis: 444px;
+    max-width: 448px;
+    flex-basis: 448px;
   }
   .content__col_2-3 {
-    max-width: 740px;
-    flex-basis: 740px;
-    height: 99%;
-    overflow: hidden;
+    max-width: 743px;
+    flex-basis: 743px;
+    // overflow: hidden;
   }
 }
 

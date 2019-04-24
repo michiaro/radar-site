@@ -78,17 +78,16 @@ export default {
 
 .all-team {
   display: flex;
-  -ms-flex-low: row wrap;
   flex-flow: row wrap;
   justify-content: flex-start;
   padding-right: 8px;
 
   @media screen and (min-width: 680px) {
-    padding-right: 15px;
+    padding-right: 0;
   }
 
   @media screen and (min-width: 1200px) {
-    margin-top: 80px;
+    margin: 80px -8px 0;
   }
 
   &__img {
@@ -128,6 +127,7 @@ export default {
       @media screen and (min-width: 1200px) {
         width: 188px;
         height: 180px;
+        margin: 0 8px 16px;
       }
     }
   }

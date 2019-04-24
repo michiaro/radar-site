@@ -59,11 +59,10 @@
               :key="work.slug"
             )
               img.one-work__img(:src="'http://new.radar-online.mcdir.ru/'+work.cover.path", :alt="work.title")
-              div
-                .one-work__description
-                  .desc-text
-                    .desc-text__title {{ work.title }}
-                    p.desc-text__text {{ work.prescription }}
+              .one-work__description
+                .desc-text
+                  .desc-text__title {{ work.title }}
+                  p.desc-text__text {{ work.prescription }}
           
     .block
       .content

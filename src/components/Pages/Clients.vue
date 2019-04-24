@@ -30,16 +30,17 @@
                     :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
                   ) 
                     |{{ tag.title }}
-        .products__img-wrapper.one-work(
-          v-for="client in filteredClients",
-          :key="client.id",
-        )
-          img.products__img(
-            :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
-            :alt="client.title",
-            :class=" { 'products__img--color' : isActiveClient(client._id) }",
-            @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"
+        .works-pack
+          .products__img-wrapper.one-work(
+            v-for="client in filteredClients",
+            :key="client.id",
           )
+            img.products__img(
+              :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
+              :alt="client.title",
+              :class=" { 'products__img--color' : isActiveClient(client._id) }",
+              @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"
+            )
 </template>
 
 <script>
@@ -48,9 +49,7 @@ import api from "../../api/";
 export default {
   name: "Clients",
   props: {
-    isMobile: {
-      type: Boolean
-    }
+    isMobile: Boolean
   },
   data() {
     return {
@@ -127,6 +126,8 @@ export default {
       api.getCollectionByKey("works").then(works => {
         this.content.works = works;
       });
+
+      if (this.isMobile) this.filterIsActive = false;
     });
   }
 };
@@ -194,6 +195,10 @@ export default {
 
   @media screen and (min-width: 680px) {
     margin-left: 3px;
+  }
+
+  @media screen and (min-width: 922px) {
+    margin-left: 8px;
   }
 
   @media screen and (min-width: 1200px) {
