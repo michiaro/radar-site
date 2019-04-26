@@ -17,7 +17,7 @@
 
 .work-zone__content {
   margin-top: 20px;
-  padding: 8px;
+  padding: 4px;
   position: relative;
   display: flex;
   flex-flow: row wrap;
@@ -492,16 +492,15 @@ video {
 
 @media screen and (min-width: 1200px) {
   .content__col {
-    padding: 0 8px;
+    padding: 0 5px;
   }
   .content__col_1-3 {
-    max-width: 448px;
-    flex-basis: 448px;
+    max-width: 450px;
+    flex-basis: 450px;
   }
   .content__col_2-3 {
-    max-width: 743px;
-    flex-basis: 743px;
-    // overflow: hidden;
+    max-width: 750px;
+    flex-basis: 750px;
   }
 }
 

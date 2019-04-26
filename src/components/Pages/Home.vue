@@ -1,24 +1,24 @@
 <template lang="pug">
-  .wrapper
+  .wrapper(v-if="isReady")
     .block
       swiper(
         :options="swiperOption",
         ref="fullScreenSwiper",
-        v-if="isReady"
       )
         swiper-slide.item.slide(
           v-for="work in content.works",
           v-if="work.isFeatured",
           :key="work.id",
-          :style="{'backgroundImage': 'url(http://new.radar-online.mcdir.ru/' +work.header.path+')'}"
+          :style="{'backgroundImage': 'url(https://radar-online.ru/' +work.header.path+')'}"
         )
-          .slider-content
-            .slider-content__title(
-              :class=" { 'dark' : work.isInverse }"
-            ) {{ work.title }}
-            .slider-content__text(
-              :class=" { 'dark' : work.isInverse }"
-            ) {{ work.prescription }}
+          router-link.slider__link(:to="'/' + work.slug")
+            .slider-content
+              .slider-content__title(
+                :class=" { 'dark' : work.isInverse }"
+              ) {{ work.title }}
+              .slider-content__text(
+                :class=" { 'dark' : work.isInverse }"
+              ) {{ work.prescription }}
 
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets(
           slot="pagination",
@@ -58,7 +58,7 @@
               @click="toWork(work)",
               :key="work.slug"
             )
-              img.one-work__img(:src="'http://new.radar-online.mcdir.ru/'+work.cover.path", :alt="work.title")
+              img.one-work__img(:src="'https://radar-online.ru/'+work.cover.path", :alt="work.title")
               .one-work__description
                 .desc-text
                   .desc-text__title {{ work.title }}
@@ -81,7 +81,7 @@
             v-if="client.isFeatured",
             :key="client.id"
           )
-            img(:src="'http://new.radar-online.mcdir.ru/'+client.logo.path", :alt="client.title")
+            img(:src="'https://radar-online.ru/'+client.logo.path", :alt="client.title")
 
     .block
       .block.big-map
@@ -276,12 +276,17 @@ export default {
   background-position: center;
 }
 
+.slider__link {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
 .slider-content {
   width: 95%;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   z-index: 200;
   text-align: left;

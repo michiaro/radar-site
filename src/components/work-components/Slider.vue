@@ -8,7 +8,7 @@
       :key="slide.meta.assets",
     ) 
       img(
-        :src="'http://new.radar-online.mcdir.ru/'+slide.path", 
+        :src="'https://radar-online.ru/'+slide.path", 
       )
     .swiper-pagination(
       slot="pagination",

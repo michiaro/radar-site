@@ -14,7 +14,7 @@
             v-if="teammate.inTeam"
             )
               img.all-team__img(
-                :src="'http://new.radar-online.mcdir.ru/'+teammate.photo.path", 
+                :src="'https://radar-online.ru/'+teammate.photo.path", 
                 :alt="teammate.name"
               )
               .all-team__desc

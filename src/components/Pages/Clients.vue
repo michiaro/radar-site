@@ -33,10 +33,11 @@
         .works-pack
           .products__img-wrapper.one-work(
             v-for="client in filteredClients",
-            :key="client.id",
+            v-if="client.color_logo.path",
+            :key="client.id"
           )
             img.products__img(
-              :src="'http://new.radar-online.mcdir.ru/'+client.color_logo.path", 
+              :src="'https://radar-online.ru/'+client.color_logo.path", 
               :alt="client.title",
               :class=" { 'products__img--color' : isActiveClient(client._id) }",
               @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"

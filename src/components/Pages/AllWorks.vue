@@ -30,7 +30,7 @@
               :key="work.slug",
               @click="toWork(work)"
             )
-              img.one-work__img(:src="'http://new.radar-online.mcdir.ru/'+work.cover.path", :alt="work.title")
+              img.one-work__img(:src="'https://radar-online.ru/'+work.cover.path", :alt="work.title")
               div
                 .one-work__description
                   .desc-text
