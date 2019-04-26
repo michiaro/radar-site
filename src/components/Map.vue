@@ -16,8 +16,6 @@
 </template>
 
 <script>
-// import api from "../api/";
-
 export default {
   name: "Map",
   props: {
@@ -30,9 +28,6 @@ export default {
   },
   data() {
     return {
-      content: {
-        // common: ""
-      },
       markers: [
         {
           latitude: "55.164515",
@@ -126,20 +121,12 @@ export default {
       }
     }
   },
-  mounted() {
-    // this.$refs.mapRef.$mapPromise.then(map => {
-    //   map.panTo({ lat: 1.38, lng: 103.8 });
-    // });
-  },
   methods: {
     zoomOut() {
       this.changingZoom = this.changingZoom - 1;
-
-      // map.setZoom(map.getZoom() - 1);
     },
     zoomIn() {
       this.changingZoom = this.changingZoom + 1;
-      // map.setZoom(map.getZoom() + 1);
     }
   }
 };

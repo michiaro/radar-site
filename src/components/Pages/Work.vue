@@ -2,7 +2,7 @@
   .wrapper(v-if="isReady")
     .block
       .work-top-block(
-        :style="{'backgroundImage': 'url(https://radar-online.ru/' +content.works[workIndex].header.path+')'}"
+        :style="{'backgroundImage': 'url(https://radar-online.ru' +content.works[workIndex].header.path+')'}"
       )
       .content.work-top-block__content 
         .slider-content
@@ -93,7 +93,7 @@
             ) Скрыть
         .work-zone__slider
           img(
-            :src="'https://radar-online.ru/'+content.works[workIndex].logo.path", :alt="content.works[workIndex].title+ ' Логотип проекта'"
+            :src="'https://radar-online.ru'+content.works[workIndex].logo.path", :alt="content.works[workIndex].title+ ' Логотип проекта'"
           )
         component(
           v-for="(layout, layoutIndex) in content.works[workIndex].layout",
@@ -119,11 +119,11 @@
               ) {{ '#'+workTags(tag._id) }} 
             .share-block__social Поделиться:
               social-sharing(
-                :url="'https://radar-online.ru/' +this.$route.fullPath",
+                :url="'https://radar-online.ru' +this.$route.fullPath",
                 :title="'Radar Advertising, ' + content.works[workIndex].title",
                 :description="'Radar Advertising, ' + content.works[workIndex].prescription",
                 :hashtags="workHashtags",
-                :media="'https://radar-online.ru/' +content.works[workIndex].logo.path",
+                :media="'https://radar-online.ru' +content.works[workIndex].logo.path",
                 inline-template
               )
                 div
@@ -138,7 +138,7 @@
         .company-description__img
           img(
             v-if="clientsIsReady",
-            :src="'https://radar-online.ru/'+clientLogo(content.works[workIndex].client._id)",
+            :src="'https://radar-online.ru'+clientLogo(content.works[workIndex].client._id)",
             :alt="content.works[workIndex].client.display+ 'Логотип'",
             @click="setClientFilter(content.works[workIndex].client._id)"
           )
@@ -150,7 +150,7 @@
       @click="toNextWork(content.works[nextWork])"
     )
       .next-work__cover(
-        :style="{'backgroundImage': 'url(https://radar-online.ru/' +content.works[nextWork].header.path+')'}"
+        :style="{'backgroundImage': 'url(https://radar-online.ru' +content.works[nextWork].header.path+')'}"
       ) 
       .content.next-work__content(
         :class=" { 'dark' : content.works[nextWork].isInverse }"

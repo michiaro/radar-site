@@ -37,7 +37,7 @@
             :key="client.id"
           )
             img.products__img(
-              :src="'https://radar-online.ru/'+client.color_logo.path", 
+              :src="'https://radar-online.ru'+client.color_logo.path", 
               :alt="client.title",
               :class=" { 'products__img--color' : isActiveClient(client._id) }",
               @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"

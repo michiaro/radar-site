@@ -1,7 +1,7 @@
 <template lang="pug">
   .content__image
     img(
-      :src="'https://radar-online.ru/'+settings.picture.path", 
+      :src="'https://radar-online.ru'+settings.picture.path", 
     )
 
 </template>

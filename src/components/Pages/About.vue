@@ -1,7 +1,7 @@
 <template lang="pug">
   .wrapper(v-if="isReady")
     .block.about-block(
-      :style="{'backgroundImage': 'url(https://radar-online.ru/' +this.content.aboutUs.background.path+')'}"
+      :style="{'backgroundImage': 'url(https://radar-online.ru' +this.content.aboutUs.background.path+')'}"
       )
       .content.about-content.page-wrapper
         h1.about-content__title {{ this.content.aboutUs.title }}
@@ -123,10 +123,12 @@ export default {
     margin-left: 30px;
   }
 
+  & a {
+    display: block;
+  }
+
   &__img {
     margin-bottom: 25px;
-  }
-  &__text {
   }
 }
 </style>

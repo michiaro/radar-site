@@ -9,7 +9,7 @@
           v-for="work in content.works",
           v-if="work.isFeatured",
           :key="work.id",
-          :style="{'backgroundImage': 'url(https://radar-online.ru/' +work.header.path+')'}"
+          :style="{'backgroundImage': 'url(https://radar-online.ru' +work.header.path+')'}"
         )
           router-link.slider__link(:to="'/' + work.slug")
             .slider-content
@@ -58,7 +58,7 @@
               @click="toWork(work)",
               :key="work.slug"
             )
-              img.one-work__img(:src="'https://radar-online.ru/'+work.cover.path", :alt="work.title")
+              img.one-work__img(:src="'https://radar-online.ru'+work.cover.path", :alt="work.title")
               .one-work__description
                 .desc-text
                   .desc-text__title {{ work.title }}
@@ -81,7 +81,7 @@
             v-if="client.isFeatured",
             :key="client.id"
           )
-            img(:src="'https://radar-online.ru/'+client.logo.path", :alt="client.title")
+            img(:src="'https://radar-online.ru'+client.logo.path", :alt="client.title")
 
     .block
       .block.big-map
