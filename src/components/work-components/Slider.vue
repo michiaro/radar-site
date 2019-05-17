@@ -49,6 +49,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .content__swiper {
   margin-top: 8px;
   width: 100%;

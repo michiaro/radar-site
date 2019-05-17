@@ -267,6 +267,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .slide {
   position: relative;
   height: 500px;

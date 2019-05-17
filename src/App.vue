@@ -32,14 +32,12 @@
 
 <script>
 import api from "./api/";
-
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
 import Logo from "./components/Logo.vue";
 import breakpoints from "./shared/breakpoints.js";
 
 export default {
-
   name: "app",
   components: {
     Navigation,
@@ -93,6 +91,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 [v-cloak] {
   display: none;
 }

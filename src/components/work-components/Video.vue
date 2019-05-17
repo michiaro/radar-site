@@ -26,6 +26,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .content__video {
   width: 100%;
   margin-top: 8px;

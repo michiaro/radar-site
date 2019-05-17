@@ -135,6 +135,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .products__content {
   padding: 120px 0;
   display: flex;

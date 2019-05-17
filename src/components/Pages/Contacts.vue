@@ -165,6 +165,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .big-map__head {
   @include from-breakpoint('xl') {
     padding-bottom: 20px;

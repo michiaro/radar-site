@@ -55,6 +55,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .team-text {
   color: #292e35;
   font-size: 16px;

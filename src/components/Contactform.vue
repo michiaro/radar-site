@@ -127,6 +127,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .form-block {
   margin-top: 50px;
   display: flex;

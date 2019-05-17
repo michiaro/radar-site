@@ -23,6 +23,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .content__audio {
   margin-top: 8px;
 }

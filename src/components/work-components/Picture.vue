@@ -19,6 +19,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 .content__image {
   width: 100%;
   margin-top: 8px;

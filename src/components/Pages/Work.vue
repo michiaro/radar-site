@@ -314,5 +314,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/globals';
+
 @import "../../styles/work.scss";
 </style>
