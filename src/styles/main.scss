@@ -91,28 +91,6 @@ ul {
   }
 }
 
-.main-menu__list {
-  margin: 0;
-}
-
-.main-menu__item {
-  display: inline-block;
-  margin-left: 40px;
-}
-
-.main-menu__item:first-child {
-  margin-left: 0;
-}
-
-.main-menu__link {
-  color: #fff;
-  font-size: 14px;
-}
-
-.main-menu__link:hover {
-  opacity: 0.8;
-}
-
 .mobile-header {
   position: fixed;
   left: 0;
@@ -216,51 +194,11 @@ ul {
   bottom: 50%;
 }
 
-.mobile {
-  &.main-menu {
-    z-index: 999;
-    height: 100vh;
-    width: 100%;
-  }
 
-  .main-menu__list {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 100%;
-    background: #e30613;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
-    transform: translateY(-20px);
-    transition: all ease 0.3s;
-    padding: 88px 0;
-  }
-
-  .main-menu__item {
-    margin: 0;
-    border-bottom: 1px solid white;
-    display: flex;
-  }
-
-  .main-menu__link {
-    font-size: 18px;
-    padding: 1em;
-    width: 100%;
-  }
-}
 
 @include from-breakpoint('xl') {
   .mobile-header {
     display: none;
-  }
-  .main-menu__link:hover {
-    color: #e10811;
-  }
-  .main-menu__link.router-link-active {
-    color: #e10811;
   }
 }
 
