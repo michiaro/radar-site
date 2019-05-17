@@ -36,6 +36,7 @@ import router from "./router.js";
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
 import Logo from "./components/Logo.vue";
+import breakpoints from "./shared/breakpoints.js";
 
 export default {
   router,
@@ -56,8 +57,8 @@ export default {
   },
   methods: {
     handleResize() {
-      this.isMobile = window.innerWidth < 1200;
-      this.isMenuOpen = window.innerWidth >= 1200;
+      this.isMobile = window.innerWidth < breakpoints.xl;
+      this.isMenuOpen = window.innerWidth >= breakpoints.xl;
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;

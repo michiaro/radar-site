@@ -6,6 +6,7 @@ import Team from "./components/Pages/Team.vue";
 import Clients from "./components/Pages/Clients.vue";
 import Contacts from "./components/Pages/Contacts.vue";
 import Work from "./components/Pages/Work.vue";
+import breakpoints from "./shared/breakpoints.js";
 
 const router = new VueRouter({
   mode: "history",
@@ -118,7 +119,7 @@ const router = new VueRouter({
       path: "/clients",
       component: Clients,
       name: "Clients",
-      props: () => ({ isMobile: window.innerWidth < 1200 }),
+      props: () => ({ isMobile: window.innerWidth < breakpoints.xl }),
       meta: {
         title: "Radar Advertising, Клиенты",
         metaTags: [
