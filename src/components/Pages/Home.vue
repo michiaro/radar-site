@@ -310,16 +310,16 @@ export default {
   color: #fff;
   font-size: 18px;
 
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     max-width: 45%;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     max-width: 35%;
   }
 }
 
-@media screen and (min-width: 680px) {
+@include from-breakpoint('md') {
   .slider-content__title {
     font-size: 48px;
   }
@@ -328,13 +328,13 @@ export default {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .slider-content__title {
     max-width: 45%;
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .slider-content {
     width: 1200px;
   }
@@ -363,7 +363,7 @@ export default {
   display: none;
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .swiper-button-prev {
     display: block;
   }

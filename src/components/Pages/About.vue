@@ -52,7 +52,7 @@ export default {
   background-size: cover;
   background-position: center;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     height: 100%;
   }
 }
@@ -61,7 +61,7 @@ export default {
   padding-top: 130px;
   box-sizing: border-box;
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     height: 100vh;
   }
 }
@@ -74,14 +74,14 @@ export default {
   font-weight: normal;
   box-sizing: border-box;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-left: 15px;
     font-size: 32px;
   }
   @media screen and (min-width: 920px) {
     width: 900px;
   }
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     margin-left: 0;
   }
 }
@@ -90,10 +90,10 @@ export default {
   display: flex;
   flex-flow: row wrap;
   margin: 8px;
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-left: 15px;
   }
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     margin-bottom: 60px;
     margin-left: 0;
     flex-wrap: nowrap;
@@ -109,7 +109,7 @@ export default {
   margin-bottom: 15px;
   margin-top: 0;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-right: 30px;
   }
 }
@@ -119,7 +119,7 @@ export default {
   width: 255px;
   margin-top: 8px;
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     margin-left: 30px;
   }
 

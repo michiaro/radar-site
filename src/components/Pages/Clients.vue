@@ -152,11 +152,11 @@ export default {
     width: 41%;
     margin: 0 10px;
 
-    @media screen and (min-width: 680px) {
+    @include from-breakpoint('md') {
       width: 22%;
     }
 
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       width: 15%;
     }
   }
@@ -172,7 +172,7 @@ export default {
   display: flex;
   flex-flow: row wrap;
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     flex-wrap: nowrap;
     margin-top: 40px;
   }
@@ -185,7 +185,7 @@ export default {
   /* hide about text on Clients */
   display: none;
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     max-width: 35%;
     margin: 0 8% 0 1px;
   }
@@ -194,15 +194,15 @@ export default {
 .products-menu {
   margin-top: 20px;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-left: 3px;
   }
 
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     margin-left: 8px;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     display: inline-block;
     margin-top: 0;
     /* hide about text on Clients */
@@ -214,7 +214,7 @@ export default {
   }
 
   &__list {
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       margin-left: 16px;
     }
   }
@@ -223,7 +223,7 @@ export default {
     margin: 0 20px 15px 10px;
     height: 20px;
 
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       margin: 0 20px 15px 10px;
     }
 
@@ -248,7 +248,7 @@ export default {
     border: none;
   }
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-left: 18px;
   }
 }

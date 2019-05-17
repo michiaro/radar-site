@@ -166,7 +166,7 @@ export default {
 
 <style lang="scss">
 .big-map__head {
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     padding-bottom: 20px;
   }
 }
@@ -186,12 +186,12 @@ export default {
     display: flex;
   }
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     padding: 0 0 10px 15px;
     margin-top: 0;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     width: 60%;
     margin: 0 0 0 15%;
     padding: 0 0 10px 0;
@@ -208,7 +208,7 @@ export default {
   &__descr {
     width: 200px;
 
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       width: 200px;
     }
   }
@@ -230,7 +230,7 @@ export default {
       margin: 0 0 10px 30px;
     }
 
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       margin: 0 0 10px 106px;
     }
 
@@ -261,7 +261,7 @@ export default {
   padding: 8px;
   box-sizing: border-box;
 
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     justify-content: space-between;
     max-width: 25%;
     margin-top: 20px;
@@ -270,12 +270,12 @@ export default {
 
 .contacts-form__left-text {
   margin-bottom: 15px;
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     padding-right: 0;
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .contacts-block__content {
     padding: 70px 0 80px 0;
   }

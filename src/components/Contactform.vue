@@ -151,12 +151,12 @@ export default {
 
 .contacts-form__left-text {
   margin-bottom: 15px;
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     padding-right: 40%;
   }
 }
 
-@media screen and (min-width: 922px) {
+@include from-breakpoint('lg') {
   .contacts-form__left {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
@@ -166,7 +166,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .contacts-block__content {
     padding: 70px 0 80px 0;
   }
@@ -289,7 +289,7 @@ textarea {
   margin-top: 10px;
 }
 
-@media screen and (min-width: 680px) {
+@include from-breakpoint('md') {
   .small-input-block {
     width: 30%;
     margin-right: 2.8%;
@@ -308,7 +308,7 @@ textarea {
   }
 }
 
-@media screen and (min-width: 922px) {
+@include from-breakpoint('lg') {
   .contacts-form__right {
     width: 73%;
   }
@@ -320,7 +320,7 @@ textarea {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .contacts-form__right {
     width: 75%;
     margin: 30px 0;
@@ -346,10 +346,10 @@ textarea {
     max-width: 100%;
     width: auto;
     box-sizing: border-box;
-    @media screen and (min-width: 680px) {
+    @include from-breakpoint('md') {
       margin: 0 15px;
     }
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       margin-left: 0;
     }
   }

@@ -88,7 +88,7 @@ export default {
   &--about {
     background-color: #343434;
 
-    @media screen and (min-width: 1200px) {
+    @include from-breakpoint('xl') {
       position: absolute;
       bottom: 0;
       width: 100%;
@@ -162,7 +162,7 @@ export default {
   margin-left: 0;
 }
 
-@media screen and (min-width: 680px) {
+@include from-breakpoint('md') {
   .sn {
     margin: 10px 8px 0 0;
   }
@@ -180,12 +180,12 @@ export default {
   }
 }
 
-// @media screen and (min-width: 922px) {
+// @include from-breakpoint('lg') {
 //   .page-footer__content {
 //     flex-wrap: row nowrap;
 //   }
 // }
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .page-footer__content {
     padding: 30px 0;
   }
@@ -203,7 +203,7 @@ export default {
   align-items: center;
   width: 100%;
 
-  @media screen and (min-width: 922px) {
+  @include from-breakpoint('lg') {
     width: auto;
   }
   &__img {

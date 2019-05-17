@@ -148,7 +148,7 @@
 .tags {
   margin: 20px 0 45px;
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     max-width: 270px;
   }
 
@@ -210,7 +210,7 @@
   }
 }
 
-@media screen and (min-width: 922px) {
+@include from-breakpoint('lg') {
   .work-zone__content {
     margin-top: 40px;
   }
@@ -250,7 +250,7 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .work-zone__text-block {
     height: 470px;
   }
@@ -345,7 +345,7 @@
   }
 }
 
-@media screen and (min-width: 680px) {
+@include from-breakpoint('md') {
   .next-work__title {
     font-size: 22px;
   }
@@ -397,11 +397,11 @@
   margin-bottom: 55px;
   margin-left: 12px;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     margin-left: 26px;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     margin-left: 0;
   }
 }
@@ -434,11 +434,11 @@ video {
   left: 0;
   transform: translate(5%, -50%);
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     transform: translate(10%, -50%);
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     transform: translate(0, 0);
   }
 
@@ -472,7 +472,7 @@ video {
   padding-right: 0;
 }
 
-@media screen and (min-width: 922px) {
+@include from-breakpoint('lg') {
   .content__col {
     padding: 0 4px;
   }
@@ -490,7 +490,7 @@ video {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@include from-breakpoint('xl') {
   .content__col {
     padding: 0 5px;
   }

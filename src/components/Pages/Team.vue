@@ -62,11 +62,11 @@ export default {
   padding-left: 8px;
   box-sizing: border-box;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     padding-left: 0;
     width: 60%;
   }
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     width: 440px;
     padding-right: 15px;
   }
@@ -82,11 +82,11 @@ export default {
   justify-content: flex-start;
   padding-right: 8px;
 
-  @media screen and (min-width: 680px) {
+  @include from-breakpoint('md') {
     padding-right: 0;
   }
 
-  @media screen and (min-width: 1200px) {
+  @include from-breakpoint('xl') {
     margin: 80px -8px 0;
   }
 
@@ -113,7 +113,7 @@ export default {
         width: 31.5%;
       }
 
-      @media screen and (min-width: 680px) {
+      @include from-breakpoint('md') {
         width: 23.5%;
       }
 
@@ -121,10 +121,10 @@ export default {
         width: 24%;
       }
 
-      @media screen and (min-width: 922px) {
+      @include from-breakpoint('lg') {
         width: 19%;
       }
-      @media screen and (min-width: 1200px) {
+      @include from-breakpoint('xl') {
         width: 188px;
         height: 180px;
         margin: 0 8px 16px;
