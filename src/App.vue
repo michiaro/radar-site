@@ -32,14 +32,14 @@
 
 <script>
 import api from "./api/";
-import router from "./router.js";
+
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
 import Logo from "./components/Logo.vue";
 import breakpoints from "./shared/breakpoints.js";
 
 export default {
-  router,
+
   name: "app",
   components: {
     Navigation,

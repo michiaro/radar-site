@@ -9,7 +9,7 @@ import VueAwesomeSwiper from "vue-awesome-swiper";
 import * as VueGoogleMaps from "vue2-google-maps";
 import SocialSharing from "vue-social-sharing";
 import App from "./App.vue";
-
+import router from "./router.js";
 
 Vue.use(SocialSharing);
 Vue.use(VueRouter);
@@ -28,5 +28,6 @@ Vue.config.productionTip = false;
 Vue.use(VueAwesomeSwiper);
 
 new Vue({
+  router,
   render: h => h(App)
 }).$mount("#app");
