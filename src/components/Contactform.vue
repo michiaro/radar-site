@@ -176,15 +176,6 @@ export default {
   margin-bottom: 25px;
 }
 
-.bb-sn__img {
-  display: inline-block;
-  margin-left: 15px;
-}
-
-.bb-sn__img.nm {
-  margin-left: 0;
-}
-
 .contacts-form__right {
   width: 100%;
   margin: 30px 8px;

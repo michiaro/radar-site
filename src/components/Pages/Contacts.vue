@@ -84,7 +84,7 @@
                   :href="content.common.vk",
                   target="_blank"
                 )
-                  img.bb-sn__img.nm(
+                  img.bb-sn__img(
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAeCAYAAADHJYVoAAABDUlEQVR4AbXVg4/DQRDF8bNtG8HZCM62grPt/z/pt0mN2f1hmnyi7ntbzTSjq6vz34U33GAHg8jNSPUIHfbqHaNyuXeLauUhHZrlJ7bl61gMWcIhvg2ZH2TZlNel+I7K8WbIFbsqD2WmDbkiL+U9QuYLmV7KR4TMUeiYq888Bxd+/BT7URfSjCHcCOe3tIZoA9ka5Zso1Nwtv1hBvub436NMpTzkCtnWP8Xg2w2pwCheDdkhV0MUuqwMn0L21KpcuGBD+nfyWj4v5b2WL6mUB38NeBKyz263Ygn2Ddk9U/kWFmOs4Ay/oeclvVpDdIlMjfJPVGmM/zPq/V5cf1hLWrsuiz5whwOMoyTVryoABtLQg09QovgAAAAASUVORK5CYII="
                     )
                 a(
@@ -296,14 +296,10 @@ export default {
 
 .bb-sn__img {
   display: inline-block;
-  margin-left: 15px;
+  margin-right: 15px;
   
   &:hover {
     opacity: 0.8;
   }
-}
-
-.bb-sn__img.nm {
-  margin-left: 0;
 }
 </style>
