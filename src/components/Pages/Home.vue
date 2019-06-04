@@ -108,13 +108,13 @@
             .contacts(
               :class="{ 'contact-active' : isChelly }"
             )
-              a(:href="content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
+              a.chelly_phone(:href="content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
               br
               a(:href="'mailto:'+content.locations.chelly_email") {{ content.locations.chelly_email }}
             .contacts(
               :class="{ 'contact-active' : isMoscow }"
             )
-              a(:href="content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
+              a.moscow_phone(:href="content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
               br
               a(:href="'mailto:'+content.locations.moscow_email") {{ content.locations.moscow_email }}
           ul.zoom
@@ -234,7 +234,7 @@ export default {
     },
     toWork(work) {
       this.$router.push({
-        path: "/" + work.slug,
+        path: "/" + work.slug
       });
       document.title = "Radar Advertising, " + work.title;
     }
@@ -261,6 +261,11 @@ export default {
       api.getSingletonsByKey("common").then(common => {
         this.content.common = common;
       });
+
+      setTimeout(() => {
+        // eslint-disable-next-line
+        callibriInit();
+      }, 500);
     });
   }
 };

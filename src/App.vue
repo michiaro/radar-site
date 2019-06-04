@@ -16,7 +16,7 @@
         )
           .hamburger-box
         .page-header__tel(v-if="!isMobile")
-          a.contacts-moscow.contacts-ekb.contacts-tyumen.contacts-chel(href="tel:+74956020399") +7 (495) 602-03-99
+          a.contacts-moscow.contacts-ekb.contacts-tyumen.contacts-chel(href="tel:+74954142222") +7 (495) 414-22-22
         Navigation(
           v-if="!isMobile"
         )
@@ -300,10 +300,10 @@ export default {
     this.$nextTick(() => {
       window.addEventListener("resize", this.handleResize);
       this.handleResize();
-    });
 
-    api.getSingletonsByKey("common").then(common => {
-      this.content.common = common;
+      api.getSingletonsByKey("common").then(common => {
+        this.content.common = common;
+      });
     });
   },
   watch: {

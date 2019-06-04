@@ -25,13 +25,13 @@
             .contacts(
               :class="{ 'contact-active' : isChelly }"
             )
-              a(:href="content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
+              a.chelly_phone(:href="content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
               br
               a(:href="'mailto:'+content.locations.chelly_email") {{ content.locations.chelly_email }}
             .contacts(
               :class="{ 'contact-active' : isMoscow }"
             )
-              a(:href="content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
+              a.moscow_phone(:href="content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
               br
               a(:href="'mailto:'+content.locations.moscow_email") {{ content.locations.moscow_email }}
           ul.zoom
@@ -80,6 +80,7 @@
               p.bb-text Подписывайтесь и&nbsp;добавляйте нас в&nbsp;друзья (:
               .bb-sn
                 a(
+                  v-if="content.common.vk",
                   :href="content.common.vk",
                   target="_blank"
                 )
@@ -87,6 +88,7 @@
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAeCAYAAADHJYVoAAABDUlEQVR4AbXVg4/DQRDF8bNtG8HZCM62grPt/z/pt0mN2f1hmnyi7ntbzTSjq6vz34U33GAHg8jNSPUIHfbqHaNyuXeLauUhHZrlJ7bl61gMWcIhvg2ZH2TZlNel+I7K8WbIFbsqD2WmDbkiL+U9QuYLmV7KR4TMUeiYq888Bxd+/BT7URfSjCHcCOe3tIZoA9ka5Zso1Nwtv1hBvub436NMpTzkCtnWP8Xg2w2pwCheDdkhV0MUuqwMn0L21KpcuGBD+nfyWj4v5b2WL6mUB38NeBKyz263Ygn2Ddk9U/kWFmOs4Ay/oeclvVpDdIlMjfJPVGmM/zPq/V5cf1hLWrsuiz5whwOMoyTVryoABtLQg09QovgAAAAASUVORK5CYII="
                     )
                 a(
+                  v-if="content.common.facebook",
                   :href="content.common.facebook",
                   target="_blank"
                 )
@@ -94,6 +96,7 @@
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAlCAYAAABCr8kFAAAAqklEQVR4Ae3Tg24EURSH8dq23UZt194HmDiZYBmtrfv+yf7XGlsn+cXnmzta45qPj/ct+AcaqkDmNKEBeUgCBS6u2BOUgIhQZou9QReISDRTbB/qQCSIMwVjQCT6YQqWZQTPlmNnApay4INbOIFL+IAw0+m+eGLRNTGDhT+OWAc2xAZ9HMHGGsYCwfE/OJHhCHaB4nAxCRKFPDtBowZN8qc4QSfoBJ2gE+wDc0JU9gVcgFgAAAAASUVORK5CYII="
                   )
                 a(
+                  v-if="content.common.instagram",
                   :href="content.common.instagram",
                   target="_blank"
                 )
@@ -101,6 +104,7 @@
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABAElEQVR42u2XvwrCMBCH4ySCAaFLQZeUiu3WF+jULg4FOwnqO8Tq+4O/wgmh1BB7Rov04FuSy30k5A8RUaQkOIL7NyCXFAwpSy48Fo/BvMP22e9NLHqilU/i/xGDuEccDxVrUII1WBAbatMuNYaIayDFi0DfEtTO4rGHObMEnMCVOIHEt7S0LF/pS5qSwEbqXtBeSBl5FwfxxchXnF0dUJEZuDmIb2BGYwKOOGSIQ454x1jqHUe8H7q52rEcsQbSKFZYcgsjTwLNvTKrnmN1Bg1xBmknp/rUXZ2/cTxzH4/EyiJcgZrxOllpwAFkQBEZtTWMZ5HHJB6l+GdfmJ992h7vvVL+F27YPwAAAABJRU5ErkJggg=="
                   )
                 a(
+                  v-if="content.common.vimeo",
                   :href="content.common.vimeo",
                   target="_blank"
                 )
@@ -159,6 +163,11 @@ export default {
       api.getSingletonsByKey("common").then(common => {
         this.content.common = common;
       });
+
+      setTimeout(() => {
+        // eslint-disable-next-line
+        callibriInit();
+      }, 500);
     });
   }
 };
