@@ -69,7 +69,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/"
+            content: "https://radar-online.ru/"
           }
         ]
       }
@@ -95,7 +95,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/all-works"
+            content: "https://radar-online.ru/all-works"
           }
         ]
       }
@@ -121,7 +121,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/about"
+            content: "https://radar-online.ru/about"
           }
         ]
       }
@@ -147,7 +147,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/team"
+            content: "https://radar-online.ru/team"
           }
         ]
       }
@@ -174,7 +174,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/clients"
+            content: "https://radar-online.ru/clients"
           }
         ]
       }
@@ -202,7 +202,7 @@ const router = new VueRouter({
           },
           {
             name: "og:url",
-            content: "/contacts"
+            content: "https://radar-online.ru/contacts"
           }
         ]
       }

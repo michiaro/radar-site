@@ -10,7 +10,6 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import SocialSharing from "vue-social-sharing";
 import App from "./App.vue";
 
-
 Vue.use(SocialSharing);
 Vue.use(VueRouter);
 Vue.use(VueGoogleMaps, {

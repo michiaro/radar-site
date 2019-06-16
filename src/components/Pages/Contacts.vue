@@ -202,7 +202,7 @@ export default {
 
   @media screen and (min-width: 1200px) {
     width: 60%;
-    margin: 0 0 0 15%;
+    margin: 0 0 0 14%;
     padding: 0 0 10px 0;
 
     &--chelly {
@@ -240,7 +240,7 @@ export default {
     }
 
     @media screen and (min-width: 1200px) {
-      margin: 0 0 10px 106px;
+      margin: 0 0 10px 96px;
     }
 
     & a {
