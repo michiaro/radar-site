@@ -152,6 +152,20 @@ export default {
     },
     changeZoomOut() {
       this.$refs.mapZoom.zoomOut();
+    },
+    defineCity() {
+      var self = this;
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+
+          if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
+            // MSK
+            self.showMoscow();
+          }
+        });
+      }
     }
   },
   mounted() {
@@ -168,6 +182,8 @@ export default {
         // eslint-disable-next-line
         callibriInit();
       }, 500);
+
+      this.defineCity();
     });
   }
 };
@@ -297,7 +313,7 @@ export default {
 .bb-sn__img {
   display: inline-block;
   margin-right: 15px;
-  
+
   &:hover {
     opacity: 0.8;
   }

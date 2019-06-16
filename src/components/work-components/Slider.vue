@@ -7,9 +7,10 @@
       v-for="slide in settings.slider"
       :key="slide.meta.assets",
     ) 
-      img(
+      img.swiper-lazy(
         :src="'https://radar-online.ru'+slide.path", 
       )
+      .swiper-lazy-preloader
     .swiper-pagination(
       slot="pagination",
     )
@@ -23,7 +24,7 @@ export default {
     settings: {
       type: Object,
       required: true
-    },
+    }
   },
   data() {
     return {
@@ -41,7 +42,9 @@ export default {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
-        }
+        },
+        preloadImages: false,
+        lazy: true
       }
     };
   }

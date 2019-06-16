@@ -5,7 +5,7 @@
         :options="swiperOption",
         ref="fullScreenSwiper",
       )
-        swiper-slide.item.slide(
+        swiper-slide.item.slide.swiper-lazy(
           v-for="work in content.works",
           v-if="work.isFeatured",
           :key="work.id",
@@ -19,7 +19,7 @@
               .slider-content__text(
                 :class=" { 'dark' : work.isInverse }"
               ) {{ work.prescription }}
-
+          .swiper-lazy-preloader
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets(
           slot="pagination",
         )
@@ -54,7 +54,8 @@
         .works-block
           .works-pack
             a.one-work(
-              v-for="work in filteredWorks",
+              v-for="(work, index) in filteredWorks",
+              v-if="index <= 23",
               @click="toWork(work)",
               :key="work.slug"
             )
@@ -125,7 +126,7 @@
         Map(
         :isChelly="isChelly",
         :isMoscow="isMoscow",
-        ref="mapZoom"
+        ref="mapRef"
         )
 </template>
 
@@ -157,7 +158,9 @@ export default {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
-        }
+        },
+        preloadImages: false,
+        lazy: true
       },
       activeIndex: 0,
       demoSwiperOption: {
@@ -227,16 +230,30 @@ export default {
       this.$router.push({ path: "/" });
     },
     changeZoomIn() {
-      this.$refs.mapZoom.zoomIn();
+      this.$refs.mapRef.zoomIn();
     },
     changeZoomOut() {
-      this.$refs.mapZoom.zoomOut();
+      this.$refs.mapRef.zoomOut();
     },
     toWork(work) {
       this.$router.push({
         path: "/" + work.slug
       });
       document.title = "Radar Advertising, " + work.title;
+    },
+    defineCity() {
+      var self = this;
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+
+          if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
+            // MSK
+            self.showMoscow();
+          }
+        });
+      }
     }
   },
   mounted() {
@@ -266,6 +283,8 @@ export default {
         // eslint-disable-next-line
         callibriInit();
       }, 500);
+
+      this.defineCity();
     });
   }
 };
