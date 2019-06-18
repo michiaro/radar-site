@@ -11,10 +11,11 @@
           .all-team__img-wrapper(
             v-for="teammate in content.team",
             :key="teammate.id",
-            v-if="teammate.inTeam"
+            v-if="teammate.inTeam",
+            v-lazyload
             )
               img.all-team__img(
-                :src="'https://radar-online.ru'+teammate.photo.path", 
+                :data-url="'https://radar-online.ru'+teammate.photo.path",
                 :alt="teammate.name"
               )
               .all-team__desc

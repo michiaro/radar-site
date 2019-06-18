@@ -9,6 +9,7 @@ import VueAwesomeSwiper from "vue-awesome-swiper";
 import * as VueGoogleMaps from "vue2-google-maps";
 import SocialSharing from "vue-social-sharing";
 import App from "./App.vue";
+import LazyLoadDirective from "./directives/LazyLoadDirective";
 
 Vue.use(SocialSharing);
 Vue.use(VueRouter);
@@ -17,14 +18,15 @@ Vue.use(VueGoogleMaps, {
     key: "AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA",
     libraries: "places"
   },
-
+  
   autobindAllEvents: false,
   installComponents: true
 });
+Vue.use(VueAwesomeSwiper);
+
+Vue.directive("lazyload", LazyLoadDirective);
 
 Vue.config.productionTip = false;
-
-Vue.use(VueAwesomeSwiper);
 
 new Vue({
   render: h => h(App)

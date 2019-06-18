@@ -25,17 +25,11 @@
 
         .works-block
           .works-pack
-            a.one-work(
-              v-for="work in filteredWorks",
+            WorkItem(
+              v-for="(work, index) in filteredWorks",
               :key="work.slug",
-              @click="toWork(work)"
+              :work="work"
             )
-              img.one-work__img(:src="'https://radar-online.ru'+work.cover.path", :alt="work.title")
-              div
-                .one-work__description
-                  .desc-text
-                    .desc-text__title {{ work.title }}
-                    p.desc-text__text {{ work.prescription }}
     .block
       .content
         Contactform.home-form
@@ -44,6 +38,7 @@
 <script>
 import api from "../../api/";
 import Contactform from "../Contactform.vue";
+import WorkItem from "../WorkItem.vue";
 
 export default {
   name: "AllWorks",
@@ -51,7 +46,8 @@ export default {
     // msg: String
   },
   components: {
-    Contactform
+    Contactform,
+    WorkItem
   },
   data() {
     return {
@@ -135,12 +131,12 @@ export default {
       this.filterId = null;
       this.$router.push({ path: "/all-works" });
     },
-    toWork(work) {
-      this.$router.push({
-        path: "/" +work.slug,
-      });
-      document.title = 'Radar Advertising, ' +work.title;
-    }
+    // toWork(work) {
+    //   this.$router.push({
+    //     path: "/" +work.slug,
+    //   });
+    //   document.title = 'Radar Advertising, ' +work.title;
+    // }
   },
   mounted() {
     this.$nextTick(() => {

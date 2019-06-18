@@ -53,18 +53,13 @@
 
         .works-block
           .works-pack
-            a.one-work(
+            WorkItem(
               v-for="(work, index) in filteredWorks",
               v-if="index <= 23",
-              @click="toWork(work)",
-              :key="work.slug"
+              :key="work.slug",
+              :work="work"
             )
-              img.one-work__img(:src="'https://radar-online.ru'+work.cover.path", :alt="work.title")
-              .one-work__description
-                .desc-text
-                  .desc-text__title {{ work.title }}
-                  p.desc-text__text {{ work.prescription }}
-          
+
     .block
       .content
         Contactform.home-form
@@ -77,11 +72,12 @@
           :options="demoSwiperOption",
           ref="demoSwiper",
         )
-          swiper-slide(
+          swiper-slide.swiper-lazy(
             v-for="client in content.clients",
             v-if="client.isFeatured",
             :key="client.id"
           )
+            .swiper-lazy-preloader
             img(:src="'https://radar-online.ru'+client.logo.path", :alt="client.title")
 
     .block
@@ -134,13 +130,15 @@
 import api from "../../api/";
 import Contactform from "../Contactform.vue";
 import Map from "../Map.vue";
+import WorkItem from "../WorkItem.vue";
 
 export default {
   name: "Home",
   props: {},
   components: {
     Contactform,
-    Map
+    Map,
+    WorkItem
   },
   data() {
     return {
@@ -184,7 +182,9 @@ export default {
             slidesPerView: 6,
             spaceBetween: 30
           }
-        }
+        },
+        preloadImages: false,
+        lazy: true
       },
       content: {
         works: [],
@@ -235,12 +235,12 @@ export default {
     changeZoomOut() {
       this.$refs.mapRef.zoomOut();
     },
-    toWork(work) {
-      this.$router.push({
-        path: "/" + work.slug
-      });
-      document.title = "Radar Advertising, " + work.title;
-    },
+    // toWork(work) {
+    //   this.$router.push({
+    //     path: "/" + work.slug
+    //   });
+    //   document.title = "Radar Advertising, " + work.title;
+    // },
     defineCity() {
       var self = this;
       if ("geolocation" in navigator) {
