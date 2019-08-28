@@ -28,6 +28,12 @@
       )
     router-view
     Footer
+    iframe(
+      src="https://www.googletagmanager.com/ns.html?id=GTM-5FTXJ2B"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+    )
 </template>
 
 <script>
@@ -40,10 +46,11 @@ import Logo from "./components/Logo.vue";
 import Home from "./components/Pages/Home.vue";
 import AllWorks from "./components/Pages/AllWorks.vue";
 import About from "./components/Pages/About.vue";
-import Team from "./components/Pages/Team.vue";
+// import Team from "./components/Pages/Team.vue";
 import Clients from "./components/Pages/Clients.vue";
 import Contacts from "./components/Pages/Contacts.vue";
 import Work from "./components/Pages/Work.vue";
+import Services from "./components/Pages/Services.vue";
 
 const router = new VueRouter({
   mode: "history",
@@ -126,32 +133,32 @@ const router = new VueRouter({
         ]
       }
     },
-    {
-      path: "/team",
-      component: Team,
-      name: "Team",
-      meta: {
-        title: "Radar Advertising, Команда",
-        metaTags: [
-          {
-            name: "description",
-            content: "Наша команда."
-          },
-          {
-            property: "og:description",
-            content: "Наша команда."
-          },
-          {
-            name: "og:title",
-            content: "Radar Advertising, Команда"
-          },
-          {
-            name: "og:url",
-            content: "https://radar-online.ru/team"
-          }
-        ]
-      }
-    },
+    // {
+    //   path: "/team",
+    //   component: Team,
+    //   name: "Team",
+    //   meta: {
+    //     title: "Radar Advertising, Команда",
+    //     metaTags: [
+    //       {
+    //         name: "description",
+    //         content: "Наша команда."
+    //       },
+    //       {
+    //         property: "og:description",
+    //         content: "Наша команда."
+    //       },
+    //       {
+    //         name: "og:title",
+    //         content: "Radar Advertising, Команда"
+    //       },
+    //       {
+    //         name: "og:url",
+    //         content: "https://radar-online.ru/team"
+    //       }
+    //     ]
+    //   }
+    // },
     {
       path: "/clients",
       component: Clients,
@@ -203,6 +210,34 @@ const router = new VueRouter({
           {
             name: "og:url",
             content: "https://radar-online.ru/contacts"
+          }
+        ]
+      }
+    },
+    {
+      path: "/services",
+      component: Services,
+      name: "Services",
+      meta: {
+        title: "Radar Advertising, Услуги",
+        metaTags: [
+          {
+            name: "description",
+            content:
+              "Коммуникационное агентство RADAR Advertising, направления работы"
+          },
+          {
+            property: "og:description",
+            content:
+              "Коммуникационное агентство RADAR Advertising, направления работы"
+          },
+          {
+            name: "og:title",
+            content: "Radar Advertising, Услуги"
+          },
+          {
+            name: "og:url",
+            content: "https://radar-online.ru/services"
           }
         ]
       }
@@ -305,6 +340,18 @@ export default {
         this.content.common = common;
       });
     });
+
+    // GTM
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-5FTXJ2B");
   },
   watch: {
     $route() {

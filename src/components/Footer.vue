@@ -59,9 +59,7 @@ export default {
   },
   data() {
     return {
-      content: {
-        common: ""
-      }
+      content: { common: "" }
     };
   },
   computed: {

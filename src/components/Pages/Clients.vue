@@ -9,10 +9,10 @@
               v-html="content.aboutClients.content"
             )
             .products__filter(
-              @click="toggleFilter",
+              @click="toggleFilterVisible",
               v-if="isMobile"
             ) По отраслям
-            nav.works-menu.products-menu(v-show="filterIsActive")
+            nav.works-menu.products-menu(v-show="filterIsVisible")
               ul.works-menu__list.products-menu__list
                 li.works-menu__item.products-menu__item(
                 ) 
@@ -30,18 +30,19 @@
                     :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
                   ) 
                     |{{ tag.title }}
-        .works-pack
+        .works-pack.works-pack--clients
           .products__img-wrapper.one-work(
             v-lazyload,
             v-for="client in filteredClients",
             v-if="client.color_logo.path",
-            :key="client.id"
+            :id="client.slug"
+            :key="client._id",
           )
             img.products__img(
               :data-url="'https://radar-online.ru'+client.color_logo.path",
               :alt="client.title",
               :class=" { 'products__img--color' : isActiveClient(client._id) }",
-              @click="isActiveClient(client._id) ? setClientFilter(client.slug, client._id) : null"
+              @click="isActiveClient(client._id) ? openClientWorks(client.slug, client._id) : null"
             )
 </template>
 
@@ -61,29 +62,31 @@ export default {
         clientsTags: [],
         works: []
       },
-      filterIsActive: true,
+      filterIsVisible: true,
       isReady: false,
       filterId: this.$route.query.filter
     };
   },
   computed: {
     filteredClients() {
-      if (!this.$route.query.filter) {
+      if (this.$route.query.filter && this.isReady) {
+        var currentTag = this.content.clientsTags.find(
+          tag => tag.slug === this.$route.query.filter
+        );
+        var filteredClients = this.content.clients.filter(client => {
+          return client.industry._id === currentTag._id;
+        });
+        return filteredClients;
+      } else {
         return this.content.clients;
       }
-      var currentTag = this.content.clientsTags.find(
-        tag => tag.slug === this.$route.query.filter
-      );
-      return this.content.clients.filter(
-        client => client.industry._id == currentTag._id
-      );
     }
   },
   methods: {
-    toggleFilter() {
-      this.filterIsActive = !this.filterIsActive;
+    toggleFilterVisible() {
+      this.filterIsVisible = !this.filterIsVisible;
     },
-    setClientFilter(slug, id) {
+    openClientWorks(slug, id) {
       var clientWorks = this.content.works.filter(
         work => work.client._id == id
       );
@@ -107,14 +110,15 @@ export default {
       this.$router.push({ path: "/clients" });
     },
     isActiveClient(id) {
-      return this.content.works.some(work => work.client._id === id);
+      return this.content.works.some(work => {
+        return work.client._id === id;
+      });
     }
   },
   mounted() {
     this.$nextTick(() => {
       api.getSingletonsByKey("aboutClients").then(aboutClients => {
         this.content.aboutClients = aboutClients;
-        this.isReady = true;
       });
 
       api.getCollectionByKey("clients").then(clients => {
@@ -123,13 +127,14 @@ export default {
 
       api.getCollectionByKey("clientsTags").then(clientsTags => {
         this.content.clientsTags = clientsTags;
+        this.isReady = true;
       });
 
       api.getCollectionByKey("works").then(works => {
         this.content.works = works;
       });
 
-      if (this.isMobile) this.filterIsActive = false;
+      if (this.isMobile) this.filterIsVisible = false;
     });
   }
 };

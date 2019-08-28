@@ -1,7 +1,7 @@
 body,
 html {
   width: 100%;
-  font-family: "ProximaNova-Regular";
+  font-family: "ProximaNova-Regular", Arial, sans-serif;
   font-weight: normal;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -312,7 +312,8 @@ ul {
   padding-bottom: 5px;
   margin: 0 10px 5px 0;
   cursor: pointer;
-  height: 20px;
+  height: 23px;
+  box-sizing: border-box;
 }
 
 .works-menu__link--active,
@@ -398,9 +399,14 @@ ul {
   padding: 15px 4px;
   justify-content: flex-start;
   margin: 0 7px;
+  box-sizing: border-box;
 
   @media screen and (min-width: 680px) {
     margin: 0 15px;
+  }
+
+  &--clients {
+    width: 100%;
   }
 }
 

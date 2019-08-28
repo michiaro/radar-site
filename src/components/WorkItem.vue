@@ -44,8 +44,8 @@ export default {
     display: block;
 
     @media screen and (min-width: 922px) {
-      width: 290px;
-      height: 350px;
+      // width: 290px;
+      // height: 350px;
       // background: grey;
     }
   }

@@ -1,10 +1,4 @@
 export default {
-  name: "WorkItem",
-  props: {
-    work: {
-      type: Object
-    }
-  },
   inserted: el => {
     function loadImage() {
       const imageElement = Array.from(el.children).find(el => el.nodeName === "IMG");

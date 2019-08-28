@@ -26,7 +26,7 @@ Vue.use(VueAwesomeSwiper);
 
 Vue.directive("lazyload", LazyLoadDirective);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 new Vue({
   render: h => h(App)
