@@ -22,6 +22,7 @@
           .works-pack
             WorkItem(
               v-for="(work, index) in filteredWorks",
+              v-if="work.isPublished"
               :key="work.slug",
               :work="work"
             )
