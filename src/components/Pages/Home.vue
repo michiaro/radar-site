@@ -50,7 +50,6 @@
                   :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
                 ) 
                   |{{ tag.title }}
-
         .works-block
           .works-pack
             WorkItem(
@@ -59,11 +58,9 @@
               :key="work.slug",
               :work="work"
             )
-
     .block
       .content
         Contactform.home-form
-
     .block
       .content.content-4
         .devider.bm
@@ -79,7 +76,6 @@
           )
             .swiper-lazy-preloader
             img(:src="'https://radar-online.ru'+client.logo.path", :alt="client.title")
-
     .block
       .block.big-map
         .big-map__head.content.content-5

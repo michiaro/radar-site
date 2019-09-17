@@ -11,7 +11,7 @@
                 v-if="tag.inServices",
                 @click="setFilterId(tag.slug)",
               )
-                img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
+                //- img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
                 span.works-menu__link.services-menu__link(
                   :key="tag.slug",
                   :class=" { 'services-menu__link--active' : tag.slug == filterId} ",
@@ -115,7 +115,7 @@ export default {
 
   &__list {
     @media screen and (min-width: 1200px) {
-      justify-content: space-between;
+      // justify-content: space-between;  uncomment to unable icons correct
       margin: 0;
     }
   }
@@ -179,6 +179,7 @@ export default {
 
     @media screen and (min-width: 1200px) {
       margin: 0;
+      margin-right: 20px; //remove to unable icons correct
     }
   }
 }
