@@ -11,7 +11,7 @@
               for="fullname"
             )
               p.input-label.star Ваше имя
-            input.small-input(
+            input.small-input.ym-record-keys(
               v-model="form.data[0].data",
               name="fullname",
               type="text",
@@ -23,7 +23,7 @@
               for="phone"
             )
               p.input-label Телефон
-            input.small-input(
+            input.small-input.ym-record-keys(
               v-model="form.data[1].data",
               id="phone",
               name="phone",
@@ -46,7 +46,7 @@
             for="message"
           )
             p.input-label.star Сообщение
-          textarea.contacts-textarea(
+          textarea.contacts-textarea.ym-record-keys(
             v-model="form.data[3].data",
             name="message",
             id="message",
@@ -103,11 +103,15 @@ export default {
         if (result) {
           form.data.forEach(function(field) {
             field.data = "";
-          })
+          });
           form.isSent = true;
           setTimeout(function() {
             form.isSent = false;
           }, 4000);
+        }
+        if (yaCounter1653081) {
+          yaCounter1653081.reachGoal("order-submit");
+          return true;
         }
       });
     },

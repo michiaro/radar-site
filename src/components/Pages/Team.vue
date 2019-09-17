@@ -1,12 +1,12 @@
 <template lang="pug">
   .wrapper
     .block
-      .content.page-wrapper
+      .content
         .devider
           h1.common-title Команда
-          .team-text(
-            v-html="content.common.teamText"
-          )
+          //- .team-text(
+          //-   v-html="content.common.teamText"
+          //- )
         .all-team
           .all-team__img-wrapper(
             v-for="teammate in content.team",
@@ -55,7 +55,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.devider {
+  margin-bottom: 10px;
+}
+
 .team-text {
   color: #292e35;
   font-size: 16px;
@@ -88,7 +92,7 @@ export default {
   }
 
   @media screen and (min-width: 1200px) {
-    margin: 80px -8px 0;
+    margin: 10px -8px 0;
   }
 
   &__img {

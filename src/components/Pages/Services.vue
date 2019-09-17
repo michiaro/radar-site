@@ -111,10 +111,12 @@ export default {
 .services-menu {
   display: block;
   width: 100%;
+  margin: 0;
 
   &__list {
     @media screen and (min-width: 1200px) {
       justify-content: space-between;
+      margin: 0;
     }
   }
 
@@ -123,8 +125,8 @@ export default {
 
     @media screen and (min-width: 1200px) {
       display: block;
-      width: 150px;
-      height: 130px;
+      width: 160px;
+      height: auto;
     }
   }
 
@@ -173,6 +175,10 @@ export default {
           )
           bottom left/100% 1px no-repeat;
       }
+    }
+
+    @media screen and (min-width: 1200px) {
+      margin: 0;
     }
   }
 }

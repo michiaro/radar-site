@@ -27,6 +27,7 @@
           .works-pack
             WorkItem(
               v-for="(work, index) in filteredWorks",
+              v-if="work.isPublished"
               :key="work.slug",
               :work="work"
             )
@@ -131,12 +132,6 @@ export default {
       this.filterId = null;
       this.$router.push({ path: "/all-works" });
     },
-    // toWork(work) {
-    //   this.$router.push({
-    //     path: "/" +work.slug,
-    //   });
-    //   document.title = 'Radar Advertising, ' +work.title;
-    // }
   },
   mounted() {
     this.$nextTick(() => {
