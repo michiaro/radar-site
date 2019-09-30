@@ -51,6 +51,7 @@ import Clients from "./components/Pages/Clients.vue";
 import Contacts from "./components/Pages/Contacts.vue";
 import Work from "./components/Pages/Work.vue";
 import Services from "./components/Pages/Services.vue";
+import Policy from "./components/Pages/Policy.vue";
 
 const router = new VueRouter({
   mode: "history",
@@ -238,6 +239,34 @@ const router = new VueRouter({
           {
             name: "og:url",
             content: "https://radar-online.ru/services"
+          }
+        ]
+      }
+    },
+    {
+      path: "/policy",
+      component: Policy,
+      name: "Policy",
+      meta: {
+        title: "Radar Advertising, Политика конфиденциальности",
+        metaTags: [
+          {
+            name: "description",
+            content:
+              "Заботимся о ваших персональных данных."
+          },
+          {
+            property: "og:description",
+            content:
+              "Заботимся о ваших персональных данных."
+          },
+          {
+            name: "og:title",
+            content: "Radar Advertising, Политика конфиденциальности"
+          },
+          {
+            name: "og:url",
+            content: "https://radar-online.ru/policy"
           }
         ]
       }
