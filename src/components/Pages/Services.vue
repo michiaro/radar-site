@@ -11,13 +11,13 @@
                 v-if="tag.inServices",
                 @click="setFilterId(tag.slug)",
               )
-                //- img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
+                img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
                 span.works-menu__link.services-menu__link(
                   :key="tag.slug",
                   :class=" { 'services-menu__link--active' : tag.slug == filterId} ",
                 ) 
                   |{{ tag.title }}
-        Service(:filterId = "filterId")
+        Service(:filterId = "filterId", id="content")
         .works-block
           .works-pack
             WorkItem(
@@ -39,9 +39,6 @@ import Service from "../Service.vue";
 
 export default {
   name: "Services",
-  props: {
-    // msg: String
-  },
   components: {
     Contactform,
     WorkItem,
@@ -78,7 +75,11 @@ export default {
   methods: {
     setFilterId(slug) {
       this.filterId = slug;
-      this.$router.push({ path: "/services", query: { filter: slug } });
+      this.$router.push({
+        path: "/services",
+        query: { filter: slug },
+        hash: "content"
+      });
     }
   },
   mounted() {
@@ -116,16 +117,13 @@ export default {
 
   &__list {
     @media screen and (min-width: 1200px) {
-      // justify-content: space-between;  uncomment to unable icons correct
+      justify-content: space-between; //uncomment to unable icons correct
       margin: 0;
     }
   }
 
   &__icon {
-    display: none;
-
     @media screen and (min-width: 1200px) {
-      display: block;
       width: 160px;
       height: auto;
     }
@@ -165,6 +163,7 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    width: 30%;
 
     &:hover {
       .services-menu__link {
@@ -178,9 +177,12 @@ export default {
       }
     }
 
+    @media screen and (min-width: 680px) {
+      width: auto;
+    }
     @media screen and (min-width: 1200px) {
       margin: 0;
-      margin-right: 20px; //remove to unable icons correct
+      // margin-right: 20px; //remove to unable icons correct
     }
   }
 }

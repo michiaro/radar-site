@@ -55,6 +55,14 @@ import Policy from "./components/Pages/Policy.vue";
 
 const router = new VueRouter({
   mode: "history",
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash,
+        offset: { x: 0, y: 100 }
+      };
+    }
+  },
   routes: [
     {
       path: "/",
@@ -252,13 +260,11 @@ const router = new VueRouter({
         metaTags: [
           {
             name: "description",
-            content:
-              "Заботимся о ваших персональных данных."
+            content: "Заботимся о ваших персональных данных."
           },
           {
             property: "og:description",
-            content:
-              "Заботимся о ваших персональных данных."
+            content: "Заботимся о ваших персональных данных."
           },
           {
             name: "og:title",
