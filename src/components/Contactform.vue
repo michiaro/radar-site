@@ -54,7 +54,10 @@
             required
           )
         .contacts-submit
-          span.contacts-submit__tip * — поля, обязательные для заполнения
+          .contacts-submit__tips
+            span.contacts-submit__tip * — поля, обязательные для заполнения
+            //- .contacts-submit__tip.contacts-submit__tip--last Заполняя форму, вы даете согласие 
+            //-   a.text-link(href="/policy") на обработку персональных данных
           button.contacts-submit__button.submit_btn(
             type="submit",
             ) ОТПРАВИТЬ
@@ -67,9 +70,6 @@
 <script>
 export default {
   name: "Contactform",
-  props: {
-    // msg: String
-  },
   data() {
     return {
       form: {
@@ -254,6 +254,10 @@ textarea {
 .contacts-submit__tip {
   color: #999;
   font-size: 12px;
+
+  &--last {
+    margin-top: 1em;
+  }
 }
 
 .contacts-submit__button {
@@ -355,6 +359,16 @@ textarea {
 
   .contacts-form__left-text {
     width: 100%;
+  }
+}
+
+.text-link {
+  // color: #e30613;
+  color: #999;
+
+  &:hover {
+    color: #292e35;
+    // text-decoration: underline;
   }
 }
 </style>

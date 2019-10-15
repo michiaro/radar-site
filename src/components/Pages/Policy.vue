@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content.page-wrapper()
+  .content.page-wrapper
     .content-page(v-html="content.policyText")
 </template>
 
@@ -54,10 +54,22 @@ export default {
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 36px;
+
+    @media screen and (min-width: 680px) {
+      font-size: 36px;
+    }
   }
   h2 {
     font-size: 24px;
+  }
+
+  ol {
+    margin-bottom: 2em;
+  }
+
+  li {
+    margin-bottom: 0.5em;
   }
 }
 </style>
