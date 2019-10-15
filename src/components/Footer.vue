@@ -54,9 +54,6 @@ import api from "../api/";
 
 export default {
   name: "Footer",
-  props: {
-    // msg: String
-  },
   data() {
     return {
       content: { common: "" }
@@ -145,10 +142,10 @@ export default {
 
 .footer-link {
   margin-right: 100px;
-}
-
-.footer-link:hover {
-  text-decoration: underline;
+  &:hover {
+    // text-decoration: underline;
+    color: #292e35;
+  }
 }
 
 .sn-img {
@@ -182,11 +179,6 @@ export default {
   }
 }
 
-// @media screen and (min-width: 922px) {
-//   .page-footer__content {
-//     flex-wrap: row nowrap;
-//   }
-// }
 @media screen and (min-width: 1200px) {
   .page-footer__content {
     padding: 30px 0;
