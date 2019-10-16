@@ -95,10 +95,6 @@ export default {
       right: 0;
       background: transparent;
     }
-
-    img {
-      filter: invert(100%);
-    }
   }
 }
 
@@ -143,7 +139,6 @@ export default {
 .footer-link {
   margin-right: 100px;
   &:hover {
-    // text-decoration: underline;
     color: #292e35;
   }
 }

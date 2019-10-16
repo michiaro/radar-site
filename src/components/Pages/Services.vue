@@ -11,7 +11,7 @@
                 v-if="tag.inServices",
                 @click="setFilterId(tag.slug)",
               )
-                //- img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
+                img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
                 span.works-menu__link.services-menu__link(
                   :key="tag.slug",
                   :class=" { 'services-menu__link--active' : tag.slug == filterId} ",
@@ -120,7 +120,7 @@ export default {
       margin: 0;
     }
     @media screen and (min-width: 1200px) {
-      // justify-content: space-between; //uncomment to unable icons correct
+      justify-content: space-between; //uncomment to unable icons correct
     }
   }
 
@@ -160,12 +160,12 @@ export default {
     }
   }
   &__item {
-    // display: flex;
-    // flex-flow: column nowrap;
-    // align-items: center;
-    // justify-content: center;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    // width: 30%;
+    width: 30%;
 
     &:hover {
       .services-menu__link {
@@ -180,10 +180,10 @@ export default {
     }
 
     @media screen and (min-width: 680px) {
-      // width: auto;
+      width: auto;
     }
     @media screen and (min-width: 680px) {
-      // margin: 0;
+      margin: 0;
       // margin-right: 20px; //remove to unable icons correct
     }
   }
