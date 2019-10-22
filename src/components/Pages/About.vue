@@ -6,12 +6,6 @@
       .content.about-content.page-wrapper
         h1.about-content__title {{ this.content.aboutUs.title }}
         .about-content__block
-          p.about-content__text-block(
-            v-html="this.content.aboutUs.column1"
-          )
-          p.about-content__text-block(
-            v-html="this.content.aboutUs.column2"
-          )
           .about-content__text-block.abkr
             a.abkr__link(target="_blank", href="http://russianbranding.ru/")
               svg.abkr__img(xmlns="http://www.w3.org/2000/svg" width="210" height="104" fill="none" viewBox="0 0 210 104")
@@ -21,12 +15,18 @@
               svg.abkr__img(xmlns="http://www.w3.org/2000/svg" width="206" height="138" fill="none" viewBox="0 0 206 138")
                 path(fill="#292e35" d="M134.4 33.81h-11.64l5.83-13.42 5.81 13.42zM132.76.7l-.03-.08h-7.78l-21.99 47.85-.06.13-.01 6.6h10.6l4.37-10.08h21.43l4.36 10.08h11.12v-6.55L132.76.7zM84.98 27.64L99.94 7.5l.03-.03V.62H89.22L73.63 22.19h-5.87V.62H54.59V55.2h13.17V34.17h5.99l15.97 20.98.04.05h11.03v-6.67L84.98 27.64zM20.43 33.81l5.82-13.42 5.82 13.42H20.43zM30.43.7L30.4.62h-7.78l-22 47.85-.05.13-.02 6.6h10.61l4.37-10.08h21.43l4.36 10.08h11.12v-6.55L30.43.7zM170.6 11.93h12.79c3.68 0 6.9 3.42 6.9 7.32 0 4.05-3.28 7.34-7.3 7.34H170.6V11.93zM184.17.62h-26.74V55.2h13.17V37.89h14c9.08 0 18.78-4.89 18.78-18.64S193.03.62 184.17.62zM8.84 90.43l-2.28-5.98-2.31 5.98h4.59zM.97 94.68l4.81-12.36h1.61l4.82 12.36v.53h-1.58l-1.29-3.42H3.77l-1.32 3.42H.97v-.53zM13.98 90.85v-4.17c0-2.93 1.83-4.64 4.94-4.64 2.49 0 4.7 1.38 4.7 4.38v.19h-1.6v-.19c0-2-1.63-2.9-3.12-2.9-2.17 0-3.31 1.14-3.31 3.05v4.39c0 1.91 1.14 3.06 3.31 3.06 1.49 0 3.12-.91 3.12-2.91v-.19h1.6v.19c0 3-2.21 4.38-4.7 4.38-3.11 0-4.94-1.71-4.94-4.64zM26.12 90.85v-4.17c0-2.93 1.83-4.64 4.94-4.64 2.49 0 4.7 1.38 4.7 4.38v.19h-1.6v-.19c0-2-1.62-2.9-3.12-2.9-2.17 0-3.31 1.14-3.31 3.05v4.39c0 1.91 1.14 3.06 3.31 3.06 1.5 0 3.12-.91 3.12-2.91v-.19h1.6v.19c0 3-2.21 4.38-4.7 4.38-3.11 0-4.94-1.71-4.94-4.64zM46.58 90.94v-4.35c0-1.8-1.2-3.07-3.36-3.07-2.17 0-3.35 1.27-3.35 3.07v4.35c0 1.8 1.18 3.08 3.35 3.08 2.16 0 3.36-1.28 3.36-3.08zm-8.31-.07v-4.2c0-2.94 1.93-4.63 4.95-4.63 3.03 0 4.96 1.69 4.96 4.63v4.2c0 2.92-1.93 4.62-4.96 4.62-3.02 0-4.95-1.7-4.95-4.62zM60.62 95.21h-9.38V82.32h1.6v11.47h6.06V82.32h1.61v11.47h1.6v4.06h-1.49v-2.64zM64.52 82.32h1.61v10.11l6.46-10.11h1.48v12.89h-1.61V85.1L66 95.21h-1.48V82.32zM84.07 90.43l-2.28-5.98-2.31 5.98h4.59zm-7.86 4.25l4.8-12.36h1.61l4.82 12.36v.53h-1.58l-1.29-3.42H79l-1.32 3.42h-1.47v-.53zM98.96 95.21h-9.38V82.32h1.6v11.47h6.07V82.32h1.6v11.47h1.6v4.06h-1.49v-2.64zM102.87 82.32h1.6v10.11l6.47-10.11h1.47v12.89h-1.6V85.1l-6.47 10.11h-1.47V82.32zM122.67 88.77v-5.04h-3.33c-1.51 0-2.38.87-2.38 2.53 0 1.69.87 2.51 2.38 2.51h3.33zm-7.61 5.91l2.9-4.68c-1.62-.41-2.64-1.68-2.64-3.76 0-2.43 1.31-3.92 3.71-3.92h5.25v12.89h-1.61v-5.03h-3.05l-3.03 5.03h-1.53v-.53zM2.26 103.18h1.61v5.71h2.06l3.74-5.71h1.49v.53l-3.83 5.81 4.07 6.02v.53H9.82l-3.87-5.76H3.87v5.76H2.26v-12.89zM21.3 111.8v-4.35c0-1.8-1.2-3.08-3.36-3.08-2.17 0-3.35 1.28-3.35 3.08v4.35c0 1.8 1.18 3.08 3.35 3.08 2.16 0 3.36-1.28 3.36-3.08zm-8.31-.07v-4.21c0-2.93 1.93-4.62 4.95-4.62 3.03 0 4.96 1.69 4.96 4.62v4.21c0 2.92-1.93 4.62-4.96 4.62-3.02 0-4.95-1.7-4.95-4.62zM25.96 103.18h1.55l4.16 6.54 4.16-6.54h1.5v12.89h-1.55v-10.06l-3.61 5.68h-1.05l-3.61-5.66v10.04h-1.55v-12.89zM40.75 103.18h1.55l4.17 6.54 4.16-6.54h1.49v12.89h-1.55v-10.06l-3.61 5.68h-1.05l-3.61-5.66v10.04h-1.55v-12.89zM58.63 112.59l-4.55-8.88v-.53h1.49l3.87 7.62 3.35-7.62h1.42v.53l-5.47 12.36h-1.53v-.53l1.42-2.95zM66.16 103.18h1.61v5.71h6.28v-5.71h1.6v12.89h-1.6v-5.76h-6.28v5.76h-1.61v-12.89zM79.08 103.18h1.6v10.11l6.47-10.11h1.47v12.89h-1.6v-10.11l-6.47 10.11h-1.47v-12.89zM92.05 103.18h1.6v5.71h2.07l3.74-5.71h1.49v.53l-3.83 5.81 4.07 6.02v.53h-1.58l-3.87-5.76h-2.09v5.76h-1.6v-12.89zM109.91 111.28l-2.29-5.97-2.3 5.97h4.59zm-7.87 4.26l4.81-12.36h1.6l4.83 12.36v.53h-1.59l-1.29-3.42h-5.56l-1.33 3.42h-1.47v-.53zM124.79 116.07h-9.37v-12.89h1.6v11.47h6.06v-11.47h1.6v11.47h1.61v4.06h-1.5v-2.64zM128.7 103.18h1.6v10.11l6.47-10.11h1.47v12.89h-1.6v-10.11l-6.47 10.11h-1.47v-12.89zM149.61 111.8v-4.35c0-1.8-1.19-3.08-3.35-3.08-2.17 0-3.35 1.28-3.35 3.08v4.35c0 1.8 1.18 3.08 3.35 3.08 2.16 0 3.35-1.28 3.35-3.08zm-8.31-.07v-4.21c0-2.93 1.94-4.62 4.96-4.62s4.96 1.69 4.96 4.62v4.21c0 2.92-1.94 4.62-4.96 4.62s-4.96-1.7-4.96-4.62zM154.27 103.18h1.61v5.71h6.28v-5.71h1.6v12.89h-1.6v-5.76h-6.28v5.76h-1.61v-12.89zM167.19 103.18h1.6v5.71h6.29v-5.71h1.6v12.89h-1.6v-5.76h-6.29v5.76h-1.6v-12.89zM191.18 103.18h1.6v12.89h-1.6v-12.89zm-5.91 11.47c1.3 0 2.15-.88 2.15-2.46 0-1.55-.85-2.45-2.15-2.45h-3.56v4.91h3.56zm-5.16-11.47h1.6v5.14h3.74c2.28 0 3.61 1.51 3.61 3.87 0 2.37-1.33 3.88-3.61 3.88h-5.34v-12.89zM195.11 115.54l4.18-6.08-3.96-5.75v-.53h1.62l3.33 5.03 3.45-5.03h1.51v.53l-3.98 5.75 4.22 6.08v.53h-1.62l-3.61-5.34-3.62 5.34h-1.52v-.53zM8.84 132.14l-2.28-5.97-2.31 5.97h4.59zM.97 136.4l4.81-12.36h1.61l4.82 12.36v.53h-1.58l-1.29-3.42H3.77l-1.32 3.42H.97v-.53zM14.35 124.04h7.87v1.42h-6.27v11.47h-1.6v-12.89zM23.96 124.04H32v1.42h-6.43v4.27h5.56v1.42h-5.56v4.37h6.45v1.41h-8.06v-12.89zM34.73 124.04h1.6v5.71h6.28v-5.71h1.6v12.89h-1.6v-5.76h-6.28v5.76h-1.6v-12.89zM57.15 132.57v-4.17c0-2.93 1.82-4.64 4.93-4.64 2.49 0 4.7 1.38 4.7 4.39v.18h-1.6v-.18c0-2.01-1.62-2.92-3.11-2.92-2.18 0-3.32 1.15-3.32 3.06v4.39c0 1.91 1.14 3.06 3.32 3.06 1.49 0 3.11-.91 3.11-2.91v-.19h1.6v.19c0 3-2.21 4.38-4.7 4.38-3.11 0-4.93-1.71-4.93-4.64zM50.27 125.46h-3.93v-1.42h9.44v1.42h-3.91v11.47h-1.6v-11.47zM72.29 125.46h-3.92v-1.42h9.43v1.42h-3.9v11.47h-1.61v-11.47zM85.78 135.52c1.42 0 2.17-.8 2.17-2.2 0-1.42-.75-2.23-2.17-2.23h-4v4.43h4zm-.43-5.79c1.37 0 2.1-.79 2.1-2.14 0-1.36-.73-2.13-2.13-2.13h-3.54v4.27h3.57zm-5.17-5.69h5.41c2.16 0 3.47 1.16 3.47 3.39 0 1.53-.68 2.37-1.68 2.8 1.2.35 2.17 1.23 2.17 3.18 0 2.29-1.32 3.52-3.5 3.52h-5.87v-12.89zM105.75 130.37c1.29 0 2.2-.86 2.2-2.45 0-1.6-.91-2.46-2.2-2.46h-3.52v4.91h3.52zm-5.12-6.33h5.4c2.23 0 3.56 1.51 3.56 3.88 0 2.36-1.33 3.87-3.56 3.87h-3.8v5.14h-1.6v-12.89zM120.13 132.66v-4.35c0-1.8-1.2-3.08-3.36-3.08-2.17 0-3.35 1.28-3.35 3.08v4.35c0 1.81 1.18 3.08 3.35 3.08 2.16 0 3.36-1.27 3.36-3.08zm-8.31-.07v-4.21c0-2.92 1.93-4.62 4.95-4.62 3.02 0 4.96 1.7 4.96 4.62v4.21c0 2.93-1.94 4.62-4.96 4.62s-4.95-1.69-4.95-4.62zM124.42 132.57v-4.17c0-2.93 1.82-4.64 4.94-4.64 2.48 0 4.69 1.38 4.69 4.39v.18h-1.6v-.18c0-2.01-1.62-2.92-3.11-2.92-2.18 0-3.32 1.15-3.32 3.06v4.39c0 1.91 1.14 3.06 3.32 3.06 1.49 0 3.11-.91 3.11-2.91v-.19h1.6v.19c0 3-2.21 4.38-4.69 4.38-3.12 0-4.94-1.71-4.94-4.64zM136.56 132.57v-4.17c0-2.93 1.83-4.64 4.94-4.64 2.49 0 4.7 1.38 4.7 4.39v.18h-1.61v-.18c0-2.01-1.62-2.92-3.11-2.92-2.17 0-3.32 1.15-3.32 3.06v4.39c0 1.91 1.15 3.06 3.32 3.06 1.49 0 3.11-.91 3.11-2.91v-.19h1.61v.19c0 3-2.21 4.38-4.7 4.38-3.11 0-4.94-1.71-4.94-4.64zM149.07 124.04h1.61v10.11l6.46-10.11h1.48v12.89h-1.61v-10.11l-6.46 10.11h-1.48v-12.89zM162.04 124.04h1.61v10.11l6.46-10.11h1.48v12.89h-1.6v-10.11l-6.47 10.11h-1.48v-12.89z")
             .abkr__text Наше агентство входит в состав Ассоциации Брендинговых Компаний России и Ассоциации Коммуникационных Агентств России.
+          p.about-content__text-block(
+            v-html="this.content.aboutUs.column1"
+          )
+          p.about-content__text-block(
+            v-html="this.content.aboutUs.column2"
+          )
         h2.common-title Команда
         swiper.about-content__swiper(
-          :options="teamSwiperOption",
           ref="teamSwiper",
+          :options="teamSwiperOption",
         )
-          swiper-slide.swiper-lazy(
+          swiper-slide(
             v-for="teammate in content.team",
             v-if="teammate.inTeam",
             :key="teammate.id",
@@ -38,14 +38,11 @@
             .about-content__teammate-info 
               .about-content__teammate-info--name {{ teammate.name }}
               .about-content__teammate-info--text {{ teammate.position }}
-            .swiper-lazy-preloader
+          .swiper-button-next.swiper-button-black(slot="button-prev")
+          .swiper-button-prev.swiper-button-black(slot="button-next")
         .swiper-scrollbar
 
         a.button.about-content__button(href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank") Стать частью нашей команды
-        br
-        br
-        br
-        br
     //- Team
 </template>
 
@@ -67,10 +64,10 @@ export default {
       isReady: false,
       teamSwiperOption: {
         slidesPerView: 5,
-        spaceBetween: 70,
+        // spaceBetween: 70,
         centeredSlides: true,
         preloadImages: false,
-        lazy: true,
+        lazy: false,
         scrollbar: {
           el: ".swiper-scrollbar",
           hide: false,
@@ -78,26 +75,47 @@ export default {
           dragSize: 20
         },
         breakpoints: {
-          // when window width is >= 320px
           680: {
             slidesPerView: 1
-            // spaceBetween: 20
           },
-          // when window width is >= 680px
           1200: {
-            slidesPerView: 3,
-            spaceBetween: 30
+            slidesPerView: 3
+            // spaceBetween: 20
           }
-          // when window width is >= 640px
-          // 1200: {
-          //   slidesPerView: 5,
-          //   spaceBetween: 70
-          // }
+        },
+        initialSlide: 12,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
         }
+        // on: {
+        //   init: function() {
+        //     this.slideTo(12);
+        //   }
+        // }
       }
     };
   },
-  methods: {},
+  // computed: {
+  //   centerSlide() {
+  //     let teamCount = 0;
+  //     this.content.team.forEach(teammate => {
+  //       if (teammate.inTeam) {
+  //         teamCount++;
+  //       }
+  //     });
+  //     return Math.floor(teamCount / 2);
+  //   }
+  // },
+  methods: {
+    shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       api.getSingletonsByKey("aboutUs").then(aboutUs => {
@@ -106,7 +124,7 @@ export default {
       });
 
       api.getCollectionByKey("team").then(team => {
-        this.content.team = team;
+        this.content.team = this.shuffleArray(team);
       });
     });
   }
@@ -119,6 +137,16 @@ export default {
   background-size: cover;
   background-position: center;
   background-image: linear-gradient(180deg, white 30%, white 30%, #e6e6e6 70%);
+
+  @media screen and (min-width: 1200px) {
+    padding-bottom: 4em;
+  }
+
+  p {
+    @media screen and (max-width: 1200px) {
+      margin-top: 0;
+    }
+  }
 }
 
 .about-content {
@@ -137,7 +165,12 @@ export default {
     }
     @media screen and (min-width: 1200px) {
       height: 285px;
-      padding: 0;
+      padding: 0 50px;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: 32%;
     }
   }
   .swiper-scrollbar {
@@ -168,6 +201,14 @@ export default {
     }
   }
 
+  .swiper-button-black {
+    opacity: 0.3;
+    display: block !important;
+  }
+  .swiper-button-disabled {
+    opacity: 0.15;
+  }
+
   &__teammate-img {
   }
   &__teammate-info {
@@ -180,16 +221,20 @@ export default {
   }
 
   &__button {
-    margin: 40px 0;
+    margin: 40px 0 40px 8px;
 
     @media screen and (min-width: 680px) {
       margin-top: 25px;
+      margin-left: 15px;
+    }
+    @media screen and (min-width: 1200px) {
+      margin-left: 0;
     }
   }
 
   &__title {
     font-size: 28px;
-    margin: 10px 8px 20px;
+    margin: 10px 8px 35px;
     color: #e30613;
     font-family: "ProximaNova-Light";
     font-weight: normal;
@@ -243,13 +288,14 @@ export default {
   align-items: center;
 
   @media screen and (min-width: 1200px) {
-    margin-left: 30px;
+    margin-right: 50px;
     margin-top: -3px;
   }
 
   &__link {
     display: inline-block;
     width: 60%;
+    margin-top: 15px;
 
     &:last-of-type {
       width: 35%;
@@ -266,7 +312,7 @@ export default {
   }
   &__text {
     @media screen and (min-width: 1200px) {
-      margin-top: -20px;
+      margin-top: 25px;
     }
   }
 }
