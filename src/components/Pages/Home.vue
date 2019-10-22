@@ -275,11 +275,6 @@ export default {
         this.content.common = common;
       });
 
-      setTimeout(() => {
-        // eslint-disable-next-line
-        callibriInit();
-      }, 500);
-
       this.defineCity();
     });
   }

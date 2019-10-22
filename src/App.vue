@@ -15,8 +15,8 @@
           :class="{'is-active' : isMenuOpen}",
         )
           .hamburger-box
-        .page-header__tel(v-if="!isMobile")
-          a.contacts-moscow.contacts-ekb.contacts-tyumen.contacts-chel(href="tel:+74954142222") +7 (495) 414-22-22
+        //- .page-header__tel(v-if="!isMobile")
+        //-   a.contacts-moscow.contacts-ekb.contacts-tyumen.contacts-chel(href="tel:+74954142222") +7 (495) 414-22-22
         Navigation(
           v-if="!isMobile"
         )
