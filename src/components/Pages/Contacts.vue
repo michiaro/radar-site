@@ -25,13 +25,13 @@
             .contacts(
               :class="{ 'contact-active' : isChelly }"
             )
-              a.chelly_phone(:href="content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
+              a.chelly_phone(:href="'tel:' +content.locations.chelly_phonelink") {{ content.locations.chelly_phone }}
               br
               a(:href="'mailto:'+content.locations.chelly_email") {{ content.locations.chelly_email }}
             .contacts(
               :class="{ 'contact-active' : isMoscow }"
             )
-              a.moscow_phone(:href="content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
+              a.moscow_phone(:href="'tel:' +content.locations.moscow_phonelink") {{ content.locations.moscow_phone }}
               br
               a(:href="'mailto:'+content.locations.moscow_email") {{ content.locations.moscow_email }}
           ul.zoom
