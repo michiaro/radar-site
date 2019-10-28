@@ -216,7 +216,7 @@ export default {
 
       for (var i = 0; i < myWorks.length - 1; i += 1) {
         if (myWorks[i].slug == workSlug) {
-          return i + 1;
+          return myWorks[i + 1].isPublished ? i + 1 : i + 2;
         }
       }
       return -1;
