@@ -63,7 +63,8 @@ export default {
       },
       isReady: false,
       teamSwiperOption: {
-        slidesPerView: 3,
+        slidesPerView: 5,
+        spaceBetween: 25,
         // spaceBetween: 70,
         centeredSlides: true,
         preloadImages: false,
@@ -80,7 +81,6 @@ export default {
           },
           1200: {
             slidesPerView: 3
-            // spaceBetween: 20
           }
         },
         initialSlide: 12,
@@ -187,26 +187,33 @@ export default {
   .swiper-slide {
     opacity: 0.35;
     text-align: center;
+    margin-top: 15px;
 
     img {
       width: 100%;
-      transform: scale(0.9);
+      transform: scale(1);
       transition: 0.2s ease-in-out;
 
-      @media screen and (min-width: 1200px) {
-        width: 400px;
-      }
+      // @media screen and (min-width: 1200px) {
+      //   width: 400px;
+      // }
     }
   }
   .swiper-slide-prev {
-    img {
-      transform-origin: left;
+    @media screen and (min-width: 1200px) {
+      margin-right: 35px !important;
     }
+    // img {
+    // transform-origin: left;
+    // }
   }
   .swiper-slide-next {
-    img {
-      transform-origin: right;
+    @media screen and (min-width: 1200px) {
+      margin-left: 10px;
     }
+    // img {
+    // transform-origin: right;
+    // }
   }
   .swiper-slide-prev,
   .swiper-slide-next {
@@ -216,7 +223,7 @@ export default {
     opacity: 1;
 
     img {
-      transform: scale(1);
+      transform: scale(1.1);
     }
 
     #{$block}__teammate-info {
@@ -225,7 +232,7 @@ export default {
   }
 
   .swiper-wrapper {
-    align-items: baseline;
+    align-items: center;
   }
   .swiper-button-black {
     opacity: 0.3;
@@ -244,6 +251,7 @@ export default {
     line-height: 1.2;
     margin-top: 17px;
     transition: 0.2s ease-in-out;
+    height: 32px;
   }
 
   &__button {
