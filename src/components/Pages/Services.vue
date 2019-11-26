@@ -1,7 +1,32 @@
 <template lang="pug">
   .wrapper(v-if="worksIsReady && tagsIsReady")
     .block
-      .content.page-wrapper
+      swiper(
+        :options="swiperOption",
+        ref="fullScreenSwiper",
+      )
+        swiper-slide.item.slide.swiper-lazy(
+          v-for="work in content.works",
+          v-if="work.isFeatured",
+          :key="work.id",
+          :style="{'backgroundImage': 'url(https://radar-online.ru' +work.header.path+')'}"
+        )
+          router-link.slider__link(:to="'/' + work.slug")
+            .slider-content
+              .slider-content__title(
+                :class=" { 'dark' : work.isInverse }"
+              ) {{ work.title }}
+              .slider-content__text(
+                :class=" { 'dark' : work.isInverse }"
+              ) {{ work.prescription }}
+          .swiper-lazy-preloader
+        .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets(
+          slot="pagination",
+        )
+        .swiper-button-next.swiper-button-white(slot="button-prev")
+        .swiper-button-prev.swiper-button-white(slot="button-next")
+    .block
+      .content.content-2
         .devider.devider--services
           h1.common-title.services-title Услуги
           nav.works-menu.services-menu
@@ -17,7 +42,9 @@
                   :class=" { 'services-menu__link--active' : tag.slug == filterId} ",
                 ) 
                   |{{ tag.title }}
+          div.services-about {{ this.content.aboutUs.title }}
         Service(:filterId = "filterId", id="content")
+        a.button.services__button(href="#contact-form") Оставить заявку
         .works-block
           .works-pack
             WorkItem(
@@ -28,7 +55,7 @@
             )
     .block
       .content
-        Contactform.home-form
+        Contactform.home-form#contact-form
 </template>
 
 <script>
@@ -50,11 +77,30 @@ export default {
         works: [],
         tags: [],
         clients: [],
-        team: []
+        team: [],
+        aboutUs: ""
       },
       filterId: this.$route.query.filter,
       worksIsReady: false,
-      tagsIsReady: false
+      tagsIsReady: false,
+      swiperOption: {
+        loop: true,
+        slidesPerView: 1,
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        preloadImages: false,
+        lazy: true
+      }
     };
   },
   computed: {
@@ -92,6 +138,10 @@ export default {
       api.getCollectionByKey("tags").then(tags => {
         this.content.tags = tags;
         this.tagsIsReady = true;
+      });
+
+      api.getSingletonsByKey("aboutUs").then(aboutUs => {
+        this.content.aboutUs = aboutUs;
       });
 
       if (!this.filterId) {
@@ -185,6 +235,44 @@ export default {
     @media screen and (min-width: 680px) {
       // margin: 0;
       // margin-right: 20px; //remove to unable icons correct
+    }
+  }
+}
+
+.services-about {
+  font-size: 28px;
+  margin: 35px 8px 35px;
+  color: #e30613;
+  font-family: "ProximaNova-Light";
+  font-weight: normal;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 680px) {
+    margin-left: 15px;
+    font-size: 32px;
+  }
+  @media screen and (min-width: 920px) {
+    width: 900px;
+  }
+  @media screen and (min-width: 1200px) {
+    margin-left: 0;
+  }
+}
+
+.services {
+  &__button {
+    margin-bottom: 35px;
+    margin: 15px 0 40px 8px;
+
+    @media screen and (min-width: 680px) {
+      margin-left: 15px;
+    }
+    @media screen and (min-width: 920px) {
+      margin-bottom: 50px;
+    }
+    @media screen and (min-width: 1200px) {
+      margin-left: 0;
+      margin-bottom: 120px;
     }
   }
 }

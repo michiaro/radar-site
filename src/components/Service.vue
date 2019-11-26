@@ -46,16 +46,16 @@ export default {
   max-width: 100%;
   font-size: 16px;
   line-height: 24px;
-  margin: 0 8px 30px;
+  margin: 0 8px 8px;
 
   @media screen and (min-width: 680px) {
     font-size: 20px;
-    margin: 50px 15px 70px;
+    margin: 35px 15px 15px;
   }
   @media screen and (min-width: 1200px) {
     max-width: 60%;
     width: 60%;
-    margin: 50px 0 120px;
+    margin: 35px 0 35px;
   }
 
   strong {
