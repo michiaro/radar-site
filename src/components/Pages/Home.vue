@@ -39,7 +39,7 @@
                   key="all",
                   :class=" { 'works-menu__link--active' : !filterId} ",
                   @click="resetFilterId"
-                ) Всё
+                ) Избранное
               li.works-menu__item(
                 v-for="tag in content.tags",
                 v-if="tag.inFilter",
@@ -198,7 +198,7 @@ export default {
   computed: {
     filteredWorks() {
       if (!this.filterId) {
-        return this.content.works;
+        return this.content.works.filter(work => work.isOnMainPage);
       }
       var tagId = this.content.tags.find(
         tag => tag.slug === this.$route.query.filter
