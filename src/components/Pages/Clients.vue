@@ -8,32 +8,10 @@
             .products__text(
               v-html="content.aboutClients.content"
             )
-            .products__filter(
-              @click="toggleFilterVisible",
-              v-if="isMobile"
-            ) По отраслям
-            nav.works-menu.products-menu(v-show="filterIsVisible")
-              ul.works-menu__list.products-menu__list
-                li.works-menu__item.products-menu__item(
-                ) 
-                  span.works-menu__link(
-                    key="all",
-                    :class=" { 'works-menu__link--active' : !filterId} ",
-                    @click="resetFilterId"
-                  ) Всё
-                li.works-menu__item.products-menu__item(
-                  v-for="tag in content.clientsTags",
-                  @click="setFilterId(tag.slug)",
-                )
-                  span.works-menu__link(
-                    :key="tag.slug",
-                    :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
-                  ) 
-                    |{{ tag.title }}
         .works-pack.works-pack--clients
           .products__img-wrapper.one-work.one-work--client(
             v-lazyload,
-            v-for="client in filteredClients",
+            v-for="client in content.clients",
             v-if="client.color_logo.path",
             :id="client.slug"
             :key="client._id",
@@ -59,33 +37,12 @@ export default {
       content: {
         aboutClients: "",
         clients: [],
-        clientsTags: [],
         works: []
       },
-      filterIsVisible: true,
-      isReady: false,
-      filterId: this.$route.query.filter
+      isReady: false
     };
   },
-  computed: {
-    filteredClients() {
-      if (this.$route.query.filter && this.isReady) {
-        var currentTag = this.content.clientsTags.find(
-          tag => tag.slug === this.$route.query.filter
-        );
-        var filteredClients = this.content.clients.filter(client => {
-          return client.industry._id === currentTag._id;
-        });
-        return filteredClients;
-      } else {
-        return this.content.clients;
-      }
-    }
-  },
   methods: {
-    toggleFilterVisible() {
-      this.filterIsVisible = !this.filterIsVisible;
-    },
     openClientWorks(slug, id) {
       var clientWorks = this.content.works.filter(
         work => work.client._id == id
@@ -100,14 +57,6 @@ export default {
           path: "/" + clientWorks[0].slug
         });
       }
-    },
-    setFilterId(slug) {
-      this.filterId = slug;
-      this.$router.push({ path: "/clients", query: { filter: slug } });
-    },
-    resetFilterId() {
-      this.filterId = null;
-      this.$router.push({ path: "/clients" });
     },
     isActiveClient(id) {
       return this.content.works.some(work => {
@@ -125,16 +74,11 @@ export default {
         this.content.clients = clients;
       });
 
-      api.getCollectionByKey("clientsTags").then(clientsTags => {
-        this.content.clientsTags = clientsTags;
-        this.isReady = true;
-      });
-
       api.getCollectionByKey("works").then(works => {
         this.content.works = works;
       });
 
-      if (this.isMobile) this.filterIsVisible = false;
+      this.isReady = !this.isReady;
     });
   }
 };
@@ -149,34 +93,40 @@ export default {
   min-height: 100vh;
 }
 
+.products__img-wrapper {
+  width: 41%;
+  margin: 0 10px;
+
+  @media screen and (min-width: 680px) {
+    width: 22%;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 15%;
+  }
+}
+
 .products__img {
   width: 100%;
   filter: grayscale(100%);
   cursor: initial;
-
-  &-wrapper {
-    width: 41%;
-    margin: 0 10px;
-
-    @media screen and (min-width: 680px) {
-      width: 22%;
-    }
-
-    @media screen and (min-width: 1200px) {
-      width: 15%;
-    }
-  }
 
   &--color:hover {
     filter: grayscale(0%);
     transition: filter 0.3s linear;
     cursor: pointer;
   }
+
+  @media screen and (min-width: 1200px) {
+    width: 180px;
+    height: 135px;
+  }
 }
 
 .products__about {
   display: flex;
   flex-flow: row wrap;
+  display: none;
 
   @media screen and (min-width: 1200px) {
     flex-wrap: nowrap;
