@@ -31,7 +31,7 @@
                   ) 
                     |{{ tag.title }}
         .works-pack.works-pack--clients
-          .products__img-wrapper.one-work(
+          .products__img-wrapper.one-work.one-work--client(
             v-lazyload,
             v-for="client in filteredClients",
             v-if="client.color_logo.path",

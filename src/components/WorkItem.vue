@@ -18,8 +18,7 @@ export default {
     work: {
       type: Object
     }
-  },
-
+  }
 };
 </script>
 
@@ -114,6 +113,11 @@ export default {
     width: 290px;
     box-sizing: border-box;
     margin: 0px 8px 16px;
+    height: 350px;
+
+    &--client {
+      height: auto;
+    }
   }
 }
 </style>

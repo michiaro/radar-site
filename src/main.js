@@ -18,15 +18,13 @@ Vue.use(VueGoogleMaps, {
     key: "AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA",
     libraries: "places"
   },
-  
+
   autobindAllEvents: false,
   installComponents: true
 });
 Vue.use(VueAwesomeSwiper);
 
 Vue.directive("lazyload", LazyLoadDirective);
-
-Vue.config.productionTip = true;
 
 new Vue({
   render: h => h(App)

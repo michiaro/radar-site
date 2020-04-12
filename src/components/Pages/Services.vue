@@ -1,33 +1,8 @@
 <template lang="pug">
   .wrapper(v-if="worksIsReady && tagsIsReady")
     .block
-      swiper(
-        :options="swiperOption",
-        ref="fullScreenSwiper",
-      )
-        swiper-slide.item.slide.swiper-lazy(
-          v-for="work in content.works",
-          v-if="work.isFeatured",
-          :key="work.id",
-          :style="{'backgroundImage': 'url(https://radar-online.ru' +work.header.path+')'}"
-        )
-          router-link.slider__link(:to="'/' + work.slug")
-            .slider-content
-              .slider-content__title(
-                :class=" { 'dark' : work.isInverse }"
-              ) {{ work.title }}
-              .slider-content__text(
-                :class=" { 'dark' : work.isInverse }"
-              ) {{ work.prescription }}
-          .swiper-lazy-preloader
-        .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets(
-          slot="pagination",
-        )
-        .swiper-button-next.swiper-button-white(slot="button-prev")
-        .swiper-button-prev.swiper-button-white(slot="button-next")
-    .block
-      .content.content-2
-        .devider.devider--services
+      .content
+        .devider.page-wrapper
           h1.common-title.services-title Услуги
           nav.works-menu.services-menu
             ul.works-menu__list.services-menu__list
@@ -39,11 +14,10 @@
                 //- img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
                 span.works-menu__link.services-menu__link(
                   :key="tag.slug",
-                  :class=" { 'services-menu__link--active' : tag.slug == filterId} ",
+                  :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
                 ) 
                   |{{ tag.title }}
-          div.services-about {{ this.content.aboutUs.title }}
-        Service(:filterId = "filterId", id="content")
+        Service(:filterId = "filterId")
         a.button.services__button(href="#contact-form") Оставить заявку
         .works-block
           .works-pack
@@ -77,8 +51,7 @@ export default {
         works: [],
         tags: [],
         clients: [],
-        team: [],
-        aboutUs: ""
+        team: []
       },
       filterId: this.$route.query.filter,
       worksIsReady: false,
@@ -123,8 +96,7 @@ export default {
       this.filterId = slug;
       this.$router.push({
         path: "/services",
-        query: { filter: slug },
-        hash: "content"
+        query: { filter: slug }
       });
     }
   },
@@ -138,10 +110,6 @@ export default {
       api.getCollectionByKey("tags").then(tags => {
         this.content.tags = tags;
         this.tagsIsReady = true;
-      });
-
-      api.getSingletonsByKey("aboutUs").then(aboutUs => {
-        this.content.aboutUs = aboutUs;
       });
 
       if (!this.filterId) {
@@ -183,28 +151,28 @@ export default {
 
   &__link {
     display: inline-block;
-    background: linear-gradient(
-        90.86343deg,
-        #e30613 20.6375%,
-        #e30613 42.375%,
-        #fafafa 91.1375%
-      )
-      bottom left/0% 1px no-repeat;
-    transition: 0.2s ease-in-out;
+    // background: linear-gradient(
+    //     90.86343deg,
+    //     #e30613 20.6375%,
+    //     #e30613 42.375%,
+    //     #fafafa 91.1375%
+    //   )
+    //   bottom left/0% 1px no-repeat;
+    // transition: 0.2s ease-in-out;
     margin-right: 15px;
 
-    &:hover {
-      border-bottom: none;
-    }
-    &--active {
-      background: linear-gradient(
-          90.86343deg,
-          #e30613 20.6375%,
-          #e30613 42.375%,
-          #fafafa 91.1375%
-        )
-        bottom left/100% 1px no-repeat;
-    }
+    // &:hover {
+    //   border-bottom: none;
+    // }
+    // &--active {
+    //   background: linear-gradient(
+    //       90.86343deg,
+    //       #e30613 20.6375%,
+    //       #e30613 42.375%,
+    //       #fafafa 91.1375%
+    //     )
+    //     bottom left/100% 1px no-repeat;
+    // }
     @media screen and (min-width: 680px) {
       margin: auto;
     }
@@ -217,17 +185,17 @@ export default {
     cursor: pointer;
     // width: 30%;
 
-    &:hover {
-      .services-menu__link {
-        background: linear-gradient(
-            90.86343deg,
-            #e30613 20.6375%,
-            #e30613 42.375%,
-            #fafafa 91.1375%
-          )
-          bottom left/100% 1px no-repeat;
-      }
-    }
+    // &:hover {
+    //   .services-menu__link {
+    //     background: linear-gradient(
+    //         90.86343deg,
+    //         #e30613 20.6375%,
+    //         #e30613 42.375%,
+    //         #fafafa 91.1375%
+    //       )
+    //       bottom left/100% 1px no-repeat;
+    //   }
+    // }
 
     @media screen and (min-width: 680px) {
       // width: auto;

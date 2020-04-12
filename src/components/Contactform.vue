@@ -56,8 +56,8 @@
         .contacts-submit
           .contacts-submit__tips
             span.contacts-submit__tip * — поля, обязательные для заполнения
-            //- .contacts-submit__tip.contacts-submit__tip--last Заполняя форму, вы даете согласие 
-            //-   a.text-link(href="/policy") на обработку персональных данных
+            .contacts-submit__tip.contacts-submit__tip--last Заполняя форму, вы даете согласие 
+              a.text-link(href="/policy") на обработку персональных данных
           button.contacts-submit__button.submit_btn(
             type="submit",
             ) ОТПРАВИТЬ
@@ -363,12 +363,12 @@ textarea {
 }
 
 .text-link {
-  // color: #e30613;
+  color: #e30613;
   color: #999;
 
   &:hover {
     color: #292e35;
-    // text-decoration: underline;
+    text-decoration: underline;
   }
 }
 </style>
