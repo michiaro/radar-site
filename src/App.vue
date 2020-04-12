@@ -46,7 +46,7 @@ import Logo from "./components/Logo.vue";
 import Home from "./components/Pages/Home.vue";
 import AllWorks from "./components/Pages/AllWorks.vue";
 import About from "./components/Pages/About.vue";
-// import Team from "./components/Pages/Team.vue";
+import Team from "./components/Pages/Team.vue";
 import Clients from "./components/Pages/Clients.vue";
 import Contacts from "./components/Pages/Contacts.vue";
 import Work from "./components/Pages/Work.vue";
@@ -142,32 +142,32 @@ const router = new VueRouter({
         ]
       }
     },
-    // {
-    //   path: "/team",
-    //   component: Team,
-    //   name: "Team",
-    //   meta: {
-    //     title: "Radar Advertising, Команда",
-    //     metaTags: [
-    //       {
-    //         name: "description",
-    //         content: "Наша команда."
-    //       },
-    //       {
-    //         property: "og:description",
-    //         content: "Наша команда."
-    //       },
-    //       {
-    //         name: "og:title",
-    //         content: "Radar Advertising, Команда"
-    //       },
-    //       {
-    //         name: "og:url",
-    //         content: "https://radar-online.ru/team"
-    //       }
-    //     ]
-    //   }
-    // },
+    {
+      path: "/team",
+      component: Team,
+      name: "Team",
+      meta: {
+        title: "Radar Advertising, Команда",
+        metaTags: [
+          {
+            name: "description",
+            content: "Наша команда."
+          },
+          {
+            property: "og:description",
+            content: "Наша команда."
+          },
+          {
+            name: "og:title",
+            content: "Radar Advertising, Команда"
+          },
+          {
+            name: "og:url",
+            content: "https://radar-online.ru/team"
+          }
+        ]
+      }
+    },
     {
       path: "/clients",
       component: Clients,

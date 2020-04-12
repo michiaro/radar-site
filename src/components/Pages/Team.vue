@@ -2,11 +2,11 @@
   .wrapper
     .block
       .content
-        .devider
+        .devider.page-wrapper
           h1.common-title Команда
-          //- .team-text(
-          //-   v-html="content.common.teamText"
-          //- )
+          .team-text(
+            v-html="content.common.teamText"
+          )
         .all-team
           .all-team__img-wrapper(
             v-for="teammate in content.team",
@@ -21,7 +21,6 @@
               .all-team__desc
                 .team-desc-name {{ teammate.name }}
                 span.team-desc-text {{ teammate.position }}
-
 </template>
 
 <script>
@@ -29,9 +28,6 @@ import api from "../../api/";
 
 export default {
   name: "Team",
-  props: {
-    // msg: String
-  },
   data() {
     return {
       content: {

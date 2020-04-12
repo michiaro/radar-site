@@ -16,11 +16,11 @@
           to="/services",
         )
           | УСЛУГИ
-      //- li.main-menu__item
-      //-   router-link.main-menu__link(
-      //-     to="/team",
-      //-   )
-      //-     | КОМАНДА
+      li.main-menu__item
+        router-link.main-menu__link(
+          to="/team",
+        )
+          | КОМАНДА
       li.main-menu__item
         router-link.main-menu__link(
           to="/clients",
@@ -61,5 +61,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
