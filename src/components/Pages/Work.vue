@@ -1,5 +1,6 @@
-<template lang="pug">
-  .wrapper(v-if="isReady")
+<template>
+  <h1>Work</h1>
+  <!-- .wrapper(v-if="isReady")
     .block
       .work-top-block(
         :style="{'backgroundImage': 'url(https://radar-online.ru' +content.works[workIndex].header.path+')'}"
@@ -161,158 +162,158 @@
           )
         div
           .next-work__content_title {{ content.works[nextWork].title }}
-          p.next-work__content_text {{ content.works[nextWork].prescription}}
+          p.next-work__content_text {{ content.works[nextWork].prescription}} -->
 </template>
 
 <script>
-import api from "../../api/";
-import Picture from "../work-components/Picture.vue";
-import Slider from "../work-components/Slider.vue";
-import Video from "../work-components/Video.vue";
-import Audio from "../work-components/Audio.vue";
-import Col_1_3_2_3 from "../work-components/Col_1_3_2_3.vue";
-import Col_2_3_1_3 from "../work-components/Col_2_3_1_3.vue";
-import Cols_1_2 from "../work-components/Cols_1_2.vue";
+// import api from "../../api/";
+// import Picture from "../work-components/Picture.vue";
+// import Slider from "../work-components/Slider.vue";
+// import Video from "../work-components/Video.vue";
+// import Audio from "../work-components/Audio.vue";
+// import Col_1_3_2_3 from "../work-components/Col_1_3_2_3.vue";
+// import Col_2_3_1_3 from "../work-components/Col_2_3_1_3.vue";
+// import Cols_1_2 from "../work-components/Cols_1_2.vue";
 
 export default {
   name: "Work",
   components: {
-    Picture,
-    Slider,
-    Video,
-    Audio,
-    Col_1_3_2_3,
-    Col_2_3_1_3,
-    Cols_1_2
+    // Picture,
+    // Slider,
+    // Video,
+    // Audio,
+    // Col_1_3_2_3,
+    // Col_2_3_1_3,
+    // Cols_1_2
   },
   data() {
     return {
-      content: {
-        works: [],
-        team: [],
-        tags: [],
-        clients: []
-      },
-      fulltext: false,
-      isReady: false,
-      clientsIsReady: false
+    //   content: {
+    //     works: [],
+    //     team: [],
+    //     tags: [],
+    //     clients: []
+    //   },
+    //   fulltext: false,
+    //   isReady: false,
+    //   clientsIsReady: false
     };
   },
-  computed: {
-    workIndex() {
-      const myWorks = this.content.works;
-      var workSlug = this.$route.params.slug;
+  // computed: {
+  //   workIndex() {
+  //     const myWorks = this.content.works;
+  //     var workSlug = this.$route.params.slug;
 
-      for (var i = 0; i < myWorks.length; i += 1) {
-        if (myWorks[i].slug == workSlug) {
-          return i;
-        }
-      }
-      return -1;
-    },
-    nextWork() {
-      const myWorks = this.content.works;
-      var workSlug = this.$route.params.slug;
+  //     for (var i = 0; i < myWorks.length; i += 1) {
+  //       if (myWorks[i].slug == workSlug) {
+  //         return i;
+  //       }
+  //     }
+  //     return -1;
+  //   },
+  //   nextWork() {
+  //     const myWorks = this.content.works;
+  //     var workSlug = this.$route.params.slug;
 
-      for (var i = 0; i < myWorks.length - 1; i += 1) {
-        if (myWorks[i].slug == workSlug) {
-          return myWorks[i + 1].isPublished ? i + 1 : i + 2;
-        }
-      }
-      return -1;
-    },
-    workHashtags() {
-      var tagsArray = this.content.works[this.workIndex].tags.map(
-        tag => tag.display
-      );
-      return tagsArray.join(", ");
-    }
-  },
-  methods: {
-    toggleText() {
-      this.fulltext = !this.fulltext;
-    },
-    workTags(id) {
-      var myTags = this.content.tags;
+  //     for (var i = 0; i < myWorks.length - 1; i += 1) {
+  //       if (myWorks[i].slug == workSlug) {
+  //         return myWorks[i + 1].isPublished ? i + 1 : i + 2;
+  //       }
+  //     }
+  //     return -1;
+  //   },
+  //   workHashtags() {
+  //     var tagsArray = this.content.works[this.workIndex].tags.map(
+  //       tag => tag.display
+  //     );
+  //     return tagsArray.join(", ");
+  //   }
+  // },
+  // methods: {
+  //   toggleText() {
+  //     this.fulltext = !this.fulltext;
+  //   },
+  //   workTags(id) {
+  //     var myTags = this.content.tags;
 
-      for (var i = 0; i < myTags.length; i += 1) {
-        if (myTags[i]._id == id) {
-          return myTags[i].slug;
-        }
-      }
-      return -1;
-    },
-    setFilter(id) {
-      var currentTag = this.content.tags.find(tag => tag._id === id);
-      this.$router.push({
-        path: "/all-works",
-        query: { filter: currentTag.slug }
-      });
-    },
-    clientLogo(id) {
-      var currentClient = this.content.clients.find(
-        client => client._id === id
-      );
-      if (currentClient.logo) return currentClient.logo.path;
-      return null;
-    },
-    setClientFilter(id) {
-      var clientWorks = this.content.works.filter(
-        work => work.client._id == id
-      );
-      var currentClient = this.content.clients.find(
-        client => client._id === id
-      );
-      if (clientWorks.length > 1) {
-        this.$router.push({
-          path: "/all-works",
-          query: { client: currentClient.slug }
-        });
-      } else {
-        this.$router.push({
-          path: "/" + clientWorks[0].slug
-        });
-        window.scrollTo(0, 0);
-      }
-    },
-    setTeamFilter(id) {
-      var currentMember = this.content.team.find(member => member._id === id);
-      this.$router.push({
-        path: "/all-works",
-        query: { team: currentMember.slug }
-      });
-    },
-    toNextWork(work) {
-      this.$router.push({
-        path: "/" + work.slug
-      });
-      document.title = "Radar Advertising, " + work.title;
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      api.getCollectionByKey("works").then(works => {
-        this.content.works = works;
-        this.isReady = true;
-      });
+  //     for (var i = 0; i < myTags.length; i += 1) {
+  //       if (myTags[i]._id == id) {
+  //         return myTags[i].slug;
+  //       }
+  //     }
+  //     return -1;
+  //   },
+  //   setFilter(id) {
+  //     var currentTag = this.content.tags.find(tag => tag._id === id);
+  //     this.$router.push({
+  //       path: "/all-works",
+  //       query: { filter: currentTag.slug }
+  //     });
+  //   },
+  //   clientLogo(id) {
+  //     var currentClient = this.content.clients.find(
+  //       client => client._id === id
+  //     );
+  //     if (currentClient.logo) return currentClient.logo.path;
+  //     return null;
+  //   },
+  //   setClientFilter(id) {
+  //     var clientWorks = this.content.works.filter(
+  //       work => work.client._id == id
+  //     );
+  //     var currentClient = this.content.clients.find(
+  //       client => client._id === id
+  //     );
+  //     if (clientWorks.length > 1) {
+  //       this.$router.push({
+  //         path: "/all-works",
+  //         query: { client: currentClient.slug }
+  //       });
+  //     } else {
+  //       this.$router.push({
+  //         path: "/" + clientWorks[0].slug
+  //       });
+  //       window.scrollTo(0, 0);
+  //     }
+  //   },
+  //   setTeamFilter(id) {
+  //     var currentMember = this.content.team.find(member => member._id === id);
+  //     this.$router.push({
+  //       path: "/all-works",
+  //       query: { team: currentMember.slug }
+  //     });
+  //   },
+  //   toNextWork(work) {
+  //     this.$router.push({
+  //       path: "/" + work.slug
+  //     });
+  //     document.title = "Radar Advertising, " + work.title;
+  //   }
+  // },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     api.getCollectionByKey("works").then(works => {
+  //       this.content.works = works;
+  //       this.isReady = true;
+  //     });
 
-      api.getCollectionByKey("team").then(team => {
-        this.content.team = team;
-      });
+  //     api.getCollectionByKey("team").then(team => {
+  //       this.content.team = team;
+  //     });
 
-      api.getCollectionByKey("tags").then(tags => {
-        this.content.tags = tags;
-      });
+  //     api.getCollectionByKey("tags").then(tags => {
+  //       this.content.tags = tags;
+  //     });
 
-      api.getCollectionByKey("clients").then(clients => {
-        this.content.clients = clients;
-        this.clientsIsReady = true;
-      });
-    });
-  }
+  //     api.getCollectionByKey("clients").then(clients => {
+  //       this.content.clients = clients;
+  //       this.clientsIsReady = true;
+  //     });
+  //   });
+  // }
 };
 </script>
 
 <style lang="scss">
-@import "../../styles/work.scss";
+// @import "../../styles/work.scss";
 </style>

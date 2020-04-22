@@ -1,5 +1,6 @@
-<template lang="pug">
-  .wrapper(v-if="worksIsReady && tagsIsReady && clientsIsReady && teamIsReady")
+<template>
+  <h1>Works</h1>
+  <!-- .wrapper(v-if="worksIsReady && tagsIsReady && clientsIsReady && teamIsReady")
     .block
       .content.page-wrapper
         .devider
@@ -33,129 +34,120 @@
             )
     .block
       .content
-        Contactform.home-form
+        Contactform.home-form -->
 </template>
 
 <script>
-import api from "../../api/";
-import Contactform from "../Contactform.vue";
-import WorkItem from "../WorkItem.vue";
+// import api from "../../api/";
 
 export default {
   name: "AllWorks",
-  props: {
-    // msg: String
-  },
-  components: {
-    Contactform,
-    WorkItem
-  },
   data() {
     return {
-      content: {
-        works: [],
-        tags: [],
-        clients: [],
-        team: []
-      },
-      filterId: this.$route.query.filter,
-      worksIsReady: false,
-      tagsIsReady: false,
-      clientsIsReady: false,
-      teamIsReady: false
+      // content: {
+      //   works: [],
+      //   tags: [],
+      //   clients: [],
+      //   team: []
+      // },
+      // filterId: this.$route.query.filter,
+      // worksIsReady: false,
+      // tagsIsReady: false,
+      // clientsIsReady: false,
+      // teamIsReady: false
     };
   },
-  computed: {
-    filteredWorks() {
-      if (!this.$route.query.filter) {
-        if (!this.$route.query.client) {
-          if (!this.$route.query.team) {
-            return this.content.works;
-          }
-          var currentTeam = this.content.team.find(
-            member => member.slug === this.$route.query.team
-          );
-          return this.content.works.filter(work =>
-            work.credits.some(position =>
-              position.value.staff.some(
-                employee => employee._id == currentTeam._id
-              )
-            )
-          );
-        }
-        var currentClient = this.content.clients.find(
-          client => client.slug === this.$route.query.client
-        );
-        if (currentClient)
-          return this.content.works.filter(
-            work => work.client._id == currentClient._id
-          );
-      }
-      var currentTag = this.content.tags.find(
-        tag => tag.slug === this.$route.query.filter
-      );
-      return this.content.works.filter(work =>
-        work.tags.some(tag => tag._id == currentTag._id)
-      );
-    },
-    worksTitle() {
-      if (!this.$route.query.filter) {
-        if (!this.$route.query.team) {
-          return "Работы";
-        }
-        var currentTeam = this.content.team.find(
-          member => member.slug === this.$route.query.team
-        );
-        if (currentTeam != undefined) {
-          return "Работы с участием " + currentTeam.name;
-        }
-        return "Работы";
-      }
-      var currentTag = this.content.tags.find(
-        tag => tag.slug === this.$route.query.filter
-      );
-      if (currentTag.inFilter) {
-        return "Работы";
-      }
-      return "#" + currentTag.slug;
-    },
-    hideFilter() {
-      return this.$route.query.client || this.$route.query.team;
-    }
-  },
-  methods: {
-    setFilterId(slug) {
-      this.filterId = slug;
-      this.$router.push({ path: "/all-works", query: { filter: slug } });
-    },
-    resetFilterId() {
-      this.filterId = null;
-      this.$router.push({ path: "/all-works" });
-    },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      api.getCollectionByKey("works").then(works => {
-        this.content.works = works;
-        this.worksIsReady = true;
-      });
+  // computed: {
+  //   filteredWorks() {
+  //     if (!this.$route.query.filter) {
+  //       if (!this.$route.query.client) {
+  //         if (!this.$route.query.team) {
+  //           return this.content.works;
+  //         }
+  //         var currentTeam = this.content.team.find(
+  //           member => member.slug === this.$route.query.team
+  //         );
+  //         return this.content.works.filter(work =>
+  //           work.credits.some(position =>
+  //             position.value.staff.some(
+  //               employee => employee._id == currentTeam._id
+  //             )
+  //           )
+  //         );
+  //       }
+  //       var currentClient = this.content.clients.find(
+  //         client => client.slug === this.$route.query.client
+  //       );
+  //       if (currentClient)
+  //         return this.content.works.filter(
+  //           work => work.client._id == currentClient._id
+  //         );
+  //     }
+  //     var currentTag = this.content.tags.find(
+  //       tag => tag.slug === this.$route.query.filter
+  //     );
+  //     return this.content.works.filter(work =>
+  //       work.tags.some(tag => tag._id == currentTag._id)
+  //     );
+  //   },
+  //   worksTitle() {
+  //     if (!this.$route.query.filter) {
+  //       if (!this.$route.query.team) {
+  //         return "Работы";
+  //       }
+  //       var currentTeam = this.content.team.find(
+  //         member => member.slug === this.$route.query.team
+  //       );
+  //       if (currentTeam != undefined) {
+  //         return "Работы с участием " + currentTeam.name;
+  //       }
+  //       return "Работы";
+  //     }
+  //     var currentTag = this.content.tags.find(
+  //       tag => tag.slug === this.$route.query.filter
+  //     );
+  //     if (currentTag.inFilter) {
+  //       return "Работы";
+  //     }
+  //     return "#" + currentTag.slug;
+  //   },
+  //   hideFilter() {
+  //     return this.$route.query.client || this.$route.query.team;
+  //   }
+  // },
+  // methods: {
+  //   setFilterId(slug) {
+  //     this.filterId = slug;
+  //     this.$router.push({ path: "/all-works", query: { filter: slug } });
+  //   },
+  //   resetFilterId() {
+  //     this.filterId = null;
+  //     this.$router.push({ path: "/all-works" });
+  //   },
+  // },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     api.getCollectionByKey("works").then(works => {
+  //       this.content.works = works;
+  //       this.worksIsReady = true;
+  //     });
 
-      api.getCollectionByKey("tags").then(tags => {
-        this.content.tags = tags;
-        this.tagsIsReady = true;
-      });
+  //     api.getCollectionByKey("tags").then(tags => {
+  //       this.content.tags = tags;
+  //       this.tagsIsReady = true;
+  //     });
 
-      api.getCollectionByKey("clients").then(clients => {
-        this.content.clients = clients;
-        this.clientsIsReady = true;
-      });
+  //     api.getCollectionByKey("clients").then(clients => {
+  //       this.content.clients = clients;
+  //       this.clientsIsReady = true;
+  //     });
 
-      api.getCollectionByKey("team").then(team => {
-        this.content.team = team;
-        this.teamIsReady = true;
-      });
-    });
-  }
+  //     api.getCollectionByKey("team").then(team => {
+  //       this.content.team = team;
+  //       this.teamIsReady = true;
+  //     });
+  //   });
+  // }
 };
 </script>
 

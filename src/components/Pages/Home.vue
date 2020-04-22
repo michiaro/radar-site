@@ -1,5 +1,52 @@
-<template lang="pug">
-  .wrapper(v-if="isReady")
+<template>
+  <div class="main">
+    <img class="main__image" :src="backgroundImage" alt="Radar advertising" />
+    <video
+      class="main__video"
+      autoplay="autoplay"
+      loop="loop"
+      muted="muted"
+      playsinline
+      preload="auto"
+    >
+      <source :src="videoMP4" type="video/mp4" />
+    </video>
+    <div class="main__content">
+      <h1 class="main__title">
+        За каждым проектом мы видим цели и мечты, ценим человеческие отношения
+      </h1>
+      <div class="main__bottom">
+        <div class="main__services">
+          Мы занимаемся
+          <router-link class="main__link link" to="Services"
+            >брендингом</router-link
+          >, <br />
+          <router-link class="main__link link" to="Services"
+            >дизайном</router-link
+          >
+          и
+          <router-link class="main__link link" to="Services"
+            >рекламой</router-link
+          >
+        </div>
+        <div class="main__social-media">
+          <a
+            href="https://www.instagram.com/radaradvertising/"
+            class="social-link"
+            target="_blank"
+            >INSTAGRAM</a
+          >
+          <a
+            href="https://www.facebook.com/RadarAdvertising"
+            class="social-link"
+            target="_blank"
+            >FACEBOOK</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- .wrapper(v-if="isReady")
     .block
       swiper(
         :options="swiperOption",
@@ -119,276 +166,273 @@
         :isChelly="isChelly",
         :isMoscow="isMoscow",
         ref="mapRef"
-        )
+  )-->
 </template>
 
 <script>
-import api from "../../api/";
-import Contactform from "../Contactform.vue";
-import Map from "../Map.vue";
-import WorkItem from "../WorkItem.vue";
+import videoMP4 from '@/video/main-video.mp4';
+import backgroundImage from '@/images/main-back.jpg';
+// import api from "../../api/";
+// import Contactform from "../Contactform.vue";
+// import Map from "../Map.vue";
+// import WorkItem from "../WorkItem.vue";
 
 export default {
-  name: "Home",
-  props: {},
+  name: 'Home',
   components: {
-    Contactform,
-    Map,
-    WorkItem
+    // Contactform,
+    // Map,
+    // WorkItem
   },
   data() {
     return {
-      swiperOption: {
-        loop: true,
-        slidesPerView: 1,
-        autoplay: {
-          delay: 4000,
-          disableOnInteraction: false
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
-        preloadImages: false,
-        lazy: true
-      },
-      activeIndex: 0,
-      demoSwiperOption: {
-        loop: true,
-        slidesPerView: 6,
-        spaceBetween: 30,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
-        breakpoints: {
-          680: {
-            slidesPerView: 2,
-            spaceBetween: 10
-          },
-          922: {
-            slidesPerView: 4,
-            spaceBetween: 20
-          },
-          1200: {
-            slidesPerView: 6,
-            spaceBetween: 30
-          }
-        },
-        preloadImages: false,
-        lazy: true
-      },
-      content: {
-        works: [],
-        tags: [],
-        clients: [],
-        locations: "",
-        common: ""
-      },
-      filterId: this.$route.query.filter,
-      isMoscow: false,
-      isChelly: true,
-      isReady: false
+      videoMP4,
+      backgroundImage,
+      // swiperOption: {
+      //   loop: true,
+      //   slidesPerView: 1,
+      //   autoplay: {
+      //     delay: 4000,
+      //     disableOnInteraction: false
+      //   },
+      //   pagination: {
+      //     el: ".swiper-pagination",
+      //     clickable: true
+      //   },
+      //   navigation: {
+      //     nextEl: ".swiper-button-next",
+      //     prevEl: ".swiper-button-prev"
+      //   },
+      //   preloadImages: false,
+      //   lazy: true
+      // },
+      // activeIndex: 0,
+      // demoSwiperOption: {
+      //   loop: true,
+      //   slidesPerView: 6,
+      //   spaceBetween: 30,
+      //   autoplay: {
+      //     delay: 3000,
+      //     disableOnInteraction: false
+      //   },
+      //   breakpoints: {
+      //     680: {
+      //       slidesPerView: 2,
+      //       spaceBetween: 10
+      //     },
+      //     922: {
+      //       slidesPerView: 4,
+      //       spaceBetween: 20
+      //     },
+      //     1200: {
+      //       slidesPerView: 6,
+      //       spaceBetween: 30
+      //     }
+      //   },
+      //   preloadImages: false,
+      //   lazy: true
+      // },
+      // content: {
+      //   works: [],
+      //   tags: [],
+      //   clients: [],
+      //   locations: "",
+      //   common: ""
+      // },
+      // filterId: this.$route.query.filter,
+      // isMoscow: false,
+      // isChelly: true,
+      // isReady: false
     };
   },
-  computed: {
-    filteredWorks() {
-      if (!this.filterId) {
-        return this.content.works.filter(work => work.isOnMainPage);
-      }
-      var tagId = this.content.tags.find(
-        tag => tag.slug === this.$route.query.filter
-      );
-      return this.content.works.filter(work =>
-        work.tags.some(tag => tag._id == tagId._id)
-      );
-    }
-  },
-  methods: {
-    showMoscow() {
-      this.isMoscow = true;
-      this.isChelly = false;
-    },
-    showChelly() {
-      this.isChelly = true;
-      this.isMoscow = false;
-    },
-    setFilterId(slug) {
-      this.filterId = slug;
-      this.$router.push({ path: "/", query: { filter: slug } });
-    },
-    resetFilterId() {
-      this.filterId = null;
-      this.$router.push({ path: "/" });
-    },
-    changeZoomIn() {
-      this.$refs.mapRef.zoomIn();
-    },
-    changeZoomOut() {
-      this.$refs.mapRef.zoomOut();
-    },
-    // toWork(work) {
-    //   this.$router.push({
-    //     path: "/" + work.slug
-    //   });
-    //   document.title = "Radar Advertising, " + work.title;
-    // },
-    defineCity() {
-      var self = this;
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude;
-          var lng = position.coords.longitude;
+  // computed: {
+  //   filteredWorks() {
+  //     if (!this.filterId) {
+  //       return this.content.works.filter(work => work.isOnMainPage);
+  //     }
+  //     var tagId = this.content.tags.find(
+  //       tag => tag.slug === this.$route.query.filter
+  //     );
+  //     return this.content.works.filter(work =>
+  //       work.tags.some(tag => tag._id == tagId._id)
+  //     );
+  //   }
+  // },
+  // methods: {
+  //   showMoscow() {
+  //     this.isMoscow = true;
+  //     this.isChelly = false;
+  //   },
+  //   showChelly() {
+  //     this.isChelly = true;
+  //     this.isMoscow = false;
+  //   },
+  //   setFilterId(slug) {
+  //     this.filterId = slug;
+  //     this.$router.push({ path: "/", query: { filter: slug } });
+  //   },
+  //   resetFilterId() {
+  //     this.filterId = null;
+  //     this.$router.push({ path: "/" });
+  //   },
+  //   changeZoomIn() {
+  //     this.$refs.mapRef.zoomIn();
+  //   },
+  //   changeZoomOut() {
+  //     this.$refs.mapRef.zoomOut();
+  //   },
+  //   // toWork(work) {
+  //   //   this.$router.push({
+  //   //     path: "/" + work.slug
+  //   //   });
+  //   //   document.title = "Radar Advertising, " + work.title;
+  //   // },
+  //   defineCity() {
+  //     var self = this;
+  //     if ("geolocation" in navigator) {
+  //       navigator.geolocation.getCurrentPosition(function(position) {
+  //         var lat = position.coords.latitude;
+  //         var lng = position.coords.longitude;
 
-          if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
-            // MSK
-            self.showMoscow();
-          }
-        });
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      api.getCollectionByKey("works").then(works => {
-        this.content.works = works;
-        this.isReady = true;
-      });
+  //         if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
+  //           // MSK
+  //           self.showMoscow();
+  //         }
+  //       });
+  //     }
+  //   }
+  // },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     api.getCollectionByKey("works").then(works => {
+  //       this.content.works = works;
+  //       this.isReady = true;
+  //     });
 
-      api.getCollectionByKey("tags").then(tags => {
-        this.content.tags = tags;
-      });
+  //     api.getCollectionByKey("tags").then(tags => {
+  //       this.content.tags = tags;
+  //     });
 
-      api.getCollectionByKey("clients").then(clients => {
-        this.content.clients = clients;
-      });
+  //     api.getCollectionByKey("clients").then(clients => {
+  //       this.content.clients = clients;
+  //     });
 
-      api.getSingletonsByKey("locations").then(locations => {
-        this.content.locations = locations;
-      });
+  //     api.getSingletonsByKey("locations").then(locations => {
+  //       this.content.locations = locations;
+  //     });
 
-      api.getSingletonsByKey("common").then(common => {
-        this.content.common = common;
-      });
+  //     api.getSingletonsByKey("common").then(common => {
+  //       this.content.common = common;
+  //     });
 
-      setTimeout(() => {
-        // eslint-disable-next-line
-        callibriInit();
-      }, 500);
-      
-      this.defineCity();
-    });
-  }
+  //     setTimeout(() => {
+  //       // eslint-disable-next-line
+  //       callibriInit();
+  //     }, 500);
+
+  //     this.defineCity();
+  //   });
+  // }
 };
 </script>
 
 <style lang="scss">
-.slide {
-  position: relative;
-  height: 500px;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
+@import '@/styles/shared/_globals.scss';
 
-.slider__link {
-  height: 100%;
-  width: 100%;
-  display: block;
-}
+.main {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  z-index: -1;
+  background-color: $color-primary;
 
-.slider-content {
-  width: 95%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 200;
-  text-align: left;
-}
+  &__video,
+  &__image {
+    position: absolute;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    top: 0;
+    z-index: -1;
 
-.slider-content__title {
-  line-height: 0.9;
-  margin-bottom: 30px;
-  font-size: 38px;
-  color: #fff;
-  font-family: "ProximaNova-Light";
-  font-weight: normal;
-}
-
-.slider-content__title.dark,
-.slider-content__text.dark {
-  color: #292e35;
-}
-
-.slider-content__text {
-  color: #fff;
-  font-size: 18px;
-
-  @media screen and (min-width: 922px) {
-    max-width: 45%;
+    @include from('md') {
+      min-width: 100%;
+      height: auto;
+      min-height: 100%;
+    }
   }
 
-  @media screen and (min-width: 1200px) {
-    max-width: 35%;
+  &__content {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 124px 20px 20px;
+    @include from('lg') {
+      padding: 16vh 34px 34px;
+    }
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+  }
+  &__title {
+    margin: 0;
+    font-weight: normal;
+    font-size: 30px;
+    @include from('sm') {
+      font-size: 70px;
+      width: 80%;
+      margin-right: 10vw;
+    }
+    @include from('lg') {
+      font-size: 90px;
+      margin-right: 40vw;
+      max-width: 1130px;
+    }
+  }
+  &__bottom {
+    @include from('lg') {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+  &__services {
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 115px;
+    @include from('lg') {
+      margin-bottom: 0;
+    }
+  }
+  &__link {
+    color: $color-text;
+    border-bottom: 2px solid $color-text;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border-bottom: none;
+    }
+  }
+  &__social-media {
   }
 }
+.social-link {
+  font-size: 22px;
+  color: $color-text--contrast;
+  transition: all 0.2s ease-in-out;
 
-@media screen and (min-width: 680px) {
-  .slider-content__title {
-    font-size: 48px;
+  & + & {
+    margin-left: 54px;
   }
-  .slider-content__text {
-    font-size: 20px;
-  }
-}
 
-@media screen and (min-width: 1200px) {
-  .slider-content__title {
-    max-width: 45%;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .slider-content {
-    width: 1200px;
-  }
-  .slider-content__title {
-    line-height: 45px;
-    margin-bottom: 40px;
-    max-width: 35%;
-  }
-}
-
-.swiper-pagination-bullet {
-  background: #fff;
-  opacity: 0.6;
-}
-
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  background: #ffffff;
-}
-
-.swiper-button-prev {
-  display: none;
-}
-
-.swiper-button-next {
-  display: none;
-}
-
-@media screen and (min-width: 1200px) {
-  .swiper-button-prev {
-    display: block;
-  }
-  .swiper-button-next {
-    display: block;
+  &:hover {
+    color: $color-text--contrast-muted;
   }
 }
 </style>

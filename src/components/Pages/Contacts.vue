@@ -1,5 +1,6 @@
-<template lang="pug">
-  .wrapper
+<template>
+  <h1>Contacts</h1>
+  <!-- .wrapper
     .block
       .content.page-wrapper
         .big-map__head
@@ -111,211 +112,73 @@
                   img.bb-sn__img(
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAcCAQAAACqy3WpAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFF2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDUgNzkuMTYzNDk5LCAyMDE4LzA4LzEzLTE2OjQwOjIyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE5LTAyLTA1VDE1OjU2OjUwKzA1OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOS0wMi0wNVQxNTo1Nzo1MiswNTowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOS0wMi0wNVQxNTo1Nzo1MiswNTowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjEiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJEb3QgR2FpbiAyNSUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NGQ3NmY4ZTktZWNlOC0wNTQ4LWFiYjEtZDNhNTQxMDYyYTM1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjRkNzZmOGU5LWVjZTgtMDU0OC1hYmIxLWQzYTU0MTA2MmEzNSIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjRkNzZmOGU5LWVjZTgtMDU0OC1hYmIxLWQzYTU0MTA2MmEzNSI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6NGQ3NmY4ZTktZWNlOC0wNTQ4LWFiYjEtZDNhNTQxMDYyYTM1IiBzdEV2dDp3aGVuPSIyMDE5LTAyLTA1VDE1OjU2OjUwKzA1OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoV2luZG93cykiLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+RimZbAAAAZRJREFUOI2FlElLA0EQRmti3AKCYEREVHxR44KBXBSXgwHx4kFwIWpQiaDiiCuaoNFo5pd7mDHOVHdH6tbv+x4ZujqCqJmkxDqDxnk4w2xR5ZY7KhTwkCQe4JyAgIAmeaPcxx6tiIdziBcPQC0G3+lP1DPcJMrhLP4FNvhWcDVW9ziz1AMqv3jHBmOCorUe8CIIacpW2MCL6l08OwRfQh8XDhgwFAnmnImmUHXCgIVIMEuOLDM8GIlHYZoWPhMMJ+4gnJK6yHkjcRBeXxeCkDdwWQnGzN8Yxx63Ct8rwaK+A1LJwJoKfJNO8EPFN/UqD6pVDRiN0axatTcyWiD4SrAcYyc2pgXbKnTUJlOK+KRsgpyKNehGEPrVLraYCBtakOZTKYoIHsfqdOu3oQVivLoaOXbV2VW0OVbBurEsej7ab8QqGPmn3mIpnjcFHq8dBep9mAJhv0O93P6P6CAoOOuXarUdgjR1a90nY6ZtAqFkqV/b6i5BL0/Gt3dbkw6BME6jXa5TdKQ6CIQsJ9xxygo97jryAzp+WD3FSMC6AAAAAElFTkSuQmCC"
                   )
-          Contactform
+          Contactform -->
 </template>
 
 <script>
-import api from "../../api/";
-import Contactform from "../Contactform.vue";
-import Map from "../Map.vue";
+// import api from "../../api/";
 
 export default {
-  name: "Contacts",
-  props: {
-    // msg: String
-  },
-  components: {
-    Contactform,
-    Map
-  },
+  name: 'Contacts',
   data() {
     return {
-      content: {
-        locations: "",
-        common: ""
-      },
-      isMoscow: false,
-      isChelly: true
+      // content: {
+      //   locations: "",
+      //   common: ""
+      // },
+      // isMoscow: false,
+      // isChelly: true
     };
   },
-  methods: {
-    showMoscow() {
-      this.isMoscow = true;
-      this.isChelly = false;
-    },
-    showChelly() {
-      this.isChelly = true;
-      this.isMoscow = false;
-    },
-    changeZoomIn() {
-      this.$refs.mapZoom.zoomIn();
-    },
-    changeZoomOut() {
-      this.$refs.mapZoom.zoomOut();
-    },
-    defineCity() {
-      var self = this;
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude;
-          var lng = position.coords.longitude;
+  // methods: {
+  //   showMoscow() {
+  //     this.isMoscow = true;
+  //     this.isChelly = false;
+  //   },
+  //   showChelly() {
+  //     this.isChelly = true;
+  //     this.isMoscow = false;
+  //   },
+  //   changeZoomIn() {
+  //     this.$refs.mapZoom.zoomIn();
+  //   },
+  //   changeZoomOut() {
+  //     this.$refs.mapZoom.zoomOut();
+  //   },
+  //   defineCity() {
+  //     var self = this;
+  //     if ("geolocation" in navigator) {
+  //       navigator.geolocation.getCurrentPosition(function(position) {
+  //         var lat = position.coords.latitude;
+  //         var lng = position.coords.longitude;
 
-          if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
-            // MSK
-            self.showMoscow();
-          }
-        });
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      api.getSingletonsByKey("locations").then(locations => {
-        this.content.locations = locations;
-      });
+  //         if (lat >= 37 && lat <= 38 && lng >= 55 && lng <= 56) {
+  //           // MSK
+  //           self.showMoscow();
+  //         }
+  //       });
+  //     }
+  //   }
+  // },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     api.getSingletonsByKey("locations").then(locations => {
+  //       this.content.locations = locations;
+  //     });
 
-      api.getSingletonsByKey("common").then(common => {
-        this.content.common = common;
-      });
+  //     api.getSingletonsByKey("common").then(common => {
+  //       this.content.common = common;
+  //     });
 
-      setTimeout(() => {
-        // eslint-disable-next-line
-        callibriInit();
-      }, 500);
-      
-      this.defineCity();
-    });
-  }
+  //     setTimeout(() => {
+  //       // eslint-disable-next-line
+  //       callibriInit();
+  //     }, 500);
+
+  //     this.defineCity();
+  //   });
+  // }
 };
 </script>
 
-<style lang="scss">
-.big-map__head {
-  @media screen and (min-width: 1200px) {
-    padding-bottom: 20px;
-  }
-}
-
-.big-map__persons {
-  padding-bottom: 20px;
-}
-
-.person {
-  font-size: 18px;
-  padding: 0 0 30px 5px;
-  flex-flow: row nowrap;
-  display: none;
-  margin-top: 30px;
-
-  &-active {
-    display: flex;
-  }
-
-  @media screen and (min-width: 680px) {
-    padding: 0 0 10px 15px;
-    margin-top: 0;
-  }
-
-  @media screen and (min-width: 1200px) {
-    width: 60%;
-    margin: 0 0 0 14%;
-    padding: 0 0 10px 0;
-
-    &--chelly {
-      margin-left: 16%;
-
-      .person__email {
-        margin-left: 115px;
-      }
-    }
-  }
-
-  &__descr {
-    width: 200px;
-
-    @media screen and (min-width: 1200px) {
-      width: 200px;
-    }
-  }
-
-  &__position {
-    font-size: 14px;
-    padding-bottom: 5px;
-  }
-
-  &__name {
-    margin-bottom: 10px;
-  }
-
-  &__email {
-    display: flex;
-    flex-flow: column wrap;
-
-    @media screen and (min-width: 450px) {
-      margin: 0 0 10px 30px;
-    }
-
-    @media screen and (min-width: 1200px) {
-      margin: 0 0 10px 96px;
-    }
-
-    & a {
-      color: #292e35;
-    }
-  }
-}
-
-.form-block {
-  margin-top: 50px;
-  display: flex;
-  flex-flow: row wrap;
-  box-sizing: border-box;
-}
-
-.contacts-form {
-  margin-top: 50px;
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.contacts-form__left {
-  color: #292e35;
-  vertical-align: top;
-  display: flex;
-  flex-flow: row wrap;
-  padding: 8px;
-  box-sizing: border-box;
-
-  @media screen and (min-width: 922px) {
-    justify-content: space-between;
-    max-width: 25%;
-    margin-top: 20px;
-  }
-}
-
-.contacts-form__left-text {
-  margin-bottom: 15px;
-  @media screen and (min-width: 922px) {
-    padding-right: 0;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .contacts-block__content {
-    padding: 70px 0 80px 0;
-  }
-}
-
-.bb-text {
-  margin-bottom: 25px;
-}
-
-.bb-sn__img {
-  display: inline-block;
-  margin-right: 15px;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-</style>
+<style lang="scss"></style>
