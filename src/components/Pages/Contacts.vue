@@ -1,10 +1,25 @@
 <template>
   <div class="contacts">
-    <h1>Контакты</h1>
     <div class="grid">
       <div class="row">
-        <div class="col col-xs-2 col-sm-2 col-lg-6">1</div>
-        <div class="col col-xs-2 col-sm-2 col-lg-6">2</div>
+        <div class="col col-xs-2 col-sm-2 col-lg-6">
+          <h1>Контакты</h1>
+          <div class="row">
+            <div class="col col-xs-2 col-sm-2 col-lg-6">
+              <h2>Москва Челябинск</h2>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis natus blanditiis perspiciatis!</p>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="col col-xs-2 col-sm-2 col-lg-6">
+              <h2>Заказ</h2>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis natus blanditiis perspiciatis!</p>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col col-xs-2 col-sm-2 col-lg-6">
+          <h1>Обсудить задачу</h1>
+        </div>
       </div>
     </div>
   </div>
