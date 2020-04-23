@@ -1,19 +1,15 @@
 <template>
   <div class="header">
-    <div class="mobile-menu" v-if="isMenuOpen && isMobile">
+    <div v-if="isMenuOpen && isMobile" class="mobile-menu">
       <div class="mobile-menu__navigation">
-        <Navigation @close-menu="closeMenu" />
+        <navigation @close-menu="closeMenu" />
       </div>
       <div class="mobile-menu__bottom">
         <div class="mobile-menu__bottom-title">Обсудить задачу</div>
         <div class="mobile-menu__bottom-content">
           <div class="mobile-menu__contacts">
-            <a class="mobile-menu__link" href="tel:+79227000100"
-              >+7 (922) 700-01-00</a
-            >
-            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru"
-              >mlopatina@radar-online.ru</a
-            >
+            <a class="mobile-menu__link" href="tel:+79227000100">+7 (922) 700-01-00</a>
+            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru">mlopatina@radar-online.ru</a>
           </div>
           <div class="mobile-menu__contact-person">
             <div class="mobile-menu__name">Мария Лопатина</div>
@@ -22,19 +18,19 @@
         </div>
       </div>
     </div>
-    <Logo @click.native="closeMenu" />
+    <logo @click.native="closeMenu" />
     <button
+      v-if="isMobile"
       class="header__burger hamburger hamburger--slider"
       :class="{ 'is-active': isMenuOpen }"
       type="button"
-      v-if="isMobile"
       @click="toggleMenu"
     >
       <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
+        <span class="hamburger-inner" />
       </span>
     </button>
-    <Navigation v-if="!isMobile" />
+    <navigation v-if="!isMobile" />
   </div>
 </template>
 
@@ -55,6 +51,12 @@ export default {
       isMenuOpen: false,
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
+    });
+  },
   methods: {
     handleResize() {
       this.isMobile = window.innerWidth < DESKTOP_SIZE;
@@ -67,12 +69,6 @@ export default {
       this.isMenuOpen = false;
     },
   },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.handleResize);
-      this.handleResize();
-    });
-  },
 };
 </script>
 
@@ -81,14 +77,14 @@ export default {
 
 .header {
   z-index: 1;
-  margin: 18px 22px;
+  margin: 18px $--gutter-xs;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 
   @include from('lg') {
-    margin: 22px 32px;
+    margin: 22px $--gutter-lg;
   }
 
   &__burger {
@@ -96,6 +92,7 @@ export default {
   }
 }
 
+// TODO убрать отдельно
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -104,7 +101,7 @@ export default {
   left: 0;
   background-color: $color-background;
 
-  padding: 124px 20px 20px;
+  padding: 124px $--gutter-xs $--gutter-xs;
   height: 100%;
   box-sizing: border-box;
 

@@ -1,0 +1,39 @@
+@import '~@/styles/shared/_variables.scss';
+
+$breakpoints: (
+  xs: $--breakpoint-xs,
+  sm: $--breakpoint-sm,
+  md: $--breakpoint-md,
+  lg: $--breakpoint-lg,
+  xl: $--breakpoint-xl,
+  xxl: $--breakpoint-xxl,
+);
+
+@mixin from($from) {
+  $min: map-get($breakpoints, $from);
+  @if ($min == 0) {
+    @content;
+  } @else {
+    @media screen and (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+@mixin from-to($from, $to) {
+  $min: map-get($breakpoints, $from);
+  $max: map-get($breakpoints, $to);
+  @if ($min == 0) {
+    @media screen and (max-width: $max - 1px) {
+      @content;
+    }
+  } @else if ($max == null) {
+    @media screen and (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $min) and (max-width: $max - 1px) {
+      @content;
+    }
+  }
+}

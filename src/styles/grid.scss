@@ -1,0 +1,142 @@
+@import '~@/styles/shared/_globals.scss';
+
+// grid naming convention
+
+$row: $--row;
+$column: $--column;
+$offset: $--offset;
+
+// settings
+
+$breakpoints: (
+  xs: $--breakpoint-xs,
+  sm: $--breakpoint-sm,
+  md: $--breakpoint-md,
+  lg: $--breakpoint-lg,
+  xl: $--breakpoint-xl,
+  xxl: $--breakpoint-xxl,
+);
+
+$gutters: (
+  xs: $--gutter-xs,
+  sm: $--gutter-sm,
+  md: $--gutter-md,
+  lg: $--gutter-lg,
+  xl: $--gutter-xl,
+  xxl: $--gutter-xxl,
+);
+
+$column-counts: (
+  xs: $--column-count-xs,
+  sm: $--column-count-sm,
+  md: $--column-count-md,
+  lg: $--column-count-lg,
+  xl: $--column-count-xl,
+  xxl: $--column-count-xxl,
+);
+
+// helper maps
+
+$main-axis-alignments: (
+  left: flex-start,
+  center: center,
+  right: flex-end,
+  around: space-around,
+  between: space-between,
+);
+
+$cross-axis-alignments: (
+  top: flex-start,
+  middle: center,
+  bottom: flex-end,
+  stretch: stretch,
+  baseline: baseline,
+);
+
+@mixin create-alignments($breakpoint) {
+  @each $align, $value in $main-axis-alignments {
+    .#{$row}-#{$breakpoint}-#{$align} {
+      justify-content: $value;
+    }
+  }
+
+  @each $align, $value in $cross-axis-alignments {
+    .#{$row}-#{$breakpoint}-#{$align} {
+      align-items: $value;
+    }
+  }
+
+  @each $align, $value in $cross-axis-alignments {
+    .#{$column}-#{$breakpoint}-#{$align} {
+      align-self: $value;
+    }
+  }
+
+  .#{$column}-#{$breakpoint}-first {
+    order: -1;
+  }
+
+  .#{$column}-#{$breakpoint}-last {
+    order: 1;
+  }
+}
+
+@mixin create-colunms($breakpoint, $column-count, $gutter) {
+  .#{$row} {
+    padding-right: $gutter * 0.5;
+    padding-left: $gutter * 0.5;
+  }
+
+  .#{$column} {
+    padding-right: $gutter * 0.5;
+    padding-left: $gutter * 0.5;
+  }
+
+  @for $i from 1 through $column-count {
+    .#{$column}-#{$breakpoint}-#{$i} {
+      flex-basis: percentage($i / $column-count);
+      max-width: percentage($i / $column-count);
+    }
+  }
+}
+
+@mixin create-colunm-offsets($breakpoint, $column-count) {
+  @for $i from 1 through $column-count - 1 {
+    .#{$column}-#{$breakpoint}-#{$offset}-#{$i} {
+      margin-left: percentage($i / $column-count);
+    }
+  }
+}
+
+@mixin create-colunm-hider($breakpoint) {
+  $to: map-get-next($breakpoints, $breakpoint, false, key);
+  @include from-to($breakpoint, $to) {
+    .#{$column}-#{$breakpoint}-0 {
+      display: none;
+    }
+  }
+}
+
+.#{$row} {
+  display: flex;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
+}
+
+.#{$column} {
+  flex-grow: 1;
+  flex-basis: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+@each $breakpoint, $size in $breakpoints {
+  @include from($breakpoint) {
+    $gutter: map-get($gutters, $breakpoint);
+    $column-count: map-get($column-counts, $breakpoint);
+    @include create-alignments($breakpoint);
+    @include create-colunms($breakpoint, $column-count, $gutter);
+    @include create-colunm-offsets($breakpoint, $column-count);
+  }
+  @include create-colunm-hider($breakpoint);
+}
