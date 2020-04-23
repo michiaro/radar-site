@@ -1,4 +1,5 @@
 @import 'shared/globals.scss';
+@import '~@/styles/grid.scss';
 
 body,
 html {
@@ -16,7 +17,7 @@ body {
   font-family: 'Gerbera', Arial, sans-serif;
   font-weight: normal;
   line-height: 1;
-  color: $color-text;;
+  color: $color-text;
 }
 
 a {

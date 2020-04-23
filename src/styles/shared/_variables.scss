@@ -7,3 +7,29 @@
 // $--letter-spacing--700: 2.35px;
 
 $--letter-spacing: 0.015em;
+
+$--breakpoint-xs: 0;
+$--breakpoint-sm: 576px;
+$--breakpoint-md: 992px;
+$--breakpoint-lg: 1200px;
+$--breakpoint-xl: 1600px;
+$--breakpoint-xxl: 1920px;
+
+$--gutter-xs: 20px;
+$--gutter-sm: 20px;
+$--gutter-md: 20px;
+$--gutter-lg: 30px;
+$--gutter-xl: 30px;
+$--gutter-xxl: 30px;
+
+$--column-count-xs: 2;
+$--column-count-sm: 4;
+$--column-count-md: 4;
+$--column-count-lg: 12;
+$--column-count-xl: 12;
+$--column-count-xxl: 12;
+
+$--grid: 'grid';
+$--row: 'row';
+$--column: 'col';
+$--offset: 'offset';
