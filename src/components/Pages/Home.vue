@@ -348,7 +348,7 @@ export default {
   box-sizing: border-box;
   height: 100vh;
   z-index: -1;
-  background-color: $color-primary;
+  background-color: $--color-brand;
 
   &__video,
   &__image {
@@ -411,8 +411,8 @@ export default {
     }
   }
   &__link {
-    color: $color-text;
-    border-bottom: 2px solid $color-text;
+    color: $--color-text;
+    border-bottom: 2px solid $--color-text;
     transition: all 0.2s ease-in-out;
 
     &:hover {
@@ -424,7 +424,7 @@ export default {
 }
 .social-link {
   font-size: 22px;
-  color: $color-text--contrast;
+  color: $--color-text--contrast;
   transition: all 0.2s ease-in-out;
 
   & + & {
@@ -432,7 +432,7 @@ export default {
   }
 
   &:hover {
-    color: $color-text--contrast-muted;
+    color: $--color-text--contrast-muted;
   }
 }
 </style>

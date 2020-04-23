@@ -185,10 +185,10 @@ export default {
 
   padding: 24px 16px 16px;
 
-  border: 4px solid $color-text;
+  border: 4px solid $--color-text;
   border-radius: 12px;
   letter-spacing: $--letter-spacing;
-  color: $color-text;
+  color: $--color-text;
   transition: all 0.5s ease-in-out;
   max-height: 100%;
   height: calc(100% - 30px);
@@ -198,9 +198,9 @@ export default {
   }
 
   &:hover {
-    border-color: $color-primary;
-    background-color: $color-primary;
-    color: $color-text--contrast;
+    border-color: $--color-brand;
+    background-color: $--color-brand;
+    color: $--color-text--contrast;
   }
 
   &__title {
@@ -236,14 +236,14 @@ export default {
       padding: 22px 0 13px;
       box-sizing: border-box;
       width: 100%;
-      background-color: $color-background;
+      background-color: $--color-background;
       transform: translateY(100%);
       transition: all 0.5s ease-in-out;
     }
   }
   &__name {
     font-size: 20px;
-    color: $color-text;
+    color: $--color-text;
     margin-top: 8px;
     @include from('xl') {
       font-size: 25px;
@@ -256,10 +256,10 @@ export default {
   &__position {
     margin-top: 3px;
     font-size: 17px;
-    color: $color-text--muted;
+    color: $--color-text--muted;
     @include from('xl') {
       font-size: 18px;
-      color: $color-text;
+      color: $--color-text;
 
       transition: all 0.5s 0.3s ease-in-out;
       opacity: 0;

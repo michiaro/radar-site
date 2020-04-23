@@ -103,7 +103,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: $color-background;
+  background-color: $--color-background;
 
   padding: 124px $--gutter-xs $--gutter-xs;
   height: 100%;
@@ -124,7 +124,7 @@ export default {
     }
   }
   &__bottom-title {
-    color: $color-primary;
+    color: $--color-brand;
     margin-bottom: 20px;
     margin-right: 66px;
   }
@@ -132,12 +132,12 @@ export default {
   }
 
   &__link {
-    color: $color-text;
+    color: $--color-text;
     display: block;
     transition: all 0.2s ease-in-out;
     
     &:hover {
-      color: $color-text--muted;
+      color: $--color-brand;
     }
 
     &:last-of-type {
@@ -145,7 +145,7 @@ export default {
     }
   }
   &__contact-person {
-    color: $color-text--muted;
+    color: $--color-text--muted;
   }
   &__name {
   }
