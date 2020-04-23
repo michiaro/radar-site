@@ -360,7 +360,7 @@ export default {
     top: 0;
     z-index: -1;
 
-    @include from('md') {
+    @include from('lg') {
       min-width: 100%;
       height: auto;
       min-height: 100%;
@@ -371,7 +371,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding: 124px 20px 20px;
-    @include from('lg') {
+    @include from('xl') {
       padding: 16vh 34px 34px;
     }
 
@@ -388,14 +388,14 @@ export default {
       width: 80%;
       margin-right: 10vw;
     }
-    @include from('lg') {
+    @include from('xl') {
       font-size: 90px;
       margin-right: 40vw;
       max-width: 1130px;
     }
   }
   &__bottom {
-    @include from('lg') {
+    @include from('xl') {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
@@ -406,7 +406,7 @@ export default {
     font-size: 22px;
     line-height: 1.3;
     margin-bottom: 115px;
-    @include from('lg') {
+    @include from('xl') {
       margin-bottom: 0;
     }
   }

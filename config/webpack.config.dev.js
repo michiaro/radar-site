@@ -1,5 +1,4 @@
 'use strict';
-import { BASE_URL } from '@/settings.js';
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
@@ -39,11 +38,11 @@ const webpackConfig = merge(commonConfig, {
     stats: 'errors-only',
     proxy: {
       '/cockpit/': {
-        target: BASE_URL,
+        target: 'http://radar-2020.radar-online.mcdir.ru/',
         changeOrigin: true,
       },
       '/order.php': {
-        target: BASE_URL,
+        target: 'http://radar-2020.radar-online.mcdir.ru/',
         changeOrigin: true,
       },
     },

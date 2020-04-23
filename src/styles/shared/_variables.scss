@@ -1,33 +1,29 @@
-// $--letter-spacing--100: 0.26px;
-// $--letter-spacing--200: 0.36px;
-// $--letter-spacing--300: 0.59px;
-// $--letter-spacing--400: 0.78px;
-// $--letter-spacing--500: 1.36px;
-// $--letter-spacing--600: 1.76px;
-// $--letter-spacing--700: 2.35px;
-
 $--letter-spacing: 0.015em;
 
 $--breakpoint-xs: 0;
 $--breakpoint-sm: 576px;
-$--breakpoint-md: 992px;
-$--breakpoint-lg: 1200px;
-$--breakpoint-xl: 1600px;
-$--breakpoint-xxl: 1920px;
+$--breakpoint-md: 768px;
+$--breakpoint-lg: 992px;
+$--breakpoint-xl: 1200px;
+$--breakpoint-2xl: 1600px;
+$--breakpoint-3xl: 1920px;
 
 $--gutter-xs: 20px;
 $--gutter-sm: 20px;
 $--gutter-md: 20px;
 $--gutter-lg: 30px;
 $--gutter-xl: 30px;
-$--gutter-xxl: 30px;
+$--gutter-2xl: 30px;
+$--gutter-3xl: 30px;
 
 $--column-count-xs: 2;
 $--column-count-sm: 4;
 $--column-count-md: 4;
-$--column-count-lg: 12;
+$--column-count-lg: 4;
 $--column-count-xl: 12;
 $--column-count-xxl: 12;
+$--column-count-2xl: 12;
+$--column-count-3xl: 12;
 
 $--grid: 'grid';
 $--row: 'row';

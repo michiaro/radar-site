@@ -47,7 +47,7 @@ export default {
   display: flex;
   flex-flow: column nowrap;
 
-  @include from('lg') {
+  @include from('xl') {
     flex-direction: row;
   }
 
@@ -61,11 +61,11 @@ export default {
     padding: 5px 0;
     font-variant: small-caps;
 
-    @include from('md') {
+    @include from('lg') {
       font-size: 120px;
       line-height: 1;
     }
-    @include from('lg') {
+    @include from('xl') {
       font-size: 22px;
     }
 
@@ -75,7 +75,7 @@ export default {
 
     & + & {
       margin-top: 8px;
-      @include from('lg') {
+      @include from('xl') {
         margin-top: 0;
         margin-left: 176px;
       }
@@ -84,7 +84,7 @@ export default {
   &--contrast {
     #{$navigation}__link {
       &:hover {
-        @include from('lg') {
+        @include from('xl') {
           color: $color-text--contrast;
         }
       }

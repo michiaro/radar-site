@@ -1,88 +1,121 @@
 <template>
   <div class="agency">
-    <div class="agency__info info">
-      <h1 class="info__title">
-        Российское независимое агентство, стратегические и&nbsp;креативные
-        разработки для&nbsp;брендов в&nbsp;сфере FMCG, девелопмента
-        и&nbsp;ритейла.
-      </h1>
-      <div class="info__about">
-        <div class="info__description">
-          Системный подход на&nbsp;этапе стратегии и планирования, перфекционизм
-          на&nbsp;этапе воплощения, партнерство с&nbsp;командами клиента.
-          За&nbsp;каждым проектом мы&nbsp;видим цели и&nbsp;мечты, ценим
-          человеческие отношения, поэтому всегда выполняем обещания.
+    <div class="grid">
+      <div class="row">
+        <div class="col col-xs-2 col-lg-4 col-xl-8">
+          <h1 class="agency__title">
+            Российское независимое агентство, стратегические и&nbsp;креативные
+            разработки для&nbsp;брендов в&nbsp;сфере FMCG, девелопмента
+            и&nbsp;ритейла.
+          </h1>
         </div>
-        <div class="info__logos">
-          <img class="info__logo" :src="abkr" alt="АБКР" />
-          <img class="info__logo" :src="akar" alt="АКАР" />
-          <div class="info__logo-description">
-            Наше агентство входит в&nbsp;состав Ассоциации Брендинговых Компаний
-            России и&nbsp;Ассоциации Коммуникационных Агентств России.
+        <div class="col col-xs-2 col-sm-3 col-xl-6">
+          <div class="agency__description">
+            Системный подход на&nbsp;этапе стратегии и&nbsp;планирования,
+            перфекционизм на&nbsp;этапе воплощения, партнерство с&nbsp;командами
+            клиента. За&nbsp;каждым проектом мы&nbsp;видим цели и&nbsp;мечты,
+            ценим человеческие отношения, поэтому всегда выполняем обещания.
+          </div>
+        </div>
+        <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
+          <div class="agency__logos">
+            <img class="agency__logo" :src="abkr" alt="АБКР" />
+            <img class="agency__logo" :src="akar" alt="АКАР" />
+            <div class="agency__logo-description">
+              Наше агентство входит в&nbsp;состав Ассоциации Брендинговых
+              Компаний России и&nbsp;Ассоциации Коммуникационных
+              Агентств&nbsp;России.
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="agency__team team">
-      <div class="team__list">
-        <div class="teammate">
-          <img :src="teammate" alt="Имя сотрудника" class="teammate__photo" />
-          <div class="teammate__info">
-            <div class="teammate__name">
-              Имя Фамилия
+      <div class="agency__team">
+        <div class="row">
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate">
+              <img
+                :src="teammate"
+                alt="Имя сотрудника"
+                class="teammate__photo"
+              />
+              <div class="teammate__info">
+                <div class="teammate__name">
+                  Имя Фамилия
+                </div>
+                <div class="teammate__position">
+                  Должность
+                </div>
+              </div>
             </div>
-            <div class="teammate__position">
-              Должность
+          </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate">
+              <img
+                :src="teammate"
+                alt="Имя сотрудника"
+                class="teammate__photo"
+              />
+              <div class="teammate__info">
+                <div class="teammate__name">
+                  Имя Фамилия
+                </div>
+                <div class="teammate__position">
+                  Должность
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate">
+              <img
+                :src="teammate"
+                alt="Имя сотрудника"
+                class="teammate__photo"
+              />
+              <div class="teammate__info">
+                <div class="teammate__name">
+                  Имя Фамилия
+                </div>
+                <div class="teammate__position">
+                  Должность
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate">
+              <img
+                :src="teammate"
+                alt="Имя сотрудника"
+                class="teammate__photo"
+              />
+              <div class="teammate__info">
+                <div class="teammate__name">
+                  Имя Фамилия
+                </div>
+                <div class="teammate__position">
+                  Должность
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <a
+              class="agency__join-us join-us"
+              href="https://chelyabinsk.hh.ru/employer/1156087"
+              target="_blank"
+            >
+              <h2 class="join-us__title">
+                вакансии
+              </h2>
+              <div class="join-us__description">
+                Стать частью <br />
+                нашей команды&nbsp;→
+              </div>
+            </a>
           </div>
         </div>
-        <div class="teammate">
-          <img :src="teammate" alt="Имя сотрудника" class="teammate__photo" />
-          <div class="teammate__info">
-            <div class="teammate__name">
-              Имя Фамилия
-            </div>
-            <div class="teammate__position">
-              Должность
-            </div>
-          </div>
-        </div>
-        <div class="teammate">
-          <img :src="teammate" alt="Имя сотрудника" class="teammate__photo" />
-          <div class="teammate__info">
-            <div class="teammate__name">
-              Имя Фамилия
-            </div>
-            <div class="teammate__position">
-              Должность
-            </div>
-          </div>
-        </div>
-        <!-- <div class="teammate">
-          <img :src="teammate" alt="Имя сотрудника" class="teammate__photo" />
-          <div class="teammate__info">
-            <div class="teammate__name">
-              Имя Фамилия
-            </div>
-            <div class="teammate__position">
-              Должность
-            </div>
-          </div>
-        </div> -->
-        <a
-          class="agency__join-us join-us"
-          href="https://chelyabinsk.hh.ru/employer/1156087"
-          target="_blank"
-        >
-          <h2 class="join-us__title">
-            вакансии
-          </h2>
-          <div class="join-us__description">
-            Стать частью <br />
-            нашей команды&nbsp;→
-          </div>
-        </a>
       </div>
     </div>
 
@@ -139,31 +172,37 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .agency {
-  &__join-us {
-  }
-  &__clients {
-  }
-}
-
-.info {
-  box-sizing: border-box;
-  letter-spacing: $--letter-spacing;
-  padding: 120px 34px 52px 20px;
-  @include from('lg') {
-    padding: 162px 32px 156px;
-  }
-
   &__title {
+    margin: 0 0 30px;
     font-size: 23px;
-    margin-bottom: 30px;
-  }
-  &__about {
+    font-weight: normal;
+
+    @include from('md') {
+      font-size: 44px;
+    }
+    @include from('lg') {
+      margin: 0 200px 40px 0;
+    }
+    @include from('xl') {
+      margin: 0 80px 86px 0;
+    }
   }
   &__description {
     margin-bottom: 44px;
     font-size: 18px;
+    @include from('md') {
+      font-size: 26px;
+      margin-right: 50px;
+    }
+    @include from('lg') {
+      margin-bottom: 50px;
+    }
+    @include from('xl') {
+      margin-bottom: 102px;
+    }
   }
   &__logos {
+    margin-bottom: 52px;
   }
   &__logo {
     & + & {
@@ -174,24 +213,9 @@ export default {
     margin-top: 16px;
     font-size: 18px;
   }
-}
-
-.team {
-  margin: 0 20px;
-  @include from('lg') {
-    margin: 0 32px;
+  &__join-us {
   }
-
-  &__list {
-    display: flex;
-    flex-flow: column nowrap;
-    @include from('sm') {
-      flex-flow: row wrap;
-      margin: 0 -10px;
-    }
-    @include from('lg') {
-      margin: 0 -14px;
-    }
+  &__clients {
   }
 }
 
@@ -199,34 +223,6 @@ export default {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-
-  width: 100%;
-  flex-basis: 100%;
-
-  @include from('sm') {
-    width: calc(50% - 10px * 2);
-    flex-basis: calc(50% - 10px * 2);
-    margin: 0 10px;
-  }
-
-  @include from('md') {
-    // width: 25%;
-    // flex-basis: 25%;
-    width: calc(25% - 10px * 2);
-    flex-basis: calc(25% - 10px * 2);
-    min-height: 263px;
-  }
-
-  @include from('lg') {
-    width: calc(25% - 14px * 2);
-    flex-basis: calc(25% - 14px * 2);
-    margin: 0 14px;
-    min-height: 365px;
-  }
-
-  @include from('xl') {
-    min-height: 365px;
-  }
 
   display: block;
   min-height: 380px;
@@ -262,34 +258,18 @@ export default {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-
-  width: 100%;
-  flex-basis: 100%;
-  @include from('sm') {
-    width: 50%;
-    flex-basis: 50%;
-    padding: 0 10px;
-  }
-  @include from('md') {
-    width: 25%;
-    flex-basis: 25%;
-  }
-  @include from('lg') {
-    padding: 0 14px;
-  }
-
   margin-bottom: 28px;
 
   &__photo {
     width: 100%;
   }
   &__info {
-    @include from('lg') {
+    @include from('xl') {
       position: absolute;
       left: 0;
       bottom: 0;
       height: 82px;
-      padding: 22px 14px 13px;
+      padding: 22px 0 13px;
       box-sizing: border-box;
       width: 100%;
       background-color: $color-background;
@@ -301,7 +281,7 @@ export default {
     font-size: 20px;
     color: $color-text;
     margin-top: 8px;
-    @include from('lg') {
+    @include from('xl') {
       font-size: 25px;
 
       transition: all 0.5s 0.2s ease-in-out;
@@ -313,7 +293,7 @@ export default {
     margin-top: 3px;
     font-size: 17px;
     color: $color-text--muted;
-    @include from('lg') {
+    @include from('xl') {
       font-size: 18px;
       color: $color-text;
 
@@ -322,7 +302,7 @@ export default {
       transform: translateY(100%);
     }
   }
-  @include from('lg') {
+  @include from('xl') {
     &:hover {
       #{$teammate}__info {
         transform: translateY(0);

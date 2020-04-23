@@ -1,12 +1,12 @@
 <template>
   <div class="page">
-    <Header></Header>
-    <router-view></router-view>
+    <page-header />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
+import PageHeader from '@/components/PageHeader.vue';
 // import api from "./api/";
 // import VueRouter from "vue-router";
 // import Navigation from "./components/Navigation.vue";
@@ -15,9 +15,9 @@ import Header from '@/components/Header.vue';
 
 export default {
   // router,
-  name: 'app',
+  name: 'App',
   components: {
-    Header,
+    PageHeader,
     // Navigation,
     // Footer,
     // Logo
@@ -69,7 +69,21 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles/shared/_globals.scss';
+
 [v-cloak] {
   display: none;
+}
+
+.page {
+  padding-top: 120px;
+
+  @include from('lg') {
+    padding-top: 152px;
+  }
+
+  @include from('xl') {
+    padding-top: 162px;
+  }
 }
 </style>

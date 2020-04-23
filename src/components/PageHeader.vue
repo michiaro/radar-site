@@ -40,7 +40,7 @@ import Navigation from '@/components/Navigation.vue';
 import { DESKTOP_SIZE } from '@/settings.js';
 
 export default {
-  name: 'Header',
+  name: 'PageHeader',
   components: {
     Logo,
     Navigation,
@@ -87,8 +87,8 @@ export default {
   left: 0;
   right: 0;
 
-  @include from('lg') {
-    margin: 22px $--gutter-lg;
+  @include from('xl') {
+    margin: 22px $--gutter-xl;
   }
 
   &__burger {
@@ -118,7 +118,7 @@ export default {
   &__bottom {
     font-size: 18px;
     letter-spacing: $--letter-spacing;
-    @include from('md') {
+    @include from('lg') {
       display: flex;
       flex-flow: row nowrap;
     }
