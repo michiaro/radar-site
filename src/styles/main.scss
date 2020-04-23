@@ -1,5 +1,7 @@
 @import 'shared/globals.scss';
 @import '~@/styles/grid.scss';
+@import '~@/styles/typography.scss';
+@import '~@/styles/form.scss';
 
 body,
 html {
@@ -17,6 +19,7 @@ body {
   font-family: 'Gerbera', Arial, sans-serif;
   font-weight: normal;
   line-height: 1;
+  letter-spacing: $--letter-spacing;
   color: $color-text;
 }
 
