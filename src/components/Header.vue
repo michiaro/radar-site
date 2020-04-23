@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
-    <div class="mobile-menu" v-if="isMenuOpen && isMobile">
+  <header class="header">
+    <div v-if="isMenuOpen && isMobile" class="mobile-menu">
       <div class="mobile-menu__navigation">
-        <Navigation @close-menu="closeMenu" />
+        <navigation @close-menu="closeMenu" />
       </div>
       <div class="mobile-menu__bottom">
         <div class="mobile-menu__bottom-title">Обсудить задачу</div>
@@ -22,20 +22,20 @@
         </div>
       </div>
     </div>
-    <Logo @click.native="closeMenu" />
+    <logo @click.native="closeMenu" />
     <button
+      v-if="isMobile"
       class="header__burger hamburger hamburger--slider"
       :class="{ 'is-active': isMenuOpen }"
       type="button"
-      v-if="isMobile"
       @click="toggleMenu"
     >
       <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
+        <span class="hamburger-inner" />
       </span>
     </button>
-    <Navigation v-if="!isMobile" />
-  </div>
+    <navigation v-if="!isMobile" />
+  </header>
 </template>
 
 <script>
@@ -55,6 +55,12 @@ export default {
       isMenuOpen: false,
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
+    });
+  },
   methods: {
     handleResize() {
       this.isMobile = window.innerWidth < DESKTOP_SIZE;
@@ -66,12 +72,6 @@ export default {
     closeMenu() {
       this.isMenuOpen = false;
     },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.handleResize);
-      this.handleResize();
-    });
   },
 };
 </script>
@@ -86,6 +86,10 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 
   @include from('lg') {
     margin: 22px 32px;
@@ -134,7 +138,7 @@ export default {
     color: $color-text;
     display: block;
     transition: all 0.2s ease-in-out;
-
+    
     &:hover {
       color: $color-text--muted;
     }

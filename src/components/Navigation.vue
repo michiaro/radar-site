@@ -1,23 +1,35 @@
 <template>
-  <nav class="header__navigation navigation">
-    <router-link @click.native="onClick" class="navigation__link" to="all-works"
-      >Работы</router-link
+  <nav
+    class="header__navigation navigation"
+    :class="{ 'navigation--contrast': isMainPage }"
+  >
+    <router-link
+      class="navigation__link"
+      to="all-works"
+      @click.native="onClick"
     >
-    <router-link @click.native="onClick" class="navigation__link" to="services"
-      >Услуги</router-link
-    >
-    <router-link @click.native="onClick" class="navigation__link" to="agency"
-      >Агентство</router-link
-    >
-    <router-link @click.native="onClick" class="navigation__link" to="contacts"
-      >Контакты</router-link
-    >
+      работы
+    </router-link>
+    <router-link class="navigation__link" to="services" @click.native="onClick">
+      услуги
+    </router-link>
+    <router-link class="navigation__link" to="agency" @click.native="onClick">
+      агентство
+    </router-link>
+    <router-link class="navigation__link" to="contacts" @click.native="onClick">
+      контакты
+    </router-link>
   </nav>
 </template>
 
 <script>
 export default {
   name: 'Navigation',
+  computed: {
+    isMainPage() {
+      return this.$route.path === '/';
+    },
+  },
   methods: {
     onClick() {
       this.$emit('close-menu');
@@ -30,6 +42,8 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .navigation {
+  $navigation: &;
+
   display: flex;
   flex-flow: column nowrap;
 
@@ -44,6 +58,8 @@ export default {
     letter-spacing: $--letter-spacing;
     font-size: 40px;
     line-height: 1.3;
+    padding: 5px 0;
+    font-variant: small-caps;
 
     @include from('md') {
       font-size: 120px;
@@ -54,10 +70,7 @@ export default {
     }
 
     &:hover {
-      color: $color-text--muted;
-      @include from('lg') {
-        color: $color-text--contrast;
-      }
+      color: $color-primary;
     }
 
     & + & {
@@ -65,6 +78,15 @@ export default {
       @include from('lg') {
         margin-top: 0;
         margin-left: 176px;
+      }
+    }
+  }
+  &--contrast {
+    #{$navigation}__link {
+      &:hover {
+        @include from('lg') {
+          color: $color-text--contrast;
+        }
       }
     }
   }

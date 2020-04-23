@@ -1,6 +1,5 @@
 import Vue from 'vue/dist/vue.js';
 import VueRouter from 'vue-router';
-import VueAwesomeSwiper from 'vue-awesome-swiper';
 import router from '@/router/index.js';
 import metaGuard from '@/router/metaGuard.js';
 
@@ -21,12 +20,10 @@ Vue.use(VueRouter);
 // google map API key
 // 'AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA'
 
-Vue.use(VueAwesomeSwiper);
-
 // Vue.directive('lazyload', LazyLoadDirective);
 
 new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   metaGuard,
 }).$mount('#app');
