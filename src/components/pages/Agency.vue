@@ -4,27 +4,32 @@
       <div class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">
           <h1 class="agency__title">
-            Российское независимое агентство, стратегические и&nbsp;креативные
-            разработки для&nbsp;брендов в&nbsp;сфере FMCG, девелопмента
-            и&nbsp;ритейла.
+            {{ aboutUs.title }}
           </h1>
         </div>
         <div class="col col-xs-2 col-sm-3 col-xl-6">
           <div class="agency__description">
-            Системный подход на&nbsp;этапе стратегии и&nbsp;планирования,
-            перфекционизм на&nbsp;этапе воплощения, партнерство с&nbsp;командами
-            клиента. За&nbsp;каждым проектом мы&nbsp;видим цели и&nbsp;мечты,
-            ценим человеческие отношения, поэтому всегда выполняем обещания.
+            {{ aboutUs.description }}
           </div>
         </div>
         <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
           <div class="agency__logos">
-            <img class="agency__logo" :src="abkr" alt="АБКР" />
-            <img class="agency__logo" :src="akar" alt="АКАР" />
+            <a
+              class="agency__logo"
+              href="http://russianbranding.ru/"
+              target="_blank"
+            >
+              <img :src="abkr" alt="АБКР" />
+            </a>
+            <a
+              class="agency__logo"
+              href="http://www.akarussia.ru/"
+              target="_blank"
+            >
+              <img :src="akar" alt="АКАР" />
+            </a>
             <div class="agency__logo-description">
-              Наше агентство входит в&nbsp;состав Ассоциации Брендинговых
-              Компаний России и&nbsp;Ассоциации Коммуникационных
-              Агентств&nbsp;России.
+              {{ aboutUs.logoDescription }}
             </div>
           </div>
         </div>
@@ -32,70 +37,23 @@
 
       <div class="agency__team">
         <div class="row">
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+          <div
+            v-for="teammate in team"
+            :key="teammate.slug"
+            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+          >
             <div class="teammate">
               <img
-                :src="teammate"
-                alt="Имя сотрудника"
+                :src="BASE_URL + teammate.photo.path"
+                :alt="teammate.name"
                 class="teammate__photo"
               />
               <div class="teammate__info">
                 <div class="teammate__name">
-                  Имя Фамилия
+                  {{ teammate.name }}
                 </div>
                 <div class="teammate__position">
-                  Должность
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <div class="teammate">
-              <img
-                :src="teammate"
-                alt="Имя сотрудника"
-                class="teammate__photo"
-              />
-              <div class="teammate__info">
-                <div class="teammate__name">
-                  Имя Фамилия
-                </div>
-                <div class="teammate__position">
-                  Должность
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <div class="teammate">
-              <img
-                :src="teammate"
-                alt="Имя сотрудника"
-                class="teammate__photo"
-              />
-              <div class="teammate__info">
-                <div class="teammate__name">
-                  Имя Фамилия
-                </div>
-                <div class="teammate__position">
-                  Должность
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <div class="teammate">
-              <img
-                :src="teammate"
-                alt="Имя сотрудника"
-                class="teammate__photo"
-              />
-              <div class="teammate__info">
-                <div class="teammate__name">
-                  Имя Фамилия
-                </div>
-                <div class="teammate__position">
-                  Должность
+                  {{ teammate.position }}
                 </div>
               </div>
             </div>
@@ -128,7 +86,6 @@
 <script>
 import abkr from '@/images/ABKR-logo.png';
 import akar from '@/images/AKAR-logo.png';
-import teammate from '@/images/teammate.jpg';
 
 import { BASE_URL } from '@/settings.js';
 import { getCollectionByKey, getSingletonByKey } from '@/api/index.js';
@@ -144,9 +101,8 @@ export default {
     return {
       abkr,
       akar,
-      teammate,
       BASE_URL,
-      aboutUs: '',
+      aboutUs: {},
       team: [],
     };
   },
@@ -231,10 +187,15 @@ export default {
 
   border: 4px solid $color-text;
   border-radius: 12px;
-  font-size: 30px;
   letter-spacing: $--letter-spacing;
   color: $color-text;
   transition: all 0.5s ease-in-out;
+  max-height: 100%;
+  height: calc(100% - 30px);
+  font-size: 22px;
+  @include from('xl') {
+    font-size: 30px;
+  }
 
   &:hover {
     border-color: $color-primary;
@@ -243,10 +204,13 @@ export default {
   }
 
   &__title {
-    font-size: 30px;
     margin: 0;
     margin-bottom: 86px;
     font-weight: normal;
+    font-size: 22px;
+    @include from('xl') {
+      font-size: 30px;
+    }
   }
   &__description {
   }
@@ -258,7 +222,7 @@ export default {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 
   &__photo {
     width: 100%;

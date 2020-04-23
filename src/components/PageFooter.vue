@@ -13,12 +13,16 @@
       </div>
     </div>
 
-    <!-- <div class="footer__slider">
-      <swiper ref="swiper" :options="clientSwiperOptions">
+    <div class="footer__slider">
+      <swiper
+        v-if="clients.length > 0"
+        ref="swiper"
+        :options="clientSwiperOptions"
+      >
         <swiper-slide
           v-for="client in clients"
           :key="client.id"
-          class="footer__swiper-slide"
+          class="footer__swiper-slide swiper-slide"
         >
           <img
             class="footer__slide-image"
@@ -26,22 +30,7 @@
             :alt="client.title"
           />
         </swiper-slide>
-      </swiper> -->
-      <!-- <div class="clients-swiper-container swiper-container">
-        <div class="footer__swiper-wrapper swiper-wrapper">
-          <div
-            v-for="client in clients"
-            :key="client.id"
-            class="footer__swiper-slide swiper-slide"
-          >
-            <img
-              class="footer__slide-image"
-              :src="BASE_URL + client.logo.path"
-              :alt="client.title"
-            />
-          </div>
-        </div>
-      </div> -->
+      </swiper>
     </div>
 
     <!-- form -->
@@ -54,33 +43,6 @@ import { BASE_URL } from '@/settings.js';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 
 // getSingletonByKey
-// import Swiper from 'swiper';
-
-// const clientSwiper = new Swiper('.clients-swiper-container', {
-//   loop: true,
-//   speed: 400,
-//   slidesPerView: 6,
-//   // spaceBetween: 120,
-//   autoplay: {
-//     delay: 3000,
-//     disableOnInteraction: false,
-//   },
-//   breakpoints: {
-//     680: {
-//       slidesPerView: 2,
-//       // spaceBetween: 10,
-//     },
-//     922: {
-//       slidesPerView: 4,
-//       spaceBetween: 120,
-//     },
-//     1200: {
-//       slidesPerView: 6,
-//       // spaceBetween: 30,
-//     },
-//   },
-//   preloadImages: false,
-// });
 
 export default {
   name: 'PageFooter',
@@ -95,28 +57,28 @@ export default {
       BASE_URL,
       clientSwiperOptions: {
         loop: true,
-        // speed: 400,
+        speed: 3000,
         slidesPerView: 6,
         spaceBetween: 120,
         autoplay: {
-          delay: 3000,
+          delay: 1,
           disableOnInteraction: false,
+          waitForTransition: false,
+          stopOnLastSlide: false,
         },
         breakpoints: {
-          680: {
+          0: {
             slidesPerView: 2,
-            // spaceBetween: 10,
+            spaceBetween: 40,
           },
-          922: {
+          768: {
             slidesPerView: 4,
             spaceBetween: 120,
           },
           1200: {
             slidesPerView: 6,
-            // spaceBetween: 30,
           },
         },
-        preloadImages: false,
       },
     };
   },
@@ -168,18 +130,10 @@ export default {
       margin-bottom: 112px;
     }
   }
-  &__swiper-wrapper {
-  }
   &__swiper-slide {
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    // max-width: 230px;
-    // @include from('md') {
-    //   max-width: 260px;
-    // }
-  }
-  &__slide-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
