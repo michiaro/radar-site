@@ -231,7 +231,7 @@ export default {
       setTimeout(() => {
         this.currentCity = city;
         this.$emit('change-city', city);
-      }, 300); // меняем город во время анимации
+      }, 240); // меняем город во время анимации
     },
     // при успешной отправке формы отправляем событие в метрику,
     //     if (yaCounter1653081) {
