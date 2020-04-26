@@ -1,13 +1,6 @@
 <template>
-  <nav
-    class="header__navigation navigation"
-    :class="{ 'navigation--contrast': isMainPage }"
-  >
-    <router-link
-      class="navigation__link"
-      to="all-works"
-      @click.native="onClick"
-    >
+  <nav class="header__navigation navigation" :class="{ 'navigation--contrast': isMainPage }">
+    <router-link class="navigation__link" to="all-works" @click.native="onClick">
       работы
     </router-link>
     <router-link class="navigation__link" to="services" @click.native="onClick">
@@ -52,8 +45,6 @@ export default {
   }
 
   &__link {
-    transition: all 0.2s ease-in-out;
-
     color: $color-text;
     letter-spacing: $--letter-spacing;
     font-size: 40px;
