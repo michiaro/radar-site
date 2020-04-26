@@ -140,11 +140,29 @@ export default {
   }
   &__link {
     color: $--color-text;
-    border-bottom: 2px solid $--color-text;
+    // border-bottom: 2px solid $--color-text;
     transition: all 0.2s ease-in-out;
 
+    // &:hover {
+    //   border-bottom: none;
+    // }
+
+    background: linear-gradient(
+        50deg,
+        $--color-text 50%,
+        $--color-text 50%
+      )
+      bottom left/100% 2px no-repeat;
+
+    $active-background: linear-gradient(
+        50deg,
+        $--color-text 50%,
+        $--color-text 50%
+      )
+      bottom left/0% 1px no-repeat;
+
     &:hover {
-      border-bottom: none;
+      background: $active-background;
     }
   }
   &__social-media {

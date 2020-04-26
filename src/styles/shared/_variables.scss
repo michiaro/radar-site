@@ -45,4 +45,5 @@ $--color-text: #000003;
 $--color-text--muted: #8f8f8f;
 $--color-text--contrast: #ffffff;
 $--color-text--contrast-muted: #ffc59e;
-$--color-background: #ffffff;
+$--color-background: $--color-text--contrast;
+$--color-background--contrast: $--color-text;

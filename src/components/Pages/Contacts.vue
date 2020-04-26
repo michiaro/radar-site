@@ -34,4 +34,6 @@ export default {
 
 <style lang="scss">
 @import '~@/styles/shared/_globals.scss';
+
+
 </style>

@@ -1,72 +1,95 @@
 <template>
-  <div class="contact-form">
+  <div class="contact-form" :class="{ 'contact-form--contrast': contrast }">
     <div class="grid">
       <div class="row">
         <div class="col col-xs-2 col-sm-4 col-xl-6">
-          <h1 class="contacts__title">Контакты</h1>
+          <h1 class="contact-form__title">Контакты</h1>
           <div class="row">
             <div class="col col-xs-2 col-sm-2 col-lg-6">
-              <div class="contacts__section">
-                <div class="contacts__subtitle">
+              <div class="contact-form__section">
+                <div class="contact-form__subtitle">
                   <button
-                    class="contacts__toggle"
+                    class="contact-form__toggle"
                     :class="{
-                      'contacts__toggle--active': currentCity === 'moscow',
+                      'contact-form__toggle--active': currentCity === 'moscow',
                     }"
                     @click="changeCity('moscow')"
                   >
                     Москва
                   </button>
                   <button
-                    class="contacts__toggle"
+                    class="contact-form__toggle"
                     :class="{
-                      'contacts__toggle--active': currentCity === 'chelly',
+                      'contact-form__toggle--active': currentCity === 'chelly',
                     }"
                     @click="changeCity('chelly')"
                   >
                     Челябинск
                   </button>
                 </div>
-                <p class="contacts__text">
-                  АКЦ&nbsp;«Челябинск&nbsp;Сити» <br />
-                  офис&nbsp;1209, ул.&nbsp;Кирова,&nbsp;159 <br />
-                  Челябинск
-                </p>
-                <p class="contacts__text">
-                  <a class="contacts__link" href="tel:+73512111150"
-                    >+7 (351) 211-11-50</a
+                <p
+                  class="contact-form__text"
+                  v-html="getContactInfoByKey('address')"
+                />
+                <p class="contact-form__text">
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${getContactInfoByKey('phone')}`"
+                    >{{ formatPhone(getContactInfoByKey('phone')) }}</a
                   ><br />
-                  <a class="contacts__link" href="mailto:info@radar-online.ru"
-                    >info@radar-online.ru</a
+                  <a
+                    class="contact-form__link"
+                    :href="`mailto:${getContactInfoByKey('email')}`"
+                    >{{ getContactInfoByKey('email') }}</a
                   >
                 </p>
               </div>
             </div>
             <div class="col col-xs-2 col-sm-2 col-xl-6">
-              <div class="contacts__section">
-                <h2 class="contacts__subtitle">Заказ</h2>
-                <p class="contacts__text">
-                  <a class="contacts__link" href="tel:+79227000100"
-                    >+7 (922) 700-01-00</a
+              <div class="contact-form__section">
+                <h2 class="contact-form__subtitle">Заказ</h2>
+                <p class="contact-form__text">
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${getContactInfoByKey('contactPhone')}`"
+                    >{{ formatPhone(getContactInfoByKey('contactPhone')) }}</a
                   ><br />
                   <a
-                    class="contacts__link"
-                    href="mailto:mlopatina@radar-online.ru"
-                    >mlopatina@radar-online.ru</a
+                    class="contact-form__link"
+                    :href="`mailto:${getContactInfoByKey('contactEmail')}`"
+                    >{{ getContactInfoByKey('contactEmail') }}</a
                   >
                 </p>
-                <p class="contacts__text">
-                  Мария Лопатина<br />
-                  Account Director
+                <p class="contact-form__text contact-form__person">
+                  {{ getContactInfoByKey('name') }}
+                  <br />
+                  {{ getContactInfoByKey('position') }}
                 </p>
               </div>
             </div>
-            <div class="col col-xs-2 col-sm-2 col-xl-6 col-xl-bottom">
-              <div class="contacts__section">
-                <p class="contacts__social">
-                  <a href="#" class="contacts__social-link">INSTAGRAM</a>
-                  <a href="#" class="contacts__social-link">FACEBOOK</a>
-                  <a href="#" class="contacts__social-link">VKONTAKTE</a>
+            <div
+              class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6"
+            >
+              <div class="contact-form__section">
+                <p class="contact-form__social">
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >INSTAGRAM</a
+                  >
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >FACEBOOK</a
+                  >
+                  <a
+                    href="https://vk.com/radaradvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >VKONTAKTE</a
+                  >
                 </p>
               </div>
             </div>
@@ -74,14 +97,14 @@
         </div>
         <div class="col col-xs-2 col-sm-4 col-xl-6">
           <form class="form" @submit.prevent="onSubmit">
-            <h2 class="contacts__title form__title">
+            <h2 class="contact-form__title form__title">
               Обсудить задачу
             </h2>
             <div class="row">
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
                   <input
-                    v-model="name"
+                    v-model="formData.name"
                     type="text"
                     class="form__input"
                     placeholder="Ваше имя"
@@ -91,7 +114,7 @@
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
                   <input
-                    v-model="contact"
+                    v-model="formData.contact"
                     type="text"
                     class="form__input"
                     placeholder="E-mail или телефон"
@@ -101,7 +124,7 @@
               <div class="col col-xs-2 col-sm-4 col-lg-12">
                 <div class="form__field">
                   <textarea
-                    v-model="message"
+                    v-model="formData.message"
                     type="text"
                     class="form__input form__input--textarea"
                     placeholder="Сообщение"
@@ -109,6 +132,8 @@
                   />
                 </div>
               </div>
+            </div>
+            <div class="row row-md-middle">
               <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
                 <div class="form__field">
                   <button class="form__input form__input--button" type="submit">
@@ -119,7 +144,7 @@
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field form__terms">
                   Заполняя форму, вы даете согласие на&nbsp;обработку
-                  <router-link to="/policy">
+                  <router-link to="/policy" class="form__link">
                     персональных данных
                   </router-link>
                 </div>
@@ -136,16 +161,30 @@
 </template>
 
 <script>
+import { getSingletonByKey } from '@/api/index.js';
+
 export default {
   name: 'ContactForm',
+  props: {
+    contrast: {
+      type: Boolean,
+      required: false,
+    },
+  },
   data() {
     return {
       isFormSent: false,
-      name: '',
-      contact: '',
-      message: '',
+      formData: {
+        name: '',
+        contact: '',
+        message: '',
+      },
       currentCity: 'moscow',
+      contactInfo: {},
     };
+  },
+  created() {
+    this.getContactInfo();
   },
   methods: {
     onSubmit() {
@@ -155,7 +194,24 @@ export default {
       this.currentCity = city;
       this.$emit('change-city', city);
     },
-    // при успешной отправке формы отправляем событие в метрику
+    async getContactInfo() {
+      this.contactInfo = await getSingletonByKey('locations');
+    },
+    getContactInfoByKey(key) {
+      const { contactInfo, currentCity } = this;
+      const keyByCity = currentCity + '_' + key;
+      return contactInfo[keyByCity];
+    },
+    formatPhone(phone) {
+      if (phone) {
+        const match = phone.match(/^(\d)(\d{3})(\d{3})(\d{2})(\d{2})$/);
+        if (match) {
+          return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
+        }
+        return null;
+      }
+    },
+    // при успешной отправке формы отправляем событие в метрику,
     //     if (yaCounter1653081) {
     //       yaCounter1653081.reachGoal('order-submit');
     //       return true;
@@ -169,7 +225,10 @@ export default {
 <style lang="scss">
 @import '~@/styles/shared/_globals.scss';
 
-.contacts {
+.contact-form {
+  $block: &;
+  padding-bottom: 56px;
+
   &__title {
     margin: 0;
     font-size: $--font-size-180;
@@ -212,12 +271,35 @@ export default {
     line-height: inherit;
     cursor: pointer;
     text-transform: uppercase;
+    color: inherit;
+    transition: 0.2s ease-in-out;
+    padding-top: 14px;
+    margin-top: -14px;
 
-    & + & {
-      margin-left: 40px;
+    background: linear-gradient(
+        90.86343deg,
+        $--color-brand 50%,
+        $--color-brand 50%
+      )
+      top left/0% 2px no-repeat;
+
+    $active-background: linear-gradient(
+        90.86343deg,
+        $--color-brand 50%,
+        $--color-brand 50%
+      )
+      top left/100% 2px no-repeat;
+
+    &:hover {
+      background: $active-background;
     }
 
     &--active {
+      background: $active-background;
+    }
+
+    & + & {
+      margin-left: 40px;
     }
   }
 
@@ -233,6 +315,7 @@ export default {
     white-space: nowrap;
     line-height: 1;
     display: block;
+    color: inherit;
   }
 
   &__social {
@@ -268,65 +351,101 @@ export default {
       color: $--color-brand;
     }
   }
-}
-
-.form {
-  margin-top: 72px;
-  @include from('lg') {
-    margin-top: 106px;
-  }
-  @include from('xl') {
-    margin-top: 0;
-  }
-  &__title {
-    max-width: 60%;
-    margin-bottom: 34px;
-    @include from('md') {
-      max-width: 100%;
-      margin-bottom: 70px;
+  .form {
+    margin-top: 72px;
+    @include from('lg') {
+      margin-top: 106px;
     }
     @include from('xl') {
-      margin-bottom: 100px;
+      margin-top: 0;
+    }
+    &__title {
+      max-width: 60%;
+      margin-bottom: 34px;
+      @include from('md') {
+        max-width: 100%;
+        margin-bottom: 70px;
+      }
+      @include from('xl') {
+        margin-bottom: 100px;
+      }
+    }
+    &__field {
+      margin-bottom: $--gutter-xs;
+      @include from('lg') {
+        margin-bottom: $--gutter-lg;
+      }
+    }
+
+    &__input {
+      box-sizing: border-box;
+      width: 100%;
+      font-size: $--font-size-100;
+      line-height: 1;
+      border: 2px solid $--color-text;
+      padding: 14px 14px 16px;
+      height: 52px;
+
+      @include from('lg') {
+        padding: 20px 20px 24px;
+        height: 74px;
+        font-size: $--font-size-120;
+      }
+
+      &--textarea {
+        resize: vertical;
+        height: auto;
+      }
+
+      &--button {
+        background-color: $--color-brand;
+        border-color: $--color-brand;
+        color: $--color-text--contrast;
+        cursor: pointer;
+        letter-spacing: $--letter-spacing;
+        text-transform: uppercase;
+        padding: 12px;
+      }
+    }
+
+    &__terms {
+      font-size: $--font-size-80;
+      color: $--color-text--muted;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    &__link {
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
-  &__field {
-    margin-bottom: $--gutter-xs;
-    @include from('lg') {
-      margin-bottom: $--gutter-lg;
-    }
-  }
 
-  &__input {
-    box-sizing: border-box;
-    width: 100%;
-    font-size: $--font-size-100;
-    line-height: 1;
-    border: 2px solid $--color-text;
-    padding: 0.38em 1em 0.62em;
+  &--contrast {
+    padding-top: 85px;
+    background-color: $--color-background--contrast;
+    color: $--color-text--contrast;
 
-    @include from('lg') {
-      font-size: $--font-size-120;
+    #{$block}__person {
+      color: $--color-text--muted;
     }
 
-    &--textarea {
-      resize: vertical;
+    .form__input {
+      background-color: $--color-background--contrast;
+      border: 2px solid $--color-text--contrast;
+      color: $--color-text--muted;
+
+      &--button {
+        color: $--color-text--contrast;
+      }
     }
 
-    &--button {
-      background-color: $--color-brand;
-      border-color: $--color-brand;
-      color: $--color-text--contrast;
-      cursor: pointer;
-    }
-  }
-
-  &__terms {
-    font-size: $--font-size-80;
-    color: $--color-text--muted;
-
-    a {
-      text-decoration: underline;
-    }
+    // #{$block}
   }
 }
 </style>

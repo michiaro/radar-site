@@ -173,7 +173,6 @@ export default {
   position: relative;
   height: 100vh;
   width: 100%;
-  margin-top: 56px;
   @include from('xl') {
     margin-top: 72px;
   }

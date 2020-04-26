@@ -33,7 +33,7 @@
       </swiper>
     </div>
 
-    <contact-form />
+    <contact-form contrast />
   </footer>
 </template>
 
