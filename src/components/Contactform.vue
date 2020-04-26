@@ -385,6 +385,8 @@ export default {
       border: 2px solid $--color-text;
       padding: 14px 14px 16px;
       height: 52px;
+      border-radius: 0;
+      box-shadow: none;
 
       @include from('lg') {
         padding: 20px 20px 24px;
