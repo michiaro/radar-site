@@ -28,13 +28,25 @@
 import videoMP4 from '@/video/main-video.mp4';
 import backgroundImage from '@/images/main-back.jpg';
 
+import { getSingletonByKey } from '@/api/index.js';
+
 export default {
   name: 'Home',
   data() {
     return {
       videoMP4,
       backgroundImage,
+      text: '',
     };
+  },
+  created() {
+    this.getWelcomeText();
+  },
+  methods: {
+    async getWelcomeText() {
+      const { content } = await getSingletonByKey('welcomeText');
+      this.text = content;
+    },
   },
 };
 </script>

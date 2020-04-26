@@ -1,6 +1,13 @@
 <template>
-  <nav class="header__navigation navigation" :class="{ 'navigation--contrast': isMainPage }">
-    <router-link class="navigation__link" to="all-works" @click.native="onClick">
+  <nav
+    class="header__navigation navigation"
+    :class="{ 'navigation--contrast': isMainPage }"
+  >
+    <router-link
+      class="navigation__link"
+      to="all-works"
+      @click.native="onClick"
+    >
       работы
     </router-link>
     <router-link class="navigation__link" to="services" @click.native="onClick">
@@ -67,6 +74,34 @@ export default {
 
     &:hover {
       color: $--color-brand;
+    }
+
+    &.router-link-active {
+      color: $--color-brand;
+      cursor: unset;
+
+      @include from('xl') {
+        color: $--color-text;
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: calc(100% - 2px);
+          height: 2px;
+          background: $--color-brand;
+          transition-timing-function: $--timing-in-out-cubic;
+          transition-duration: $--duration;
+          transition-property: transform;
+          transform-origin: left center;
+        }
+
+        &:hover {
+          color: $--color-text;
+        }
+      }
     }
 
     & + & {
