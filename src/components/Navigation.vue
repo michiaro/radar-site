@@ -76,6 +76,25 @@ export default {
       color: $--color-brand;
     }
 
+    @include from('xl') {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: calc(100% - 2px);
+        height: 2px;
+        background: $--color-brand;
+        transition-timing-function: $--timing-in-out-cubic;
+        transition-duration: $--duration;
+        transition-property: transform;
+        transform-origin: left center;
+        transform: scaleX(0);
+      }
+    }
+
     &.router-link-active {
       color: $--color-brand;
       cursor: unset;
@@ -85,17 +104,7 @@ export default {
         position: relative;
 
         &:after {
-          content: '';
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: calc(100% - 2px);
-          height: 2px;
-          background: $--color-brand;
-          transition-timing-function: $--timing-in-out-cubic;
-          transition-duration: $--duration;
-          transition-property: transform;
-          transform-origin: left center;
+          transform: scaleX(1);
         }
 
         &:hover {

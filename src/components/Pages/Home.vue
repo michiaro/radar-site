@@ -1,23 +1,47 @@
 <template>
   <div class="main">
     <img class="main__image" :src="backgroundImage" alt="Radar advertising" />
-    <video class="main__video" autoplay="autoplay" loop="loop" muted="muted" playsinline preload="auto">
+    <video
+      class="main__video"
+      autoplay="autoplay"
+      loop="loop"
+      muted="muted"
+      playsinline
+      preload="auto"
+    >
       <source :src="videoMP4" type="video/mp4" />
     </video>
     <div class="main__content">
       <h1 class="main__title">
-        За&nbsp;каждым проектом мы&nbsp;видим&nbsp;цели и&nbsp;мечты, ценим человеческие отношения
+        {{ text }}
       </h1>
       <div class="main__bottom">
         <div class="main__services">
           Мы занимаемся
-          <router-link class="main__link link" to="Services">брендингом</router-link>, <br />
-          <router-link class="main__link link" to="Services">дизайном</router-link> и
-          <router-link class="main__link link" to="Services">рекламой</router-link>
+          <router-link class="main__link link" to="Services">
+            брендингом </router-link
+          >, <br />
+          <router-link class="main__link link" to="Services">
+            дизайном
+          </router-link>
+          и
+          <router-link class="main__link link" to="Services">
+            рекламой
+          </router-link>
         </div>
         <div class="main__social-media">
-          <a href="https://www.instagram.com/radaradvertising/" class="social-link" target="_blank">INSTAGRAM</a>
-          <a href="https://www.facebook.com/RadarAdvertising" class="social-link" target="_blank">FACEBOOK</a>
+          <a
+            href="https://www.instagram.com/radaradvertising/"
+            class="social-link"
+            target="_blank"
+            >INSTAGRAM</a
+          >
+          <a
+            href="https://www.facebook.com/RadarAdvertising"
+            class="social-link"
+            target="_blank"
+            >FACEBOOK</a
+          >
         </div>
       </div>
     </div>
