@@ -45,7 +45,7 @@ export default {
   }
 
   &__link {
-    color: $color-text;
+    color: $--color-text;
     letter-spacing: $--letter-spacing;
     font-size: 40px;
     line-height: 1.3;
@@ -61,7 +61,7 @@ export default {
     }
 
     &:hover {
-      color: $color-primary;
+      color: $--color-brand;
     }
 
     & + & {
@@ -76,7 +76,7 @@ export default {
     #{$navigation}__link {
       &:hover {
         @include from('xl') {
-          color: $color-text--contrast;
+          color: $--color-text--contrast;
         }
       }
     }

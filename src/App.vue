@@ -7,64 +7,23 @@
 
 <script>
 import PageHeader from '@/components/PageHeader.vue';
-// import api from "./api/";
-// import VueRouter from "vue-router";
-// import Navigation from "./components/Navigation.vue";
-// import Footer from "./components/Footer.vue";
-// import Logo from "./components/Logo.vue";
 
 export default {
-  // router,
   name: 'App',
   components: {
     PageHeader,
-    // Navigation,
-    // Footer,
-    // Logo
   },
   data() {
-    return {
-      isMenuOpen: false,
-      isMobile: false,
-      content: {
-        common: '',
-      },
-    };
+    return {};
   },
-  // methods: {
-  //   handleResize() {
-  //     this.isMobile = window.innerWidth < 1200;
-  //     this.isMenuOpen = window.innerWidth >= 1200;
-  //   },
-  //   toggleMenu() {
-  //     this.isMenuOpen = !this.isMenuOpen;
-  //   },
-  //   closeMenu() {
-  //     this.isMenuOpen = false;
-  //   }
-  // },
   // mounted() {
   //   this.$nextTick(() => {
-  //     window.addEventListener("resize", this.handleResize);
-  //     this.handleResize();
-
-  //     api.getSingletonsByKey("common").then(common => {
-  //       this.content.common = common;
-  //     });
+  //     setTimeout(() => {
+  //       // eslint-disable-next-line
+  //       callibriInit();
+  //     }, 500);
   //   });
   // },
-  // watch: {
-  //   $route() {
-  //     this.closeMenu();
-  //     if (
-  //       !this.$route.query.filter &&
-  //       !this.$route.query.client &&
-  //       !this.$route.query.team
-  //     ) {
-  //       window.scrollTo(0, 0);
-  //     }
-  //   }
-  // }
 };
 </script>
 

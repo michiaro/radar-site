@@ -33,7 +33,7 @@
       </swiper>
     </div>
 
-    <!-- form -->
+    <contact-form contrast />
   </footer>
 </template>
 
@@ -42,6 +42,8 @@ import { getCollectionByKey } from '@/api/index.js';
 import { BASE_URL } from '@/settings.js';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 
+import ContactForm from '@/components/ContactForm.vue';
+
 // getSingletonByKey
 
 export default {
@@ -49,6 +51,7 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
+    ContactForm,
   },
   data() {
     return {
@@ -122,7 +125,7 @@ export default {
     }
   }
   &__title--accent {
-    color: $color-primary;
+    color: $--color-brand;
   }
   &__slider {
     margin-bottom: 76px;

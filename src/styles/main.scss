@@ -1,18 +1,11 @@
 @import 'shared/globals.scss';
 @import '~@/styles/grid.scss';
 @import '~@/styles/typography.scss';
-@import '~@/styles/form.scss';
 
 body,
 html {
-  // width: 100%;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  // overflow-x: hidden;
-  // overflow-y: scroll;
-  // @include from('lg') {
-  //   overflow-y: unset;
-  // }
 }
 
 body {
@@ -20,7 +13,7 @@ body {
   font-weight: normal;
   line-height: 1;
   letter-spacing: $--letter-spacing;
-  color: $color-text;
+  color: $--color-text;
 }
 
 a {
@@ -36,6 +29,6 @@ ul {
 }
 
 *::selection {
-  color: $color-text--contrast;
-  background: $color-primary;
+  color: $--color-text--contrast;
+  background: $--color-brand;
 }

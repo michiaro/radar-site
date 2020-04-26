@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" :class="{'header--contrast' : isMainPage}">
     <div v-if="isMenuOpen && isMobile" class="mobile-menu">
       <div class="mobile-menu__navigation">
         <navigation @close-menu="closeMenu" />
@@ -8,8 +8,12 @@
         <div class="mobile-menu__bottom-title">Обсудить задачу</div>
         <div class="mobile-menu__bottom-content">
           <div class="mobile-menu__contacts">
-            <a class="mobile-menu__link" href="tel:+79227000100">+7 (922) 700-01-00</a>
-            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru">mlopatina@radar-online.ru</a>
+            <a class="mobile-menu__link" href="tel:+79227000100"
+              >+7 (922) 700-01-00</a
+            >
+            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru"
+              >mlopatina@radar-online.ru</a
+            >
           </div>
           <div class="mobile-menu__contact-person">
             <div class="mobile-menu__name">Мария Лопатина</div>
@@ -51,6 +55,11 @@ export default {
       isMenuOpen: false,
     };
   },
+  computed: {
+    isMainPage() {
+      return this.$route.path === '/';
+    },
+  },
   mounted() {
     this.$nextTick(() => {
       window.addEventListener('resize', this.handleResize);
@@ -76,8 +85,8 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .header {
-  z-index: 1;
-  margin: 18px $--gutter-xs;
+  z-index: 2; // перекрываем свайпер
+  padding: 18px $--gutter-xs;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -86,13 +95,18 @@ export default {
   top: 0;
   left: 0;
   right: 0;
+  background-color: $--color-background;
 
   @include from('xl') {
-    margin: 22px $--gutter-xl;
+    padding: 22px $--gutter-xl;
   }
 
   &__burger {
     padding: 0;
+  }
+
+  &--contrast {
+    background: none;
   }
 }
 
@@ -103,7 +117,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: $color-background;
+  background-color: $--color-background;
 
   padding: 124px $--gutter-xs $--gutter-xs;
   height: 100%;
@@ -124,7 +138,7 @@ export default {
     }
   }
   &__bottom-title {
-    color: $color-primary;
+    color: $--color-brand;
     margin-bottom: 20px;
     margin-right: 66px;
   }
@@ -132,12 +146,12 @@ export default {
   }
 
   &__link {
-    color: $color-text;
+    color: $--color-text;
     display: block;
     transition: all 0.2s ease-in-out;
-    
+
     &:hover {
-      color: $color-text--muted;
+      color: $--color-brand;
     }
 
     &:last-of-type {
@@ -145,7 +159,7 @@ export default {
     }
   }
   &__contact-person {
-    color: $color-text--muted;
+    color: $--color-text--muted;
   }
   &__name {
   }

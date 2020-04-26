@@ -17,9 +17,6 @@ import App from './App.vue';
 
 Vue.use(VueRouter);
 
-// google map API key
-// 'AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA'
-
 // Vue.directive('lazyload', LazyLoadDirective);
 
 new Vue({

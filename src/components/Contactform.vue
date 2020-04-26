@@ -1,374 +1,453 @@
-<template lang="pug">
-  .contacts-form__right
-    .form-wrapper
-      form.contacts-form#feedback(action="", v-if="!form.isSent", @submit.prevent="submit(form, form.url)")
-        h2.form-title Оставить заявку
-        p.contacts-form__left-text
-          | Мы с радостью ответим на ваши вопросы. Заполнение формы займет всего пару минут.
-        .contacts-inputs
-          .small-input-block
-            label(
-              for="fullname"
-            )
-              p.input-label.star Ваше имя
-            input.small-input.ym-record-keys(
-              v-model="form.data[0].data",
-              name="fullname",
-              type="text",
-              id="fullname",
-              required
-            )
-          .small-input-block
-            label(
-              for="phone"
-            )
-              p.input-label Телефон
-            input.small-input.ym-record-keys(
-              v-model="form.data[1].data",
-              id="phone",
-              name="phone",
-              type="text"
-            )
-          .small-input-block
-            label(
-              for="email"
-            )
-              p.input-label.star Электронная почта
-            input.small-input(
-              v-model="form.data[2].data",
-              name="email",
-              id="email",
-              type="text",
-              required
-            )
-        .contacts-textarea
-          label(
-            for="message"
-          )
-            p.input-label.star Сообщение
-          textarea.contacts-textarea.ym-record-keys(
-            v-model="form.data[3].data",
-            name="message",
-            id="message",
-            rows="9",
-            required
-          )
-        .contacts-submit
-          .contacts-submit__tips
-            span.contacts-submit__tip * — поля, обязательные для заполнения
-            .contacts-submit__tip.contacts-submit__tip--last Заполняя форму, вы даете согласие 
-              a.text-link(href="/policy") на обработку персональных данных
-          button.contacts-submit__button.submit_btn(
-            type="submit",
-            ) ОТПРАВИТЬ
-      .form-result#result(v-if="form.isSent")
+<template>
+  <div class="contact-form" :class="{ 'contact-form--contrast': contrast }">
+    <div class="grid">
+      <div class="row">
+        <div class="col col-xs-2 col-sm-4 col-xl-6">
+          <h1 class="contact-form__title">Контакты</h1>
+          <div class="row">
+            <div class="col col-xs-2 col-sm-2 col-lg-6">
+              <div class="contact-form__section">
+                <div class="contact-form__subtitle">
+                  <button
+                    class="contact-form__toggle"
+                    :class="{
+                      'contact-form__toggle--active': currentCity === 'moscow',
+                    }"
+                    @click="changeCity('moscow')"
+                  >
+                    Москва
+                  </button>
+                  <button
+                    class="contact-form__toggle"
+                    :class="{
+                      'contact-form__toggle--active': currentCity === 'chelly',
+                    }"
+                    @click="changeCity('chelly')"
+                  >
+                    Челябинск
+                  </button>
+                </div>
+                <p
+                  class="contact-form__text"
+                  v-html="getContactInfoByKey('address')"
+                />
+                <p class="contact-form__text">
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${getContactInfoByKey('phone')}`"
+                    >{{ formatPhone(getContactInfoByKey('phone')) }}</a
+                  ><br />
+                  <a
+                    class="contact-form__link"
+                    :href="`mailto:${getContactInfoByKey('email')}`"
+                    >{{ getContactInfoByKey('email') }}</a
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="col col-xs-2 col-sm-2 col-xl-6">
+              <div class="contact-form__section">
+                <h2 class="contact-form__subtitle">Заказ</h2>
+                <p class="contact-form__text">
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${getContactInfoByKey('contactPhone')}`"
+                    >{{ formatPhone(getContactInfoByKey('contactPhone')) }}</a
+                  ><br />
+                  <a
+                    class="contact-form__link"
+                    :href="`mailto:${getContactInfoByKey('contactEmail')}`"
+                    >{{ getContactInfoByKey('contactEmail') }}</a
+                  >
+                </p>
+                <p class="contact-form__text contact-form__person">
+                  {{ getContactInfoByKey('name') }}
+                  <br />
+                  {{ getContactInfoByKey('position') }}
+                </p>
+              </div>
+            </div>
+            <div
+              class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6"
+            >
+              <div class="contact-form__section">
+                <p class="contact-form__social">
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >INSTAGRAM</a
+                  >
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >FACEBOOK</a
+                  >
+                  <a
+                    href="https://vk.com/radaradvertising"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >VKONTAKTE</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-xs-2 col-sm-4 col-xl-6">
+          <form class="form" @submit.prevent="onSubmit">
+            <h2 class="contact-form__title form__title">
+              Обсудить задачу
+            </h2>
+            <div class="row">
+              <div class="col col-xs-2 col-sm-2 col-lg-6">
+                <div class="form__field">
+                  <input
+                    v-model="formData.name"
+                    type="text"
+                    class="form__input"
+                    placeholder="Ваше имя"
+                  />
+                </div>
+              </div>
+              <div class="col col-xs-2 col-sm-2 col-lg-6">
+                <div class="form__field">
+                  <input
+                    v-model="formData.contact"
+                    type="text"
+                    class="form__input"
+                    placeholder="E-mail или телефон"
+                  />
+                </div>
+              </div>
+              <div class="col col-xs-2 col-sm-4 col-lg-12">
+                <div class="form__field">
+                  <textarea
+                    v-model="formData.message"
+                    type="text"
+                    class="form__input form__input--textarea"
+                    placeholder="Сообщение"
+                    rows="8"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row row-md-middle">
+              <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
+                <div class="form__field">
+                  <button class="form__input form__input--button" type="submit">
+                    Отправить
+                  </button>
+                </div>
+              </div>
+              <div class="col col-xs-2 col-sm-2 col-lg-6">
+                <div class="form__field form__terms">
+                  Заполняя форму, вы даете согласие на&nbsp;обработку
+                  <router-link to="/policy" class="form__link">
+                    персональных данных
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- .form-result#result(v-if="form.isSent")
         h2.form-title Сообщение отправлено
-        | Ваше сообщение отправлено. Спасибо!
-
+        | Ваше сообщение отправлено. Спасибо! -->
 </template>
 
 <script>
+import { getSingletonByKey } from '@/api/index.js';
+
 export default {
-  name: "Contactform",
+  name: 'ContactForm',
+  props: {
+    contrast: {
+      type: Boolean,
+      required: false,
+    },
+  },
   data() {
     return {
-      form: {
-        subject: "Новая заявка с сайта radar-online.ru",
-        isSent: false,
-        url: "/process.php",
-        data: [
-          {
-            label: "Имя",
-            data: ""
-          },
-          {
-            label: "Телефон",
-            data: ""
-          },
-          {
-            label: "Электронная почта",
-            phone: ""
-          },
-          {
-            label: "Сообщение",
-            data: ""
-          }
-        ]
-      }
+      isFormSent: false,
+      formData: {
+        name: '',
+        contact: '',
+        message: '',
+      },
+      currentCity: 'moscow',
+      contactInfo: {},
     };
   },
+  created() {
+    this.getContactInfo();
+  },
   methods: {
-    submit(form, url) {
-      this.post(form, url, function(result) {
-        if (result) {
-          form.data.forEach(function(field) {
-            field.data = "";
-          });
-          form.isSent = true;
-          setTimeout(function() {
-            form.isSent = false;
-          }, 4000);
-        }
-        if (yaCounter1653081) {
-          yaCounter1653081.reachGoal("order-submit");
-          return true;
-        }
-      });
+    onSubmit() {
+      console.log('submit');
     },
-    post(data, url, success) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", url, !0);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.send(JSON.stringify(data));
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          success(xhr.responseText);
+    changeCity(city) {
+      this.currentCity = city;
+      this.$emit('change-city', city);
+    },
+    async getContactInfo() {
+      this.contactInfo = await getSingletonByKey('locations');
+    },
+    getContactInfoByKey(key) {
+      const { contactInfo, currentCity } = this;
+      const keyByCity = currentCity + '_' + key;
+      return contactInfo[keyByCity];
+    },
+    formatPhone(phone) {
+      if (phone) {
+        const match = phone.match(/^(\d)(\d{3})(\d{3})(\d{2})(\d{2})$/);
+        if (match) {
+          return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
         }
-      };
-    }
-  }
+        return null;
+      }
+    },
+    // при успешной отправке формы отправляем событие в метрику,
+    //     if (yaCounter1653081) {
+    //       yaCounter1653081.reachGoal('order-submit');
+    //       return true;
+    //     }
+    //   });
+    // },
+  },
 };
 </script>
 
 <style lang="scss">
-.form-block {
-  margin-top: 50px;
-  display: flex;
-  flex-flow: row wrap;
-}
+@import '~@/styles/shared/_globals.scss';
 
-.contacts-form {
-  margin-top: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-flow: row wrap;
-}
+.contact-form {
+  $block: &;
+  padding-bottom: 56px;
 
-.contacts-form__left {
-  color: #292e35;
-  vertical-align: top;
-  display: flex;
-  flex-flow: row wrap;
-  padding: 8px;
-}
+  &__title {
+    margin: 0;
+    font-size: $--font-size-180;
+    line-height: 1;
+    font-weight: normal;
 
-.contacts-form__left-text {
-  margin-bottom: 15px;
-  @media screen and (min-width: 922px) {
-    padding-right: 40%;
+    margin-bottom: 34px;
+    @include from('md') {
+      max-width: 100%;
+      margin-bottom: 70px;
+    }
+    @include from('lg') {
+      font-size: $--font-size-200;
+    }
+    @include from('xl') {
+      margin-bottom: 100px;
+    }
   }
-}
 
-@media screen and (min-width: 922px) {
-  .contacts-form__left {
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    max-width: 25%;
-    margin-top: 20px;
-  }
-}
+  &__section {
+    margin: 30px 0;
+    line-height: 1.2;
 
-@media screen and (min-width: 1200px) {
-  .contacts-block__content {
-    padding: 70px 0 80px 0;
-  }
-}
-
-.bb-text {
-  margin-bottom: 25px;
-}
-
-.contacts-form__right {
-  width: 100%;
-  margin: 30px 8px;
-  display: flex;
-  flex-flow: row wrap;
-  vertical-align: top;
-  box-sizing: border-box;
-}
-
-.form-title {
-  font-size: 36px;
-  font-weight: normal;
-  font-family: "ProximaNova-Light";
-  color: #292e35;
-}
-
-.small-input-block {
-  width: 100%;
-  box-sizing: border-box;
-  margin: 15px 0;
-  vertical-align: top;
-}
-
-.small-input-block.nm {
-  margin-left: 0;
-}
-
-.small-input,
-.cont-textarea {
-  padding: 5px;
-  border: 1px solid #999;
-  width: 100%;
-  border-radius: 0;
-  box-sizing: border-box;
-}
-
-textarea {
-  border: 1px solid #999;
-}
-
-.input-label {
-  color: #292e35;
-  margin-bottom: 10px;
-}
-
-.input-label.star {
-  position: relative;
-  display: inline-block;
-
-  &:before {
-    content: "*";
-    color: #e30613;
     font-size: 22px;
-    font-family: "ProximaNova-Bold";
-    position: absolute;
-    right: -12px;
-    top: 0;
+    @include from('md') {
+      font-size: 26px;
+    }
   }
-}
 
-.contacts-inputs {
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-.contacts-textarea {
-  width: 100%;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-.contacts-submit__tip {
-  color: #999;
-  font-size: 12px;
-
-  &--last {
-    margin-top: 1em;
+  a {
+    color: inherit;
   }
-}
 
-.contacts-submit__button {
-  display: block;
-  padding: 10px 20px;
-  color: #292e35;
-  font-size: 14px;
-  border-radius: 30px;
-  border: 1px solid #e30613;
-  margin: 15px 0;
-  transition: all 0.3s linear;
-  letter-spacing: 2px;
-  background: #fff;
-  cursor: pointer;
-}
+  &__toggle {
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: inherit;
+    transition: 0.2s ease-in-out;
+    padding-top: 14px;
+    margin-top: -14px;
 
-.contacts-submit__button:hover {
-  color: #fff;
-  background-color: #e30613;
-}
+    background: linear-gradient(
+        90.86343deg,
+        $--color-brand 50%,
+        $--color-brand 50%
+      )
+      top left/0% 2px no-repeat;
 
-.grey {
-  color: #959595;
-}
+    $active-background: linear-gradient(
+        90.86343deg,
+        $--color-brand 50%,
+        $--color-brand 50%
+      )
+      top left/100% 2px no-repeat;
 
-.form-result {
-  width: 100%;
-  margin-top: 10px;
-}
+    &:hover {
+      background: $active-background;
+    }
 
-@media screen and (min-width: 680px) {
-  .small-input-block {
-    width: 30%;
-    margin-right: 2.8%;
-    display: inline-block;
+    &--active {
+      background: $active-background;
+    }
+
+    & + & {
+      margin-left: 40px;
+    }
   }
-  .small-input-block:last-child {
-    margin-right: 0;
+
+  &__subtitle {
+    margin: 0;
+    margin-bottom: 20px;
+    @include from('lg') {
+      margin-bottom: 66px;
+    }
+    font-size: $--font-size-100;
+    font-weight: normal;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1;
+    display: block;
+    color: inherit;
   }
-  .contacts-submit {
+
+  &__social {
     display: flex;
     justify-content: space-between;
-    width: 99%;
-  }
-  .contacts-textarea {
-    width: 99%;
-  }
-}
+    margin: 0;
+    margin-top: 40px;
 
-@media screen and (min-width: 922px) {
-  .contacts-form__right {
-    width: 73%;
-  }
-  .contacts-textarea {
-    width: 98%;
-  }
-  .contacts-submit {
-    width: 98%;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .contacts-form__right {
-    width: 75%;
-    margin: 30px 0;
-  }
-  .form-title {
-    margin-bottom: 45px;
-  }
-  .small-input-block {
-    width: 32%;
-    margin-right: 1%;
-  }
-  .contacts-textarea {
-    width: 99%;
-  }
-  .contacts-submit {
-    width: 99%;
-  }
-}
-
-.home-form {
-  &.contacts-form__right {
-    margin-left: 8px;
-    max-width: 100%;
-    width: auto;
-    box-sizing: border-box;
-    @media screen and (min-width: 680px) {
-      margin: 0 15px;
-    }
-    @media screen and (min-width: 1200px) {
-      margin-left: 0;
+    @include from('xl') {
+      margin-top: 0;
     }
   }
 
-  .form-title {
-    margin-bottom: 15px;
+  &__social-link {
+    display: block;
+    font-size: 18px;
+    @include from('md') {
+      font-size: 22px;
+    }
+
+    &:hover {
+      color: $--color-brand;
+    }
   }
 
-  .contacts-form__left-text {
-    width: 100%;
+  &__text {
+    margin: 0;
+    margin-bottom: 22px;
   }
-}
+  &__link {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      color: $--color-brand;
+    }
+  }
+  .form {
+    margin-top: 72px;
+    @include from('lg') {
+      margin-top: 106px;
+    }
+    @include from('xl') {
+      margin-top: 0;
+    }
+    &__title {
+      max-width: 60%;
+      margin-bottom: 34px;
+      @include from('md') {
+        max-width: 100%;
+        margin-bottom: 70px;
+      }
+      @include from('xl') {
+        margin-bottom: 100px;
+      }
+    }
+    &__field {
+      margin-bottom: $--gutter-xs;
+      @include from('lg') {
+        margin-bottom: $--gutter-lg;
+      }
+    }
 
-.text-link {
-  color: #e30613;
-  color: #999;
+    &__input {
+      box-sizing: border-box;
+      width: 100%;
+      font-size: $--font-size-100;
+      line-height: 1;
+      border: 2px solid $--color-text;
+      padding: 14px 14px 16px;
+      height: 52px;
+      border-radius: 0;
+      box-shadow: none;
 
-  &:hover {
-    color: #292e35;
-    text-decoration: underline;
+      @include from('lg') {
+        padding: 20px 20px 24px;
+        height: 74px;
+        font-size: $--font-size-120;
+      }
+
+      &--textarea {
+        resize: vertical;
+        height: auto;
+      }
+
+      &--button {
+        background-color: $--color-brand;
+        border-color: $--color-brand;
+        color: $--color-text--contrast;
+        cursor: pointer;
+        letter-spacing: $--letter-spacing;
+        text-transform: uppercase;
+        padding: 12px;
+      }
+    }
+
+    &__terms {
+      font-size: $--font-size-80;
+      color: $--color-text--muted;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    &__link {
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &--contrast {
+    padding-top: 85px;
+    background-color: $--color-background--contrast;
+    color: $--color-text--contrast;
+
+    #{$block}__person {
+      color: $--color-text--muted;
+    }
+
+    .form__input {
+      background-color: $--color-background--contrast;
+      border: 2px solid $--color-text--contrast;
+      color: $--color-text--muted;
+
+      &--button {
+        color: $--color-text--contrast;
+      }
+    }
+
+    // #{$block}
   }
 }
 </style>

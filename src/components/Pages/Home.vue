@@ -6,14 +6,13 @@
     </video>
     <div class="main__content">
       <h1 class="main__title">
-        За каждым проектом мы видим цели и мечты, ценим человеческие отношения
+        За&nbsp;каждым проектом мы&nbsp;видим&nbsp;цели и&nbsp;мечты, ценим человеческие отношения
       </h1>
       <div class="main__bottom">
         <div class="main__services">
           Мы занимаемся
           <router-link class="main__link link" to="Services">брендингом</router-link>, <br />
-          <router-link class="main__link link" to="Services">дизайном</router-link>
-          и
+          <router-link class="main__link link" to="Services">дизайном</router-link> и
           <router-link class="main__link link" to="Services">рекламой</router-link>
         </div>
         <div class="main__social-media">
@@ -52,7 +51,7 @@ export default {
   box-sizing: border-box;
   height: 100vh;
   z-index: -1;
-  background-color: $color-primary;
+  background-color: $--color-brand;
 
   &__video,
   &__image {
@@ -115,7 +114,7 @@ export default {
     }
   }
   &__link {
-    color: $color-text;
+    color: $--color-text;
     display: inline-block;
     position: relative;
     &:after {
@@ -125,7 +124,7 @@ export default {
       right: 0;
       top: 100%;
       height: 2px;
-      background: $color-text;
+      background: $--color-text;
       transition: 612ms $--ease-in-out-cubic transform;
       transform-origin: left center;
     }
@@ -136,14 +135,14 @@ export default {
 }
 .social-link {
   font-size: 22px;
-  color: $color-text--contrast;
+  color: $--color-text--contrast;
 
   & + & {
     margin-left: 54px;
   }
 
   &:hover {
-    color: $color-text--contrast-muted;
+    color: $--color-text--contrast;
   }
 }
 </style>
