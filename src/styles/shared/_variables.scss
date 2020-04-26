@@ -31,6 +31,7 @@ $--column: 'col';
 $--offset: 'offset';
 
 $--font-size-80: 18px;
+$--font-size-90: 20px;
 $--font-size-100: 22px;
 $--font-size-120: 26px;
 $--font-size-140: 30px;
@@ -47,6 +48,9 @@ $--color-text--contrast: #ffffff;
 $--color-text--contrast-muted: #ffc59e;
 $--color-background: #ffffff;
 
-$--ease-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
+$--timing-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
+$--duration: 612ms;
+$--duration-fast: 480ms;
+$--delay: 50ms;
 $--color-background: $--color-text--contrast;
 $--color-background--contrast: $--color-text;

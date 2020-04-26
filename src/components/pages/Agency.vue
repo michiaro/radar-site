@@ -14,18 +14,10 @@
         </div>
         <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
           <div class="agency__logos">
-            <a
-              class="agency__logo"
-              href="http://russianbranding.ru/"
-              target="_blank"
-            >
+            <a class="agency__logo" href="http://russianbranding.ru/" target="_blank">
               <img :src="abkr" alt="АБКР" />
             </a>
-            <a
-              class="agency__logo"
-              href="http://www.akarussia.ru/"
-              target="_blank"
-            >
+            <a class="agency__logo" href="http://www.akarussia.ru/" target="_blank">
               <img :src="akar" alt="АКАР" />
             </a>
             <div class="agency__logo-description">
@@ -37,18 +29,11 @@
 
       <div class="agency__team">
         <div class="row">
-          <div
-            v-for="teammate in team"
-            :key="teammate.slug"
-            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
-          >
+          <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
             <div class="teammate">
-              <img
-                :src="BASE_URL + teammate.photo.path"
-                :alt="teammate.name"
-                class="teammate__photo"
-              />
-              <div class="teammate__info">
+              <img :src="BASE_URL + teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+              <div class="teammate__overlay" />
+              <div class="teammate__summary">
                 <div class="teammate__name">
                   {{ teammate.name }}
                 </div>
@@ -59,11 +44,7 @@
             </div>
           </div>
           <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <a
-              class="agency__join-us join-us"
-              href="https://chelyabinsk.hh.ru/employer/1156087"
-              target="_blank"
-            >
+            <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
               <h2 class="join-us__title">
                 вакансии
               </h2>
@@ -227,55 +208,70 @@ export default {
   &__photo {
     width: 100%;
   }
-  &__info {
+
+  $overlay-height: 100px;
+
+  &__overlay {
     @include from('xl') {
       position: absolute;
       left: 0;
       bottom: 0;
-      height: 82px;
-      padding: 22px 0 13px;
+      right: 0;
+      height: $overlay-height;
+      background-color: $--color-background;
+      transition-timing-function: $--timing-in-out-cubic;
+      transition-duration: $--duration-fast;
+      transition-property: transform;
+      transform: translateY(100%);
+    }
+  }
+
+  &__summary {
+    @include from('xl') {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: $overlay-height;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       box-sizing: border-box;
       width: 100%;
-      background-color: $--color-background;
+      transition-timing-function: $--timing-in-out-cubic, $--timing-in-out-cubic;
+      transition-duration: $--duration-fast, $--duration-fast;
+      transition-property: transform, opacity;
       transform: translateY(100%);
-      transition: all 0.5s ease-in-out;
-    }
-  }
-  &__name {
-    font-size: 20px;
-    color: $--color-text;
-    margin-top: 8px;
-    @include from('xl') {
-      font-size: 25px;
-
-      transition: all 0.5s 0.2s ease-in-out;
       opacity: 0;
-      transform: translateY(100%);
     }
   }
+
+  &__name {
+    margin-top: 8px;
+    font-size: $--font-size-90;
+    color: $--color-text;
+    @include from('xl') {
+      margin-top: 0;
+      font-size: $--font-size-140;
+    }
+  }
+
   &__position {
-    margin-top: 3px;
-    font-size: 17px;
+    margin: 3px 0;
+    font-size: $--font-size-80;
     color: $--color-text--muted;
     @include from('xl') {
-      font-size: 18px;
       color: $--color-text;
-
-      transition: all 0.5s 0.3s ease-in-out;
-      opacity: 0;
-      transform: translateY(100%);
     }
   }
+
   @include from('xl') {
     &:hover {
-      #{$teammate}__info {
+      #{$teammate}__overlay {
         transform: translateY(0);
       }
-      #{$teammate}__name {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      #{$teammate}__position {
+      #{$teammate}__summary {
+        transition-delay: $--delay, $--delay;
+        transition-duration: $--duration, $--duration;
         transform: translateY(0);
         opacity: 1;
       }

@@ -125,7 +125,9 @@ export default {
       top: 100%;
       height: 2px;
       background: $--color-text;
-      transition: 612ms $--ease-in-out-cubic transform;
+      transition-timing-function: $--timing-in-out-cubic;
+      transition-duration: $--duration;
+      transition-property: transform;
       transform-origin: left center;
     }
     &:hover:after {
