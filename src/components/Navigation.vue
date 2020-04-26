@@ -42,6 +42,11 @@ export default {
 
   @include from('xl') {
     flex-direction: row;
+    justify-content: space-between;
+    margin: 0 $--gutter-xl * -0.5;
+    padding-right: $--gutter-xl * 0.5;
+    width: 50%;
+    box-sizing: border-box;
   }
 
   &__link {
@@ -68,7 +73,6 @@ export default {
       margin-top: 8px;
       @include from('xl') {
         margin-top: 0;
-        margin-left: 176px;
       }
     }
   }

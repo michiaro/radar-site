@@ -260,6 +260,7 @@ export default {
     font-size: $--font-size-80;
     color: $--color-text--muted;
     @include from('xl') {
+      margin-top: 8px;
       color: $--color-text;
     }
   }
