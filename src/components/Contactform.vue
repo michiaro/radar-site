@@ -27,21 +27,15 @@
                     Челябинск
                   </button>
                 </div>
-                <p
-                  class="contact-form__text"
-                  v-html="getContactInfoByKey('address')"
-                />
+                <p class="contact-form__text" v-html="getContactInfoByKey('address')" />
                 <p class="contact-form__text">
-                  <a
-                    class="contact-form__link"
-                    :href="`tel:+${getContactInfoByKey('phone')}`"
-                    >{{ formatPhone(getContactInfoByKey('phone')) }}</a
+                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">{{
+                    formatPhone(getContactInfoByKey('phone'))
+                  }}</a
                   ><br />
-                  <a
-                    class="contact-form__link"
-                    :href="`mailto:${getContactInfoByKey('email')}`"
-                    >{{ getContactInfoByKey('email') }}</a
-                  >
+                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('email')}`">{{
+                    getContactInfoByKey('email')
+                  }}</a>
                 </p>
               </div>
             </div>
@@ -49,16 +43,13 @@
               <div class="contact-form__section">
                 <h2 class="contact-form__subtitle">Заказ</h2>
                 <p class="contact-form__text">
-                  <a
-                    class="contact-form__link"
-                    :href="`tel:+${getContactInfoByKey('contactPhone')}`"
-                    >{{ formatPhone(getContactInfoByKey('contactPhone')) }}</a
+                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('contactPhone')}`">{{
+                    formatPhone(getContactInfoByKey('contactPhone'))
+                  }}</a
                   ><br />
-                  <a
-                    class="contact-form__link"
-                    :href="`mailto:${getContactInfoByKey('contactEmail')}`"
-                    >{{ getContactInfoByKey('contactEmail') }}</a
-                  >
+                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('contactEmail')}`">{{
+                    getContactInfoByKey('contactEmail')
+                  }}</a>
                 </p>
                 <p class="contact-form__text contact-form__person">
                   {{ getContactInfoByKey('name') }}
@@ -67,27 +58,16 @@
                 </p>
               </div>
             </div>
-            <div
-              class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6"
-            >
+            <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising"
-                    target="_blank"
-                    class="contact-form__social-link"
+                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
                     >INSTAGRAM</a
                   >
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising"
-                    target="_blank"
-                    class="contact-form__social-link"
+                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
                     >FACEBOOK</a
                   >
-                  <a
-                    href="https://vk.com/radaradvertising"
-                    target="_blank"
-                    class="contact-form__social-link"
+                  <a href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
                     >VKONTAKTE</a
                   >
                 </p>
@@ -103,22 +83,12 @@
             <div class="row">
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
-                  <input
-                    v-model="formData.name"
-                    type="text"
-                    class="form__input"
-                    placeholder="Ваше имя"
-                  />
+                  <input v-model="formData.name" type="text" class="form__input" placeholder="Ваше имя" />
                 </div>
               </div>
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
-                  <input
-                    v-model="formData.contact"
-                    type="text"
-                    class="form__input"
-                    placeholder="E-mail или телефон"
-                  />
+                  <input v-model="formData.contact" type="text" class="form__input" placeholder="E-mail или телефон" />
                 </div>
               </div>
               <div class="col col-xs-2 col-sm-4 col-lg-12">
@@ -276,19 +246,9 @@ export default {
     padding-top: 14px;
     margin-top: -14px;
 
-    background: linear-gradient(
-        90.86343deg,
-        $--color-brand 50%,
-        $--color-brand 50%
-      )
-      top left/0% 2px no-repeat;
+    background: linear-gradient(90.86343deg, $--color-brand 50%, $--color-brand 50%) top left/0% 2px no-repeat;
 
-    $active-background: linear-gradient(
-        90.86343deg,
-        $--color-brand 50%,
-        $--color-brand 50%
-      )
-      top left/100% 2px no-repeat;
+    $active-background: linear-gradient(90.86343deg, $--color-brand 50%, $--color-brand 50%) top left/100% 2px no-repeat;
 
     &:hover {
       background: $active-background;

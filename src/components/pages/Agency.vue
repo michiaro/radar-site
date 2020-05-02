@@ -31,7 +31,7 @@
         <div class="row">
           <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
             <div class="teammate">
-              <img :src="BASE_URL + teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+              <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
               <div class="teammate__overlay" />
               <div class="teammate__summary">
                 <div class="teammate__name">
@@ -67,9 +67,7 @@
 <script>
 import abkr from '@/images/ABKR-logo.png';
 import akar from '@/images/AKAR-logo.png';
-
-import { BASE_URL } from '@/settings.js';
-import { getCollectionByKey, getSingletonByKey } from '@/api/index.js';
+import { getCollectionByKey } from '@/api/index.js';
 
 import PageFooter from '@/components/PageFooter.vue';
 
@@ -82,24 +80,26 @@ export default {
     return {
       abkr,
       akar,
-      BASE_URL,
-      aboutUs: {},
+      isLoading: true,
       team: [],
     };
   },
+  computed: {
+    aboutUs() {
+      return this.$store.state.staticData.singletones.aboutUs;
+    },
+  },
   created() {
-    this.getAgencyInfo();
-    this.getTeam();
+    this.fetchTeam();
   },
   methods: {
-    async getAgencyInfo() {
-      this.aboutUs = await getSingletonByKey('aboutUs');
-    },
-    async getTeam() {
+    async fetchTeam() {
+      this.isLoading = true;
       this.team = await getCollectionByKey({
         key: 'team',
-        filterOptions: { inTeam: true },
+        filter: { inTeam: true },
       });
+      this.isLoading = false;
     },
   },
 };
