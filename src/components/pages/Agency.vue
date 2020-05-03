@@ -29,30 +29,40 @@
 
       <div class="agency__team">
         <div class="row">
-          <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <div class="teammate">
-              <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
-              <div class="teammate__overlay" />
-              <div class="teammate__summary">
-                <div class="teammate__name">
-                  {{ teammate.name }}
-                </div>
-                <div class="teammate__position">
-                  {{ teammate.position }}
+          <template v-if="isLoading">
+            <div v-for="i in 12" :key="i" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+              <div class="teammate teammate--dummy loading" />
+            </div>
+          </template>
+          <template v-else-if="team.length !== 0">
+            <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+              <div class="teammate">
+                <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+                <div class="teammate__overlay" />
+                <div class="teammate__summary">
+                  <div class="teammate__name">
+                    {{ teammate.name }}
+                  </div>
+                  <div class="teammate__position">
+                    {{ teammate.position }}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
-              <h2 class="join-us__title">
-                вакансии
-              </h2>
-              <div class="join-us__description">
-                Стать частью <br />
-                нашей команды&nbsp;→
-              </div>
-            </a>
+            <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+              <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
+                <h2 class="join-us__title">
+                  вакансии
+                </h2>
+                <div class="join-us__description">
+                  Стать частью <br />
+                  нашей команды&nbsp;→
+                </div>
+              </a>
+            </div>
+          </template>
+          <div v-else class="col col-xs-2">
+            Нет данных!
           </div>
         </div>
       </div>
@@ -204,6 +214,15 @@ export default {
   position: relative;
   overflow: hidden;
   margin-bottom: 30px;
+
+  &--dummy {
+    background: $--color-text--muted;
+    &:after {
+      content: '';
+      display: block;
+      padding-bottom: 114.54%;
+    }
+  }
 
   &__photo {
     width: 100%;

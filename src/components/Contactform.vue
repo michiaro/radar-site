@@ -8,44 +8,22 @@
             <div class="col col-xs-2 col-sm-2 col-lg-6">
               <div class="contact-form__section">
                 <div class="contact-form__subtitle">
-                  <button
-                    class="contact-form__toggle"
-                    :class="{
-                      'contact-form__toggle--active': currentCity === 'moscow',
-                    }"
-                    @click="handleCityToggle('moscow')"
-                  >
+                  <button :class="getToggleCityClass('moscow')" @click="handleCityToggle('moscow')">
                     Москва
                   </button>
-                  <button
-                    class="contact-form__toggle"
-                    :class="{
-                      'contact-form__toggle--active': currentCity === 'chelly',
-                    }"
-                    @click="handleCityToggle('chelly')"
-                  >
+                  <button :class="getToggleCityClass('chelly')" @click="handleCityToggle('chelly')">
                     Челябинск
                   </button>
                 </div>
-                <p
-                  class="contact-form__text"
-                  :class="{
-                    'contact-form__content--animated': isContactContentAnimated,
-                  }"
-                  v-html="getContactInfoByKey('address')"
-                />
-                <p
-                  class="contact-form__text contact-form__content"
-                  :class="{
-                    'contact-form__content--animated': isContactContentAnimated,
-                  }"
-                >
-                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">{{
-                    formatPhone(getContactInfoByKey('phone'))
-                  }}</a><br />
-                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('email')}`">{{
-                    getContactInfoByKey('email')
-                  }}</a>
+                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }" v-html="getContactInfoByKey('address')" />
+                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }">
+                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">
+                    {{ formatPhone(getContactInfoByKey('phone')) }}
+                  </a>
+                  <br />
+                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('email')}`">
+                    {{ getContactInfoByKey('email') }}
+                  </a>
                 </p>
               </div>
             </div>
@@ -53,12 +31,13 @@
               <div class="contact-form__section">
                 <h2 class="contact-form__subtitle">Заказ</h2>
                 <p class="contact-form__text">
-                  <a class="contact-form__link" :href="`tel:+${contactInfo.contactPhone}`">{{
-                    formatPhone(contactInfo.contactPhone)
-                  }}</a><br />
-                  <a class="contact-form__link" :href="`mailto:${contactInfo.contactEmail}`">{{
-                    contactInfo.contactEmail
-                  }}</a>
+                  <a class="contact-form__link" :href="`tel:+${contactInfo.contactPhone}`">
+                    {{ formatPhone(contactInfo.contactPhone) }}
+                  </a>
+                  <br />
+                  <a class="contact-form__link" :href="`mailto:${contactInfo.contactEmail}`">
+                    {{ contactInfo.contactEmail }}
+                  </a>
                 </p>
                 <p class="contact-form__text contact-form__person">
                   {{ contactInfo.name }}
@@ -70,15 +49,9 @@
             <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                  >INSTAGRAM</a>
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                  >FACEBOOK</a>
-                  <a
-                    href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
-                  >VKONTAKTE</a>
+                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">INSTAGRAM</a>
+                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">FACEBOOK</a>
+                  <a href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link">VKONTAKTE</a>
                 </p>
               </div>
             </div>
@@ -134,9 +107,6 @@
       </div>
     </div>
   </div>
-  <!-- .form-result#result(v-if="form.isSent")
-        h2.form-title Сообщение отправлено
-        | Ваше сообщение отправлено. Спасибо! -->
 </template>
 
 <script>
@@ -169,6 +139,9 @@ export default {
   methods: {
     onSubmit() {
       console.log('submit');
+    },
+    getToggleCityClass(city) {
+      return `contact-form__toggle${this.currentCity === city ? ' contact-form__toggle--active' : ''}`;
     },
     changeCity(city) {
       this.currentCity = city;

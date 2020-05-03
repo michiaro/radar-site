@@ -32,3 +32,14 @@ ul {
   color: $--color-text--contrast;
   background: $--color-brand;
 }
+
+.loading {
+  animation: loading 1s ease-in-out infinite;
+  background: #ccc;
+}
+
+@keyframes loading {
+  50% {
+    opacity: 0.62;
+  }
+}

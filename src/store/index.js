@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
-import staicData from '@/store/modules/staticData.js';
+import staticData from '@/store/modules/staticData.js';
 
 Vue.use(Vuex);
 
@@ -11,12 +11,12 @@ const vuexPersist = new VuexPersist({
   key: 'staticData',
   strictMode: debug,
   storage: window.localStorage,
-  modules: ['staicData'],
+  modules: ['staticData'],
 });
 
 const store = new Vuex.Store({
   modules: {
-    staicData,
+    staticData,
   },
   strict: debug,
   mutations: {
