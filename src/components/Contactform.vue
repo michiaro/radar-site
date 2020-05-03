@@ -13,7 +13,7 @@
                     :class="{
                       'contact-form__toggle--active': currentCity === 'moscow',
                     }"
-                    @click="changeCity('moscow')"
+                    @click="handleCityToggle('moscow')"
                   >
                     Москва
                   </button>
@@ -22,17 +22,27 @@
                     :class="{
                       'contact-form__toggle--active': currentCity === 'chelly',
                     }"
-                    @click="changeCity('chelly')"
+                    @click="handleCityToggle('chelly')"
                   >
                     Челябинск
                   </button>
                 </div>
-                <p class="contact-form__text" v-html="getContactInfoByKey('address')" />
-                <p class="contact-form__text">
+                <p
+                  class="contact-form__text"
+                  :class="{
+                    'contact-form__content--animated': isContactContentAnimated,
+                  }"
+                  v-html="getContactInfoByKey('address')"
+                />
+                <p
+                  class="contact-form__text contact-form__content"
+                  :class="{
+                    'contact-form__content--animated': isContactContentAnimated,
+                  }"
+                >
                   <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">{{
                     formatPhone(getContactInfoByKey('phone'))
-                  }}</a
-                  ><br />
+                  }}</a><br />
                   <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('email')}`">{{
                     getContactInfoByKey('email')
                   }}</a>
@@ -43,33 +53,32 @@
               <div class="contact-form__section">
                 <h2 class="contact-form__subtitle">Заказ</h2>
                 <p class="contact-form__text">
-                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('contactPhone')}`">{{
-                    formatPhone(getContactInfoByKey('contactPhone'))
-                  }}</a
-                  ><br />
-                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('contactEmail')}`">{{
-                    getContactInfoByKey('contactEmail')
+                  <a class="contact-form__link" :href="`tel:+${contactInfo.contactPhone}`">{{
+                    formatPhone(contactInfo.contactPhone)
+                  }}</a><br />
+                  <a class="contact-form__link" :href="`mailto:${contactInfo.contactEmail}`">{{
+                    contactInfo.contactEmail
                   }}</a>
                 </p>
                 <p class="contact-form__text contact-form__person">
-                  {{ getContactInfoByKey('name') }}
+                  {{ contactInfo.name }}
                   <br />
-                  {{ getContactInfoByKey('position') }}
+                  {{ contactInfo.position }}
                 </p>
               </div>
             </div>
             <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                    >INSTAGRAM</a
-                  >
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                    >FACEBOOK</a
-                  >
-                  <a href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
-                    >VKONTAKTE</a
-                  >
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
+                  >INSTAGRAM</a>
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
+                  >FACEBOOK</a>
+                  <a
+                    href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
+                  >VKONTAKTE</a>
                 </p>
               </div>
             </div>
@@ -151,6 +160,7 @@ export default {
       },
       currentCity: 'moscow',
       contactInfo: {},
+      isContactContentAnimated: false,
     };
   },
   created() {
@@ -180,6 +190,21 @@ export default {
         }
         return null;
       }
+    },
+    animateContactContent() {
+      this.isContactContentAnimated = true;
+
+      setTimeout(() => {
+        this.isContactContentAnimated = false;
+      }, 500);
+    },
+    handleCityToggle(city) {
+      this.animateContactContent();
+
+      setTimeout(() => {
+        this.currentCity = city;
+        this.$emit('change-city', city);
+      }, 240); // меняем город во время анимации
     },
     // при успешной отправке формы отправляем событие в метрику,
     //     if (yaCounter1653081) {
@@ -242,20 +267,28 @@ export default {
     cursor: pointer;
     text-transform: uppercase;
     color: inherit;
-    transition: 0.2s ease-in-out;
-    padding-top: 14px;
-    margin-top: -14px;
+    position: relative;
 
-    background: linear-gradient(90.86343deg, $--color-brand 50%, $--color-brand 50%) top left/0% 2px no-repeat;
-
-    $active-background: linear-gradient(90.86343deg, $--color-brand 50%, $--color-brand 50%) top left/100% 2px no-repeat;
-
-    &:hover {
-      background: $active-background;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(100% + 14px);
+      height: 2px;
+      background: $--color-brand;
+      transition-timing-function: $--timing-in-out-cubic;
+      transition-duration: $--duration;
+      transition-property: transform;
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+    &:hover:after {
+      transform: scaleX(1);
     }
 
-    &--active {
-      background: $active-background;
+    &--active:after {
+      transform: scaleX(1);
     }
 
     & + & {
@@ -311,6 +344,28 @@ export default {
       color: $--color-brand;
     }
   }
+
+  &__content {
+    &--animated {
+      animation: contactContentAnimation $--duration-fast $--timing-in-out-cubic;
+
+      @keyframes contactContentAnimation {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(10px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   .form {
     margin-top: 72px;
     @include from('lg') {

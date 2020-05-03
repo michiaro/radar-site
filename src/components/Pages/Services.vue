@@ -1,123 +1,183 @@
 <template>
-  <h1>Services</h1>
-  <!-- .wrapper(v-if="worksIsReady && tagsIsReady")
-    .block
-      .content
-        .devider.page-wrapper
-          h1.common-title.services-title Услуги
-          nav.works-menu.services-menu
-            ul.works-menu__list.services-menu__list
-              li.works-menu__item.services-menu__item(
-                v-for="tag in this.content.tags",
-                v-if="tag.inServices",
-                @click="setFilterId(tag.slug)",
-              )
-                //- img.services-menu__icon(:src="'https://radar-online.ru'+tag.serviceIcon.path")
-                span.works-menu__link.services-menu__link(
-                  :key="tag.slug",
-                  :class=" { 'works-menu__link--active' : tag.slug == filterId} ",
-                ) 
-                  |{{ tag.title }}
-        Service(:filterId = "filterId")
-        a.button.services__button(href="#contact-form") Оставить заявку
-        .works-block
-          .works-pack
-            WorkItem(
-              v-for="(work, index) in filteredWorks",
-              v-if="work.isPublished"
-              :key="work.slug",
-              :work="work"
-            )
-    .block
-      .content
-        Contactform.home-form#contact-form -->
+  <div class="services">
+    <div class="grid">
+      <div class="row">
+        <div class="services__item">
+          <div class="service" @mouseenter="handleHover('campaign')">
+            <video
+              ref="campaignVideo"
+              class="service__video"
+              muted="muted"
+              playsinline
+              preload="auto"
+            >
+              <source :src="dummyVideo" type="video/mp4" />
+            </video>
+            <div class="service__content">
+              <h2 class="service__title">
+                Рекламные кампании
+              </h2>
+              <p class="service__description">
+                Создаем и&nbsp;проводим рекламные кампании во&nbsp;всех
+                медиасредах
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="services__item">
+          <div class="service" @mouseenter="handleHover('branding')">
+            <video
+              ref="brandingVideo"
+              class="service__video"
+              muted="muted"
+              playsinline
+              preload="auto"
+            >
+              <source :src="dummyVideo" type="video/mp4" />
+            </video>
+            <div class="service__content">
+              <h2 class="service__title">
+                Брендинг
+              </h2>
+              <p class="service__description">
+                Создаем лидерские бренды
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="services__item">
+          <div class="service" @mouseenter="handleHover('digital')">
+            <video
+              ref="digitalVideo"
+              class="service__video"
+              muted="muted"
+              playsinline
+              preload="auto"
+            >
+              <source :src="dummyVideo" type="video/mp4" />
+            </video>
+            <div class="service__content">
+              <h2 class="service__title">
+                SMM+Digital
+              </h2>
+              <p class="service__description">
+                Сопровождаем бренды и&nbsp;продукты в&nbsp;цифровых средах
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-xs-2 col-lg-2 col-xl-8">
+          <h1 class="services__title">
+            Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
+            базируется на&nbsp;четырех ключевых опорах:
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-2">
+          Creative
+        </div>
+        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-3">
+          Design
+        </div>
+        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-1">
+          Strategy
+        </div>
+        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-3">
+          Innovation
+        </div>
+      </div>
+    </div>
+
+    <page-footer />
+  </div>
 </template>
 
 <script>
-import api from '../../api/';
+import { getCollectionByKey } from '@/api/index.js';
+import PageFooter from '@/components/PageFooter.vue';
+import dummyVideo from '@/video/service-dummy-video.mp4';
 
 export default {
   name: 'Services',
   components: {
-    // Contactform,
-    // WorkItem,
-    // Service,
+    PageFooter,
   },
   data() {
     return {
-      // content: {
-      //   works: [],
-      //   tags: [],
-      //   clients: [],
-      //   team: [],
-      // },
-      // filterId: this.$route.query.filter,
-      // worksIsReady: false,
-      // tagsIsReady: false,
-      // swiperOption: {
-      //   loop: true,
-      //   slidesPerView: 1,
-      //   autoplay: {
-      //     delay: 4000,
-      //     disableOnInteraction: false,
-      //   },
-      //   pagination: {
-      //     el: '.swiper-pagination',
-      //     clickable: true,
-      //   },
-      //   navigation: {
-      //     nextEl: '.swiper-button-next',
-      //     prevEl: '.swiper-button-prev',
-      //   },
-      //   preloadImages: false,
-      //   lazy: true,
-      // },
+      dummyVideo,
     };
   },
-  // computed: {
-  //   filteredWorks() {
-  //     if (!this.$route.query.filter) {
-  //       return this.content.works.filter(work =>
-  //         work.tags.some(tag => tag._id == 'branding'),
-  //       );
-  //     }
-  //     var currentTag = this.content.tags.find(
-  //       tag => tag.slug === this.$route.query.filter,
-  //     );
-  //     return this.content.works.filter(work =>
-  //       work.tags.some(tag => tag._id == currentTag._id),
-  //     );
-  //   },
-  // },
-  // methods: {
-  //   setFilterId(slug) {
-  //     this.filterId = slug;
-  //     this.$router.push({
-  //       path: '/services',
-  //       query: { filter: slug },
-  //     });
-  //   },
-  // },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     api.getCollectionByKey('works').then(works => {
-  //       this.content.works = works;
-  //       this.worksIsReady = true;
-  //     });
-
-  //     api.getCollectionByKey('tags').then(tags => {
-  //       this.content.tags = tags;
-  //       this.tagsIsReady = true;
-  //     });
-
-  //     if (!this.filterId) {
-  //       this.setFilterId('branding');
-  //     }
-  //   });
-  // },
+  computed: {},
+  created() {},
+  methods: {
+    handleHover(service) {
+      const key = service + 'Video';
+      this.$refs[key].play();
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+@import '~@/styles/shared/_globals.scss';
 
+.services {
+  &__item {
+    flex-grow: 1;
+    box-sizing: border-box;
+
+    padding-right: 15px;
+    padding-left: 15px;
+
+    flex-basis: 100%;
+    max-width: 100%;
+
+    @include from('lg') {
+      flex-basis: 33.33%;
+      max-width: 33.33%;
+    }
+  }
+  &__title {
+  }
+}
+.service {
+  position: relative;
+
+  $service-padding: 14px;
+  $service-padding-top: 18px;
+
+  &__content {
+    position: absolute;
+    top: $service-padding-top;
+    left: $service-padding;
+    right: $service-padding;
+
+    letter-spacing: $--letter-spacing;
+  }
+
+  &__title {
+    font-size: $--font-size-200;
+    margin: 0;
+    margin-bottom: 20px;
+
+    @include from('lg') {
+      min-height: 156px;
+    }
+  }
+  &__description {
+    font-size: $--font-size-100;
+    line-height: 1.3;
+    margin: 0;
+  }
+  &__video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    opacity: 0.3;
+  }
+}
 </style>
