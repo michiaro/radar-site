@@ -7,6 +7,7 @@
 
 <script>
 import PageHeader from '@/components/PageHeader.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -16,14 +17,21 @@ export default {
   data() {
     return {};
   },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     setTimeout(() => {
-  //       // eslint-disable-next-line
-  //       callibriInit();
-  //     }, 500);
-  //   });
-  // },
+  mounted() {
+    this.$nextTick(async () => {
+      const { data } = await axios.get('/cockpit/getStaticData.php', {
+        params: {
+          lastUpdated: 0,
+        },
+      });
+
+      const { isUpdated, lastUpdated, singletones } = data;
+
+      if (isUpdated) {
+        this.$store.commit('setStaticData', { lastUpdated, singletones });
+      }
+    });
+  },
 };
 </script>
 

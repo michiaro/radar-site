@@ -92,7 +92,7 @@ export default {
     async getClients() {
       this.clients = await getCollectionByKey({
         key: 'clients',
-        filterOptions: { isFeatured: true },
+        filter: { isFeatured: true },
       });
     },
   },

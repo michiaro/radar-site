@@ -1,6 +1,7 @@
-import Vue from 'vue/dist/vue.js';
+import Vue from 'vue';
 import VueRouter from 'vue-router';
 import router from '@/router/index.js';
+import store from '@/store/index.js';
 import metaGuard from '@/router/metaGuard.js';
 
 import 'normalize.css';
@@ -20,7 +21,9 @@ Vue.use(VueRouter);
 // Vue.directive('lazyload', LazyLoadDirective);
 
 new Vue({
-  render: (h) => h(App),
+  el: '#app',
+  store,
   router,
+  render: (h) => h(App),
   metaGuard,
-}).$mount('#app');
+});
