@@ -193,6 +193,7 @@ export default {
     }
   }
 }
+
 .social-link {
   font-size: 22px;
   color: $--color-text--contrast-muted;

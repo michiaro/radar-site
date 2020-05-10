@@ -181,7 +181,7 @@ export default {
 
       setTimeout(() => {
         this.isContactContentAnimated = false;
-      }, 500);
+      }, 350);
     },
     handleCityToggle(city) {
       const { animateContactContent, currentCity } = this;
@@ -353,7 +353,7 @@ export default {
 
   &__content {
     &--animated {
-      animation: contactContentAnimation $--duration-700 $--timing-in-out-cubic;
+      animation: contactContentAnimation $--duration-1000 $--timing-in-out-cubic;
 
       @keyframes contactContentAnimation {
         0% {
