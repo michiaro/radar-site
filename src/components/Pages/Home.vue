@@ -2,14 +2,14 @@
   <div class="main">
     <img class="main__image" :src="backgroundImage" alt="Radar advertising" />
     <video
-      class="main__video"
+      class="main__video main__video--desktop"
       autoplay="autoplay"
       loop="loop"
       muted="muted"
       playsinline
       preload="auto"
     >
-      <source :src="videoMP4" type="video/mp4" />
+      <source :src="backgroundVideo" type="video/mp4" />
     </video>
     <div class="main__content">
       <h1 class="main__title">
@@ -29,17 +29,10 @@
             рекламой
           </router-link>
         </div>
+
         <div class="main__social-media">
-          <a
-            href="https://www.instagram.com/radaradvertising/"
-            class="social-link"
-            target="_blank"
-          >INSTAGRAM</a>
-          <a
-            href="https://www.facebook.com/RadarAdvertising"
-            class="social-link"
-            target="_blank"
-          >FACEBOOK</a>
+          <a :href="common.instagram" class="social-link" target="_blank">INSTAGRAM</a>
+          <a :href="common.facebook" class="social-link" target="_blank">FACEBOOK</a>
         </div>
       </div>
     </div>
@@ -47,27 +40,51 @@
 </template>
 
 <script>
-import videoMP4 from '@/video/main-video.mp4';
+import video from '@/video/main-video.mp4';
+import videoMobile from '@/video/main-video-mobile.mp4';
 import backgroundImage from '@/images/main-back.jpg';
+import backgroundImageMobile from '@/images/main-back-mobile.jpg';
 
 import { getSingletonByKey } from '@/api/index.js';
+import { TABLET_SIZE } from '@/settings.js';
 
 export default {
   name: 'Home',
   data() {
     return {
-      videoMP4,
-      backgroundImage,
       text: '',
+      isMobile: false,
     };
+  },
+  computed: {
+    common() {
+      return this.$store.state.staticData.singletones.common;
+    },
+    backgroundVideo() {
+      const { isMobile } = this;
+      return isMobile ? videoMobile : video;
+    },
+    backgroundImage() {
+      const { isMobile } = this;
+      return isMobile ? backgroundImageMobile : backgroundImage;
+    },
   },
   created() {
     this.getWelcomeText();
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
+    });
   },
   methods: {
     async getWelcomeText() {
       const { content } = await getSingletonByKey('welcomeText');
       this.text = content;
+    },
+    handleResize() {
+      this.isMobile = window.innerWidth <= TABLET_SIZE;
     },
   },
 };
@@ -90,17 +107,24 @@ export default {
   &__video,
   &__image {
     position: absolute;
-    width: auto;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 100%;
     z-index: -1;
 
-    @include from('lg') {
-      min-width: 100%;
+    height: 120%;
+    min-height: 100%;
+
+    min-width: 100%;
+    width: auto;
+
+    @include from('sm') {
       height: auto;
-      min-height: 100%;
+      width: 100%;
+    }
+    @include from('md') {
+      width: auto;
+      min-width: 100%;
     }
   }
 
@@ -171,7 +195,7 @@ export default {
 }
 .social-link {
   font-size: 22px;
-  color: $--color-text--contrast;
+  color: $--color-text--contrast-muted;
 
   & + & {
     margin-left: 54px;

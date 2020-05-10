@@ -53,18 +53,12 @@
                 </p>
               </div>
             </div>
-            <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
+            <div class="col col-xs-2 col-sm-2 col-xl-12 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                  >INSTAGRAM</a>
-                  <a
-                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
-                  >FACEBOOK</a>
-                  <a
-                    href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
-                  >VKONTAKTE</a>
+                  <a :href="common.instagram" target="_blank" class="contact-form__social-link">INSTAGRAM</a>
+                  <a :href="common.facebook" target="_blank" class="contact-form__social-link">FACEBOOK</a>
+                  <a :href="common.vk" target="_blank" class="contact-form__social-link">VKONTAKTE</a>
                 </p>
               </div>
             </div>
@@ -146,6 +140,11 @@ export default {
       isContactContentAnimated: false,
     };
   },
+  computed: {
+    common() {
+      return this.$store.state.staticData.singletones.common;
+    },
+  },
   created() {
     this.getContactInfo();
   },
@@ -185,12 +184,16 @@ export default {
       }, 500);
     },
     handleCityToggle(city) {
-      this.animateContactContent();
+      const { animateContactContent, currentCity } = this;
 
-      setTimeout(() => {
-        this.currentCity = city;
-        this.$emit('change-city', city);
-      }, 240); // меняем город во время анимации
+      if (currentCity !== city) {
+        animateContactContent();
+
+        setTimeout(() => {
+          this.currentCity = city;
+          this.$emit('change-city', city);
+        }, 240); // меняем город во время анимации
+      }
     },
     // при успешной отправке формы отправляем событие в метрику,
     //     if (yaCounter1653081) {
@@ -276,7 +279,7 @@ export default {
     &--active {
       cursor: default;
       &:hover {
-        color: inherit
+        color: inherit;
       }
       &:after {
         transform: scaleX(1);
@@ -317,6 +320,11 @@ export default {
   &__social-link {
     display: block;
     font-size: 18px;
+
+    & + & {
+      margin-left: 16px;
+    }
+
     @include from('md') {
       font-size: 22px;
     }

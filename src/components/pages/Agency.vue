@@ -14,11 +14,19 @@
         </div>
         <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
           <div class="agency__logos">
-            <a class="agency__logo" href="http://russianbranding.ru/" target="_blank">
-              <img :src="abkr" alt="АБКР" />
+            <a
+              class="agency__logo"
+              href="http://russianbranding.ru/"
+              target="_blank"
+            >
+              <img :src="BASE_URL + aboutUs.abkrLogo.path" alt="АБКР" />
             </a>
-            <a class="agency__logo" href="http://www.akarussia.ru/" target="_blank">
-              <img :src="akar" alt="АКАР" />
+            <a
+              class="agency__logo"
+              href="http://www.akarussia.ru/"
+              target="_blank"
+            >
+              <img :src="BASE_URL + aboutUs.akarLogo.path" alt="АКАР" />
             </a>
             <div class="agency__logo-description">
               {{ aboutUs.logoDescription }}
@@ -73,9 +81,8 @@
 </template>
 
 <script>
-import abkr from '@/images/ABKR-logo.png';
-import akar from '@/images/AKAR-logo.png';
 import { getCollectionByKey } from '@/api/index.js';
+import { BASE_URL } from '@/settings.js';
 
 import PageFooter from '@/components/PageFooter.vue';
 
@@ -86,10 +93,9 @@ export default {
   },
   data() {
     return {
-      abkr,
-      akar,
       isLoading: true,
       team: [],
+      BASE_URL,
     };
   },
   computed: {
