@@ -12,7 +12,7 @@ async function getCollectionByKey({ key, filter }) {
       filter,
     },
   });
-  return data.entries;
+  return { data: data.entries, total: data.total };
 }
 
 async function getSingletonByKey(key) {

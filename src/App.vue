@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" :class="{'page--titleless' : isWorksPage}">
     <page-header />
     <router-view />
   </div>
@@ -16,6 +16,11 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    isWorksPage() {
+      return this.$route.name === 'AllWorks';
+    }
   },
   mounted() {
     this.$nextTick(async () => {
@@ -51,6 +56,10 @@ export default {
 
   @include from('xl') {
     padding-top: 162px;
+  }
+
+  &--titleless {
+    padding-top: 108px;
   }
 }
 </style>

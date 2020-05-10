@@ -19,8 +19,8 @@
         <div class="main__services">
           Мы занимаемся
           <router-link class="main__link link" to="Services">
-            брендингом
-          </router-link>, <br />
+            брендингом </router-link
+          >, <br />
           <router-link class="main__link link" to="Services">
             дизайном
           </router-link>
@@ -31,8 +31,12 @@
         </div>
 
         <div class="main__social-media">
-          <a :href="common.instagram" class="social-link" target="_blank">INSTAGRAM</a>
-          <a :href="common.facebook" class="social-link" target="_blank">FACEBOOK</a>
+          <a :href="common.instagram" class="social-link" target="_blank"
+            >INSTAGRAM</a
+          >
+          <a :href="common.facebook" class="social-link" target="_blank"
+            >FACEBOOK</a
+          >
         </div>
       </div>
     </div>
@@ -58,7 +62,8 @@ export default {
   },
   computed: {
     common() {
-      return this.$store.state.staticData.singletones.common;
+      const commonData = this.$store.state.staticData.singletones.common;
+      return commonData ? commonData : {};
     },
     backgroundVideo() {
       const { isMobile } = this;

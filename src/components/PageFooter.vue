@@ -90,10 +90,11 @@ export default {
   },
   methods: {
     async getClients() {
-      this.clients = await getCollectionByKey({
+      const { data } = await getCollectionByKey({
         key: 'clients',
         filter: { isFeatured: true },
       });
+      this.clients = data;
     },
   },
 };

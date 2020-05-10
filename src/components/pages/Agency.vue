@@ -37,14 +37,26 @@
 
       <div class="row">
         <template v-if="isLoading">
-          <div v-for="i in 12" :key="i" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+          <div
+            v-for="i in 12"
+            :key="i"
+            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+          >
             <div class="teammate teammate--dummy loading" />
           </div>
         </template>
         <template v-else-if="team.length !== 0">
-          <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+          <div
+            v-for="teammate in team"
+            :key="teammate.slug"
+            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+          >
             <div class="teammate">
-              <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+              <img
+                :src="teammate.photo.path"
+                :alt="teammate.name"
+                class="teammate__photo"
+              />
               <div class="teammate__overlay" />
               <div class="teammate__summary">
                 <div class="teammate__name">
@@ -57,7 +69,11 @@
             </div>
           </div>
           <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-            <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
+            <a
+              class="agency__join-us join-us"
+              href="https://chelyabinsk.hh.ru/employer/1156087"
+              target="_blank"
+            >
               <h2 class="join-us__title">
                 вакансии
               </h2>
@@ -109,10 +125,11 @@ export default {
   methods: {
     async fetchTeam() {
       this.isLoading = true;
-      this.team = await getCollectionByKey({
+      const { data } = await getCollectionByKey({
         key: 'team',
         filter: { inTeam: true },
       });
+      this.team = data;
       this.isLoading = false;
     },
   },

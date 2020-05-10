@@ -1,6 +1,22 @@
-<template lang="pug">
-
-  router-link.one-work(v-lazyload :to="'/' +work.slug")
+<template>
+  <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
+    <router-link to="/">
+      <div class="work">
+        <!-- TODO заменить путь до настоящий изображений -->
+        <!-- :src="BASE_URL + work.cover.path" -->
+        <div class="work__cover-wrapper">
+          <img :src="work.cover" :alt="work.title" class="work__cover" />
+        </div>
+        <h3 class="work__title">
+          {{ work.title }}
+        </h3>
+        <p class="work__description">
+          {{ glueUpPrepositions(work.description) }}
+        </p>
+      </div>
+    </router-link>
+  </div>
+  <!-- router-link.one-work(v-lazyload :to="'/' +work.slug")
     img.one-work__img(
       :data-url="'https://radar-online.ru'+work.cover.path"
       :alt="work.title"
@@ -8,115 +24,118 @@
     .one-work__description
       .desc-text
         .desc-text__title {{ work.title }}
-        p.desc-text__text {{ work.prescription }}
+        p.desc-text__text {{ work.prescription }} -->
 </template>
 
 <script>
+import { BASE_URL } from '@/settings.js';
+import { glueUpPrepositions } from '@/utils/index.js';
+
 export default {
-  name: "WorkItem",
+  name: 'WorkItem',
   props: {
     work: {
-      type: Object
-    }
-  }
+      type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      patternLenght: 8,
+      BASE_URL,
+    };
+  },
+  computed: {
+    widthIndex() {
+      const { index, patternLenght } = this;
+      return index % patternLenght;
+    },
+    workColumnSize() {
+      const { widthIndex } = this;
+      let size;
+
+      switch (widthIndex) {
+        case 0:
+        case 1:
+        case 4:
+        case 5:
+          size = 6;
+          break;
+
+        case 2:
+        case 7:
+          size = 4;
+          break;
+
+        case 3:
+        case 6:
+          size = 8;
+          break;
+
+        default:
+          size = 6;
+      }
+
+      return 'col-xl-' + size;
+    },
+  },
+  methods: {
+    glueUpPrepositions,
+  },
 };
 </script>
 
 <style lang="scss">
-.one-work {
-  width: 46%;
-  height: auto;
-  margin-bottom: 7px;
-  position: relative;
-  overflow: hidden;
-  margin-right: 10px;
-  display: block;
+@import '~@/styles/shared/_globals.scss';
+
+.work {
+  $block: &;
+
+  letter-spacing: $--letter-spacing;
+  margin-bottom: $--gutter;
   cursor: pointer;
 
-  @media screen and (min-width: 670px) {
-    width: 47%;
+  &__cover-wrapper {
+    overflow: hidden;
   }
-
-  &__img {
+  &__cover {
     max-width: 100%;
-    height: auto;
+    width: 100%;
+    line-height: 1;
     display: block;
 
-    @media screen and (min-width: 922px) {
-      // width: 290px;
-      // height: 350px;
-      // background: grey;
-    }
+    transition: transform $--duration-2000 $--timing-in-out-cubic;
   }
-
-  &__description {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    transition: all 0.3s linear;
-  }
-
-  &:hover &__description {
-    opacity: 1;
-  }
-}
-
-.desc-text {
-  text-align: center;
-  width: 80%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   &__title {
-    font-size: 16px;
-    color: #fff;
-    margin-bottom: 15px;
-    font-family: "ProximaNova-Light";
+    margin: 0;
+
+    margin-top: 12px;
     font-weight: normal;
+    font-size: $--font-size-120;
+    color: $--color-text;
+
+    transition: color $--duration-200 $--timing-in-out-cubic;
+  }
+  &__description {
+    margin: 0;
+
+    margin-top: 4px;
+    font-size: $--font-size-80;
+    color: $--color-text--muted;
+
+    max-width: 440px;
   }
 
-  &__text {
-    color: #fff;
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-width: 680px) {
-  .one-work {
-    width: 31%;
-    margin-bottom: 12px;
-    margin-right: 15px;
-  }
-  .desc-text__title {
-    font-size: 24px;
-  }
-  .desc-text__text {
-    font-size: 15px;
-  }
-}
-
-@media screen and (min-width: 922px) {
-  .one-work {
-    width: 22.5%;
-    margin: 0px 15px 16px 3px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .one-work {
-    width: 290px;
-    box-sizing: border-box;
-    margin: 0px 8px 16px;
-    height: 350px;
-
-    &--client {
-      height: auto;
+  &:hover {
+    #{$block}__title {
+      color: $--color-brand;
+    }
+    #{$block}__cover {
+      transform: scale(1.1);
     }
   }
 }

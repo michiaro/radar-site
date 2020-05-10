@@ -50,8 +50,8 @@ export default {
   @include from('xl') {
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 $--page-padding-x * -0.5;
-    padding-right: $--page-padding-x * 0.5;
+    margin: 0 $--gutter * -0.5;
+    padding-right: $--gutter * 0.5;
     width: 50%;
     box-sizing: border-box;
   }
