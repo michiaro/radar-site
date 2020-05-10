@@ -10,6 +10,9 @@ export default new Router({
         offset: { x: 0, y: 100 },
       };
     }
+    return {
+      offset: { x: 0, y: 0 },
+    };
   },
   routes,
 });

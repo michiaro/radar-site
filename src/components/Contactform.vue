@@ -8,20 +8,43 @@
             <div class="col col-xs-2 col-sm-2 col-lg-6">
               <div class="contact-form__section">
                 <div class="contact-form__subtitle">
-                  <button :class="getToggleCityClass('moscow')" @click="handleCityToggle('moscow')">
+                  <button
+                    :class="getToggleCityClass('moscow')"
+                    @click="handleCityToggle('moscow')"
+                  >
                     Москва
                   </button>
-                  <button :class="getToggleCityClass('chelly')" @click="handleCityToggle('chelly')">
+                  <button
+                    :class="getToggleCityClass('chelly')"
+                    @click="handleCityToggle('chelly')"
+                  >
                     Челябинск
                   </button>
                 </div>
-                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }" v-html="getContactInfoByKey('address')" />
-                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }">
-                  <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">
+                <p
+                  class="contact-form__text contact-form__content"
+                  :class="{
+                    'contact-form__content--animated': isContactContentAnimated,
+                  }"
+                  v-html="getContactInfoByKey('address')"
+                />
+                <p
+                  class="contact-form__text contact-form__content"
+                  :class="{
+                    'contact-form__content--animated': isContactContentAnimated,
+                  }"
+                >
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${getContactInfoByKey('phone')}`"
+                  >
                     {{ formatPhone(getContactInfoByKey('phone')) }}
                   </a>
                   <br />
-                  <a class="contact-form__link" :href="`mailto:${getContactInfoByKey('email')}`">
+                  <a
+                    class="contact-form__link"
+                    :href="`mailto:${getContactInfoByKey('email')}`"
+                  >
                     {{ getContactInfoByKey('email') }}
                   </a>
                 </p>
@@ -31,11 +54,17 @@
               <div class="contact-form__section">
                 <h2 class="contact-form__subtitle">Заказ</h2>
                 <p class="contact-form__text">
-                  <a class="contact-form__link" :href="`tel:+${contactInfo.contactPhone}`">
+                  <a
+                    class="contact-form__link"
+                    :href="`tel:+${contactInfo.contactPhone}`"
+                  >
                     {{ formatPhone(contactInfo.contactPhone) }}
                   </a>
                   <br />
-                  <a class="contact-form__link" :href="`mailto:${contactInfo.contactEmail}`">
+                  <a
+                    class="contact-form__link"
+                    :href="`mailto:${contactInfo.contactEmail}`"
+                  >
                     {{ contactInfo.contactEmail }}
                   </a>
                 </p>
@@ -46,12 +75,27 @@
                 </p>
               </div>
             </div>
-            <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
+            <div class="col col-xs-2 col-sm-2 col-xl-12 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">INSTAGRAM</a>
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">FACEBOOK</a>
-                  <a href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link">VKONTAKTE</a>
+                  <a
+                    :href="common.instagram"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >INSTAGRAM</a
+                  >
+                  <a
+                    :href="common.facebook"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >FACEBOOK</a
+                  >
+                  <a
+                    :href="common.vk"
+                    target="_blank"
+                    class="contact-form__social-link"
+                    >VKONTAKTE</a
+                  >
                 </p>
               </div>
             </div>
@@ -65,12 +109,22 @@
             <div class="row">
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
-                  <input v-model="formData.name" type="text" class="form__input" placeholder="Ваше имя" />
+                  <input
+                    v-model="formData.name"
+                    type="text"
+                    class="form__input"
+                    placeholder="Ваше имя"
+                  />
                 </div>
               </div>
               <div class="col col-xs-2 col-sm-2 col-lg-6">
                 <div class="form__field">
-                  <input v-model="formData.contact" type="text" class="form__input" placeholder="E-mail или телефон" />
+                  <input
+                    v-model="formData.contact"
+                    type="text"
+                    class="form__input"
+                    placeholder="E-mail или телефон"
+                  />
                 </div>
               </div>
               <div class="col col-xs-2 col-sm-4 col-lg-12">
@@ -136,12 +190,19 @@ export default {
   created() {
     this.getContactInfo();
   },
+  computed: {
+    common() {
+      return this.$store.state.staticData.singletones.common;
+    },
+  },
   methods: {
     onSubmit() {
       console.log('submit');
     },
     getToggleCityClass(city) {
-      return `contact-form__toggle${this.currentCity === city ? ' contact-form__toggle--active' : ''}`;
+      return `contact-form__toggle${
+        this.currentCity === city ? ' contact-form__toggle--active' : ''
+      }`;
     },
     changeCity(city) {
       this.currentCity = city;
@@ -172,12 +233,16 @@ export default {
       }, 500);
     },
     handleCityToggle(city) {
-      this.animateContactContent();
+      const { animateContactContent, currentCity } = this;
 
-      setTimeout(() => {
-        this.currentCity = city;
-        this.$emit('change-city', city);
-      }, 240); // меняем город во время анимации
+      if (currentCity !== city) {
+        animateContactContent();
+
+        setTimeout(() => {
+          this.currentCity = city;
+          this.$emit('change-city', city);
+        }, 240); // меняем город во время анимации
+      }
     },
     // при успешной отправке формы отправляем событие в метрику,
     //     if (yaCounter1653081) {
@@ -298,6 +363,11 @@ export default {
   &__social-link {
     display: block;
     font-size: 18px;
+
+    & + & {
+      margin-left: 16px;
+    }
+
     @include from('md') {
       font-size: 22px;
     }

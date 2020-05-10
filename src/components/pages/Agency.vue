@@ -14,11 +14,19 @@
         </div>
         <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
           <div class="agency__logos">
-            <a class="agency__logo" href="http://russianbranding.ru/" target="_blank">
-              <img :src="abkr" alt="АБКР" />
+            <a
+              class="agency__logo"
+              href="http://russianbranding.ru/"
+              target="_blank"
+            >
+              <img :src="BASE_URL + aboutUs.abkrLogo.path" alt="АБКР" />
             </a>
-            <a class="agency__logo" href="http://www.akarussia.ru/" target="_blank">
-              <img :src="akar" alt="АКАР" />
+            <a
+              class="agency__logo"
+              href="http://www.akarussia.ru/"
+              target="_blank"
+            >
+              <img :src="BASE_URL + aboutUs.akarLogo.path" alt="АКАР" />
             </a>
             <div class="agency__logo-description">
               {{ aboutUs.logoDescription }}
@@ -30,14 +38,26 @@
       <div class="agency__team">
         <div class="row">
           <template v-if="isLoading">
-            <div v-for="i in 12" :key="i" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div
+              v-for="i in 12"
+              :key="i"
+              class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+            >
               <div class="teammate teammate--dummy loading" />
             </div>
           </template>
           <template v-else-if="team.length !== 0">
-            <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div
+              v-for="teammate in team"
+              :key="teammate.slug"
+              class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+            >
               <div class="teammate">
-                <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+                <img
+                  :src="teammate.photo.path"
+                  :alt="teammate.name"
+                  class="teammate__photo"
+                />
                 <div class="teammate__overlay" />
                 <div class="teammate__summary">
                   <div class="teammate__name">
@@ -50,7 +70,11 @@
               </div>
             </div>
             <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-              <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
+              <a
+                class="agency__join-us join-us"
+                href="https://chelyabinsk.hh.ru/employer/1156087"
+                target="_blank"
+              >
                 <h2 class="join-us__title">
                   вакансии
                 </h2>
@@ -75,9 +99,8 @@
 </template>
 
 <script>
-import abkr from '@/images/ABKR-logo.png';
-import akar from '@/images/AKAR-logo.png';
 import { getCollectionByKey } from '@/api/index.js';
+import { BASE_URL } from '@/settings.js';
 
 import PageFooter from '@/components/PageFooter.vue';
 
@@ -88,10 +111,9 @@ export default {
   },
   data() {
     return {
-      abkr,
-      akar,
       isLoading: true,
       team: [],
+      BASE_URL,
     };
   },
   computed: {

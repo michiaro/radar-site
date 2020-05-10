@@ -1,6 +1,5 @@
 <template>
-  <h1>Services</h1>
-  <!-- <div class="services">
+  <div class="services">
     <div class="grid">
       <div class="row">
         <div class="services__item">
@@ -93,7 +92,7 @@
     </div>
 
     <page-footer />
-  </div> -->
+  </div>
 </template>
 
 <script>
