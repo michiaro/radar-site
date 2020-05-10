@@ -1,6 +1,6 @@
 <template>
   <div class="contact-form" :class="{ 'contact-form--contrast': contrast }">
-    <div class="grid">
+    <div class="container">
       <div class="row">
         <div class="col col-xs-2 col-sm-4 col-xl-6">
           <h1 class="contact-form__title">Контакты</h1>
