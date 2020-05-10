@@ -19,8 +19,8 @@
         <div class="main__services">
           Мы занимаемся
           <router-link class="main__link link" to="Services">
-            брендингом </router-link
-          >, <br />
+            брендингом
+          </router-link>, <br />
           <router-link class="main__link link" to="Services">
             дизайном
           </router-link>
@@ -34,14 +34,12 @@
             href="https://www.instagram.com/radaradvertising/"
             class="social-link"
             target="_blank"
-            >INSTAGRAM</a
-          >
+          >INSTAGRAM</a>
           <a
             href="https://www.facebook.com/RadarAdvertising"
             class="social-link"
             target="_blank"
-            >FACEBOOK</a
-          >
+          >FACEBOOK</a>
         </div>
       </div>
     </div>
@@ -162,7 +160,7 @@ export default {
       height: 2px;
       background: $--color-text;
       transition-timing-function: $--timing-in-out-cubic;
-      transition-duration: $--duration;
+      transition-duration: $--duration-1000;
       transition-property: transform;
       transform-origin: left center;
     }

@@ -8,12 +8,12 @@
         <div class="mobile-menu__bottom-title">Обсудить задачу</div>
         <div class="mobile-menu__bottom-content">
           <div class="mobile-menu__contacts">
-            <a class="mobile-menu__link" href="tel:+79227000100"
-              >+7 (922) 700-01-00</a
-            >
-            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru"
-              >mlopatina@radar-online.ru</a
-            >
+            <a
+              class="mobile-menu__link" href="tel:+79227000100"
+            >+7 (922) 700-01-00</a>
+            <a
+              class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru"
+            >mlopatina@radar-online.ru</a>
           </div>
           <div class="mobile-menu__contact-person">
             <div class="mobile-menu__name">Мария Лопатина</div>
@@ -86,7 +86,7 @@ export default {
 
 .header {
   z-index: 2; // перекрываем свайпер
-  padding: 18px $--gutter-xs;
+  padding: 18px $--grid-spacing;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -98,7 +98,7 @@ export default {
   background-color: $--color-background;
 
   @include from('xl') {
-    padding: 22px $--gutter-xl;
+    padding: 22px $--grid-spacing;
   }
 
   &__burger {
@@ -119,7 +119,7 @@ export default {
   left: 0;
   background-color: $--color-background;
 
-  padding: 124px $--gutter-xs $--gutter-xs;
+  padding: 124px $--grid-spacing $--grid-spacing;
   height: 100%;
   box-sizing: border-box;
 

@@ -15,8 +15,15 @@
                     Челябинск
                   </button>
                 </div>
-                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }" v-html="getContactInfoByKey('address')" />
-                <p class="contact-form__text contact-form__content" :class="{ 'contact-form__content--animated': isContactContentAnimated }">
+                <p
+                  class="contact-form__text contact-form__content"
+                  :class="{ 'contact-form__content--animated': isContactContentAnimated }"
+                  v-html="getContactInfoByKey('address')"
+                />
+                <p
+                  class="contact-form__text contact-form__content"
+                  :class="{ 'contact-form__content--animated': isContactContentAnimated }"
+                >
                   <a class="contact-form__link" :href="`tel:+${getContactInfoByKey('phone')}`">
                     {{ formatPhone(getContactInfoByKey('phone')) }}
                   </a>
@@ -49,9 +56,15 @@
             <div class="col col-xs-2 col-sm-2 col-xl-10 col-2xl-6">
               <div class="contact-form__section">
                 <p class="contact-form__social">
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">INSTAGRAM</a>
-                  <a href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link">FACEBOOK</a>
-                  <a href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link">VKONTAKTE</a>
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
+                  >INSTAGRAM</a>
+                  <a
+                    href="https://www.facebook.com/RadarAdvertising" target="_blank" class="contact-form__social-link"
+                  >FACEBOOK</a>
+                  <a
+                    href="https://vk.com/radaradvertising" target="_blank" class="contact-form__social-link"
+                  >VKONTAKTE</a>
                 </p>
               </div>
             </div>
@@ -247,21 +260,27 @@ export default {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: calc(100% + 14px);
+      bottom: calc(100% + 8px);
       height: 2px;
       background: $--color-brand;
       transition-timing-function: $--timing-in-out-cubic;
-      transition-duration: $--duration;
+      transition-duration: $--duration-1000;
       transition-property: transform;
       transform-origin: left center;
       transform: scaleX(0);
     }
-    &:hover:after {
-      transform: scaleX(1);
+    &:hover {
+      color: $--color-brand;
     }
 
-    &--active:after {
-      transform: scaleX(1);
+    &--active {
+      cursor: default;
+      &:hover {
+        color: inherit
+      }
+      &:after {
+        transform: scaleX(1);
+      }
     }
 
     & + & {
@@ -320,7 +339,7 @@ export default {
 
   &__content {
     &--animated {
-      animation: contactContentAnimation $--duration-fast $--timing-in-out-cubic;
+      animation: contactContentAnimation $--duration-700 $--timing-in-out-cubic;
 
       @keyframes contactContentAnimation {
         0% {
@@ -359,10 +378,7 @@ export default {
       }
     }
     &__field {
-      margin-bottom: $--gutter-xs;
-      @include from('lg') {
-        margin-bottom: $--gutter-lg;
-      }
+      margin-bottom: $--gutter;
     }
 
     &__input {

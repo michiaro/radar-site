@@ -8,13 +8,21 @@ $--breakpoint-xl: 1200px;
 $--breakpoint-2xl: 1600px;
 $--breakpoint-3xl: 1920px;
 
+$--grid: 'grid';
+$--row: 'row';
+$--column: 'col';
+$--offset: 'offset';
+
+$--grid-spacing: 30px;
+$--gutter: 20px;
+
 $--gutter-xs: 20px;
 $--gutter-sm: 20px;
 $--gutter-md: 20px;
-$--gutter-lg: 30px;
-$--gutter-xl: 30px;
-$--gutter-2xl: 30px;
-$--gutter-3xl: 30px;
+$--gutter-lg: 20px;
+$--gutter-xl: 20px;
+$--gutter-2xl: 20px;
+$--gutter-3xl: 20px;
 
 $--column-count-xs: 2;
 $--column-count-sm: 4;
@@ -24,11 +32,6 @@ $--column-count-xl: 12;
 $--column-count-xxl: 12;
 $--column-count-2xl: 12;
 $--column-count-3xl: 12;
-
-$--grid: 'grid';
-$--row: 'row';
-$--column: 'col';
-$--offset: 'offset';
 
 $--font-size-80: 18px;
 $--font-size-90: 20px;
@@ -49,8 +52,19 @@ $--color-text--contrast-muted: #ffc59e;
 $--color-background: #ffffff;
 
 $--timing-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
-$--duration: 612ms;
-$--duration-fast: 480ms;
+$--duration-0: 0ms;
+$--duration-100: 130ms;
+$--duration-200: 160ms;
+$--duration-300: 190ms;
+$--duration-400: 220ms;
+$--duration-500: 250ms;
+$--duration-600: 300ms;
+$--duration-700: 350ms;
+$--duration-800: 400ms;
+$--duration-900: 450ms;
+$--duration-1000: 500ms;
+$--duration-2000: 1000ms;
+$--duration-4000: 2000ms;
 $--delay: 50ms;
 $--color-background: $--color-text--contrast;
 $--color-background--contrast: $--color-text;

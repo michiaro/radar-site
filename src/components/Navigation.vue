@@ -50,8 +50,8 @@ export default {
   @include from('xl') {
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 $--gutter-xl * -0.5;
-    padding-right: $--gutter-xl * 0.5;
+    margin: 0 $--grid-spacing * -0.5;
+    padding-right: $--grid-spacing * 0.5;
     width: 50%;
     box-sizing: border-box;
   }
@@ -88,7 +88,7 @@ export default {
         height: 2px;
         background: $--color-brand;
         transition-timing-function: $--timing-in-out-cubic;
-        transition-duration: $--duration;
+        transition-duration: $--duration-1000;
         transition-property: transform;
         transform-origin: left center;
         transform: scaleX(0);

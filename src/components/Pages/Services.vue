@@ -1,17 +1,10 @@
 <template>
-  <h1>Services</h1>
-  <!-- <div class="services">
+  <div class="services-page">
     <div class="grid">
-      <div class="row">
+      <div class="services">
         <div class="services__item">
           <div class="service" @mouseenter="handleHover('campaign')">
-            <video
-              ref="campaignVideo"
-              class="service__video"
-              muted="muted"
-              playsinline
-              preload="auto"
-            >
+            <video ref="campaignVideo" class="service__video" muted="muted" playsinline preload="auto">
               <source :src="dummyVideo" type="video/mp4" />
             </video>
             <div class="service__content">
@@ -19,21 +12,14 @@
                 Рекламные кампании
               </h2>
               <p class="service__description">
-                Создаем и&nbsp;проводим рекламные кампании во&nbsp;всех
-                медиасредах
+                Создаем и&nbsp;проводим рекламные кампании во&nbsp;всех медиасредах
               </p>
             </div>
           </div>
         </div>
         <div class="services__item">
           <div class="service" @mouseenter="handleHover('branding')">
-            <video
-              ref="brandingVideo"
-              class="service__video"
-              muted="muted"
-              playsinline
-              preload="auto"
-            >
+            <video ref="brandingVideo" class="service__video" muted="muted" playsinline preload="auto">
               <source :src="dummyVideo" type="video/mp4" />
             </video>
             <div class="service__content">
@@ -48,13 +34,7 @@
         </div>
         <div class="services__item">
           <div class="service" @mouseenter="handleHover('digital')">
-            <video
-              ref="digitalVideo"
-              class="service__video"
-              muted="muted"
-              playsinline
-              preload="auto"
-            >
+            <video ref="digitalVideo" class="service__video" muted="muted" playsinline preload="auto">
               <source :src="dummyVideo" type="video/mp4" />
             </video>
             <div class="service__content">
@@ -71,8 +51,7 @@
       <div class="row">
         <div class="col col-xs-2 col-lg-2 col-xl-8">
           <h1 class="services__title">
-            Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
-            базируется на&nbsp;четырех ключевых опорах:
+            Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход базируется на&nbsp;четырех ключевых опорах:
           </h1>
         </div>
       </div>
@@ -93,7 +72,7 @@
     </div>
 
     <page-footer />
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -126,6 +105,8 @@ export default {
 @import '~@/styles/shared/_globals.scss';
 
 .services {
+  display: flex;
+  // padding-left: $--gutter;
   &__item {
     flex-grow: 1;
     box-sizing: border-box;

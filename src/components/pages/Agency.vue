@@ -27,43 +27,41 @@
         </div>
       </div>
 
-      <div class="agency__team">
-        <div class="row">
-          <template v-if="isLoading">
-            <div v-for="i in 12" :key="i" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-              <div class="teammate teammate--dummy loading" />
-            </div>
-          </template>
-          <template v-else-if="team.length !== 0">
-            <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-              <div class="teammate">
-                <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
-                <div class="teammate__overlay" />
-                <div class="teammate__summary">
-                  <div class="teammate__name">
-                    {{ teammate.name }}
-                  </div>
-                  <div class="teammate__position">
-                    {{ teammate.position }}
-                  </div>
+      <div class="row">
+        <template v-if="isLoading">
+          <div v-for="i in 12" :key="i" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate teammate--dummy loading" />
+          </div>
+        </template>
+        <template v-else-if="team.length !== 0">
+          <div v-for="teammate in team" :key="teammate.slug" class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <div class="teammate">
+              <img :src="teammate.photo.path" :alt="teammate.name" class="teammate__photo" />
+              <div class="teammate__overlay" />
+              <div class="teammate__summary">
+                <div class="teammate__name">
+                  {{ teammate.name }}
+                </div>
+                <div class="teammate__position">
+                  {{ teammate.position }}
                 </div>
               </div>
             </div>
-            <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
-              <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
-                <h2 class="join-us__title">
-                  вакансии
-                </h2>
-                <div class="join-us__description">
-                  Стать частью <br />
-                  нашей команды&nbsp;→
-                </div>
-              </a>
-            </div>
-          </template>
-          <div v-else class="col col-xs-2">
-            Нет данных!
           </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+            <a class="agency__join-us join-us" href="https://chelyabinsk.hh.ru/employer/1156087" target="_blank">
+              <h2 class="join-us__title">
+                вакансии
+              </h2>
+              <div class="join-us__description">
+                Стать частью <br />
+                нашей команды&nbsp;→
+              </div>
+            </a>
+          </div>
+        </template>
+        <div v-else class="col col-xs-2">
+          Нет данных!
         </div>
       </div>
     </div>
@@ -213,7 +211,7 @@ export default {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  margin-bottom: 30px;
+  margin-bottom: $--gutter;
 
   &--dummy {
     background: $--color-text--muted;
@@ -226,6 +224,7 @@ export default {
 
   &__photo {
     width: 100%;
+    display: block;
   }
 
   $overlay-height: 100px;
@@ -239,7 +238,7 @@ export default {
       height: $overlay-height;
       background-color: $--color-background;
       transition-timing-function: $--timing-in-out-cubic;
-      transition-duration: $--duration-fast;
+      transition-duration: $--duration-700;
       transition-property: transform;
       transform: translateY(100%);
     }
@@ -257,7 +256,7 @@ export default {
       box-sizing: border-box;
       width: 100%;
       transition-timing-function: $--timing-in-out-cubic, $--timing-in-out-cubic;
-      transition-duration: $--duration-fast, $--duration-fast;
+      transition-duration: $--duration-700, $--duration-700;
       transition-property: transform, opacity;
       transform: translateY(100%);
       opacity: 0;
@@ -291,7 +290,7 @@ export default {
       }
       #{$teammate}__summary {
         transition-delay: $--delay, $--delay;
-        transition-duration: $--duration, $--duration;
+        transition-duration: $--duration-1000, $--duration-1000;
         transform: translateY(0);
         opacity: 1;
       }
