@@ -1,6 +1,6 @@
 <template>
   <div class="policy">
-    <div class="grid">
+    <div class="container">
       <div class="col col-xs-2 col-xl-8">
         <div class="policy__content" v-html="policy" />
       </div>

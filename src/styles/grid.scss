@@ -1,16 +1,11 @@
 @import '~@/styles/shared/_globals.scss';
 
-// grid naming convention
-
-$grid: $--grid;
+// naming convention
 $row: $--row;
 $column: $--column;
 $offset: $--offset;
 
 // settings
-$gutter: $--gutter;
-$grid-spacing: $--grid-spacing;
-
 $breakpoints: (
   xs: $--breakpoint-xs,
   sm: $--breakpoint-sm,
@@ -42,7 +37,6 @@ $column-counts: (
 );
 
 // helper maps
-
 $main-axis-alignments: (
   left: flex-start,
   center: center,
@@ -60,11 +54,6 @@ $cross-axis-alignments: (
 );
 
 @mixin create-colunms($breakpoint, $column-count, $gutter) {
-  .#{$grid} {
-    padding-right: $grid-spacing;
-    padding-left: $grid-spacing;
-  }
-
   .#{$row} {
     margin-right: $gutter * -0.5;
     margin-left: $gutter * -0.5;
@@ -148,7 +137,7 @@ $cross-axis-alignments: (
 
 @each $breakpoint, $size in $breakpoints {
   @include from($breakpoint) {
-    // $gutter: map-get($gutters, $breakpoint);
+    $gutter: map-get($gutters, $breakpoint);
     $column-count: map-get($column-counts, $breakpoint);
     @include create-colunms($breakpoint, $column-count, $gutter);
     @include create-alignments($breakpoint);

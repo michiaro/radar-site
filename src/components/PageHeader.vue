@@ -86,7 +86,7 @@ export default {
 
 .header {
   z-index: 2; // перекрываем свайпер
-  padding: 18px $--grid-spacing;
+  padding: 18px $--page-padding-x;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -98,7 +98,7 @@ export default {
   background-color: $--color-background;
 
   @include from('xl') {
-    padding: 22px $--grid-spacing;
+    padding: 22px $--page-padding-x;
   }
 
   &__burger {
@@ -119,7 +119,7 @@ export default {
   left: 0;
   background-color: $--color-background;
 
-  padding: 124px $--grid-spacing $--grid-spacing;
+  padding: 124px $--page-padding-x $--page-padding-x;
   height: 100%;
   box-sizing: border-box;
 

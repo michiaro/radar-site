@@ -1,6 +1,6 @@
 <template>
   <div class="services-page">
-    <div class="grid">
+    <div class="container">
       <div class="services">
         <div class="services__item">
           <div class="service" @mouseenter="handleHover('campaign')">

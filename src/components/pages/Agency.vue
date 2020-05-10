@@ -1,6 +1,6 @@
 <template>
   <div class="agency">
-    <div class="grid">
+    <div class="container">
       <div class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">
           <h1 class="agency__title">
