@@ -196,6 +196,9 @@ export default {
 .social-link {
   font-size: 22px;
   color: $--color-text--contrast-muted;
+  transition-property: color;
+  transition-duration: $--duration-100;
+  transition-timing-function: $--timing-in-out-cubic;
 
   & + & {
     margin-left: 54px;

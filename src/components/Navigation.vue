@@ -63,6 +63,9 @@ export default {
     line-height: 1.3;
     padding: 5px 0;
     font-variant: small-caps;
+    transition-property: color;
+    transition-duration: $--duration-100;
+    transition-timing-function: $--timing-in-out-cubic;
 
     @include from('lg') {
       font-size: 120px;

@@ -257,6 +257,9 @@ export default {
     text-transform: uppercase;
     color: inherit;
     position: relative;
+    transition-property: color;
+    transition-duration: $--duration-100;
+    transition-timing-function: $--timing-in-out-cubic;
 
     &:after {
       content: '';
@@ -320,6 +323,9 @@ export default {
   &__social-link {
     display: block;
     font-size: 18px;
+    transition-property: color;
+    transition-duration: $--duration-100;
+    transition-timing-function: $--timing-in-out-cubic;
 
     & + & {
       margin-left: 16px;
