@@ -1,5 +1,5 @@
 <template>
-  <div class="page" :class="{'page--titleless' : isWorksPage}">
+  <div class="page">
     <page-header />
     <router-view />
   </div>
@@ -13,14 +13,6 @@ export default {
   name: 'App',
   components: {
     PageHeader,
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    isWorksPage() {
-      return this.$route.name === 'AllWorks';
-    },
   },
   mounted() {
     this.$nextTick(async () => {
@@ -48,18 +40,6 @@ export default {
 }
 
 .page {
-  padding-top: 120px;
-
-  @include from('lg') {
-    padding-top: 152px;
-  }
-
-  @include from('xl') {
-    padding-top: 162px;
-  }
-
-  &--titleless {
-    padding-top: 108px;
-  }
+  padding-top: $--header-height;
 }
 </style>

@@ -140,6 +140,12 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .agency {
+  padding-top: $--page-padding-y-xs;
+
+  @include from('lg') {
+    padding-top: $--page-padding-y-lg;
+  }
+
   &__title {
     margin: 0 0 30px;
     font-size: 23px;
