@@ -35,5 +35,11 @@ export default {
 <style lang="scss">
 @import '~@/styles/shared/_globals.scss';
 
+.contacts {
+  padding-top: $--page-padding-y-xs;
 
+  @include from('lg') {
+    padding-top: $--page-padding-y-lg;
+  }
+}
 </style>
