@@ -106,10 +106,7 @@ export default {
 .footer {
   margin-top: 76px;
   @include from('md') {
-    margin-top: 156px;
-  }
-  @include from('xl') {
-    margin-top: 186px;
+    margin-top: 108px;
   }
 
   &__title {

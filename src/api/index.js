@@ -4,12 +4,13 @@ const apiClient = axios.create();
 
 const token = '197125d3878c8b0555a0a9dfab3403';
 
-async function getCollectionByKey({ key, filter }) {
+async function getCollectionByKey({ key, filter, options }) {
   const { data } = await apiClient({
     method: 'post',
     url: `/cockpit/api/collections/get/${key}?token=${token}`,
     data: {
       filter,
+      ...options,
     },
   });
   return { data: data.entries, total: data.total };

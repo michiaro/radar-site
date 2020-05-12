@@ -9,7 +9,7 @@
             <div
               class="filter__item"
               :class="{ 'filter__item--active': currentFilter === null }"
-              @click="resetFilter"
+              @click="setFilter(null)"
             >
               Все
             </div>
@@ -35,7 +35,7 @@
       </div>
       <div v-if="isLoadMoreVisible" class="row">
         <div class="col col-xs-12">
-          <button class="all-works__show-more" @click="loadMore">
+          <button class="all-works__show-more" @click="fetchWorks">
             ещё работы
           </button>
         </div>
@@ -51,71 +51,6 @@ import { getCollectionByKey } from '@/api/index.js';
 import WorkItem from '@/components/WorkItem.vue';
 import PageFooter from '@/components/PageFooter.vue';
 
-//dummyCovers
-import cover1 from '@/images/cases/case-preview-1.jpg';
-import cover2 from '@/images/cases/case-preview-2.jpg';
-import cover3 from '@/images/cases/case-preview-3.jpg';
-import cover4 from '@/images/cases/case-preview-4.jpg';
-import cover5 from '@/images/cases/case-preview-5.jpg';
-import cover6 from '@/images/cases/case-preview-6.jpg';
-import cover7 from '@/images/cases/case-preview-7.jpg';
-import cover8 from '@/images/cases/case-preview-8.jpg';
-
-const dummyWorks = [
-  {
-    cover: cover1,
-    title: 'Solo',
-    description: 'Разработка айдентики для клубного дома Solo',
-    tags: ['design', 'campaign'],
-  },
-  {
-    cover: cover2,
-    title: 'Friendly',
-    description: 'Разработка айдентики для кафе',
-    tags: ['branding'],
-  },
-  {
-    cover: cover3,
-    title: 'Завтраки и еда',
-    description: 'Разработка айдентики для фудбара',
-    tags: ['digital'],
-  },
-  {
-    cover: cover4,
-    title: 'Белый кит',
-    description:
-      'Разработка айдентики и персонажей для новой детской стоматологии',
-    tags: ['branding', 'digital'],
-  },
-  {
-    cover: cover5,
-    title: 'Ametis',
-    description:
-      'Разработка новой торговой марки для производителя керамического гранита',
-    tags: ['design', 'campaign'],
-  },
-  {
-    cover: cover6,
-    title: 'Endorf',
-    description:
-      'Позиционирование, нейминг и дизайн упаковки новой торговой марки сыров',
-    tags: ['design', 'digital'],
-  },
-  {
-    cover: cover7,
-    title: 'Горизонт',
-    description: 'Брендинг жилого комплекса',
-    tags: ['design', 'branding'],
-  },
-  {
-    cover: cover8,
-    title: 'Slastnik',
-    description:
-      'Разработка айдентики для производителя кондитерского инвентаря',
-    tags: ['design'],
-  },
-];
-
 export default {
   name: 'AllWorks',
   components: {
@@ -124,26 +59,48 @@ export default {
   },
   data() {
     return {
-      works: [],
-      total: null,
-      currentFilter: this.$route.query.filter || null,
-
       isFilterLoading: false,
       isWorksLoading: false,
     };
   },
   computed: {
     tags() {
-      return this.$store.state.staticData.collections.tags;
+      return this.$store.state.staticData.collections.tags || null;
+    },
+    works() {
+      return this.$store.state.works.content || null;
+    },
+    total() {
+      return this.$store.state.works.total || null;
     },
     isLoadMoreVisible() {
       const { works, total } = this;
-      return works.length < total;
+
+      return works.length ? works.length < total : false;
+    },
+    currentFilter() {
+      const filterInStore = this.$store.state.works.filter;
+      const filterQuery = this.$route.query.filter;
+
+      return filterInStore || filterQuery || null;
+    },
+    currentFilterTitle() {
+      const { tags, currentFilter } = this;
+
+      return tags && currentFilter
+        ? tags.find((tag) => tag.slug === currentFilter).title
+        : null;
     },
   },
   created() {
-    this.fetchTags();
-    this.fetchWorks();
+    const { tags, works } = this;
+
+    if (!tags) {
+      this.fetchTags();
+    }
+    if (!works.length) {
+      this.fetchWorks();
+    }
   },
   methods: {
     async fetchTags() {
@@ -162,31 +119,45 @@ export default {
 
       this.isFilterLoading = false;
     },
-    fetchWorks() {
+    async fetchWorks({ resetSkip } = { resetSkip: false }) {
+      const { works, currentFilterTitle } = this;
+
       this.isWorksLoading = true;
 
-      this.works = dummyWorks;
-      this.total = 24;
+      let filterSettings = { isPublished: true };
+      if (currentFilterTitle) {
+        filterSettings = {
+          ...filterSettings,
+          tagsNewField: { $has: currentFilterTitle },
+        };
+      }
 
-      this.isWorksLoading = false;
-    },
-    loadMore() {
-      this.isWorksLoading = true;
-      this.works = [...this.works, ...dummyWorks];
+      const { data, total } = await getCollectionByKey({
+        key: 'works',
+        filter: filterSettings,
+        options: {
+          limit: 8,
+          skip: resetSkip ? 0 : works.length,
+          sort: { _o: 1 },
+        },
+      });
+
+      this.$store.commit('setWorksContent', { data, reset: resetSkip });
+      this.$store.commit('setWorksTotal', { total });
+
       this.isWorksLoading = false;
     },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
-        this.currentFilter = tag;
-        this.$router.push({ path: '/all-works', query: { filter: tag } });
-        this.fetchWorks();
-      }
-    },
-    resetFilter() {
-      if (this.currentFilter !== null) {
-        this.currentFilter = null;
-        this.$router.push({ path: '/all-works' });
-        this.fetchWorks();
+        this.$router.push({
+          path: '/all-works',
+          query: tag ? { filter: tag } : {},
+        });
+
+        this.$store.commit('setWorksFilter', {
+          filter: tag,
+        });
+        this.fetchWorks({ resetSkip: true });
       }
     },
   },

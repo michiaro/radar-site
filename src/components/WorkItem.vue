@@ -1,30 +1,23 @@
 <template>
   <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
-    <router-link to="/">
-      <div class="work">
-        <!-- TODO заменить путь до настоящий изображений -->
-        <!-- :src="BASE_URL + work.cover.path" -->
-        <div class="work__cover-wrapper">
-          <img :src="work.cover" :alt="work.title" class="work__cover" />
-        </div>
-        <h3 class="work__title">
-          {{ work.title }}
-        </h3>
-        <p class="work__description">
-          {{ glueUpPrepositions(work.description) }}
-        </p>
+    <!-- <router-link to="/"> -->
+    <div class="work">
+      <div class="work__cover-wrapper">
+        <img
+          :src="BASE_URL + work.cover.path"
+          :alt="work.title"
+          class="work__cover"
+        />
       </div>
-    </router-link>
+      <h3 class="work__title">
+        {{ work.title }}
+      </h3>
+      <p class="work__description">
+        {{ glueUpPrepositions(work.prescription) }}
+      </p>
+    </div>
+    <!-- </router-link> -->
   </div>
-  <!-- router-link.one-work(v-lazyload :to="'/' +work.slug")
-    img.one-work__img(
-      :data-url="'https://radar-online.ru'+work.cover.path"
-      :alt="work.title"
-    )
-    .one-work__description
-      .desc-text
-        .desc-text__title {{ work.title }}
-        p.desc-text__text {{ work.prescription }} -->
 </template>
 
 <script>

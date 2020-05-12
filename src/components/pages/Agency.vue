@@ -128,6 +128,9 @@ export default {
       const { data } = await getCollectionByKey({
         key: 'team',
         filter: { inTeam: true },
+        options: {
+          sort: { _o: 1 },
+        },
       });
       this.team = data;
       this.isLoading = false;
@@ -140,6 +143,13 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .agency {
+  @include from('md') {
+    margin-bottom: 48px;
+  }
+  @include from('xl') {
+    margin-bottom: 78px;
+  }
+
   &__title {
     margin: 0 0 30px;
     font-size: 23px;
@@ -181,10 +191,6 @@ export default {
     margin-top: 16px;
     font-size: 18px;
   }
-  &__join-us {
-  }
-  &__clients {
-  }
 }
 
 .join-us {
@@ -203,7 +209,7 @@ export default {
   color: $--color-text;
   transition: all 0.5s ease-in-out;
   max-height: 100%;
-  height: calc(100% - 30px);
+  height: calc(100% - 20px);
   font-size: 22px;
   @include from('xl') {
     font-size: 30px;
