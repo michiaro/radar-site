@@ -88,17 +88,20 @@
                     :href="common.instagram"
                     target="_blank"
                     class="contact-form__social-link"
-                  >INSTAGRAM</a>
+                    >INSTAGRAM</a
+                  >
                   <a
                     :href="common.facebook"
                     target="_blank"
                     class="contact-form__social-link"
-                  >FACEBOOK</a>
+                    >FACEBOOK</a
+                  >
                   <a
                     :href="common.vk"
                     target="_blank"
                     class="contact-form__social-link"
-                  >VKONTAKTE</a>
+                    >VKONTAKTE</a
+                  >
                 </p>
               </div>
             </div>
@@ -145,7 +148,11 @@
             <div class="row row-md-middle">
               <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
                 <div class="form__field">
-                  <button class="button" :class="{'button--contrast' : contrast}" type="submit">
+                  <button
+                    class="button"
+                    :class="{ 'button--contrast': contrast }"
+                    type="submit"
+                  >
                     Отправить
                   </button>
                 </div>
@@ -362,7 +369,11 @@ export default {
     justify-content: space-between;
     margin: 0;
     margin-top: 40px;
+    flex-wrap: wrap;
 
+    @include from('sm') {
+      flex-wrap: nowrap;
+    }
     @include from('xl') {
       margin-top: 0;
     }
@@ -376,7 +387,13 @@ export default {
     transition-timing-function: $--timing-in-out-cubic;
 
     & + & {
-      margin-left: 16px;
+      margin-right: 16px;
+      margin-bottom: 16px;
+
+      @include from('sm') {
+        margin-left: 16px;
+        margin-bottom: 0;
+      }
     }
 
     @include from('md') {
@@ -511,8 +528,6 @@ export default {
         color: $--color-text--contrast;
       }
     }
-
-    // #{$block}
   }
 }
 </style>

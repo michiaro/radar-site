@@ -5,7 +5,7 @@
         <div
           class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6"
         >
-          <div class="filter">
+          <div v-if="!isFilterLoading" class="filter">
             <div
               class="filter__item"
               :class="{ 'filter__item--active': currentFilter === null }"
@@ -23,15 +23,33 @@
               {{ tag.title }}
             </div>
           </div>
+          <div v-if="isFilterLoading" class="filter filter--dummy loading" />
         </div>
       </div>
-      <div class="row">
+      <div v-if="isWorksLoading" class="row">
+        <work-item-dummy
+          v-for="(i, index) in 8"
+          :key="i"
+          :index="index"
+          class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+        >
+          <div class="teammate teammate--dummy loading" />
+        </work-item-dummy>
+      </div>
+      <div v-if="!isWorksLoading" class="row">
         <work-item
           v-for="(work, index) in works"
           :key="work.slug"
           :index="index"
           :work="work"
         />
+      </div>
+      <div v-if="!works.length" class="row">
+        <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
+          <p class="dummy-title">
+            Кейсов по&nbsp;этому направлению пока&nbsp;нет
+          </p>
+        </div>
       </div>
       <div v-if="isLoadMoreVisible" class="row">
         <div class="col col-xs-12">
@@ -49,12 +67,14 @@
 <script>
 import { getCollectionByKey } from '@/api/index.js';
 import WorkItem from '@/components/WorkItem.vue';
+import WorkItemDummy from '@/components/WorkItemDummy.vue';
 import PageFooter from '@/components/PageFooter.vue';
 
 export default {
   name: 'AllWorks',
   components: {
     WorkItem,
+    WorkItemDummy,
     PageFooter,
   },
   data() {
@@ -220,6 +240,28 @@ export default {
     &:hover {
       color: $--color-brand;
     }
+  }
+
+  &--dummy {
+    height: $--font-size-90 * 1.3;
+    background: $--color-text--muted;
+    width: 100%;
+    padding-bottom: 0;
+    margin: 0 0 12px;
+  }
+}
+
+.dummy-title {
+  margin: 0;
+
+  font-weight: normal;
+  font-size: 23px;
+  letter-spacing: $--letter-spacing;
+
+  margin-bottom: 62px;
+  @include from('md') {
+    margin-bottom: 104px;
+    font-size: 44px;
   }
 }
 </style>
