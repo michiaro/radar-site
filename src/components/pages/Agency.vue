@@ -143,13 +143,6 @@ export default {
 @import '@/styles/shared/_globals.scss';
 
 .agency {
-  @include from('md') {
-    margin-bottom: 48px;
-  }
-  @include from('xl') {
-    margin-bottom: 78px;
-  }
-
   &__title {
     margin: 0 0 30px;
     font-size: 23px;
@@ -190,6 +183,14 @@ export default {
   &__logo-description {
     margin-top: 16px;
     font-size: 18px;
+  }
+  &__clients {
+  @include from('md') {
+    margin-top: 48px;
+  }
+  @include from('xl') {
+    margin-top: 78px;
+  }
   }
 }
 

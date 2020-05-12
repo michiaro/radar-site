@@ -145,7 +145,7 @@
             <div class="row row-md-middle">
               <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
                 <div class="form__field">
-                  <button class="form__input form__input--button" type="submit">
+                  <button class="button" :class="{'button--contrast' : contrast}" type="submit">
                     Отправить
                   </button>
                 </div>
@@ -453,6 +453,11 @@ export default {
       height: 52px;
       border-radius: 0;
       box-shadow: none;
+      transition: all $--duration-200 $--timing-in-out-cubic;
+
+      &:hover {
+        border-color: $--color-gray-800;
+      }
 
       @include from('lg') {
         padding: 20px 20px 24px;
@@ -463,16 +468,6 @@ export default {
       &--textarea {
         resize: vertical;
         height: auto;
-      }
-
-      &--button {
-        background-color: $--color-brand;
-        border-color: $--color-brand;
-        color: $--color-text--contrast;
-        cursor: pointer;
-        letter-spacing: $--letter-spacing;
-        text-transform: uppercase;
-        padding: 12px;
       }
     }
 
@@ -508,7 +503,11 @@ export default {
       border: 2px solid $--color-text--contrast;
       color: $--color-text--muted;
 
-      &--button {
+      &:hover {
+        border-color: $--color-gray-300;
+      }
+
+      .button {
         color: $--color-text--contrast;
       }
     }
