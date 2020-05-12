@@ -20,7 +20,7 @@ export default {
   computed: {
     isWorksPage() {
       return this.$route.name === 'AllWorks';
-    }
+    },
   },
   mounted() {
     this.$nextTick(async () => {

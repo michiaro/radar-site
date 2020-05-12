@@ -30,6 +30,8 @@ export default {
 
 <style lang="scss">
 .logo {
-  z-index: 1;
+  svg {
+    display: block;
+  }
 }
 </style>

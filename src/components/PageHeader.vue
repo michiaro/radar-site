@@ -97,10 +97,6 @@ export default {
   right: 0;
   background-color: $--color-background;
 
-  @include from('xl') {
-    padding: 22px $--page-padding-x;
-  }
-
   &__burger {
     padding: 0;
   }

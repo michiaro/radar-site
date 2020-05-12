@@ -88,20 +88,17 @@
                     :href="common.instagram"
                     target="_blank"
                     class="contact-form__social-link"
-                    >INSTAGRAM</a
-                  >
+                  >INSTAGRAM</a>
                   <a
                     :href="common.facebook"
                     target="_blank"
                     class="contact-form__social-link"
-                    >FACEBOOK</a
-                  >
+                  >FACEBOOK</a>
                   <a
                     :href="common.vk"
                     target="_blank"
                     class="contact-form__social-link"
-                    >VKONTAKTE</a
-                  >
+                  >VKONTAKTE</a>
                 </p>
               </div>
             </div>
