@@ -1,5 +1,5 @@
 <template>
-  <div class="services-popup">
+  <div v-show="activeServiceId !== null" class="services-popup">
     <div ref="container" class="services-popup__content">
       <div
         v-for="service in services"
@@ -29,6 +29,10 @@ export default {
       type: Array,
       required: true,
     },
+    activeServiceId: {
+      validator: (prop) => typeof prop === 'string' || prop === null,
+      required: true,
+    },
   },
   data() {
     return {
@@ -36,12 +40,19 @@ export default {
       closedBasis: 0,
       openedVerticalBasis: 0,
       openedHorizontalBasis: 0,
-      activeServiceId: null,
     };
   },
   computed: {
     isMobile() {
       return false;
+    },
+  },
+  watch: {
+    activeServiceId(next, prev) {
+      if (next !== null) {
+        this.openService(next);
+      }
+      console.log(next, prev);
     },
   },
   mounted() {
@@ -89,11 +100,13 @@ export default {
       if (this.activeServiceId === targetServiceId) {
         return;
       }
-      // basis потому, что на мобилке это вертикальный флек, а на десктопе горизонтальый
 
-      const openedBasis = this.isMobile
-        ? this.openedVerticalBasis
-        : this.openedHorizontalBasis;
+      this.$emit('openService', {
+        serviceId: targetServiceId,
+      });
+
+      // basis потому, что на мобилке это вертикальный флек, а на десктопе горизонтальый
+      const openedBasis = this.isMobile ? this.openedVerticalBasis : this.openedHorizontalBasis;
 
       const startWidthArray = this.services.map(({ serviceId }) =>
         this.activeServiceId === serviceId ? openedBasis : this.closedBasis,
@@ -103,7 +116,6 @@ export default {
           targetServiceId === serviceId ? openedBasis : this.closedBasis;
         return endWidth - startWidthArray[index];
       });
-      console.log(startWidthArray);
 
       if (!this.animation) {
         this.animation = animate({
@@ -131,10 +143,16 @@ export default {
           },
           onComplete: () => {
             this.animation = null;
-            this.activeServiceId = targetServiceId;
           },
         });
       }
+    },
+    close() {
+      console.log('close');
+
+      this.$emit('openService', {
+        serviceId: null,
+      });
     },
   },
 };

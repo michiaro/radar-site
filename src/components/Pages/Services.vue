@@ -2,15 +2,11 @@
   <div class="services-page">
     <div class="container">
       <div class="row">
-        <div
-          v-for="service in services"
-          :key="service.serviceId"
-          class="col col-xs-2 col-xl-4"
-        >
-          <service-section v-bind="service" @openService="openServicePopup" />
+        <div v-for="service in services" :key="service.serviceId" class="col col-xs-2 col-xl-4">
+          <service-section v-bind="service" @openService="setActiveServiceId" />
         </div>
       </div>
-      <services-popup :services="services" />
+      <services-popup :services="services" :active-service-id="activeServiceId" @openService="setActiveServiceId" />
       <div class="row">
         <div class="col col-xs-2 col-lg-2 col-xl-8">
           <h1 class="services__title">
@@ -102,11 +98,12 @@ export default {
           ],
         },
       ],
+      activeServiceId: null,
     };
   },
   methods: {
-    openServicePopup({ serviceNode, serviceId }) {
-      console.log(serviceNode, serviceId);
+    setActiveServiceId({ serviceId }) {
+      this.activeServiceId = serviceId;
     },
   },
 };
@@ -114,4 +111,8 @@ export default {
 
 <style lang="scss">
 @import '~@/styles/shared/_globals.scss';
+
+.services-page {
+  padding-top: $--page-padding-x - $--gutter * 0.5;
+}
 </style>

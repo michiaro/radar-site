@@ -37,7 +37,7 @@ export default {
     },
     passReference() {
       this.$emit('openService', {
-        serviceNode: this.$refs.serviceNode,
+        // serviceNode: this.$refs.serviceNode,
         serviceId: this.serviceId,
       });
     },
