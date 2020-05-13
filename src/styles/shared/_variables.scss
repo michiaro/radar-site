@@ -13,18 +13,18 @@ $--row: 'row';
 $--column: 'col';
 $--offset: 'offset';
 
-$--page-padding-x: 1.5vmax;
+$--page-padding-x: 2vmax;
 $--page-padding-y-xs: 40px;
 $--page-padding-y-lg: 80px;
-$--gutter: 1vmax;
+$--gutter: 1.5vmax;
 
-$--gutter-xs: 1vmax;
-$--gutter-sm: 1vmax;
-$--gutter-md: 1vmax;
-$--gutter-lg: 1vmax;
-$--gutter-xl: 1vmax;
-$--gutter-2xl: 1vmax;
-$--gutter-3xl: 1vmax;
+$--gutter-xs: 1.5vmax;
+$--gutter-sm: 1.5vmax;
+$--gutter-md: 1.5vmax;
+$--gutter-lg: 1.5vmax;
+$--gutter-xl: 1.5vmax;
+$--gutter-2xl: 1.5vmax;
+$--gutter-3xl: 1.5vmax;
 
 $--column-count-xs: 2;
 $--column-count-sm: 4;
@@ -80,6 +80,7 @@ $--duration-700: 350ms;
 $--duration-800: 400ms;
 $--duration-900: 450ms;
 $--duration-1000: 500ms;
+$--duration-1500: 750ms;
 $--duration-2000: 1000ms;
 $--duration-4000: 2000ms;
 $--delay: 50ms;

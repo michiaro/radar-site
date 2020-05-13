@@ -3,10 +3,10 @@
     <div class="container">
       <div class="row">
         <div v-for="service in services" :key="service.serviceId" class="col col-xs-2 col-xl-4">
-          <service-section v-bind="service" @openService="setActiveServiceId" />
+          <service-page-direction v-bind="service" @setService="setActiveServiceId" />
         </div>
       </div>
-      <services-popup :services="services" :active-service-id="activeServiceId" @openService="setActiveServiceId" />
+      <services-popup :services="services" :active-service-id="activeServiceId" @setService="setActiveServiceId" />
       <div class="row">
         <div class="col col-xs-2 col-lg-2 col-xl-8">
           <h1 class="services__title">
@@ -37,7 +37,7 @@
 
 <script>
 import PageFooter from '@/components/PageFooter.vue';
-import ServiceSection from '@/components/ServiceSection.vue';
+import ServicePageDirection from '@/components/ServicePageDirection.vue';
 import ServicesPopup from '@/components/ServicesPopup.vue';
 import advertisingCampaign from '@/video/campaign.mp4';
 import branding from '@/video/branding.mp4';
@@ -47,7 +47,7 @@ export default {
   name: 'Services',
   components: {
     PageFooter,
-    ServiceSection,
+    ServicePageDirection,
     ServicesPopup,
   },
   data() {
@@ -102,7 +102,7 @@ export default {
     };
   },
   methods: {
-    setActiveServiceId({ serviceId }) {
+    setActiveServiceId(serviceId) {
       this.activeServiceId = serviceId;
     },
   },
@@ -113,6 +113,6 @@ export default {
 @import '~@/styles/shared/_globals.scss';
 
 .services-page {
-  padding-top: $--page-padding-x - $--gutter * 0.5;
+  padding-top: $--page-padding-x;
 }
 </style>

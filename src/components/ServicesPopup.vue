@@ -1,14 +1,18 @@
 <template>
-  <div v-show="activeServiceId !== null" class="services-popup">
-    <div ref="container" class="services-popup__content">
+  <div ref="popup" class="services-popup">
+    <div class="services-popup__content">
       <div
         v-for="service in services"
         :ref="service.serviceId"
         :key="service.serviceId"
         class="services-popup__section"
-        @click="openService(service.serviceId)"
+        @click="$emit('setService', service.serviceId)"
       >
-        <service-direction :service="service" data-service-direction />
+        <service-popup-direction
+          :service="service"
+          :is-contrast="isContrast(service.serviceId)"
+          @close="$emit('setService', null)"
+        />
       </div>
     </div>
   </div>
@@ -16,13 +20,14 @@
 
 <script>
 import animate from '@/utils/animate.js';
-import { easeInOutCubic } from '@/utils/easings.js';
-import ServiceDirection from '@/components/ServiceDirection.vue';
+import { easeInOutCubic, linear } from '@/utils/easings.js';
+import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
+import progressFromTo from '@/utils/progressFromTo.js';
 
 export default {
   name: 'ServicesPopup',
   components: {
-    ServiceDirection,
+    ServicePopupDirection,
   },
   props: {
     services: {
@@ -37,9 +42,6 @@ export default {
   data() {
     return {
       animation: null,
-      closedBasis: 0,
-      openedVerticalBasis: 0,
-      openedHorizontalBasis: 0,
     };
   },
   computed: {
@@ -48,111 +50,90 @@ export default {
     },
   },
   watch: {
-    activeServiceId(next, prev) {
-      if (next !== null) {
-        this.openService(next);
-      }
-      console.log(next, prev);
+    activeServiceId(nextServiceId, prevServiceId) {
+      this.animatePopup(nextServiceId, prevServiceId);
     },
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.init();
-    });
-  },
+
   methods: {
-    init() {
-      this.setSizes();
+    isContrast(serviceId) {
+      return this.activeServiceId !== null && serviceId !== this.activeServiceId;
     },
-    pixelsToViewporMax(px) {
-      const max = Math.max(window.outerWidth, window.outerHeight);
-      return (px / max) * 100;
-    },
-    setSizes() {
-      const gutter = 1;
-      const pagePaddingX = 1.5;
-      this.closedBasis = this.isMobile ? 56 : 6.5;
-      this.openedVerticalBasis =
-        this.services.reduce(
-          (total, { serviceId }) =>
-            total +
-            this.pixelsToViewporMax(this.$refs[serviceId][0].offsetHeight),
-          0,
-        ) -
-        this.closedBasis * (this.services.length - 1);
-
-      this.openedHorizontalBasis =
-        100 -
-        pagePaddingX * 2 -
-        (this.closedBasis + gutter) * (this.services.length - 1);
-
-      // this.services.forEach(({ serviceId }) => {
-      //   const serviceDirectionNode = this.$refs[serviceId][0].querySelector(
-      //     '[data-service-direction]',
-      //   );
-      //   const serviceDirectionNodeWidth = this.isMobile
-      //     ? '100%'
-      //     : `${this.openedHorizontalBasis}vw`;
-      //   serviceDirectionNode.style.width = serviceDirectionNodeWidth;
-      // });
-    },
-    openService(targetServiceId) {
-      if (this.activeServiceId === targetServiceId) {
-        return;
-      }
-
-      this.$emit('openService', {
-        serviceId: targetServiceId,
-      });
+    animatePopup(nextServiceId, prevServiceId) {
+      const isClosing = nextServiceId === null;
+      const isOpening = prevServiceId === null;
 
       // basis потому, что на мобилке это вертикальный флек, а на десктопе горизонтальый
-      const openedBasis = this.isMobile ? this.openedVerticalBasis : this.openedHorizontalBasis;
+      const gutter = 1.5;
+      const pagePaddingX = 2;
+      const serviceCount = this.services.length;
+      const fullBasis = 100 - pagePaddingX * 2 - gutter * (serviceCount - 1);
+      const closedBasis = this.isMobile ? 0 : 6.5;
+      const openedBasis = this.isMobile ? 0 : fullBasis - closedBasis * (serviceCount - 1);
 
-      const startWidthArray = this.services.map(({ serviceId }) =>
-        this.activeServiceId === serviceId ? openedBasis : this.closedBasis,
-      );
-      const deltaWidthArray = this.services.map(({ serviceId }, index) => {
-        const endWidth =
-          targetServiceId === serviceId ? openedBasis : this.closedBasis;
-        return endWidth - startWidthArray[index];
+      const startBasisArray = this.services.map(({ serviceId }) => {
+        if (isOpening) {
+          return fullBasis / serviceCount;
+        }
+        return prevServiceId === serviceId ? openedBasis : closedBasis;
       });
+
+      const deltaBasisArray = this.services.map(({ serviceId }, index) => {
+        const endWidth = nextServiceId === serviceId ? openedBasis : closedBasis;
+        return endWidth - startBasisArray[index];
+      });
+
+      const startOpacity = isOpening ? 0 : 1;
+      const endOpacity = isClosing ? 0 : 1;
+      const detlaOpacity = endOpacity - startOpacity;
 
       if (!this.animation) {
         this.animation = animate({
-          duration: 350,
-          easing: easeInOutCubic,
+          duration: 750,
+          easing: linear,
           draw: (progress) => {
-            this.services.forEach(({ serviceId }, index) => {
-              // анимируем базис
-              const start = startWidthArray[index];
-              const delta = deltaWidthArray[index];
-              const nextWidth = start + delta * progress;
-              this.$refs[serviceId][0].style.flexBasis = `${nextWidth}vw`;
+            // часть от общего прогресса
+            const fadeDuration = 0.38;
+            const slideDuration = 0.80;
 
-              // ставим классы))))
-              const serviceDirectionNode = this.$refs[
-                serviceId
-              ][0].querySelector('[data-service-direction]');
-              const closedClassName = 'service-direction--contrast';
-              if (serviceId === targetServiceId) {
-                serviceDirectionNode.classList.remove(closedClassName);
+            // анимируем попап
+            if (isOpening || isClosing) {
+              const opacityProgressFrom = isOpening ? 0 : 1 - fadeDuration;
+              const opacityProgressTo = isOpening ? fadeDuration : 1;
+              const opacityProgress = progressFromTo(progress, opacityProgressFrom, opacityProgressTo);
+              const opacity = startOpacity + detlaOpacity * opacityProgress;
+              this.$refs.popup.style.opacity = opacity;
+
+              const activeClassName = 'services-popup--active';
+              if (opacity > 0) {
+                this.$refs.popup.classList.add(activeClassName);
               } else {
-                serviceDirectionNode.classList.add(closedClassName);
+                this.$refs.popup.classList.remove(activeClassName);
               }
+            }
+
+            // анимируем скольжение
+            let slideProgressFrom = 0;
+            let slideProgressTo = 1;
+            if (isOpening || isClosing) {
+              slideProgressFrom = isOpening ? 1 - slideDuration : 0;
+              slideProgressTo = isOpening ? 1 : slideDuration;
+            }
+            const slideProgress = easeInOutCubic(progressFromTo(progress, slideProgressFrom, slideProgressTo));
+            this.services.forEach(({ serviceId }, index) => {
+              const start = startBasisArray[index];
+              const delta = deltaBasisArray[index];
+              const nextWidth = start + delta * slideProgress;
+              this.$refs[serviceId][0].style.flexBasis = `${nextWidth}vw`;
             });
+
+            // анимируем контент
           },
           onComplete: () => {
             this.animation = null;
           },
         });
       }
-    },
-    close() {
-      console.log('close');
-
-      this.$emit('openService', {
-        serviceId: null,
-      });
     },
   },
 };
@@ -163,6 +144,10 @@ export default {
 
 .services-popup {
   $services-popup: &;
+  display: none;
+  &--active {
+    display: block;
+  }
   position: fixed;
   top: $--header-height;
   bottom: 0;
@@ -170,15 +155,15 @@ export default {
   right: 0;
   overflow: hidden;
   background: $--color-background;
-  padding: $--gutter $--page-padding-x;
-  margin: $--gutter * -0.5;
+  padding: $--page-padding-x;
+  margin: 0 $--gutter * -0.5;
   &__content {
     display: flex;
     height: 100%;
   }
   &__section {
     flex-grow: 1;
-    margin: $--gutter * 0.5;
+    margin: 0 $--gutter * 0.5;
     overflow-x: hidden;
     overflow-y: hidden;
   }
