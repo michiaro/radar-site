@@ -1,7 +1,10 @@
 <template>
-  <div class="service-direction" data-service-direction>
+  <div class="service-direction" :class="{ 'service-direction--contrast': isContrast }">
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
+        <button class="service-direction__close" @click.stop="$emit('close')">
+          <div class="service-direction__cross" />
+        </button>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-6">
             <h2 class="service-direction__title">
@@ -36,12 +39,7 @@
           </div>
         </div>
         <div class="row">
-          <work-item
-            v-for="(work, index) in works"
-            :key="work.slug"
-            :work="work"
-            :index="index"
-          />
+          <work-item v-for="(work, index) in works" :key="work.slug" :work="work" :index="index" />
         </div>
       </div>
     </simplebar>
@@ -50,7 +48,7 @@
         {{ service.title }}
       </div>
     </div>
-    <div class="service-direction__plus" />
+    <div class="service-direction__cross service-direction__plus" />
   </div>
 </template>
 
@@ -63,7 +61,7 @@ import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
 
 export default {
-  name: 'ServiceDirection',
+  name: 'ServicePopupDirection',
   components: {
     WorkItem,
     simplebar,
@@ -71,6 +69,10 @@ export default {
   props: {
     service: {
       type: Object,
+      required: true,
+    },
+    isContrast: {
+      type: Boolean,
       required: true,
     },
   },
@@ -113,7 +115,7 @@ export default {
   box-sizing: border-box;
   padding: 1.5vw $--gutter;
   background: $--color-gray-200;
-  transition-duration: $--duration-700, $--duration-700;
+  transition-duration: $--duration-500, $--duration-500;
   transition-timing-function: $--timing-out-circ, $--timing-out-circ;
   transition-property: color, background-color;
   width: 100%;
@@ -147,29 +149,62 @@ export default {
     font-size: 1.5625vw;
   }
 
+  $cross-size: 1.5vmax;
+
   &__plus {
-    $size: 1.5vmax;
     opacity: 0;
     transform: translate(-50%, 2vmax);
     position: absolute;
+    bottom: $--page-padding-x + $cross-size;
+    left: 3.25vmax;
+    &:before,
+    &:after {
+      background: $--color-gray-50;
+    }
+  }
+
+  &__cross {
     width: 0;
     height: 0;
-    bottom: $--page-padding-x + $size;
-    left: 3.25vmax;
     &:before,
     &:after {
       content: '';
       position: absolute;
       height: 2px;
-      left: -$size;
-      right: -$size;
-      background: $--color-gray-50;
+      left: -$cross-size;
+      right: -$cross-size;
     }
     &:after {
       transition-duration: 382ms;
       transition-timing-function: $--timing-in-out-cubic;
       transition-property: transform;
       transform: rotate(-90deg);
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    padding: 2vmax;
+    background: none;
+    border: none;
+    cursor: pointer;
+    #{$service-direction}__cross {
+      transform: rotate(-45deg);
+      &:before,
+      &:after {
+        background: $--color-gray-900;
+      }
+    }
+    &:hover {
+      #{$service-direction}__cross {
+        &:before,
+        &:after {
+          background: $--color-gray-700;
+        }
+      }
     }
   }
 
@@ -202,24 +237,19 @@ export default {
   }
 
   &__main {
-
   }
   &__title {
+    font-size: 12vw;
+    line-height: 0.9;
     font-weight: normal;
     letter-spacing: $--letter-spacing;
-    font-size: $--font-size-180;
     margin: 0;
-    margin-bottom: 18px;
-
-    @include from('md') {
-      font-size: $--font-size-300;
-    }
+    margin: 0 0 18px;
     @include from('lg') {
-      margin-top: 38px;
       margin-bottom: 32px;
     }
-    @include from('2xl') {
-      font-size: $--font-size-500;
+    @include from('xl') {
+      font-size: 4vw;
     }
   }
   &__description {

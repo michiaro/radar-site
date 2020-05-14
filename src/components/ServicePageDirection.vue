@@ -5,14 +5,17 @@
     </video>
     <div class="service__content">
       <h2 class="service__title">{{ title }}</h2>
-      <p class="service__description" v-html="description" />
+      <p class="service__description">
+        {{ glueUpPrepositions(description) }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { glueUpPrepositions } from '@/utils/index.js';
 export default {
-  name: 'ServiceSection',
+  name: 'ServicePageDirection',
   props: {
     serviceId: {
       type: String,
@@ -32,14 +35,12 @@ export default {
     },
   },
   methods: {
+    glueUpPrepositions,
     handleHover() {
       this.$refs.video.play();
     },
     passReference() {
-      this.$emit('openService', {
-        serviceNode: this.$refs.serviceNode,
-        serviceId: this.serviceId,
-      });
+      this.$emit('setService', this.serviceId);
     },
   },
 };
@@ -60,13 +61,14 @@ export default {
     bottom: 0;
     left: 0;
     padding: 1.5vw $--gutter;
-    letter-spacing: $--letter-spacing;
   }
 
   &__title {
+    margin: 0;
     font-size: 12vw;
     line-height: 0.9;
-    margin: 0;
+    font-weight: normal;
+    letter-spacing: $--letter-spacing;
     @include from('xl') {
       font-size: 4vw;
       min-height: 11vw;
@@ -74,9 +76,15 @@ export default {
   }
 
   &__description {
+    margin: 0;
     font-size: $--font-size-100;
     line-height: 1.3;
-    margin: 0;
+    letter-spacing: $--letter-spacing;
+    opacity: 0;
+    transform: translate(0, 3vmax);
+    transition-duration: $--duration-1000, $--duration-1000;
+    transition-timing-function: $--timing-in-circ, $--timing-in-circ;
+    transition-property: opacity, transform;
   }
 
   &__video {
@@ -88,6 +96,10 @@ export default {
   &:hover {
     #{$service}__title {
       color: $--color-brand;
+    }
+    #{$service}__description {
+      opacity: 1;
+      transform: translate(0, 0);
     }
   }
 }
