@@ -4,7 +4,7 @@ import Agency from '@/components/pages/Agency.vue';
 import Services from '@/components/pages/Services.vue';
 import Contacts from '@/components/pages/Contacts.vue';
 import Policy from '@/components/pages/Policy.vue';
-import Error from '@/components/pages/Error.vue';
+import ErrorPage from '@/components/pages/ErrorPage.vue';
 import Work from '@/components/pages/Work.vue';
 
 const routes = [
@@ -170,8 +170,8 @@ const routes = [
   },
   {
     path: '/404',
-    component: Error,
-    name: 'Error',
+    component: ErrorPage,
+    name: 'ErrorPage',
     meta: {
       title: 'Radar Advertising, Страница не существует',
       metaTags: [
@@ -209,7 +209,11 @@ const routes = [
       title: 'Radar Advertising, Работы',
     },
   },
-  { path: '*', redirect: { name: 'Error' } },
+  { path: '*', redirect: { name: 'ErrorPage' } },
+  {
+    path: '/test',
+    component: Test,
+  },
 ];
 
 export default routes;
