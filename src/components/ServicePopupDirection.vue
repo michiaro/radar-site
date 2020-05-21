@@ -1,29 +1,27 @@
 <template>
-  <div class="service-direction" :class="{ 'service-direction--contrast': !isOpen }">
+  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <transition-sequence
-          :is-visible="animationStep > 2 + service.subdivisions.length"
-          :is-blocked="!isOpen || isAnimating"
-        >
+        <transition-sequence :is-visible="animationStep > 2 + service.subdivisions.length">
           <button class="service-direction__close" @click.stop="onClose">
             <div class="service-direction__cross" />
           </button>
         </transition-sequence>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-6">
-            <h2 class="service-direction__title">
-              {{ service.title }}
-            </h2>
-            <div class="service-direction__description">
-              {{ glueUpPrepositions(service.description) }}
-            </div>
+            <transition name="fade">
+              <div v-if="!isClosed" class="service-direction__summary">
+                <h2 class="service-direction__title">
+                  {{ service.title }}
+                </h2>
+                <div class="service-direction__description">
+                  {{ glueUpPrepositions(service.description) }}
+                </div>
+              </div>
+            </transition>
           </div>
           <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-4 col-2xl-3">
-            <transition-sequence
-              :is-visible="animationStep > 3 + service.subdivisions.length"
-              :is-blocked="!isOpen || isAnimating"
-            >
+            <transition-sequence :is-visible="animationStep > 3 + service.subdivisions.length">
               <div class="service-direction__button">
                 <button class="button button--quiet">Обсудить задачу</button>
               </div>
@@ -32,11 +30,7 @@
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <transition-sequence
-              :is-visible="animationStep > 0"
-              :is-blocked="!isOpen || isAnimating"
-              @startNext="startNext"
-            >
+            <transition-sequence :is-visible="animationStep > 0" @startNext="startNext">
               <p class="service-direction__info">
                 {{ glueUpPrepositions(service.info) }}
               </p>
@@ -48,7 +42,6 @@
                 v-for="(subdivision, index) in service.subdivisions"
                 :key="index"
                 :is-visible="animationStep > 1 + index"
-                :is-blocked="!isOpen || isAnimating"
                 @startNext="startNext"
               >
                 <p class="service-direction__subdirection">
@@ -63,7 +56,6 @@
             v-for="(work, index) in works"
             :key="work.slug"
             :is-visible="animationStep > 1 + index + service.subdivisions.length"
-            :is-blocked="!isOpen || isAnimating"
             @startNext="startNext"
           >
             <work-item :work="work" :index="index" />
@@ -71,23 +63,18 @@
         </div>
       </div>
     </simplebar>
-    <transition-sequence
-      :is-visible="animationStep > 0"
-      :is-blocked="isOpen || isAnimating"
-      transition-name="fade-down"
-      @startNext="startNext"
-    >
-      <div class="service-direction__label-transition">
+    <transition name="fade">
+      <div v-if="isClosed" class="service-direction__label-transition">
         <div class="service-direction__label">
           {{ service.title }}
         </div>
       </div>
-    </transition-sequence>
-    <transition-sequence :is-visible="animationStep > 1" :is-blocked="isOpen || isAnimating">
-      <div class="service-direction__plus-transition">
+    </transition>
+    <transition name="fade">
+      <div v-if="isClosed" class="service-direction__plus-transition">
         <div class="service-direction__cross service-direction__plus" />
       </div>
-    </transition-sequence>
+    </transition>
   </div>
 </template>
 
@@ -95,6 +82,7 @@
 import WorkItem from '@/components/WorkItem.vue';
 import { glueUpPrepositions } from '@/utils/index.js';
 import { getCollectionByKey } from '@/api/index.js';
+import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
 
 import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
@@ -112,12 +100,8 @@ export default {
       type: Object,
       required: true,
     },
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
-    isAnimating: {
-      type: Boolean,
+    state: {
+      type: Number,
       required: true,
     },
   },
@@ -127,6 +111,14 @@ export default {
       works: null,
       animationStep: 0,
     };
+  },
+  computed: {
+    isOpen() {
+      return this.state === SERVICE_STATE.OPEN;
+    },
+    isClosed() {
+      return this.state === SERVICE_STATE.CLOSED;
+    },
   },
   created() {
     this.fetchWorks();
@@ -148,7 +140,9 @@ export default {
       this.isWorksLoading = false;
     },
     startNext(index) {
-      if (index !== undefined) {
+      if (this.state !== SERVICE_STATE.OPEN) {
+        this.animationStep = 0;
+      } else if (index !== undefined) {
         this.animationStep = index;
       } else {
         this.animationStep++;
@@ -173,7 +167,7 @@ export default {
   padding: 1.5vw $--gutter;
   background: $--color-gray-200;
   transition-duration: $--duration-500, $--duration-500;
-  transition-timing-function: $--timing-out-circ, $--timing-out-circ;
+  transition-timing-function: $--timing-out-spring, $--timing-out-spring;
   transition-property: color, background-color;
   width: 100%;
   height: 100%;
@@ -278,22 +272,12 @@ export default {
   }
 
   &--contrast {
-    background-color: $--color-gray-700;
+    background-color: $--color-gray-900;
     color: $--color-gray-50;
 
     #{$service-direction}__main {
-      // opacity: 0;
+      opacity: 0;
     }
-
-    // #{$service-direction}__label-rotor {
-    //   opacity: 1;
-    //   transform: translate(0, 0) rotate(-90deg);
-    // }
-
-    // #{$service-direction}__plus {
-    //   opacity: 1;
-    //   transform: translate(-50%, 0);
-    // }
   }
 
   &__title {

@@ -11,8 +11,7 @@
         <service-popup-direction
           ref="directions"
           :service="service"
-          :is-open="service.serviceId === activeServiceId"
-          :is-animating="animation !== null"
+          :state="getState(service.serviceId)"
           @close="$emit('setService', null)"
         />
       </div>
@@ -26,6 +25,7 @@ import animate from '@/utils/animate.js';
 import { easeInOutCubic, linear } from '@/utils/easings.js';
 import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
 import progressFromTo from '@/utils/progressFromTo.js';
+import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
 
 export default {
   name: 'ServicesPopup',
@@ -57,8 +57,17 @@ export default {
       this.animatePopup(nextServiceId, prevServiceId);
     },
   },
-
   methods: {
+    getState(serviceId) {
+      if (this.activeServiceId === null) {
+        return SERVICE_STATE.IDLE;
+      } else {
+        if (this.activeServiceId === serviceId) {
+          return SERVICE_STATE.OPEN;
+        }
+        return SERVICE_STATE.CLOSED;
+      }
+    },
     animatePopup(nextServiceId, prevServiceId) {
       const isClosing = nextServiceId === null;
       const isOpening = prevServiceId === null;
@@ -96,7 +105,7 @@ export default {
             const fadeDuration = 0.38;
             const slideDuration = 0.8;
 
-            // анимируем попап
+            // анимируем прозрачность и класс
             if (isOpening || isClosing) {
               const opacityProgressFrom = isOpening ? 0 : 1 - fadeDuration;
               const opacityProgressTo = isOpening ? fadeDuration : 1;
@@ -119,6 +128,7 @@ export default {
               slideProgressFrom = isOpening ? 1 - slideDuration : 0;
               slideProgressTo = isOpening ? 1 : slideDuration;
             }
+
             const slideProgress = easeInOutCubic(progressFromTo(progress, slideProgressFrom, slideProgressTo));
             this.services.forEach((service, index) => {
               const start = startBasisArray[index];
@@ -129,12 +139,19 @@ export default {
           },
           onComplete: () => {
             this.animation = null;
-            // анимируем контент
+
+            // запускаем анимацию появления контента
             if (this.activeServiceId) {
-              this.services.forEach((service, index) => {
-                this.$refs.directions[index].startNext(1);
+              this.services.forEach(({ serviceId }, index) => {
+                if (this.activeServiceId === serviceId) {
+                  this.$refs.directions[index].startNext(1);
+                } else {
+                  this.$refs.directions[index].startNext(0);
+                }
               });
             }
+
+            // запрещаем скролл документа
             if (this.activeServiceId !== null) {
               disableDocumentScroll();
             } else {
