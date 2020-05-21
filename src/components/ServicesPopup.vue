@@ -3,14 +3,16 @@
     <div class="services-popup__content">
       <div
         v-for="service in services"
-        :ref="service.serviceId"
+        ref="service"
         :key="service.serviceId"
         class="services-popup__section"
         @click="$emit('setService', service.serviceId)"
       >
         <service-popup-direction
+          ref="directions"
           :service="service"
-          :is-contrast="isContrast(service.serviceId)"
+          :is-open="service.serviceId === activeServiceId"
+          :is-animating="animation !== null"
           @close="$emit('setService', null)"
         />
       </div>
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+import { disableDocumentScroll, enableDocumentScroll } from '@/utils/documentScroll.js';
 import animate from '@/utils/animate.js';
 import { easeInOutCubic, linear } from '@/utils/easings.js';
 import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
@@ -56,9 +59,6 @@ export default {
   },
 
   methods: {
-    isContrast(serviceId) {
-      return this.activeServiceId !== null && serviceId !== this.activeServiceId;
-    },
     animatePopup(nextServiceId, prevServiceId) {
       const isClosing = nextServiceId === null;
       const isOpening = prevServiceId === null;
@@ -94,7 +94,7 @@ export default {
           draw: (progress) => {
             // часть от общего прогресса
             const fadeDuration = 0.38;
-            const slideDuration = 0.80;
+            const slideDuration = 0.8;
 
             // анимируем попап
             if (isOpening || isClosing) {
@@ -120,17 +120,26 @@ export default {
               slideProgressTo = isOpening ? 1 : slideDuration;
             }
             const slideProgress = easeInOutCubic(progressFromTo(progress, slideProgressFrom, slideProgressTo));
-            this.services.forEach(({ serviceId }, index) => {
+            this.services.forEach((service, index) => {
               const start = startBasisArray[index];
               const delta = deltaBasisArray[index];
               const nextWidth = start + delta * slideProgress;
-              this.$refs[serviceId][0].style.flexBasis = `${nextWidth}vw`;
+              this.$refs.service[index].style.flexBasis = `${nextWidth}vmax`;
             });
-
-            // анимируем контент
           },
           onComplete: () => {
             this.animation = null;
+            // анимируем контент
+            if (this.activeServiceId) {
+              this.services.forEach((service, index) => {
+                this.$refs.directions[index].startNext(1);
+              });
+            }
+            if (this.activeServiceId !== null) {
+              disableDocumentScroll();
+            } else {
+              enableDocumentScroll();
+            }
           },
         });
       }
@@ -159,6 +168,10 @@ export default {
   margin: 0 $--gutter * -0.5;
   &__content {
     display: flex;
+    flex-direction: column;
+    @include from('xl') {
+      flex-direction: row;
+    }
     height: 100%;
   }
   &__section {

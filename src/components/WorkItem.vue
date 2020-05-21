@@ -1,7 +1,7 @@
 <template>
   <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
     <!-- <router-link to="/"> -->
-    <div class="work">
+    <div class="work fade-up">
       <div class="work__cover-wrapper">
         <img
           :src="BASE_URL + work.cover.path"
