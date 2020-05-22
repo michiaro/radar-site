@@ -1,22 +1,23 @@
 <template>
   <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
-    <!-- <router-link to="/"> -->
-    <div class="work">
-      <div class="work__cover-wrapper">
-        <img
-          :src="BASE_URL + work.cover.path"
-          :alt="work.title"
-          class="work__cover"
-        />
+    <router-link to="/all-works/friendly">
+      <div class="work">
+        <div class="work__cover-wrapper">
+          <!-- TODO если видео -->
+          <img
+            :src="BASE_URL + work.cover.path"
+            :alt="work.title"
+            class="work__cover"
+          />
+        </div>
+        <h3 class="work__title">
+          {{ work.title }}
+        </h3>
+        <p class="work__description">
+          {{ glueUpPrepositions(work.prescription) }}
+        </p>
       </div>
-      <h3 class="work__title">
-        {{ work.title }}
-      </h3>
-      <p class="work__description">
-        {{ glueUpPrepositions(work.prescription) }}
-      </p>
-    </div>
-    <!-- </router-link> -->
+    </router-link>
   </div>
 </template>
 

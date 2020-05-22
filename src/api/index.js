@@ -11,6 +11,7 @@ async function getCollectionByKey({ key, filter, options }) {
     data: {
       filter,
       ...options,
+      populate: 1,
     },
   });
   return { data: data.entries, total: data.total };

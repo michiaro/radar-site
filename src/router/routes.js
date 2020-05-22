@@ -197,7 +197,7 @@ const routes = [
   { path: '/index.html', redirect: { name: 'Home' } },
   {
     path: '*.html',
-    redirect: to => {
+    redirect: (to) => {
       return to.path.replace('.html', '');
     },
   },
@@ -210,10 +210,6 @@ const routes = [
     },
   },
   { path: '*', redirect: { name: 'ErrorPage' } },
-  {
-    path: '/test',
-    component: Test,
-  },
 ];
 
 export default routes;

@@ -5,3 +5,7 @@ export function glueUpPrepositions(string) {
   }
   return string.replace(CONJUNCTIONS_AND_PREPOSITIONS_REGEXP, ' $2\xa0');
 }
+
+export function isVideo(filePath) {
+  return filePath.includes('.mp4');
+}
