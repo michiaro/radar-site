@@ -3,14 +3,15 @@
     <div class="services-popup__content">
       <div
         v-for="service in services"
-        :ref="service.serviceId"
+        ref="service"
         :key="service.serviceId"
         class="services-popup__section"
         @click="$emit('setService', service.serviceId)"
       >
         <service-popup-direction
+          ref="directions"
           :service="service"
-          :is-contrast="isContrast(service.serviceId)"
+          :state="getState(service.serviceId)"
           @close="$emit('setService', null)"
         />
       </div>
@@ -19,10 +20,12 @@
 </template>
 
 <script>
+import { disableDocumentScroll, enableDocumentScroll } from '@/utils/documentScroll.js';
 import animate from '@/utils/animate.js';
 import { easeInOutCubic, linear } from '@/utils/easings.js';
 import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
 import progressFromTo from '@/utils/progressFromTo.js';
+import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
 
 export default {
   name: 'ServicesPopup',
@@ -54,10 +57,16 @@ export default {
       this.animatePopup(nextServiceId, prevServiceId);
     },
   },
-
   methods: {
-    isContrast(serviceId) {
-      return this.activeServiceId !== null && serviceId !== this.activeServiceId;
+    getState(serviceId) {
+      if (this.activeServiceId === null) {
+        return SERVICE_STATE.IDLE;
+      } else {
+        if (this.activeServiceId === serviceId) {
+          return SERVICE_STATE.OPEN;
+        }
+        return SERVICE_STATE.CLOSED;
+      }
     },
     animatePopup(nextServiceId, prevServiceId) {
       const isClosing = nextServiceId === null;
@@ -94,9 +103,9 @@ export default {
           draw: (progress) => {
             // часть от общего прогресса
             const fadeDuration = 0.38;
-            const slideDuration = 0.80;
+            const slideDuration = 0.8;
 
-            // анимируем попап
+            // анимируем прозрачность и класс
             if (isOpening || isClosing) {
               const opacityProgressFrom = isOpening ? 0 : 1 - fadeDuration;
               const opacityProgressTo = isOpening ? fadeDuration : 1;
@@ -119,18 +128,35 @@ export default {
               slideProgressFrom = isOpening ? 1 - slideDuration : 0;
               slideProgressTo = isOpening ? 1 : slideDuration;
             }
+
             const slideProgress = easeInOutCubic(progressFromTo(progress, slideProgressFrom, slideProgressTo));
-            this.services.forEach(({ serviceId }, index) => {
+            this.services.forEach((service, index) => {
               const start = startBasisArray[index];
               const delta = deltaBasisArray[index];
               const nextWidth = start + delta * slideProgress;
-              this.$refs[serviceId][0].style.flexBasis = `${nextWidth}vw`;
+              this.$refs.service[index].style.flexBasis = `${nextWidth}vmax`;
             });
-
-            // анимируем контент
           },
           onComplete: () => {
             this.animation = null;
+
+            // запускаем анимацию появления контента
+            if (this.activeServiceId) {
+              this.services.forEach(({ serviceId }, index) => {
+                if (this.activeServiceId === serviceId) {
+                  this.$refs.directions[index].startNext(1);
+                } else {
+                  this.$refs.directions[index].startNext(0);
+                }
+              });
+            }
+
+            // запрещаем скролл документа
+            if (this.activeServiceId !== null) {
+              disableDocumentScroll();
+            } else {
+              enableDocumentScroll();
+            }
           },
         });
       }
@@ -159,6 +185,10 @@ export default {
   margin: 0 $--gutter * -0.5;
   &__content {
     display: flex;
+    flex-direction: column;
+    @include from('xl') {
+      flex-direction: row;
+    }
     height: 100%;
   }
   &__section {

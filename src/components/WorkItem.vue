@@ -1,7 +1,7 @@
 <template>
   <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
     <router-link to="/all-works/friendly">
-      <div class="work">
+      <div class="work fade-up">
         <div class="work__cover-wrapper">
           <!-- TODO если видео -->
           <img

@@ -72,6 +72,7 @@ $--color-background: $--color-gray-50;
 $--timing-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
 $--timing-in-circ: cubic-bezier(0, 1, 1, 1);
 $--timing-out-circ: cubic-bezier(1, 0, 1, 1);
+$--timing-out-spring: cubic-bezier(0.25, 0.1, 0.25, 1);
 $--duration-0: 0ms;
 $--duration-100: 130ms;
 $--duration-200: 160ms;
