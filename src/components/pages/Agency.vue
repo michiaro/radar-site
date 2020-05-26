@@ -93,7 +93,7 @@
     </div>
 
     <div class="agency__clients">
-      <page-footer />
+      <page-footer is-clients />
     </div>
   </div>
 </template>
@@ -193,12 +193,12 @@ export default {
     font-size: 18px;
   }
   &__clients {
-  @include from('md') {
-    margin-top: 48px;
-  }
-  @include from('xl') {
-    margin-top: 78px;
-  }
+    @include from('md') {
+      margin-top: 48px;
+    }
+    @include from('xl') {
+      margin-top: 78px;
+    }
   }
 }
 

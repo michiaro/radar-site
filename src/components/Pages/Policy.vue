@@ -5,14 +5,20 @@
         <div class="policy__content" v-html="policy" />
       </div>
     </div>
+
+    <page-footer />
   </div>
 </template>
 
 <script>
 import { getSingletonByKey } from '@/api/index.js';
+import PageFooter from '@/components/PageFooter.vue';
 
 export default {
   name: 'Policy',
+  components: {
+    PageFooter,
+  },
   data() {
     return {
       policy: '',

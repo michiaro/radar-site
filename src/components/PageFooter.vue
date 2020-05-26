@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="container">
+    <div class="container" v-if="isClients">
       <div class="row">
         <div class="col col-xs-2 col-sm-2 col-md-3 col-lg-6 col-2xl-4">
           <h2 class="footer__title">
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="footer__slider">
+    <div class="footer__slider" v-if="isClients">
       <swiper
         v-if="clients.length > 0"
         ref="swiper"
@@ -52,6 +52,12 @@ export default {
     Swiper,
     SwiperSlide,
     ContactForm,
+  },
+  props: {
+    isClients: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
