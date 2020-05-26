@@ -1,7 +1,7 @@
 <template>
   <div class="agency">
     <div class="container">
-      <div class="row">
+      <div v-if="aboutUs" class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">
           <h1 class="agency__title">
             {{ aboutUs.title }}
@@ -34,6 +34,8 @@
           </div>
         </div>
       </div>
+
+      <!-- TODO load info -->
 
       <div class="row">
         <template v-if="isLoading">

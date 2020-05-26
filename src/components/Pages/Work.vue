@@ -94,7 +94,7 @@
         </div>
       </div>
 
-      <div class="work-page__cross-link cross-link" v-if="!isNextWorkLoading">
+      <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
         <div class="cross-link__wrapper">
           <img
             v-if="!isVideo(nextWork.header.path)"
@@ -143,7 +143,7 @@ export default {
   data() {
     return {
       isWorkLoading: false,
-      isNextWorkLoading: false,
+      isNextWorkLoading: true,
       currentWork: null,
       nextWork: null,
       BASE_URL,
