@@ -4,7 +4,8 @@
   box-sizing: border-box;
   width: 100%;
   font-size: $--font-size-100;
-  line-height: 1;
+  // fix vertical align
+  line-height: 2;
   border: 2px solid $--color-text;
   height: 52px;
   border-radius: 0;
