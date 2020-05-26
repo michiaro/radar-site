@@ -72,18 +72,18 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 1.5vw $--gutter;
+    padding: $--gutter;
   }
 
   &__title {
     margin: 0;
-    font-size: 12vw;
+    font-size: 12vmax;
     line-height: 0.9;
     font-weight: normal;
     letter-spacing: $--letter-spacing;
     @include from('xl') {
-      font-size: 4vw;
-      min-height: 11vw;
+      font-size: 4vmax;
+      min-height: 11vmax;
     }
   }
 
