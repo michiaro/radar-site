@@ -164,7 +164,6 @@ export default {
 
   position: relative;
   box-sizing: border-box;
-  padding: 1.5vw $--gutter;
   background: $--color-gray-200;
   transition-duration: $--duration-500, $--duration-500;
   transition-timing-function: $--timing-out-spring, $--timing-out-spring;
@@ -172,6 +171,10 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  &__main {
+    padding: 1.5vmax $--gutter;
+  }
 
   &__label-transition {
     position: absolute;
@@ -238,8 +241,8 @@ export default {
 
   &__close {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 1.5vmax;
+    top: 1.5vmax;
     margin: 0;
     padding: 2vmax;
     background: none;
@@ -309,7 +312,6 @@ export default {
     margin-bottom: 22px;
     @include from('lg') {
       margin-bottom: 0;
-      margin-top: 44px;
     }
   }
   &__info {
