@@ -1,6 +1,9 @@
 <template>
-  <div ref="serviceNode" class="service" @mouseenter="handleHover" @click="passReference">
-    <video ref="video" class="service__video" muted="muted" playsinline preload="auto">
+  <div ref="serviceNode" class="service" @mouseenter="handleEnter" @mouseleave="handleLeave" @click="passReference">
+    <video
+      ref="video" class="service__video" muted="muted" playsinline preload="auto"
+      :loop="isLooped"
+    >
       <source :src="videoUrl" type="video/mp4" />
     </video>
     <div class="service__content">
@@ -34,10 +37,19 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isLooped: false,
+    };
+  },
   methods: {
     glueUpPrepositions,
-    handleHover() {
+    handleEnter() {
+      this.isLooped = true;
       this.$refs.video.play();
+    },
+    handleLeave() {
+      this.isLooped = false;
     },
     passReference() {
       this.$emit('setService', this.serviceId);
