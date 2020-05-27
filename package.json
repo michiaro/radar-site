@@ -64,6 +64,7 @@
     "build": "yarn cross-env NODE_ENV=production webpack"
   },
   "dependencies": {
+    "animated-scroll-to": "^2.0.8",
     "create-observable": "^1.0.3",
     "simplebar": "^5.2.0",
     "vuex": "^3.3.0",

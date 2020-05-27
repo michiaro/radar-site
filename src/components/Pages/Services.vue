@@ -36,12 +36,14 @@
 </template>
 
 <script>
+import animateScrollTo from 'animated-scroll-to';
 import PageFooter from '@/components/PageFooter.vue';
 import ServicePageDirection from '@/components/ServicePageDirection.vue';
 import ServicesPopup from '@/components/ServicesPopup.vue';
 import advertisingCampaign from '@/video/campaign.mp4';
 import branding from '@/video/branding.mp4';
 import smmDigital from '@/video/smm-digital.mp4';
+import { easeOutSin } from '@/utils/easings.js';
 
 export default {
   name: 'Services',
@@ -102,8 +104,15 @@ export default {
     };
   },
   methods: {
-    setActiveServiceId(serviceId) {
-      this.activeServiceId = serviceId;
+    async setActiveServiceId(serviceId) {
+      const isScrolled = await animateScrollTo(0, {
+        easing: easeOutSin,
+        maxDuration: 700,
+      });
+
+      if (isScrolled) {
+        this.activeServiceId = serviceId;
+      }
     },
   },
 };
