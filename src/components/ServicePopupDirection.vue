@@ -98,7 +98,7 @@ import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
 
 import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
-import TransitionSequence from './TransitionSequence.vue';
+import TransitionSequence from '@/components/TransitionSequence.vue';
 
 export default {
   name: 'ServicePopupDirection',

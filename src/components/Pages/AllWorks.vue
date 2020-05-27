@@ -26,29 +26,23 @@
           <div v-if="isFilterLoading" class="filter filter--dummy loading" />
         </div>
       </div>
-      <div v-if="isWorksLoading" class="row">
-        <work-item-dummy
-          v-for="(i, index) in 8"
-          :key="i"
-          :index="index"
-          class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
-        >
-          <div class="teammate teammate--dummy loading" />
-        </work-item-dummy>
-      </div>
-      <div v-if="!isWorksLoading" class="row">
-        <work-item
-          v-for="(work, index) in works"
-          :key="work.slug"
-          :index="index"
-          :work="work"
-        />
-      </div>
-      <div v-if="!works.length" class="row">
-        <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
-          <p class="dummy-title">
-            Кейсов по&nbsp;этому направлению пока&nbsp;нет
-          </p>
+      <div class="all-works__list">
+        <div v-if="!isWorksLoading && works.length" class="row">
+          <transition-sequence
+            v-for="(work, index) in works"
+            :key="work.slug"
+            :is-visible="animationStep > 0 + index"
+            @startNext="startNext"
+          >
+            <work-item :work="work" :index="index" />
+          </transition-sequence>
+        </div>
+        <div v-else class="row">
+          <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
+            <p class="dummy-title">
+              Кейсов по&nbsp;этому направлению пока&nbsp;нет
+            </p>
+          </div>
         </div>
       </div>
       <div v-if="isLoadMoreVisible" class="row">
@@ -67,20 +61,21 @@
 <script>
 import { getCollectionByKey } from '@/api/index.js';
 import WorkItem from '@/components/WorkItem.vue';
-import WorkItemDummy from '@/components/WorkItemDummy.vue';
 import PageFooter from '@/components/PageFooter.vue';
+import TransitionSequence from '@/components/TransitionSequence.vue';
 
 export default {
   name: 'AllWorks',
   components: {
     WorkItem,
-    WorkItemDummy,
+    TransitionSequence,
     PageFooter,
   },
   data() {
     return {
       isFilterLoading: false,
       isWorksLoading: false,
+      animationStep: 0,
     };
   },
   computed: {
@@ -112,14 +107,17 @@ export default {
         : null;
     },
   },
-  created() {
+  async created() {
     const { tags, works } = this;
 
     if (!tags) {
       this.fetchTags();
     }
     if (!works.length) {
-      this.fetchWorks();
+      await this.fetchWorks();
+      this.animationStep = 1;
+    } else {
+      this.animationStep = works.length + 1;
     }
   },
   methods: {
@@ -180,6 +178,13 @@ export default {
         this.fetchWorks({ resetSkip: true });
       }
     },
+    startNext(index) {
+      if (index !== undefined) {
+        this.animationStep = index;
+      } else {
+        this.animationStep++;
+      }
+    },
   },
 };
 </script>
@@ -188,6 +193,10 @@ export default {
 @import '~@/styles/shared/_globals.scss';
 
 .all-works {
+  &__list {
+    min-height: calc(100vh - #{$--header-height});
+  }
+
   &__show-more {
     font-size: $--font-size-120;
     text-align: center;

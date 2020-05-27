@@ -6,10 +6,10 @@
           <!-- TODO если видео -->
           <img :src="baseURL + work.cover.path" :alt="work.title" class="work__cover" />
         </div>
-        <h3 class="work__title">
+        <h3 class="work__title" :class="{ 'work__title--ready': isReady }">
           {{ work.title }}
         </h3>
-        <p class="work__description">
+        <p class="work__description" :class="{ 'work__description--ready': isReady }">
           {{ glueUpPrepositions(work.prescription) }}
         </p>
       </div>
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       patternLenght: 8,
+      isReady: false,
       baseURL,
     };
   },
@@ -73,8 +74,16 @@ export default {
       return 'col-xl-' + size;
     },
   },
+  mounted() {
+    this.$nextTick(this.afterMount);
+  },
   methods: {
     glueUpPrepositions,
+    afterMount() {
+      setTimeout(() => {
+        this.isReady = true;
+      }, 200);
+    },
   },
 };
 </script>
@@ -84,7 +93,6 @@ export default {
 
 .work {
   $block: &;
-
   letter-spacing: $--letter-spacing;
   margin-bottom: $--gutter;
   cursor: pointer;
@@ -92,40 +100,55 @@ export default {
   &__cover-wrapper {
     overflow: hidden;
   }
+
   &__cover {
     max-width: 100%;
     width: 100%;
     line-height: 1;
     display: block;
-
     transition: transform $--duration-2000 $--timing-in-out-cubic;
   }
-  &__title {
-    margin: 0;
 
-    margin-top: 12px;
+  &__title {
+    margin: 12px 0 0;
     font-weight: normal;
     font-size: $--font-size-120;
     color: $--color-text;
-
-    transition: color $--duration-200 $--timing-in-out-cubic;
+    transition-duration: $--duration-2000, $--duration-2000, $--duration-200;
+    transition-timing-function: $--timing-out-spring, $--timing-out-spring, $--timing-in-out-cubic;
+    transition-property: opacity, transform, color;
+    transition-delay: $--duration-300;
+    opacity: 0;
+    transform: translate(0, 3vmax);
+    &--ready {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
   }
-  &__description {
-    margin: 0;
 
-    margin-top: 4px;
+  &__description {
+    margin: 4px 0 0;
     font-size: $--font-size-80;
     color: $--color-text--muted;
-
     max-width: 440px;
+    transition-duration: $--duration-2000, $--duration-2000;
+    transition-timing-function: $--timing-out-spring, $--timing-out-spring;
+    transition-property: opacity, transform;
+    transition-delay: $--duration-700;
+    opacity: 0;
+    transform: translate(0, 3vmax);
+    &--ready {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
   }
 
   &:hover {
-    #{$block}__title {
-      color: $--color-brand;
-    }
     #{$block}__cover {
       transform: scale(1.1);
+    }
+    #{$block}__title {
+      color: $--color-brand;
     }
   }
 }
