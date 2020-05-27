@@ -5,13 +5,13 @@
         <img
           v-if="!isVideo(work.header.path)"
           class="work-page__header work-page__header--image"
-          :src="BASE_URL + work.header.path"
+          :src="baseURL + work.header.path"
           :alt="work.title"
         />
         <video
           v-if="isVideo(work.header.path)"
           class="work-page__header work-page__header--video"
-          :src="BASE_URL + work.header.path"
+          :src="baseURL + work.header.path"
         />
       </div>
 
@@ -94,18 +94,18 @@
         </div>
       </div>
 
-      <div class="work-page__cross-link cross-link" v-if="!isNextWorkLoading">
+      <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
         <div class="cross-link__wrapper">
           <img
             v-if="!isVideo(nextWork.header.path)"
             class="cross-link__cover cross-link__cover--image"
-            :src="BASE_URL + nextWork.header.path"
+            :src="baseURL + nextWork.header.path"
             :alt="nextWork.title"
           />
           <video
             v-if="isVideo(nextWork.header.path)"
             class="cross-link__cover cross-link__cover--video"
-            :src="BASE_URL + nextWork.header.path"
+            :src="baseURL + nextWork.header.path"
           />
         </div>
         <div class="cross-link__content">
@@ -125,10 +125,8 @@
 </template>
 
 <script>
-import { getCollectionByKey } from '@/api/index.js';
+import { baseURL, getCollectionByKey } from '@/api/index.js';
 import { glueUpPrepositions, isVideo } from '@/utils/index.js';
-import { BASE_URL } from '@/settings.js';
-
 import TextContent from '@/components/work-components/TextContent.vue';
 import PictureArray from '@/components/work-components/PictureArray.vue';
 import Media from '@/components/work-components/Media.vue';
@@ -146,7 +144,7 @@ export default {
       isNextWorkLoading: false,
       currentWork: null,
       nextWork: null,
-      BASE_URL,
+      baseURL,
     };
   },
   computed: {

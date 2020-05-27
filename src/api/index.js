@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const apiClient = axios.create();
+const baseURL = 'http://radar-2020.radar-online.mcdir.ru/';
+
+const apiClient = axios.create({
+  baseURL,
+});
 
 const token = '197125d3878c8b0555a0a9dfab3403';
 
@@ -34,4 +38,21 @@ async function sendForm(form) {
   return data;
 }
 
-export { getCollectionByKey, getSingletonByKey, sendForm };
+async function getStaticData(lastUpdated) {
+  const { data } = await apiClient({
+    method: 'get',
+    url: '/cockpit/getStaticData.php',
+    params: {
+      lastUpdated,
+    },
+  });
+  return data;
+}
+
+export {
+  baseURL,
+  getCollectionByKey,
+  getSingletonByKey,
+  getStaticData,
+  sendForm,
+};

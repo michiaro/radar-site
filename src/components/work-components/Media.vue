@@ -16,7 +16,7 @@
 
 <script>
 import { isVideo } from '@/utils/index.js';
-import { BASE_URL } from '@/settings.js';
+import { baseURL } from '@/api/index.js';
 
 export default {
   name: 'Media',
@@ -28,13 +28,13 @@ export default {
   },
   data() {
     return {
-      BASE_URL,
+      baseURL,
     };
   },
   computed: {
     mediaPath() {
-      const { BASE_URL, settings } = this;
-      return BASE_URL + settings.media.path;
+      const { baseURL, settings } = this;
+      return baseURL + settings.media.path;
     },
   },
   methods: {

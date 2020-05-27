@@ -26,7 +26,7 @@
         >
           <img
             class="footer__slide-image"
-            :src="BASE_URL + client.logo.path"
+            :src="baseURL + client.logo.path"
             :alt="client.title"
           />
         </swiper-slide>
@@ -38,8 +38,7 @@
 </template>
 
 <script>
-import { getCollectionByKey } from '@/api/index.js';
-import { BASE_URL } from '@/settings.js';
+import { baseURL, getCollectionByKey } from '@/api/index.js';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 
 import ContactForm from '@/components/ContactForm.vue';
@@ -57,7 +56,7 @@ export default {
     return {
       common: '',
       clients: [],
-      BASE_URL,
+      baseURL,
       clientSwiperOptions: {
         loop: true,
         speed: 3000,

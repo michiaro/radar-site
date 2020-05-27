@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { BASE_URL } from '@/settings.js';
+import { baseURL } from '@/api/index.js';
 
 export default {
   name: 'PictureArray',
@@ -23,13 +23,13 @@ export default {
   },
   data() {
     return {
-      BASE_URL,
+      baseURL,
     };
   },
   computed: {
     array() {
-      const { BASE_URL, settings } = this;
-      return settings.pictureArray.map((picture) => BASE_URL + picture.path);
+      const { baseURL, settings } = this;
+      return settings.pictureArray.map((picture) => baseURL + picture.path);
     },
   },
 };

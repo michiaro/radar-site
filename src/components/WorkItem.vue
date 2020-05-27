@@ -4,11 +4,7 @@
       <div class="work fade-up">
         <div class="work__cover-wrapper">
           <!-- TODO если видео -->
-          <img
-            :src="BASE_URL + work.cover.path"
-            :alt="work.title"
-            class="work__cover"
-          />
+          <img :src="baseURL + work.cover.path" :alt="work.title" class="work__cover" />
         </div>
         <h3 class="work__title">
           {{ work.title }}
@@ -22,7 +18,7 @@
 </template>
 
 <script>
-import { BASE_URL } from '@/settings.js';
+import { baseURL } from '@/api/index.js';
 import { glueUpPrepositions } from '@/utils/index.js';
 
 export default {
@@ -40,7 +36,7 @@ export default {
   data() {
     return {
       patternLenght: 8,
-      BASE_URL,
+      baseURL,
     };
   },
   computed: {

@@ -19,14 +19,14 @@
               href="http://russianbranding.ru/"
               target="_blank"
             >
-              <img :src="BASE_URL + aboutUs.abkrLogo.path" alt="АБКР" />
+              <img :src="baseURL + aboutUs.abkrLogo.path" alt="АБКР" />
             </a>
             <a
               class="agency__logo"
               href="http://www.akarussia.ru/"
               target="_blank"
             >
-              <img :src="BASE_URL + aboutUs.akarLogo.path" alt="АКАР" />
+              <img :src="baseURL + aboutUs.akarLogo.path" alt="АКАР" />
             </a>
             <div class="agency__logo-description">
               {{ aboutUs.logoDescription }}
@@ -53,7 +53,7 @@
           >
             <div class="teammate">
               <img
-                :src="teammate.photo.path"
+                :src="baseURL + teammate.photo.path"
                 :alt="teammate.name"
                 class="teammate__photo"
               />
@@ -97,9 +97,7 @@
 </template>
 
 <script>
-import { getCollectionByKey } from '@/api/index.js';
-import { BASE_URL } from '@/settings.js';
-
+import { baseURL, getCollectionByKey } from '@/api/index.js';
 import PageFooter from '@/components/PageFooter.vue';
 
 export default {
@@ -111,7 +109,7 @@ export default {
     return {
       isLoading: true,
       team: [],
-      BASE_URL,
+      baseURL,
     };
   },
   computed: {

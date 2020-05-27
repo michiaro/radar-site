@@ -7,7 +7,7 @@
 
 <script>
 import PageHeader from '@/components/PageHeader.vue';
-import axios from 'axios';
+import { getStaticData } from '@/api/index.js';
 
 export default {
   name: 'App',
@@ -16,13 +16,7 @@ export default {
   },
   mounted() {
     this.$nextTick(async () => {
-      const { data } = await axios.get('/cockpit/getStaticData.php', {
-        params: {
-          lastUpdated: 0,
-        },
-      });
-
-      const { isUpdated, lastUpdated, singletones } = data;
+      const { isUpdated, lastUpdated, singletones } = await getStaticData(lastUpdated);
 
       if (isUpdated) {
         this.$store.commit('setStaticData', { lastUpdated, singletones });

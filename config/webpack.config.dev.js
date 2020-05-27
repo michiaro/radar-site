@@ -36,15 +36,8 @@ const webpackConfig = merge(commonConfig, {
     overlay: true,
     port: 8000,
     stats: 'errors-only',
-    proxy: {
-      '/cockpit/': {
-        target: 'http://radar-2020.radar-online.mcdir.ru/',
-        changeOrigin: true,
-      },
-      '/order.php': {
-        target: 'http://radar-2020.radar-online.mcdir.ru/',
-        changeOrigin: true,
-      },
+    watchOptions: {
+      poll: true,
     },
   },
 });
