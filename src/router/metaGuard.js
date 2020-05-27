@@ -1,8 +1,11 @@
 import router from '@/router/index.js';
+import { enableDocumentScroll } from '@/utils/documentScroll.js';
 
 // меняем тайтл и метатеги при переходах
 
 export default router.beforeEach((to, from, next) => {
+  enableDocumentScroll();
+
   const nearestWithTitle = to.matched
     .slice()
     .reverse()
