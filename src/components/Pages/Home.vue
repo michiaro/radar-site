@@ -50,14 +50,12 @@ import backgroundImage from '@/images/main-back.jpg';
 import backgroundImageMobile from '@/images/main-back-mobile.jpg';
 
 import { getSingletonByKey } from '@/api/index.js';
-import { TABLET_SIZE } from '@/settings.js';
 
 export default {
   name: 'Home',
   data() {
     return {
       text: '',
-      isMobile: false,
     };
   },
   computed: {
@@ -66,30 +64,24 @@ export default {
       return commonData ? commonData : {};
     },
     backgroundVideo() {
-      const { isMobile } = this;
-      return isMobile ? videoMobile : video;
+      const { isTablet } = this;
+      return isTablet ? videoMobile : video;
     },
     backgroundImage() {
-      const { isMobile } = this;
-      return isMobile ? backgroundImageMobile : backgroundImage;
+      const { isTablet } = this;
+      return isTablet ? backgroundImageMobile : backgroundImage;
+    },
+    isTablet() {
+      return this.$store.state.isTablet;
     },
   },
   created() {
     this.getWelcomeText();
   },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.handleResize);
-      this.handleResize();
-    });
-  },
   methods: {
     async getWelcomeText() {
       const { content } = await getSingletonByKey('welcomeText');
       this.text = content;
-    },
-    handleResize() {
-      this.isMobile = window.innerWidth <= TABLET_SIZE;
     },
   },
 };

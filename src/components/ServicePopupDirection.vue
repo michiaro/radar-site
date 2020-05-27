@@ -1,8 +1,13 @@
 <template>
-  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
+  <div
+    class="service-direction"
+    :class="{ 'service-direction--contrast': isClosed }"
+  >
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <transition-sequence :is-visible="animationStep > 2 + service.subdivisions.length">
+        <transition-sequence
+          :is-visible="animationStep > 2 + service.subdivisions.length"
+        >
           <button class="service-direction__close" @click.stop="onClose">
             <div class="service-direction__cross" />
           </button>
@@ -21,7 +26,9 @@
             </transition>
           </div>
           <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-4 col-2xl-3">
-            <transition-sequence :is-visible="animationStep > 3 + service.subdivisions.length">
+            <transition-sequence
+              :is-visible="animationStep > 3 + service.subdivisions.length"
+            >
               <div class="service-direction__button">
                 <button class="button button--quiet">Обсудить задачу</button>
               </div>
@@ -30,7 +37,10 @@
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <transition-sequence :is-visible="animationStep > 0" @startNext="startNext">
+            <transition-sequence
+              :is-visible="animationStep > 0"
+              @startNext="startNext"
+            >
               <p class="service-direction__info">
                 {{ glueUpPrepositions(service.info) }}
               </p>
@@ -55,7 +65,9 @@
           <transition-sequence
             v-for="(work, index) in works"
             :key="work.slug"
-            :is-visible="animationStep > 1 + index + service.subdivisions.length"
+            :is-visible="
+              animationStep > 1 + index + service.subdivisions.length
+            "
             @startNext="startNext"
           >
             <work-item :work="work" :index="index" />
@@ -312,6 +324,7 @@ export default {
     margin-bottom: 22px;
     @include from('lg') {
       margin-bottom: 0;
+      margin-top: 8px;
     }
   }
   &__info {

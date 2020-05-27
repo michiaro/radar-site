@@ -95,30 +95,36 @@
       </div>
 
       <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
-        <div class="cross-link__wrapper">
-          <img
-            v-if="!isVideo(nextWork.header.path)"
-            class="cross-link__cover cross-link__cover--image"
-            :src="baseURL + nextWork.header.path"
-            :alt="nextWork.title"
-          />
-          <video
-            v-if="isVideo(nextWork.header.path)"
-            class="cross-link__cover cross-link__cover--video"
-            :src="baseURL + nextWork.header.path"
-          />
-        </div>
-        <div class="cross-link__content">
-          <div class="container">
-            <div class="row">
-              <div class="col col-xs-2">
-                <div class="cross-link__title">
-                  {{ nextWork.title }}
+        <router-link
+          v-if="!isNextWorkLoading"
+          :to="'/all-works/friendly'"
+          class="work-page__cross-link cross-link"
+        >
+          <div class="cross-link__wrapper">
+            <img
+              v-if="!isVideo(nextWork.header.path)"
+              class="cross-link__cover cross-link__cover--image"
+              :src="baseURL + nextWork.header.path"
+              :alt="nextWork.title"
+            />
+            <video
+              v-if="isVideo(nextWork.header.path)"
+              class="cross-link__cover cross-link__cover--video"
+              :src="baseURL + nextWork.header.path"
+            />
+          </div>
+          <div class="cross-link__content">
+            <div class="container">
+              <div class="row">
+                <div class="col col-xs-2">
+                  <div class="cross-link__title">
+                    {{ nextWork.title }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -141,7 +147,7 @@ export default {
   data() {
     return {
       isWorkLoading: false,
-      isNextWorkLoading: false,
+      isNextWorkLoading: true,
       currentWork: null,
       nextWork: null,
       baseURL,
@@ -261,7 +267,7 @@ export default {
       margin: 0;
     }
     p + p {
-      margin-top: 32px;
+      margin-top: 1.7vmax;
     }
   }
   &__subtitle {
@@ -271,7 +277,7 @@ export default {
     line-height: 1.67;
     color: $--color-text--muted;
     margin: 0;
-    margin-bottom: 24px;
+    margin-bottom: 1.25vmax;
   }
   &__subtitle {
   }
@@ -283,14 +289,14 @@ export default {
     text-transform: lowercase;
 
     &:last-of-type {
-      margin-bottom: 24px;
+      margin-bottom: 1.25vmax;
     }
   }
   &__subtitle {
     font-weight: normal;
     font-size: $--font-size-120;
     margin: 0;
-    margin-bottom: 12px;
+    margin-bottom: 0.65vmax;
   }
   &__position {
     font-size: $--font-size-80;
@@ -298,23 +304,22 @@ export default {
   }
   &__teammate {
     font-size: $--font-size-80;
-    margin: 12px 0 24px;
+    margin: 0.65vmax 0 1.25vmax;
   }
   &__next-work {
     font-size: $--font-size-100;
     font-weight: normal;
-    margin-top: 50px;
-
-    @include from('lg') {
-      margin-top: 100px;
-    }
+    margin-top: 5.5vmax;
   }
   &__cross-link {
   }
 }
 
 .cross-link {
+  $cross-link: &;
+
   position: relative;
+  display: block;
 
   &__wrapper {
     height: 60vh;
@@ -326,6 +331,7 @@ export default {
     width: 100%;
     object-fit: cover;
     object-position: bottom;
+    transition: transform $--duration-2000 $--timing-in-out-cubic;
 
     &--image {
     }
@@ -345,6 +351,16 @@ export default {
     }
 
     color: $--color-text--contrast;
+    transition: color $--duration-200 $--timing-in-out-cubic;
+  }
+
+  &:hover {
+    #{$cross-link}__cover {
+      transform: scale(1.1);
+    }
+    #{$cross-link}__title {
+      color: $--color-brand;
+    }
   }
 }
 </style>

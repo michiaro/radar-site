@@ -20,7 +20,10 @@
 </template>
 
 <script>
-import { disableDocumentScroll, enableDocumentScroll } from '@/utils/documentScroll.js';
+import {
+  disableDocumentScroll,
+  enableDocumentScroll,
+} from '@/utils/documentScroll.js';
 import animate from '@/utils/animate.js';
 import { easeInOutCubic, linear } from '@/utils/easings.js';
 import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
@@ -49,7 +52,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return false;
+      return this.$store.state.page.isMobile;
     },
   },
   watch: {
@@ -78,7 +81,9 @@ export default {
       const serviceCount = this.services.length;
       const fullBasis = 100 - pagePaddingX * 2 - gutter * (serviceCount - 1);
       const closedBasis = this.isMobile ? 0 : 6.5;
-      const openedBasis = this.isMobile ? 0 : fullBasis - closedBasis * (serviceCount - 1);
+      const openedBasis = this.isMobile
+        ? 0
+        : fullBasis - closedBasis * (serviceCount - 1);
 
       const startBasisArray = this.services.map(({ serviceId }) => {
         if (isOpening) {
@@ -88,7 +93,8 @@ export default {
       });
 
       const deltaBasisArray = this.services.map(({ serviceId }, index) => {
-        const endWidth = nextServiceId === serviceId ? openedBasis : closedBasis;
+        const endWidth =
+          nextServiceId === serviceId ? openedBasis : closedBasis;
         return endWidth - startBasisArray[index];
       });
 
@@ -109,7 +115,11 @@ export default {
             if (isOpening || isClosing) {
               const opacityProgressFrom = isOpening ? 0 : 1 - fadeDuration;
               const opacityProgressTo = isOpening ? fadeDuration : 1;
-              const opacityProgress = progressFromTo(progress, opacityProgressFrom, opacityProgressTo);
+              const opacityProgress = progressFromTo(
+                progress,
+                opacityProgressFrom,
+                opacityProgressTo,
+              );
               const opacity = startOpacity + detlaOpacity * opacityProgress;
               this.$refs.popup.style.opacity = opacity;
 
@@ -129,7 +139,9 @@ export default {
               slideProgressTo = isOpening ? 1 : slideDuration;
             }
 
-            const slideProgress = easeInOutCubic(progressFromTo(progress, slideProgressFrom, slideProgressTo));
+            const slideProgress = easeInOutCubic(
+              progressFromTo(progress, slideProgressFrom, slideProgressTo),
+            );
             this.services.forEach((service, index) => {
               const start = startBasisArray[index];
               const delta = deltaBasisArray[index];

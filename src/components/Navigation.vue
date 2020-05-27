@@ -5,18 +5,18 @@
   >
     <router-link
       class="navigation__link"
-      to="all-works"
+      :to="{name: 'AllWorks'}"
       @click.native="onClick"
     >
       работы
     </router-link>
-    <router-link class="navigation__link" to="services" @click.native="onClick">
+    <router-link class="navigation__link" :to="{name: 'Services'}" @click.native="onClick">
       услуги
     </router-link>
-    <router-link class="navigation__link" to="agency" @click.native="onClick">
+    <router-link class="navigation__link" :to="{name: 'Agency'}" @click.native="onClick">
       агентство
     </router-link>
-    <router-link class="navigation__link" to="contacts" @click.native="onClick">
+    <router-link class="navigation__link" :to="{name: 'Contacts'}" @click.native="onClick">
       контакты
     </router-link>
   </nav>

@@ -8,6 +8,7 @@
 <script>
 import PageHeader from '@/components/PageHeader.vue';
 import { getStaticData } from '@/api/index.js';
+import { DESKTOP_SIZE, TABLET_SIZE } from '@/settings.js';
 
 export default {
   name: 'App',
@@ -21,7 +22,22 @@ export default {
       if (isUpdated) {
         this.$store.commit('setStaticData', { lastUpdated, singletones });
       }
+
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
     });
+  },
+  methods: {
+    handleResize() {
+      const isTablet = window.innerWidth <= TABLET_SIZE;
+      this.$store.commit('setIsTablet', { isTablet });
+
+      const isMobile = window.innerWidth <= DESKTOP_SIZE;
+      this.$store.commit('setIsMobile', { isMobile });
+
+      const isMenuOpen = window.innerWidth >= DESKTOP_SIZE;
+      this.$store.commit('setMenuOpen', { isMenuOpen });
+    },
   },
 };
 </script>

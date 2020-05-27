@@ -1,12 +1,18 @@
 @import '~@/styles/shared/_globals.scss';
 
 .button {
+  $button: &;
+
   box-sizing: border-box;
   width: 100%;
   font-size: $--font-size-100;
   // fix vertical align
   line-height: 2;
+
   border: 2px solid $--color-text;
+  background-color: $--color-background--contrast;
+  color: $--color-text--muted;
+
   height: 52px;
   border-radius: 0;
   box-shadow: none;
@@ -16,14 +22,17 @@
   padding: 12px;
 
   transition: all $--duration-400 $--timing-in-out-cubic;
-
+  
   @include from('lg') {
     height: 74px;
     font-size: $--font-size-120;
   }
 
-  background-color: transparent;
-  color: $--color-text;
+  &--quiet {
+    background-color: transparent;
+    color: $--color-text;
+    border-color: $--color-text;
+  }
 
   &:hover {
     background-color: $--color-brand;
@@ -32,9 +41,15 @@
   }
 
   &--contrast {
-    background-color: transparent;
-    border-color: $--color-text--contrast;
-    color: $--color-text--contrast;
+    background-color: $--color-background;
+    border-color: $--color-background;
+    color: $--color-text--muted;
+
+    #{$button}--quiet {
+      background-color: transparent;
+      border-color: $--color-text--contrast;
+      color: $--color-text--contrast;
+    }
 
     &:hover {
       background-color: $--color-brand;

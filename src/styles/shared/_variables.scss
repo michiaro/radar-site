@@ -68,6 +68,7 @@ $--color-text--muted: $--color-gray-600;
 $--color-text--contrast: $--color-gray-50;
 $--color-text--contrast-muted: #f9e198;
 $--color-background: $--color-gray-50;
+$--color-background--contrast: $--color-text;
 
 $--timing-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
 $--timing-in-circ: cubic-bezier(0, 1, 1, 1);

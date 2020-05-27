@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <page-footer />
+    <page-footer is-clients />
   </div>
 </template>
 

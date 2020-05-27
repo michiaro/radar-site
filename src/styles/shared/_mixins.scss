@@ -21,6 +21,15 @@ $breakpoints: (
   }
 }
 
+@mixin to($to) {
+  $min: map-get($breakpoints, $to);
+  @if ($min != 0) {
+    @media screen and (max-width: $min) {
+      @content;
+    }
+  }
+}
+
 @mixin from-to($from, $to) {
   $min: map-get($breakpoints, $from);
   $max: map-get($breakpoints, $to);

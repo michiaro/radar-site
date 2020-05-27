@@ -33,7 +33,7 @@ export default {
     margin: 0;
   }
   p + p {
-    margin-top: 32px;
+    margin-top: 1.7vmax;
   }
 }
 </style>
