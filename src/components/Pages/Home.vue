@@ -18,14 +18,23 @@
       <div class="main__bottom">
         <div class="main__services">
           Мы занимаемся
-          <router-link class="main__link link" to="Services">
+          <router-link
+            class="main__link link"
+            :to="{ path: '/services', query: { direction: 'branding' } }"
+          >
             брендингом </router-link
           >, <br />
-          <router-link class="main__link link" to="Services">
+          <router-link
+            class="main__link link"
+            :to="{ path: '/services', query: { direction: 'campaign' } }"
+          >
             дизайном
           </router-link>
           и
-          <router-link class="main__link link" to="Services">
+          <router-link
+            class="main__link link"
+            :to="{ path: '/services', query: { direction: 'digital' } }"
+          >
             рекламой
           </router-link>
         </div>

@@ -2,11 +2,22 @@
   <div class="services-page">
     <div class="container">
       <div class="row">
-        <div v-for="service in services" :key="service.serviceId" class="col col-xs-2 col-xl-4">
-          <service-page-direction v-bind="service" @setService="setActiveServiceId" />
+        <div
+          v-for="service in services"
+          :key="service.serviceId"
+          class="col col-xs-2 col-xl-4"
+        >
+          <service-page-direction
+            v-bind="service"
+            @setService="handleClickOnService"
+          />
         </div>
       </div>
-      <services-popup :services="services" :active-service-id="activeServiceId" @setService="setActiveServiceId" />
+      <services-popup
+        :services="services"
+        :active-service-id="activeServiceId"
+        @setService="handleClickOnService"
+      />
       <div class="row">
         <div class="col col-xs-2 col-lg-2 col-xl-8">
           <h1 class="services__title">
@@ -56,7 +67,7 @@ export default {
     return {
       services: [
         {
-          serviceId: 'campaigns',
+          serviceId: 'campaign',
           videoUrl: advertisingCampaign,
           title: 'Рекламные кампании',
           description:
@@ -85,7 +96,7 @@ export default {
           ],
         },
         {
-          serviceId: 'smmDigital',
+          serviceId: 'digital',
           videoUrl: smmDigital,
           title: 'SMM+Digital',
           description: 'Сопровождаем бренды и продукты в цифровых средах',
@@ -103,6 +114,12 @@ export default {
       activeServiceId: null,
     };
   },
+  created() {
+    const activeServiceId = this.$route.query.direction;
+    if (activeServiceId) {
+      this.setActiveServiceId(activeServiceId);
+    }
+  },
   methods: {
     async setActiveServiceId(serviceId) {
       const isScrolled = await animateScrollTo(0, {
@@ -113,6 +130,22 @@ export default {
       if (isScrolled) {
         this.activeServiceId = serviceId;
       }
+    },
+    handleClickOnService(serviceId) {
+      this.setActiveServiceId(serviceId);
+
+      let newPath = {
+        path: '/services',
+      };
+      if (serviceId) {
+        newPath = {
+          ...newPath,
+          query: {
+            direction: serviceId,
+          },
+        };
+      }
+      this.$router.push(newPath);
     },
   },
 };
