@@ -32,6 +32,11 @@
     background-color: transparent;
     color: $--color-text;
     border-color: $--color-text;
+
+    &#{$button}--brand {
+      color: $--color-brand;
+      border-color: $--color-brand;
+    }
   }
 
   &:hover {

@@ -81,7 +81,7 @@ export default {
       return isTablet ? backgroundImageMobile : backgroundImage;
     },
     isTablet() {
-      return this.$store.state.isTablet;
+      return this.$store.state.page.isTablet;
     },
   },
   created() {

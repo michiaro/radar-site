@@ -6,7 +6,6 @@ import Contacts from '@/components/pages/Contacts.vue';
 import Policy from '@/components/pages/Policy.vue';
 import ErrorPage from '@/components/pages/ErrorPage.vue';
 import Work from '@/components/pages/Work.vue';
-import Test from '@/components/pages/Test.vue';
 
 const routes = [
   {

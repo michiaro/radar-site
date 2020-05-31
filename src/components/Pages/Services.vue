@@ -133,19 +133,20 @@ export default {
     },
     handleClickOnService(serviceId) {
       this.setActiveServiceId(serviceId);
+      const currentServiceId = this.$route.query.direction;
 
       let newPath = {
         path: '/services',
       };
-      if (serviceId) {
+      if (serviceId && serviceId !== currentServiceId) {
         newPath = {
           ...newPath,
           query: {
             direction: serviceId,
           },
         };
+        this.$router.push(newPath);
       }
-      this.$router.push(newPath);
     },
   },
 };

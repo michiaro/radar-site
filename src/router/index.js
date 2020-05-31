@@ -18,4 +18,6 @@ export default new Router({
     };
   },
   routes,
+  // scrollGuard,
+  // metaGuard,
 });

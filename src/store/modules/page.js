@@ -2,6 +2,7 @@ const state = {
   isMobile: false,
   isTablet: false,
   isMenuOpen: false,
+  isFormPopupOpen: false,
 };
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   setMenuOpen(state, { isMenuOpen }) {
     state.isMenuOpen = isMenuOpen;
+  },
+  setPopupFormOpen(state, { isFormPopupOpen }) {
+    state.isFormPopupOpen = isFormPopupOpen;
   },
 };
 

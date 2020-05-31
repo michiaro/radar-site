@@ -1,20 +1,16 @@
 import router from '@/router/index.js';
-import { enableDocumentScroll } from '@/utils/documentScroll.js';
-
-// меняем тайтл и метатеги при переходах
 
 export default router.beforeEach((to, from, next) => {
-  enableDocumentScroll();
-
+  // меняем тайтл и метатеги при переходах
   const nearestWithTitle = to.matched
     .slice()
     .reverse()
-    .find(r => r.meta && r.meta.title);
+    .find((r) => r.meta && r.meta.title);
 
   const nearestWithMeta = to.matched
     .slice()
     .reverse()
-    .find(r => r.meta && r.meta.metaTags);
+    .find((r) => r.meta && r.meta.metaTags);
 
   if (nearestWithTitle) {
     document.title = nearestWithTitle.meta.title;
@@ -22,17 +18,17 @@ export default router.beforeEach((to, from, next) => {
 
   Array.from(
     document.querySelectorAll('[data-vue-router-controlled]'),
-  ).map(el => el.parentNode.removeChild(el));
+  ).map((el) => el.parentNode.removeChild(el));
 
   if (!nearestWithMeta) {
     return next();
   }
 
   nearestWithMeta.meta.metaTags
-    .map(tagDef => {
+    .map((tagDef) => {
       const tag = document.createElement('meta');
 
-      Object.keys(tagDef).forEach(key => {
+      Object.keys(tagDef).forEach((key) => {
         tag.setAttribute(key, tagDef[key]);
       });
 
@@ -40,7 +36,7 @@ export default router.beforeEach((to, from, next) => {
 
       return tag;
     })
-    .forEach(tag => document.head.appendChild(tag));
+    .forEach((tag) => document.head.appendChild(tag));
 
   next();
 });

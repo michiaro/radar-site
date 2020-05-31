@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import router from '@/router/index.js';
 import store from '@/store/index.js';
 import metaGuard from '@/router/metaGuard.js';
+import scrollGuard from '@/router/scrollGuard.js';
 
 import 'normalize.css';
 import 'swiper/css/swiper.css';
@@ -26,4 +27,5 @@ new Vue({
   router,
   render: (h) => h(App),
   metaGuard,
+  scrollGuard,
 });

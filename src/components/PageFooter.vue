@@ -33,7 +33,7 @@
       </swiper>
     </div>
 
-    <contact-form contrast />
+    <contacts-info contrast />
   </footer>
 </template>
 
@@ -41,7 +41,7 @@
 import { baseURL, getCollectionByKey } from '@/api/index.js';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 
-import ContactForm from '@/components/ContactForm.vue';
+import ContactsInfo from '@/components/ContactsInfo.vue';
 
 // getSingletonByKey
 
@@ -50,7 +50,7 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    ContactForm,
+    ContactsInfo,
   },
   props: {
     isClients: {

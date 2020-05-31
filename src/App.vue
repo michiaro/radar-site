@@ -2,11 +2,15 @@
   <div class="page">
     <page-header />
     <router-view />
+
+    <popup-form v-if="isPopupFormOpen" />
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/PageHeader.vue';
+import PopupForm from '@/components/PopupForm.vue';
+
 import { getStaticData } from '@/api/index.js';
 import { DESKTOP_SIZE, TABLET_SIZE } from '@/settings.js';
 
@@ -14,10 +18,18 @@ export default {
   name: 'App',
   components: {
     PageHeader,
+    PopupForm,
+  },
+  computed: {
+    isPopupFormOpen() {
+      return this.$store.state.page.isFormPopupOpen;
+    },
   },
   mounted() {
     this.$nextTick(async () => {
-      const { isUpdated, lastUpdated, singletones } = await getStaticData(lastUpdated);
+      const { isUpdated, lastUpdated, singletones } = await getStaticData(
+        lastUpdated,
+      );
 
       if (isUpdated) {
         this.$store.commit('setStaticData', { lastUpdated, singletones });

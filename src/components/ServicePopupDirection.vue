@@ -8,8 +8,8 @@
         <transition-sequence
           :is-visible="animationStep > 2 + service.subdivisions.length"
         >
-          <button class="service-direction__close" @click.stop="onClose">
-            <div class="service-direction__cross" />
+          <button class="close-button close-button--cross" @click.stop="onClose">
+            <div class="close-button__cross" />
           </button>
         </transition-sequence>
         <div class="row">
@@ -30,7 +30,9 @@
               :is-visible="animationStep > 3 + service.subdivisions.length"
             >
               <div class="service-direction__button">
-                <button class="button button--quiet">Обсудить задачу</button>
+                <button class="button button--quiet" @click="openPopupForm">
+                  Обсудить задачу
+                </button>
               </div>
             </transition-sequence>
           </div>
@@ -83,8 +85,8 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="isClosed" class="service-direction__plus-transition">
-        <div class="service-direction__cross service-direction__plus" />
+      <div v-if="isClosed" class="close-button close-button--plus-transition">
+        <div class="close-button__cross close-button__plus" />
       </div>
     </transition>
   </div>
@@ -163,6 +165,10 @@ export default {
     onClose() {
       this.startNext(0);
       this.$emit('close');
+      this.$store.commit('setPopupFormOpen', { isFormPopupOpen: false });
+    },
+    openPopupForm() {
+      this.$store.commit('setPopupFormOpen', { isFormPopupOpen: true });
     },
   },
 };
@@ -210,70 +216,6 @@ export default {
       transform: rotate(-90deg) translate(0, -15%);
       transform-origin: right center;
       font-size: 1.5625vw;
-    }
-  }
-
-  $cross-size: 1.5vmax;
-
-  &__plus-transition {
-    position: absolute;
-    bottom: $--page-padding-x + $cross-size;
-    right: 3.25vmax;
-    @include from('xl') {
-      left: 3.25vmax;
-    }
-  }
-
-  &__plus {
-    position: absolute;
-    &:before,
-    &:after {
-      background: $--color-gray-50;
-    }
-  }
-
-  &__cross {
-    width: 0;
-    height: 0;
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      height: 2px;
-      left: -$cross-size;
-      right: -$cross-size;
-    }
-    &:after {
-      transition-duration: 382ms;
-      transition-timing-function: $--timing-in-out-cubic;
-      transition-property: transform;
-      transform: rotate(-90deg);
-    }
-  }
-
-  &__close {
-    position: absolute;
-    right: 1.5vmax;
-    top: 1.5vmax;
-    margin: 0;
-    padding: 2vmax;
-    background: none;
-    border: none;
-    cursor: pointer;
-    #{$service-direction}__cross {
-      transform: rotate(-45deg);
-      &:before,
-      &:after {
-        background: $--color-gray-900;
-      }
-    }
-    &:hover {
-      #{$service-direction}__cross {
-        &:before,
-        &:after {
-          background: $--color-gray-700;
-        }
-      }
     }
   }
 
@@ -356,6 +298,73 @@ export default {
 
     @include from('lg') {
       font-size: $--font-size-90;
+    }
+  }
+}
+
+.close-button {
+  $close-button: &;
+  $cross-size: 1.5vmax;
+
+  &--cross {
+    position: absolute;
+    right: 1.5vmax;
+    top: 1.5vmax;
+    margin: 0;
+    padding: 2vmax;
+    background: none;
+    border: none;
+    cursor: pointer;
+    #{$close-button}__cross {
+      transform: rotate(-45deg);
+      &:before,
+      &:after {
+        background: $--color-gray-900;
+      }
+    }
+    #{$close-button}:hover {
+      &__cross {
+        &:before,
+        &:after {
+          background: $--color-gray-700;
+        }
+      }
+    }
+  }
+
+  &--plus-transition {
+    position: absolute;
+    bottom: $--page-padding-x + $cross-size;
+    right: 3.25vmax;
+    @include from('xl') {
+      left: 3.25vmax;
+    }
+  }
+
+  &__plus {
+    position: absolute;
+    &:before,
+    &:after {
+      background: $--color-gray-50;
+    }
+  }
+
+  &__cross {
+    width: 0;
+    height: 0;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 2px;
+      left: -$cross-size;
+      right: -$cross-size;
+    }
+    &:after {
+      transition-duration: 382ms;
+      transition-timing-function: $--timing-in-out-cubic;
+      transition-property: transform;
+      transform: rotate(-90deg);
     }
   }
 }

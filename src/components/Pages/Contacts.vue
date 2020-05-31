@@ -1,19 +1,19 @@
 <template>
   <div class="contacts">
-    <contact-form @change-city="onChangeCity" />
+    <contacts-info @change-city="onChangeCity" />
     <google-map ref="map" :current-city="currentCity" />
   </div>
 </template>
 
 <script>
 import GoogleMap from '@/components/GoogleMap.vue';
-import ContactForm from '@/components/ContactForm.vue';
+import ContactsInfo from '@/components/ContactsInfo.vue';
 
 export default {
   name: 'Contacts',
   components: {
     GoogleMap,
-    ContactForm,
+    ContactsInfo,
   },
   data() {
     return {
