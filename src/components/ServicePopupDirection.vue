@@ -8,7 +8,10 @@
         <transition-sequence
           :is-visible="animationStep > 2 + service.subdivisions.length"
         >
-          <button class="close-button close-button--cross" @click.stop="onClose">
+          <button
+            class="close-button close-button--cross"
+            @click.stop="onClose"
+          >
             <div class="close-button__cross" />
           </button>
         </transition-sequence>
@@ -25,7 +28,7 @@
               </div>
             </transition>
           </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-4 col-2xl-3">
+          <div class="col col-xs-0 col-xl-4 col-2xl-3">
             <transition-sequence
               :is-visible="animationStep > 3 + service.subdivisions.length"
             >
@@ -57,10 +60,21 @@
                 @startNext="startNext"
               >
                 <p class="service-direction__subdirection">
-                  {{ glueUpPrepositions(subdivision) }}
+                  {{ glueUpPrepositions(subdivision.value.subdivision) }}
                 </p>
               </transition-sequence>
             </div>
+          </div>
+          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0">
+            <transition-sequence
+              :is-visible="animationStep > 3 + service.subdivisions.length"
+            >
+              <div class="service-direction__button">
+                <button class="button button--quiet" @click="openPopupForm">
+                  Обсудить задачу
+                </button>
+              </div>
+            </transition-sequence>
           </div>
         </div>
         <div class="row">
@@ -238,17 +252,13 @@ export default {
   }
 
   &__title {
-    font-size: 12vw;
+    font-size: 5vmax;
     line-height: 0.9;
     font-weight: normal;
     letter-spacing: $--letter-spacing;
     margin: 0;
-    margin: 0 0 18px;
-    @include from('lg') {
-      margin-bottom: 32px;
-    }
     @include from('xl') {
-      font-size: 4vw;
+      font-size: 4vmax;
     }
   }
   &__description {
@@ -256,6 +266,7 @@ export default {
     line-height: 1.1;
     letter-spacing: $--letter-spacing;
     margin-bottom: 22px;
+    margin-top: 1.5vmax;
 
     @include from('lg') {
       margin-bottom: 100px;
@@ -334,7 +345,7 @@ export default {
 
   &--plus-transition {
     position: absolute;
-    bottom: $--page-padding-x + $cross-size;
+    bottom: 3.25vmax;
     right: 3.25vmax;
     @include from('xl') {
       left: 3.25vmax;

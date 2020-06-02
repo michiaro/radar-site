@@ -1,10 +1,20 @@
 <template>
-  <div ref="serviceNode" class="service" @mouseenter="handleEnter" @mouseleave="handleLeave" @click="passReference">
+  <div
+    ref="serviceNode"
+    class="service"
+    @mouseenter="handleEnter"
+    @mouseleave="handleLeave"
+    @click="passReference"
+  >
     <video
-      ref="video" class="service__video" muted="muted" playsinline preload="auto"
+      ref="video"
+      class="service__video"
+      muted="muted"
+      playsinline
+      preload="auto"
       :loop="isLooped"
     >
-      <source :src="videoUrl" type="video/mp4" />
+      <source :src="videoURL + video.path" type="video/mp4" />
     </video>
     <div class="service__content">
       <h2 class="service__title">{{ title }}</h2>
@@ -17,6 +27,8 @@
 
 <script>
 import { glueUpPrepositions } from '@/utils/index.js';
+import { baseURL } from '@/api/index.js';
+
 export default {
   name: 'ServicePageDirection',
   props: {
@@ -24,8 +36,8 @@ export default {
       type: String,
       required: true,
     },
-    videoUrl: {
-      type: String,
+    video: {
+      type: Object,
       required: true,
     },
     title: {
@@ -41,6 +53,11 @@ export default {
     return {
       isLooped: false,
     };
+  },
+  computed: {
+    videoURL() {
+      return baseURL + '/cockpit/storage/uploads';
+    },
   },
   methods: {
     glueUpPrepositions,
@@ -66,6 +83,20 @@ export default {
   position: relative;
   cursor: pointer;
 
+  // вписываем все три плашки в один экран по высоте
+  // вычитаем высоту шапки, отступы между плашками и от шапки
+  height: calc(
+    (100vh - #{$--header-height} - (#{$--gutter} * 3) - #{$--page-padding-x}) /
+      3
+  );
+  margin-bottom: $--gutter;
+  overflow: hidden;
+
+  @include from('xl') {
+    height: auto;
+    margin-bottom: 0;
+  }
+
   &__content {
     position: absolute;
     top: 0;
@@ -77,10 +108,13 @@ export default {
 
   &__title {
     margin: 0;
-    font-size: 12vmax;
+    font-size: 5vmax;
     line-height: 0.9;
     font-weight: normal;
     letter-spacing: $--letter-spacing;
+    @include from('xl') {
+      font-size: 12vmax;
+    }
     @include from('xl') {
       font-size: 4vmax;
       min-height: 11vmax;
@@ -89,14 +123,20 @@ export default {
 
   &__description {
     margin: 0;
+    margin-top: 1.5vmax;
     font-size: $--font-size-100;
-    line-height: 1.3;
+    line-height: 1.1;
     letter-spacing: $--letter-spacing;
-    opacity: 0;
-    transform: translate(0, 3vmax);
-    transition-duration: $--duration-1000, $--duration-1000;
-    transition-timing-function: $--timing-in-circ, $--timing-in-circ;
-    transition-property: opacity, transform;
+
+    @include from('xl') {
+      margin-top: 0;
+
+      opacity: 0;
+      transform: translate(0, 3vmax);
+      transition-duration: $--duration-1000, $--duration-1000;
+      transition-timing-function: $--timing-in-circ, $--timing-in-circ;
+      transition-property: opacity, transform;
+    }
   }
 
   &__video {
@@ -110,8 +150,10 @@ export default {
       color: $--color-brand;
     }
     #{$service}__description {
-      opacity: 1;
-      transform: translate(0, 0);
+      @include from('xl') {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
     }
   }
 }

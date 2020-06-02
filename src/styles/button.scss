@@ -7,7 +7,7 @@
   width: 100%;
   font-size: $--font-size-100;
   // fix vertical align
-  line-height: 2;
+  line-height: 1;
 
   border: 2px solid $--color-text;
   background-color: $--color-background--contrast;
@@ -32,11 +32,6 @@
     background-color: transparent;
     color: $--color-text;
     border-color: $--color-text;
-
-    &#{$button}--brand {
-      color: $--color-brand;
-      border-color: $--color-brand;
-    }
   }
 
   &:hover {

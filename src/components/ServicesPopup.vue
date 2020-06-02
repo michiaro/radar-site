@@ -60,6 +60,13 @@ export default {
       this.animatePopup(nextServiceId, prevServiceId);
     },
   },
+  created() {
+    const { activeServiceId } = this;
+
+    if (activeServiceId) {
+      this.animatePopup(activeServiceId, null);
+    }
+  },
   methods: {
     getState(serviceId) {
       if (this.activeServiceId === null) {
@@ -79,11 +86,12 @@ export default {
       const gutter = 1.5;
       const pagePaddingX = 2;
       const serviceCount = this.services.length;
-      const fullBasis = 100 - pagePaddingX * 2 - gutter * (serviceCount - 1);
-      const closedBasis = this.isMobile ? 0 : 6.5;
-      const openedBasis = this.isMobile
-        ? 0
-        : fullBasis - closedBasis * (serviceCount - 1);
+      const headerBasis = 9;
+      const fullBasis = this.isMobile
+        ? 100 - headerBasis - gutter * (serviceCount - 1)
+        : 100 - pagePaddingX * 2 - gutter * (serviceCount - 1);
+      const closedBasis = 6.5;
+      const openedBasis = fullBasis - closedBasis * (serviceCount - 1);
 
       const startBasisArray = this.services.map(({ serviceId }) => {
         if (isOpening) {
@@ -194,7 +202,7 @@ export default {
   overflow: hidden;
   background: $--color-background;
   padding: $--page-padding-x;
-  margin: 0 $--gutter * -0.5;
+  margin: $--gutter * -0.5;
   &__content {
     display: flex;
     flex-direction: column;
@@ -205,7 +213,7 @@ export default {
   }
   &__section {
     flex-grow: 1;
-    margin: 0 $--gutter * 0.5;
+    margin: $--gutter * 0.5;
     overflow-x: hidden;
     overflow-y: hidden;
   }

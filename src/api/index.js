@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://radar-2020.radar-online.mcdir.ru/';
+const baseURL = 'http://radar-2020.radar-online.mcdir.ru';
 
 const apiClient = axios.create({
   baseURL,

@@ -10,7 +10,7 @@
             >
               <div class="close-button__cross" />
             </button>
-            <contact-form contour />
+            <contact-form />
           </div>
         </div>
       </div>

@@ -16,14 +16,14 @@
           <div class="agency__logos">
             <a
               class="agency__logo"
-              href="http://russianbranding.ru/"
+              href="http://russianbranding.ru/members/radar/"
               target="_blank"
             >
               <img :src="baseURL + aboutUs.abkrLogo.path" alt="АБКР" />
             </a>
             <a
               class="agency__logo"
-              href="http://www.akarussia.ru/"
+              href="http://www.akarussia.ru/node/8836"
               target="_blank"
             >
               <img :src="baseURL + aboutUs.akarLogo.path" alt="АКАР" />

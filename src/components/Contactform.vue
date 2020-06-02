@@ -53,7 +53,7 @@
         <div class="form__field">
           <button
             class="button"
-            :class="{ 'button--contrast': contrast, 'button--quiet button--brand' : contour }"
+            :class="{ 'button--contrast': contrast }"
             type="submit"
           >
             Отправить
@@ -69,10 +69,6 @@ export default {
   name: 'ContactForm',
   props: {
     contrast: {
-      type: Boolean,
-      required: false,
-    },
-    contour: {
       type: Boolean,
       required: false,
     },
