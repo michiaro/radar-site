@@ -45,6 +45,7 @@ export default {
   bottom: 0;
   background-color: $--color-background;
   padding-top: 8.5vmax;
+  z-index: 2;
 
   &__inner {
     position: relative;
