@@ -4,13 +4,16 @@
       v-if="isVideo(mediaPath)"
       class="work-media__element work-media__element--video"
       :src="mediaPath"
+      autoplay
+      loop
+      muted
     />
     <img
       v-if="!isVideo(mediaPath)"
       class="work-media__element work-media__element--image"
       :src="mediaPath"
+      alt="Radar"
     />
-    <!-- TODO alt text -->
   </div>
 </template>
 
@@ -48,11 +51,11 @@ export default {
 
 .work-media {
   max-width: 100%;
+  margin-bottom: 1vmax;
 
   &__element {
     max-width: 100%;
     width: 100%;
-    margin-bottom: $--gutter;
 
     &--video {
     }

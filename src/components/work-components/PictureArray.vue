@@ -5,9 +5,8 @@
       :key="index"
       class="work-images__image"
     >
-      <img ref="picture" :src="picture" />
+      <img ref="picture" :src="picture" alt="Radar" />
     </div>
-    <!-- TODO alt text -->
   </div>
 </template>
 
@@ -49,7 +48,7 @@ export default {
   flex-flow: row wrap;
   overflow: hidden;
 
-  margin-bottom: $--gutter;
+  margin-bottom: 1vmax;
   flex: 0 1 auto;
 
   @include from('md') {
