@@ -65,7 +65,7 @@
               </transition-sequence>
             </div>
           </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0">
+          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0">
             <transition-sequence
               :is-visible="animationStep > 3 + service.subdivisions.length"
             >
