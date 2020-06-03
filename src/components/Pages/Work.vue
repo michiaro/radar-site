@@ -1,55 +1,73 @@
 <template>
-  <div class="work-page">
+  <div v-if="currentWork" class="work-page">
     <div v-if="!isWorkLoading" class="work-page__inner">
       <div class="work-page__header-wrapper">
         <img
-          v-if="!isVideo(work.header.path)"
+          v-if="!isVideo(currentWork.header.path)"
           class="work-page__header work-page__header--image"
-          :src="baseURL + work.header.path"
-          :alt="work.title"
+          :src="baseURL + currentWork.header.path"
+          :alt="currentWork.title"
         />
         <video
-          v-if="isVideo(work.header.path)"
+          v-if="isVideo(currentWork.header.path)"
           class="work-page__header work-page__header--video"
-          :src="baseURL + work.header.path"
+          :src="baseURL + currentWork.header.path"
         />
       </div>
 
       <div class="container">
         <div class="row">
           <div class="col col-xs-2 col-md-4 col-xl-6">
-            <h1 class="work-page__title">{{ work.title }}</h1>
+            <h1 class="work-page__title">{{ currentWork.title }}</h1>
           </div>
         </div>
         <div class="row">
           <div class="col col-xs-2 col-md-4 col-xl-6">
             <div
               class="work-page__about work-page__content"
-              v-html="glueUpPrepositions(work.about)"
+              v-html="glueUpPrepositions(currentWork.about)"
             />
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
             <h2 class="work-page__subtitle">Задача</h2>
             <div
               class="work-page__task"
-              v-html="glueUpPrepositions(work.task)"
+              v-html="glueUpPrepositions(currentWork.task)"
             />
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
-            <h2 class="work-page__subtitle">Услуга</h2>
-            <p
-              v-for="(tag, index) in work.tags"
-              :key="index"
-              class="work-page__service"
+            <h2 class="work-page__subtitle">Клиент</h2>
+            <router-link
+              :to="{ name: 'AllWorks', query: { client: currentWork.client.slug } }"
+              class="work-page__client"
             >
-              {{ tag }}
+              {{ currentWork.client.title }} —
+            </router-link>
+            <p class="work-page__client-about">
+              {{ currentWork.clientAbout }}
             </p>
+            <div v-if="tags" class="work-page__servces">
+              <h2 class="work-page__subtitle">Услуга</h2>
+              <router-link
+                v-for="(tag, index) in currentWork.tags"
+                :key="index"
+                class="work-page__service"
+                :to="{
+                  name: 'AllWorks',
+                  query: {
+                    filter: getFilterTag(tag),
+                  },
+                }"
+              >
+                {{ tag }}
+              </router-link>
+            </div>
           </div>
         </div>
 
         <div class="row">
           <div
-            v-for="(item, index) in work.layout"
+            v-for="(item, index) in currentWork.layout"
             :key="index"
             class="col col-xs-2"
             :class="{ 'col-md-2': item.component === 'Text' }"
@@ -68,7 +86,7 @@
             </h2>
           </div>
           <div
-            v-for="(position, index) in work.credits"
+            v-for="(position, index) in currentWork.credits"
             :key="index"
             class="col col-xs-1 col-md-1 col-xl-2"
           >
@@ -151,31 +169,25 @@ export default {
       currentWork: null,
       nextWork: null,
       baseURL,
+      tags: null,
     };
   },
   computed: {
-    works() {
-      return this.$store.state.works.content || null;
-    },
     workSlug() {
       return this.$route.params.slug;
     },
-    work() {
-      const { works, workSlug, currentWork } = this;
-      return works.find(({ slug }) => slug === workSlug) || currentWork || null;
-    },
   },
   async created() {
-    const { work } = this;
+    const { tags } = this;
     // check if works in vuex are exist
     // load current work if needed
     // load next work
 
-    if (work === null) {
-      await this.fetchWork();
-      this.fetchNextWork();
-    } else {
-      this.fetchNextWork();
+    await this.fetchWork();
+    this.fetchNextWork();
+
+    if (!tags) {
+      this.fetchTags();
     }
   },
   methods: {
@@ -190,6 +202,7 @@ export default {
         filter: {
           slug: workSlug,
         },
+        populate: 1,
       });
 
       this.currentWork = data[0];
@@ -197,19 +210,25 @@ export default {
       this.isWorkLoading = false;
     },
     async fetchNextWork() {
-      const { work } = this;
+      const { currentWork } = this;
       this.isNextWorkLoading = true;
 
       const { data } = await getCollectionByKey({
         key: 'works',
         filter: {
-          _o: work._o + 1,
+          _o: currentWork._o + 1,
         },
       });
 
       this.nextWork = data[0];
 
       this.isNextWorkLoading = false;
+    },
+    async fetchTags() {
+      const { data } = await getCollectionByKey({
+        key: 'tags',
+      });
+      this.tags = data;
     },
     getLayoutComponent(layoutItem) {
       switch (layoutItem) {
@@ -220,6 +239,10 @@ export default {
         case 'Media':
           return Media;
       }
+    },
+    getFilterTag(tagTitle) {
+      const { tags } = this;
+      return tags.find((tag) => tag.title === tagTitle).slug;
     },
   },
 };
@@ -272,12 +295,25 @@ export default {
   }
   &__subtitle {
   }
-  &__task {
+  &__client,
+  &__task,
+  &__client-about {
     font-size: $--font-size-80;
     line-height: 1.67;
     color: $--color-text--muted;
     margin: 0;
+    display: block;
+  }
+  &__task {
     margin-bottom: 1.25vmax;
+  }
+  &__client {
+    &:hover {
+      color: $--color-brand;
+    }
+  }
+  &__client-about {
+    margin-bottom: 3.25vmax;
   }
   &__subtitle {
   }
@@ -287,9 +323,14 @@ export default {
     color: $--color-text--muted;
     margin: 0;
     text-transform: lowercase;
+    display: block;
 
     &:last-of-type {
       margin-bottom: 1.25vmax;
+    }
+
+    &:hover {
+      color: $--color-brand;
     }
   }
   &__subtitle {

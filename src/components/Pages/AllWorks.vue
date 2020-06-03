@@ -2,7 +2,11 @@
   <div class="all-works">
     <div class="container">
       <div class="row">
+        <h1 v-if="currentClient && client" class="col col-xs-2">
+          Наши работы для {{ client.title }}
+        </h1>
         <div
+          v-if="!currentClient"
           class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6"
         >
           <div v-if="!isFilterLoading" class="filter">
@@ -14,7 +18,7 @@
               Все
             </div>
             <div
-              v-for="tag in tags"
+              v-for="tag in filterTags"
               :key="tag.slug"
               class="filter__item"
               :class="{ 'filter__item--active': currentFilter === tag.slug }"
@@ -76,11 +80,16 @@ export default {
       isFilterLoading: false,
       isWorksLoading: false,
       animationStep: 0,
+      client: null,
     };
   },
   computed: {
     tags() {
       return this.$store.state.staticData.collections.tags || null;
+    },
+    filterTags() {
+      const { tags } = this;
+      return tags.filter((tag) => tag.inFilter);
     },
     works() {
       return this.$store.state.works.content || null;
@@ -97,7 +106,7 @@ export default {
       const filterInStore = this.$store.state.works.filter;
       const filterQuery = this.$route.query.filter;
 
-      return filterInStore || filterQuery || null;
+      return filterQuery || filterInStore || null;
     },
     currentFilterTitle() {
       const { tags, currentFilter } = this;
@@ -106,9 +115,13 @@ export default {
         ? tags.find((tag) => tag.slug === currentFilter).title
         : null;
     },
+    currentClient() {
+      const clientQuery = this.$route.query.client;
+      return clientQuery || null;
+    },
   },
   async created() {
-    const { tags, works } = this;
+    const { tags, works, currentFilter, currentClient } = this;
 
     if (!tags) {
       this.fetchTags();
@@ -119,6 +132,11 @@ export default {
     } else {
       this.animationStep = works.length + 1;
     }
+
+    if (currentFilter || currentClient) {
+      this.fetchWorks({ resetSkip: true });
+      this.fetchClient();
+    }
   },
   methods: {
     async fetchTags() {
@@ -126,7 +144,6 @@ export default {
 
       const { data } = await getCollectionByKey({
         key: 'tags',
-        filter: { inFilter: true },
       });
       const tagsArray = data;
 
@@ -138,7 +155,7 @@ export default {
       this.isFilterLoading = false;
     },
     async fetchWorks({ resetSkip } = { resetSkip: false }) {
-      const { works, currentFilterTitle } = this;
+      const { works, currentFilterTitle, currentClient } = this;
 
       this.isWorksLoading = true;
 
@@ -147,6 +164,12 @@ export default {
         filterSettings = {
           ...filterSettings,
           tagsNewField: { $has: currentFilterTitle },
+        };
+      }
+      if (currentClient) {
+        filterSettings = {
+          ...filterSettings,
+          'client.display': currentClient,
         };
       }
 
@@ -164,6 +187,18 @@ export default {
       this.$store.commit('setWorksTotal', { total });
 
       this.isWorksLoading = false;
+    },
+    async fetchClient() {
+      const { currentClient } = this;
+
+      const { data } = await getCollectionByKey({
+        key: 'clients',
+        filter: {
+          slug: currentClient,
+        },
+      });
+
+      this.client = data[0];
     },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
