@@ -72,7 +72,7 @@ export default {
       line-height: 1;
     }
     @include from('xl') {
-      font-size: 22px;
+      font-size: 23px;
     }
 
     &:hover {

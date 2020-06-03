@@ -203,6 +203,7 @@ export default {
   background: $--color-background;
   padding: $--page-padding-x;
   margin: $--gutter * -0.5;
+  z-index: 1;
   &__content {
     display: flex;
     flex-direction: column;
