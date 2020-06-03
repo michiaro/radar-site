@@ -8,9 +8,6 @@ import scrollGuard from '@/router/scrollGuard.js';
 import 'normalize.css';
 import 'swiper/css/swiper.css';
 
-import '@/styles/hamburger-settings.scss';
-import 'hamburgers/dist/hamburgers.css';
-
 import '@/styles/main.scss';
 import '@/fonts/gerbera.css';
 
