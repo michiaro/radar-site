@@ -7,7 +7,6 @@ import metaGuard from '@/router/metaGuard.js';
 import scrollGuard from '@/router/scrollGuard.js';
 
 import 'normalize.css';
-import 'swiper/css/swiper.css';
 
 import '@/styles/main.scss';
 import '@/fonts/gerbera.css';

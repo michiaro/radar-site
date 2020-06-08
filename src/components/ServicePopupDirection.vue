@@ -28,7 +28,7 @@
               </div>
             </transition>
           </div>
-          <div class="col col-xs-0 col-xl-4 col-2xl-3">
+          <div class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3">
             <transition-sequence
               :is-visible="animationStep > 3 + service.subdivisions.length"
             >
@@ -275,7 +275,7 @@ export default {
   }
   &__button {
     margin-bottom: 22px;
-    @include from('lg') {
+    @include from('xl') {
       margin-bottom: 0;
       margin-top: 8px;
     }

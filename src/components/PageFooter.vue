@@ -13,24 +13,8 @@
       </div>
     </div>
 
-    <div class="footer__slider" v-if="isClients">
-      <swiper
-        v-if="clients.length > 0"
-        ref="swiper"
-        :options="clientSwiperOptions"
-      >
-        <swiper-slide
-          v-for="client in clients"
-          :key="client.id"
-          class="footer__swiper-slide swiper-slide"
-        >
-          <img
-            class="footer__slide-image"
-            :src="baseURL + client.logo.path"
-            :alt="client.title"
-          />
-        </swiper-slide>
-      </swiper>
+    <div class="footer__loop" v-if="isClients">
+      <loop />
     </div>
 
     <contacts-info contrast />
@@ -38,68 +22,19 @@
 </template>
 
 <script>
-import { baseURL, getCollectionByKey } from '@/api/index.js';
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-
 import ContactsInfo from '@/components/ContactsInfo.vue';
-
-// getSingletonByKey
+import Loop from '@/components/Loop.vue';
 
 export default {
   name: 'PageFooter',
   components: {
-    Swiper,
-    SwiperSlide,
     ContactsInfo,
+    Loop,
   },
   props: {
     isClients: {
       type: Boolean,
       required: false,
-    },
-  },
-  data() {
-    return {
-      common: '',
-      clients: [],
-      baseURL,
-      clientSwiperOptions: {
-        loop: true,
-        speed: 3000,
-        slidesPerView: 6,
-        spaceBetween: 120,
-        autoplay: {
-          delay: 1,
-          disableOnInteraction: false,
-          waitForTransition: false,
-          stopOnLastSlide: false,
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 2,
-            spaceBetween: 40,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 120,
-          },
-          1200: {
-            slidesPerView: 6,
-          },
-        },
-      },
-    };
-  },
-  created() {
-    this.getClients();
-  },
-  methods: {
-    async getClients() {
-      const { data } = await getCollectionByKey({
-        key: 'clients',
-        filter: { isFeatured: true },
-      });
-      this.clients = data;
     },
   },
 };
@@ -130,16 +65,11 @@ export default {
   &__title--accent {
     color: $--color-brand;
   }
-  &__slider {
+  &__loop {
     margin-bottom: 76px;
     @include from('md') {
       margin-bottom: 112px;
     }
-  }
-  &__swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 </style>
