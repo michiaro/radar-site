@@ -1,20 +1,16 @@
 <template>
-  <div class="col col-xs-2 col-lg-2" :class="workColumnSize">
-    <router-link to="/all-works/friendly">
-      <div class="work fade-up">
-        <div class="work__cover-wrapper">
-          <!-- TODO если видео -->
-          <img :src="baseURL + work.cover.path" :alt="work.title" class="work__cover" />
-        </div>
-        <h3 class="work__title" :class="{ 'work__title--ready': isReady }">
-          {{ work.title }}
-        </h3>
-        <p class="work__description" :class="{ 'work__description--ready': isReady }">
-          {{ glueUpPrepositions(work.prescription) }}
-        </p>
-      </div>
-    </router-link>
-  </div>
+  <router-link to="/all-works/friendly" class="work">
+    <div class="work__cover">
+      <!-- TODO если видео -->
+      <img :src="baseURL + work.cover.path" :alt="work.title" />
+    </div>
+    <h3 class="work__title">
+      {{ work.title }}
+    </h3>
+    <p class="work__description">
+      {{ glueUpPrepositions(work.prescription) }}
+    </p>
+  </router-link>
 </template>
 
 <script>
@@ -28,10 +24,6 @@ export default {
       type: Object,
       required: true,
     },
-    index: {
-      type: Number,
-      required: true,
-    },
   },
   data() {
     return {
@@ -40,50 +32,8 @@ export default {
       baseURL,
     };
   },
-  computed: {
-    widthIndex() {
-      const { index, patternLenght } = this;
-      return index % patternLenght;
-    },
-    workColumnSize() {
-      const { widthIndex } = this;
-      let size;
-
-      switch (widthIndex) {
-        case 0:
-        case 1:
-        case 4:
-        case 5:
-          size = 6;
-          break;
-
-        case 2:
-        case 7:
-          size = 4;
-          break;
-
-        case 3:
-        case 6:
-          size = 8;
-          break;
-
-        default:
-          size = 6;
-      }
-
-      return 'col-xl-' + size;
-    },
-  },
-  mounted() {
-    this.$nextTick(this.afterMount);
-  },
   methods: {
     glueUpPrepositions,
-    afterMount() {
-      setTimeout(() => {
-        this.isReady = true;
-      }, 200);
-    },
   },
 };
 </script>
@@ -93,20 +43,30 @@ export default {
 
 .work {
   $block: &;
+  display: block;
   letter-spacing: $--letter-spacing;
   margin-bottom: $--gutter;
   cursor: pointer;
 
-  &__cover-wrapper {
-    overflow: hidden;
-  }
-
   &__cover {
-    max-width: 100%;
-    width: 100%;
-    line-height: 1;
-    display: block;
-    transition: transform $--duration-2000 $--timing-in-out-cubic;
+    overflow: hidden;
+    transition-duration: $--duration-2000, $--duration-2000;
+    transition-timing-function: $--timing-out-spring, $--timing-out-spring;
+    transition-property: opacity, transform;
+    opacity: 0;
+    transform: translate(0, 3vmax);
+    @at-root ._ready & {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    img {
+      max-width: 100%;
+      width: 100%;
+      line-height: 1;
+      display: block;
+      transition: transform $--duration-2000 $--timing-in-out-cubic;
+      
+    }
   }
 
   &__title {
@@ -120,7 +80,7 @@ export default {
     transition-delay: $--duration-300;
     opacity: 0;
     transform: translate(0, 3vmax);
-    &--ready {
+    @at-root ._ready & {
       opacity: 1;
       transform: translate(0, 0);
     }
@@ -137,14 +97,14 @@ export default {
     transition-delay: $--duration-700;
     opacity: 0;
     transform: translate(0, 3vmax);
-    &--ready {
+    @at-root ._ready & {
       opacity: 1;
       transform: translate(0, 0);
     }
   }
 
   &:hover {
-    #{$block}__cover {
+    #{$block}__cover img {
       transform: scale(1.1);
     }
     #{$block}__title {

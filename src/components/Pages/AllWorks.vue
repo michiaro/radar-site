@@ -2,29 +2,20 @@
   <div class="all-works">
     <div class="container">
       <div class="row">
-        <h1 v-if="currentClient && client" class="col col-xs-2">
-          Наши работы для {{ client.title }}
-        </h1>
-        <div
-          v-if="!currentClient"
-          class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6"
-        >
+        <h1 v-if="currentClient && client" class="col col-xs-2">Наши работы для {{ client.title }}</h1>
+        <div v-if="!currentClient" class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
           <div v-if="!isFilterLoading" class="filter">
-            <div
-              class="filter__item"
-              :class="{ 'filter__item--active': currentFilter === null }"
-              @click="setFilter(null)"
-            >
+            <div class="filter__item" :class="getFilterClass(null)" @click="setFilter(null)">
               Все
             </div>
             <div
-              v-for="tag in filterTags"
-              :key="tag.slug"
+              v-for="{ slug, title } in filterTags"
+              :key="slug"
               class="filter__item"
-              :class="{ 'filter__item--active': currentFilter === tag.slug }"
-              @click="setFilter(tag.slug)"
+              :class="getFilterClass(slug)"
+              @click="setFilter(slug)"
             >
-              {{ tag.title }}
+              {{ title }}
             </div>
           </div>
           <div v-if="isFilterLoading" class="filter filter--dummy loading" />
@@ -32,14 +23,16 @@
       </div>
       <div class="all-works__list">
         <div v-if="!isWorksLoading && works.length" class="row">
-          <transition-sequence
+          <div
             v-for="(work, index) in works"
             :key="work.slug"
-            :is-visible="animationStep > 0 + index"
-            @startNext="startNext"
+            class="col col-xs-2 col-lg-2"
+            :class="getColumnClass(index)"
           >
-            <work-item :work="work" :index="index" />
-          </transition-sequence>
+            <appear-sequence :is-visible="getVisibility(index)" @startNext="startNext">
+              <work-item v-observe-visibility="track(index)" :work="work" />
+            </appear-sequence>
+          </div>
         </div>
         <div v-else class="row">
           <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
@@ -66,13 +59,13 @@
 import { getCollectionByKey } from '@/api/index.js';
 import WorkItem from '@/components/WorkItem.vue';
 import PageFooter from '@/components/PageFooter.vue';
-import TransitionSequence from '@/components/TransitionSequence.vue';
+import AppearSequence from '@/components/AppearSequence.vue';
 
 export default {
   name: 'AllWorks',
   components: {
     WorkItem,
-    TransitionSequence,
+    AppearSequence,
     PageFooter,
   },
   data() {
@@ -80,6 +73,7 @@ export default {
       isFilterLoading: false,
       isWorksLoading: false,
       animationStep: 0,
+      visibleWorks: {},
       client: null,
     };
   },
@@ -111,9 +105,7 @@ export default {
     currentFilterTitle() {
       const { tags, currentFilter } = this;
 
-      return tags && currentFilter
-        ? tags.find((tag) => tag.slug === currentFilter).title
-        : null;
+      return tags && currentFilter ? tags.find((tag) => tag.slug === currentFilter).title : null;
     },
     currentClient() {
       const clientQuery = this.$route.query.client;
@@ -128,9 +120,8 @@ export default {
     }
     if (!works.length) {
       await this.fetchWorks();
-      this.animationStep = 1;
     } else {
-      this.animationStep = works.length + 1;
+      this.animationStep = works.length;
     }
 
     if (currentFilter || currentClient) {
@@ -200,6 +191,21 @@ export default {
 
       this.client = data[0];
     },
+    getColumnClass(index) {
+      switch (index % 8) {
+        case 2:
+        case 7:
+          return 'col-xl-4';
+        case 3:
+        case 6:
+          return 'col-xl-8';
+        default:
+          return 'col-xl-6';
+      }
+    },
+    getFilterClass(filter) {
+      return filter === this.currentFilter ? 'filter__item--active' : false;
+    },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
         this.$router.push({
@@ -212,6 +218,20 @@ export default {
         });
         this.fetchWorks({ resetSkip: true });
       }
+    },
+    track(index) {
+      return (value) => {
+        if (value) {
+          // shallow copy для триггера реактивности
+          this.visibleWorks = {
+            ...this.visibleWorks,
+            [index]: true,
+          };
+        }
+      };
+    },
+    getVisibility(index) {
+      return this.visibleWorks[index] === true && this.animationStep >= index;
     },
     startNext(index) {
       if (index !== undefined) {

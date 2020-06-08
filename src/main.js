@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueObserveVisibility from 'vue-observe-visibility';
 import router from '@/router/index.js';
 import store from '@/store/index.js';
 import metaGuard from '@/router/metaGuard.js';
@@ -14,6 +15,7 @@ import '@/fonts/gerbera.css';
 import App from './App.vue';
 // import LazyLoadDirective from './directives/LazyLoadDirective';
 
+Vue.use(VueObserveVisibility);
 Vue.use(VueRouter);
 
 // Vue.directive('lazyload', LazyLoadDirective);
