@@ -1,20 +1,12 @@
 <template>
-  <div
-    class="service-direction"
-    :class="{ 'service-direction--contrast': isClosed }"
-  >
+  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <transition-sequence
-          :is-visible="animationStep > 2 + service.subdivisions.length"
-        >
-          <button
-            class="close-button close-button--cross"
-            @click.stop="onClose"
-          >
+        <appear :is-visible="animationCounter >= 3 + service.subdivisions.length" is-silent>
+          <button class="close-button close-button--cross appear appear--up" @click.stop="onClose">
             <div class="close-button__cross" />
           </button>
-        </transition-sequence>
+        </appear>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-6">
             <transition name="fade">
@@ -29,65 +21,49 @@
             </transition>
           </div>
           <div class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3">
-            <transition-sequence
-              :is-visible="animationStep > 3 + service.subdivisions.length"
-            >
-              <div class="service-direction__button">
+            <appear :is-visible="animationCounter >= 4 + service.subdivisions.length" is-silent>
+              <div class="service-direction__button appear appear--up">
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
                 </button>
               </div>
-            </transition-sequence>
+            </appear>
           </div>
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <transition-sequence
-              :is-visible="animationStep > 0"
-              @startNext="startNext"
-            >
-              <p class="service-direction__info">
+            <appear :is-visible="animationCounter >= 1" :counter-key="serviceId">
+              <p class="service-direction__info appear appear--up">
                 {{ glueUpPrepositions(service.info) }}
               </p>
-            </transition-sequence>
+            </appear>
           </div>
           <div class="col col-xs-2 col-lg-2 col-xl-6 col-xl-offset-1">
             <div class="service-direction__subdirections">
-              <transition-sequence
+              <appear
                 v-for="(subdivision, index) in service.subdivisions"
                 :key="index"
-                :is-visible="animationStep > 1 + index"
-                @startNext="startNext"
+                :is-visible="animationCounter >= 2 + index"
+                :counter-key="serviceId"
               >
-                <p class="service-direction__subdirection">
+                <p class="service-direction__subdirection appear appear--up">
                   {{ glueUpPrepositions(subdivision.value.subdivision) }}
                 </p>
-              </transition-sequence>
+              </appear>
             </div>
           </div>
           <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0">
-            <transition-sequence
-              :is-visible="animationStep > 3 + service.subdivisions.length"
-            >
-              <div class="service-direction__button">
+            <appear :is-visible="animationCounter >= 4 + service.subdivisions.length" is-silent>
+              <div class="service-direction__button appear appear--up">
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
                 </button>
               </div>
-            </transition-sequence>
+            </appear>
           </div>
         </div>
-        <div class="row">
-          <transition-sequence
-            v-for="(work, index) in works"
-            :key="work.slug"
-            :is-visible="
-              animationStep > 1 + index + service.subdivisions.length
-            "
-            @startNext="startNext"
-          >
-            <work-item :work="work" :index="index" />
-          </transition-sequence>
+        <div v-if="works" class="row">
+          <work-list :works="works" :counter-key="serviceId" :counter-modifier="service.subdivisions.length" />
         </div>
       </div>
     </simplebar>
@@ -107,21 +83,21 @@
 </template>
 
 <script>
-import WorkItem from '@/components/WorkItem.vue';
+import WorkList from '@/components/WorkList.vue';
 import { glueUpPrepositions } from '@/utils/index.js';
 import { getCollectionByKey } from '@/api/index.js';
 import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
 
 import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
-import TransitionSequence from '@/components/TransitionSequence.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'ServicePopupDirection',
   components: {
-    WorkItem,
+    WorkList,
     simplebar,
-    TransitionSequence,
+    Appear,
   },
   props: {
     service: {
@@ -147,6 +123,12 @@ export default {
     isClosed() {
       return this.state === SERVICE_STATE.CLOSED;
     },
+    serviceId() {
+      return this.service.serviceId;
+    },
+    animationCounter() {
+      return this.$store.state.page.animationCounter[this.serviceId];
+    },
   },
   created() {
     this.fetchWorks();
@@ -167,18 +149,18 @@ export default {
       this.works = data;
       this.isWorksLoading = false;
     },
-    startNext(index) {
-      if (this.state !== SERVICE_STATE.OPEN) {
-        this.animationStep = 0;
-      } else if (index !== undefined) {
-        this.animationStep = index;
-      } else {
-        this.animationStep++;
-      }
-    },
+    // startNext(index) {
+    //   if (this.state !== SERVICE_STATE.OPEN) {
+    //     this.animationStep = 0;
+    //   } else if (index !== undefined) {
+    //     this.animationStep = index;
+    //   } else {
+    //     this.animationStep++;
+    //   }
+    // },
     onClose() {
-      this.startNext(0);
       this.$emit('close');
+      this.$store.commit('resetAnimations', { counterKey: this.serviceId });
       this.$store.commit('setPopupFormOpen', { isFormPopupOpen: false });
     },
     openPopupForm() {

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <h1 v-if="currentClient && client" class="col col-xs-2">Наши работы для {{ client.title }}</h1>
-        <div v-if="!currentClient" class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
+        <div v-else class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
           <div v-if="!isFilterLoading" class="filter">
             <div class="filter__item" :class="getFilterClass(null)" @click="setFilter(null)">
               Все
@@ -22,18 +22,9 @@
         </div>
       </div>
       <div class="all-works__list">
-        <div v-if="!isWorksLoading && works.length" class="row">
-          <div
-            v-for="(work, index) in works"
-            :key="work.slug"
-            class="col col-xs-2 col-lg-2"
-            :class="getColumnClass(index)"
-          >
-            <appear-sequence :is-visible="getVisibility(index)" @startNext="startNext">
-              <work-item v-observe-visibility="track(index)" :work="work" />
-            </appear-sequence>
-          </div>
-        </div>
+        <template v-if="!isWorksLoading">
+          <work-list ref="workList" :works="works" />
+        </template>
         <div v-else class="row">
           <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
             <p class="dummy-title">
@@ -57,23 +48,20 @@
 
 <script>
 import { getCollectionByKey } from '@/api/index.js';
-import WorkItem from '@/components/WorkItem.vue';
+import WorkList from '@/components/WorkList.vue';
 import PageFooter from '@/components/PageFooter.vue';
-import AppearSequence from '@/components/AppearSequence.vue';
+import { WORKS_TO_LOAD_COUNT } from '@/settings.js';
 
 export default {
   name: 'AllWorks',
   components: {
-    WorkItem,
-    AppearSequence,
+    WorkList,
     PageFooter,
   },
   data() {
     return {
       isFilterLoading: false,
       isWorksLoading: false,
-      animationStep: 0,
-      visibleWorks: {},
       client: null,
     };
   },
@@ -121,7 +109,7 @@ export default {
     if (!works.length) {
       await this.fetchWorks();
     } else {
-      this.animationStep = works.length;
+      // this.animationStep = works.length;
     }
 
     if (currentFilter || currentClient) {
@@ -131,6 +119,7 @@ export default {
   },
   methods: {
     async fetchTags() {
+      // убрать подсветку загрузки
       this.isFilterLoading = true;
 
       const { data } = await getCollectionByKey({
@@ -168,7 +157,7 @@ export default {
         key: 'works',
         filter: filterSettings,
         options: {
-          limit: 8,
+          limit: WORKS_TO_LOAD_COUNT,
           skip: resetSkip ? 0 : works.length,
           sort: { _o: 1 },
         },
@@ -191,23 +180,18 @@ export default {
 
       this.client = data[0];
     },
-    getColumnClass(index) {
-      switch (index % 8) {
-        case 2:
-        case 7:
-          return 'col-xl-4';
-        case 3:
-        case 6:
-          return 'col-xl-8';
-        default:
-          return 'col-xl-6';
-      }
-    },
     getFilterClass(filter) {
       return filter === this.currentFilter ? 'filter__item--active' : false;
     },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
+        // обнуляем счетчик анимаций
+        this.$store.commit('resetAnimations', { counterKey: 'page' });
+
+        if (this.$refs.workList) {
+          this.$refs.workList.resetVisibility();
+        }
+
         this.$router.push({
           path: '/all-works',
           query: tag ? { filter: tag } : {},
@@ -216,28 +200,8 @@ export default {
         this.$store.commit('setWorksFilter', {
           filter: tag,
         });
+
         this.fetchWorks({ resetSkip: true });
-      }
-    },
-    track(index) {
-      return (value) => {
-        if (value) {
-          // shallow copy для триггера реактивности
-          this.visibleWorks = {
-            ...this.visibleWorks,
-            [index]: true,
-          };
-        }
-      };
-    },
-    getVisibility(index) {
-      return this.visibleWorks[index] === true && this.animationStep >= index;
-    },
-    startNext(index) {
-      if (index !== undefined) {
-        this.animationStep = index;
-      } else {
-        this.animationStep++;
       }
     },
   },

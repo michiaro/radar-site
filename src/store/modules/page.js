@@ -3,6 +3,12 @@ const state = {
   isTablet: false,
   isMenuOpen: false,
   isFormPopupOpen: false,
+  animationCounter: {
+    page: 0,
+    campaign: 0,
+    digital: 0,
+    branding: 0,
+  },
 };
 
 const mutations = {
@@ -17,6 +23,12 @@ const mutations = {
   },
   setPopupFormOpen(state, { isFormPopupOpen }) {
     state.isFormPopupOpen = isFormPopupOpen;
+  },
+  animateNext(state, { counterKey }) {
+    state.animationCounter[counterKey]++;
+  },
+  resetAnimations(state, { counterKey }) {
+    state.animationCounter[counterKey] = 0;
   },
 };
 

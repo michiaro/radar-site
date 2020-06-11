@@ -1,13 +1,13 @@
 <template>
   <router-link to="/all-works/friendly" class="work">
-    <div class="work__cover">
+    <div class="work__cover appear appear--up">
       <!-- TODO если видео -->
       <img :src="baseURL + work.cover.path" :alt="work.title" />
     </div>
-    <h3 class="work__title">
+    <h3 class="work__title appear appear--up appear--delay-300">
       {{ work.title }}
     </h3>
-    <p class="work__description">
+    <p class="work__description appear appear--up appear--delay-600">
       {{ glueUpPrepositions(work.prescription) }}
     </p>
   </router-link>
@@ -50,15 +50,6 @@ export default {
 
   &__cover {
     overflow: hidden;
-    transition-duration: $--duration-2000, $--duration-2000;
-    transition-timing-function: $--timing-out-spring, $--timing-out-spring;
-    transition-property: opacity, transform;
-    opacity: 0;
-    transform: translate(0, 3vmax);
-    @at-root ._ready & {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
     img {
       max-width: 100%;
       width: 100%;
@@ -74,16 +65,6 @@ export default {
     font-weight: normal;
     font-size: $--font-size-120;
     color: $--color-text;
-    transition-duration: $--duration-2000, $--duration-2000, $--duration-200;
-    transition-timing-function: $--timing-out-spring, $--timing-out-spring, $--timing-in-out-cubic;
-    transition-property: opacity, transform, color;
-    transition-delay: $--duration-300;
-    opacity: 0;
-    transform: translate(0, 3vmax);
-    @at-root ._ready & {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
   }
 
   &__description {
@@ -91,16 +72,6 @@ export default {
     font-size: $--font-size-80;
     color: $--color-text--muted;
     max-width: 440px;
-    transition-duration: $--duration-2000, $--duration-2000;
-    transition-timing-function: $--timing-out-spring, $--timing-out-spring;
-    transition-property: opacity, transform;
-    transition-delay: $--duration-700;
-    opacity: 0;
-    transform: translate(0, 3vmax);
-    @at-root ._ready & {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
   }
 
   &:hover {
