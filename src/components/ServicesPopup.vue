@@ -162,11 +162,13 @@ export default {
 
             // запускаем анимацию появления контента
             if (this.activeServiceId) {
-              this.services.forEach(({ serviceId }, index) => {
+              this.services.forEach(({ serviceId }) => {
                 if (this.activeServiceId === serviceId) {
-                  this.$refs.directions[index].startNext(1);
+                  this.$store.commit('animateNext', { counterKey: serviceId });
+                  // this.$refs.directions[index].startNext(1);
                 } else {
-                  this.$refs.directions[index].startNext(0);
+                  this.$store.commit('resetAnimations', { counterKey: serviceId });
+                  // this.$refs.directions[index].startNext(0);
                 }
               });
             }
