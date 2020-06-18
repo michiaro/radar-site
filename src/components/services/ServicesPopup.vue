@@ -26,9 +26,9 @@ import {
 } from '@/utils/documentScroll.js';
 import animate from '@/utils/animate.js';
 import { easeInOutCubic, linear } from '@/utils/easings.js';
-import ServicePopupDirection from '@/components/ServicePopupDirection.vue';
+import ServicePopupDirection from '@/components/services/ServicePopupDirection.vue';
 import progressFromTo from '@/utils/progressFromTo.js';
-import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
+import SERVICE_STATE from '@/components/services/servicePopupDirectionState.js';
 
 export default {
   name: 'ServicesPopup',

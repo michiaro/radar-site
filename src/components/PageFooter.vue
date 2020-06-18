@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container" v-if="isClients">
       <div class="row">
-        <div class="col col-xs-2 col-sm-2 col-md-3 col-lg-6 col-2xl-4">
+        <div class="col col-xs-2 col-sm-2 col-md-3 col-lg-6 col-2xl-5">
           <h2 class="footer__title">
             <span class="footer__title--accent">
               Клиенты.

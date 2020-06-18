@@ -86,11 +86,11 @@
 import WorkList from '@/components/WorkList.vue';
 import { glueUpPrepositions } from '@/utils/index.js';
 import { getCollectionByKey } from '@/api/index.js';
-import SERVICE_STATE from '@/components/servicePopupDirectionState.js';
+import SERVICE_STATE from '@/components/services/servicePopupDirectionState.js';
 
 import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
-import Appear from '@/components/Appear.vue';
+import Appear from '@/components/services/Appear.vue';
 
 export default {
   name: 'ServicePopupDirection',

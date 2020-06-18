@@ -1,5 +1,5 @@
 <template>
-  <div class="services-page" v-if="services.length">
+  <div v-if="services.length" class="services-page">
     <div class="container">
       <div class="row">
         <div
@@ -18,29 +18,24 @@
         :active-service-id="activeServiceId"
         @setService="handleClickOnService"
       />
-      <!-- <div class="row">
-        <div class="col col-xs-2 col-lg-2 col-xl-8">
-          <h1 class="services__title">
-            Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
-            базируется на&nbsp;четырех ключевых опорах:
-          </h1>
+
+      <div class="pillars">
+        <div class="row">
+          <div class="col col-xs-2 col-lg-3 col-xl-8">
+            <h1 class="pillars__title">
+              Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
+              базируется на&nbsp;четырех ключевых опорах:
+            </h1>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-2">
-          Creative
-        </div>
-        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-3">
-          Design
-        </div>
-        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-1">
-          Strategy
-        </div>
-        <div class="col col-xs-2 col-sm-4 col-lg-2 col-xl-3 col-xl-offset-3">
-          Innovation
-        </div>
-      </div> -->
     </div>
+    <pillar
+      v-for="(pillar, index) in pillars"
+      :key="index"
+      :pillar="pillar"
+      :number="index + 1"
+    />
 
     <page-footer is-clients />
   </div>
@@ -49,10 +44,16 @@
 <script>
 import animateScrollTo from 'animated-scroll-to';
 import PageFooter from '@/components/PageFooter.vue';
-import ServicePageDirection from '@/components/ServicePageDirection.vue';
-import ServicesPopup from '@/components/ServicesPopup.vue';
+import ServicePageDirection from '@/components/services/ServicePageDirection.vue';
+import ServicesPopup from '@/components/services/ServicesPopup.vue';
+import Pillar from '@/components/services/Pillar.vue';
 import { easeOutSin } from '@/utils/easings.js';
 import { getCollectionByKey } from '@/api/index.js';
+
+import creative from '@/video/creative.mp4';
+import design from '@/video/design.mp4';
+import strategy from '@/video/strategy.mp4';
+import innovation from '@/video/innovation.mp4';
 
 export default {
   name: 'Services',
@@ -60,10 +61,70 @@ export default {
     PageFooter,
     ServicePageDirection,
     ServicesPopup,
+    Pillar,
   },
   data() {
     return {
       activeServiceId: null,
+      pillars: [
+        {
+          title: 'Креатив',
+          description: 'Базируемся на стратегических решениях',
+          content: `<p>Всегда находимо интересное решение любой задачи. Исключительно хорошо делаем отдельные задачи, из которых складываются наши компетенции:</p>
+          <ul>
+            <li>нейминг</li>
+            <li>креативные концепции</li>
+            <li>визуалы</li>
+            <li>сценарии роликов</li>
+            <li>концепции материалов в цифровой среде</li>
+          </ul>`,
+          video: creative,
+          id: 'creative',
+        },
+        {
+          title: 'Дизайн',
+          description: 'Придерживаемся принципов осознанного дизайна',
+          content: `<p>Любая дизайн задача решается разными дизайнерами с разным подходом, взглядом перспективой. Больше всего мы любим:</p>
+          <ul>
+            <li>продуктовые упаковки</li>
+            <li>логотипы</li>
+            <li>фирменные стили</li>
+            <li>дизайн-концепции</li>
+            <li>рекламные материалы</li>
+            <li>спецпроекты</li>
+          </ul>`,
+          video: design,
+          id: 'design',
+        },
+        {
+          title: 'Стратегии',
+          description: 'Любую задачу пропускаем через стратегическое сито',
+          content: `<p>Стратегический подход синхронизирует все усилия для достижения максимального результата. Наши стратеги разрабатывают:</p>
+          <ul>
+            <li>продуктовые стратегии</li>
+            <li>позиционирование марок</li>
+            <li>медийные стратегии</li>
+            <li>диджитал стратегии</li>
+            <li>исследования</li>
+          </ul>`,
+          video: strategy,
+          id: 'strategy',
+        },
+        {
+          title: 'Инновации',
+          description: 'Предлагаем самые актуальные и эффективные решения',
+          content: `<p>Мир вокруг меняется настолько быстро, что важно держать руку на пульсе и быть в контексте.</p>
+          <ul>
+            <li>ньюсджекинг</li>
+            <li>современные технологии</li>
+            <li>новые комбинации медиа</li>
+            <li>нестандартный подход к аудитории и продукту</li>
+            <li>оптимизиация бизнеспроцессов</li>
+          </ul>`,
+          video: innovation,
+          id: 'innovation',
+        },
+      ],
     };
   },
   computed: {
@@ -136,5 +197,14 @@ export default {
 
 .services-page {
   padding-top: $--page-padding-x;
+}
+
+.pillars {
+  &__title {
+    font-weight: normal;
+    font-size: 4.1vmax;
+    letter-spacing: $--letter-spacing;
+    color: $--color-text;
+  }
 }
 </style>

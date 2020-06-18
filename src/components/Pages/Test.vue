@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TransitionSequence from '../TransitionSequence.vue';
+import TransitionSequence from '@/components/services/TransitionSequence.vue';
 
 export default {
   name: 'Test',
