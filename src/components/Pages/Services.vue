@@ -50,11 +50,6 @@ import Pillar from '@/components/services/Pillar.vue';
 import { easeOutSin } from '@/utils/easings.js';
 import { getCollectionByKey } from '@/api/index.js';
 
-import creative from '@/video/creative.mp4';
-import design from '@/video/design.mp4';
-import strategy from '@/video/strategy.mp4';
-import innovation from '@/video/innovation.mp4';
-
 export default {
   name: 'Services',
   components: {
@@ -66,70 +61,14 @@ export default {
   data() {
     return {
       activeServiceId: null,
-      pillars: [
-        {
-          title: 'Креатив',
-          description: 'Базируемся на стратегических решениях',
-          content: `<p>Всегда находимо интересное решение любой задачи. Исключительно хорошо делаем отдельные задачи, из которых складываются наши компетенции:</p>
-          <ul>
-            <li>нейминг</li>
-            <li>креативные концепции</li>
-            <li>визуалы</li>
-            <li>сценарии роликов</li>
-            <li>концепции материалов в цифровой среде</li>
-          </ul>`,
-          video: creative,
-          id: 'creative',
-        },
-        {
-          title: 'Дизайн',
-          description: 'Придерживаемся принципов осознанного дизайна',
-          content: `<p>Любая дизайн задача решается разными дизайнерами с разным подходом, взглядом перспективой. Больше всего мы любим:</p>
-          <ul>
-            <li>продуктовые упаковки</li>
-            <li>логотипы</li>
-            <li>фирменные стили</li>
-            <li>дизайн-концепции</li>
-            <li>рекламные материалы</li>
-            <li>спецпроекты</li>
-          </ul>`,
-          video: design,
-          id: 'design',
-        },
-        {
-          title: 'Стратегии',
-          description: 'Любую задачу пропускаем через стратегическое сито',
-          content: `<p>Стратегический подход синхронизирует все усилия для достижения максимального результата. Наши стратеги разрабатывают:</p>
-          <ul>
-            <li>продуктовые стратегии</li>
-            <li>позиционирование марок</li>
-            <li>медийные стратегии</li>
-            <li>диджитал стратегии</li>
-            <li>исследования</li>
-          </ul>`,
-          video: strategy,
-          id: 'strategy',
-        },
-        {
-          title: 'Инновации',
-          description: 'Предлагаем самые актуальные и эффективные решения',
-          content: `<p>Мир вокруг меняется настолько быстро, что важно держать руку на пульсе и быть в контексте.</p>
-          <ul>
-            <li>ньюсджекинг</li>
-            <li>современные технологии</li>
-            <li>новые комбинации медиа</li>
-            <li>нестандартный подход к аудитории и продукту</li>
-            <li>оптимизиация бизнеспроцессов</li>
-          </ul>`,
-          video: innovation,
-          id: 'innovation',
-        },
-      ],
     };
   },
   computed: {
     services() {
       return this.$store.state.services.content || null;
+    },
+    pillars() {
+      return this.$store.state.services.pillars || null;
     },
   },
   async created() {
@@ -139,12 +78,18 @@ export default {
       this.setActiveServiceId(activeServiceId);
     }
 
-    const { services } = this;
+    const { services, pillars } = this;
     if (!services.length) {
       await this.fetchServices();
       this.animationStep = 1;
     } else {
       this.animationStep = services.length + 1;
+    }
+    if (!pillars.length) {
+      await this.fetchPillars();
+      // this.animationStep = 1;
+    } else {
+      // this.animationStep = pillars.length + 1;
     }
   },
   methods: {
@@ -168,6 +113,16 @@ export default {
       if (isScrolled) {
         this.activeServiceId = serviceId;
       }
+    },
+    async fetchPillars() {
+      const { data } = await getCollectionByKey({
+        key: 'pillars',
+        options: {
+          sort: { _o: 1 },
+        },
+      });
+
+      this.$store.commit('setPillarsContent', { data });
     },
     handleClickOnService(serviceId) {
       const currentServiceId = this.$route.query.direction;

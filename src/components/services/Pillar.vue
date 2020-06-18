@@ -3,7 +3,7 @@
     <div class="pillar__video-wrapper">
       <video
         ref="video"
-        :src="pillar.video"
+        :src="videoURL + pillar.video.path"
         class="pillar__video"
         muted="muted"
         playsinline
@@ -47,6 +47,7 @@
 
 <script>
 import { glueUpPrepositions } from '@/utils/index.js';
+import { baseURL } from '@/api/index.js';
 
 export default {
   name: 'Pillar',
@@ -58,6 +59,11 @@ export default {
     number: {
       type: Number,
       required: true,
+    },
+  },
+  computed: {
+    videoURL() {
+      return baseURL + '/cockpit/storage/uploads';
     },
   },
   methods: {
