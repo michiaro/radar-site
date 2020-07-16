@@ -18,8 +18,10 @@
         :active-service-id="activeServiceId"
         @setService="handleClickOnService"
       />
+    </div>
 
-      <div class="pillars">
+    <div class="pillars">
+      <div class="container">
         <div class="row">
           <div class="col col-xs-2 col-lg-3 col-xl-8">
             <h1 class="pillars__title">
@@ -29,13 +31,14 @@
           </div>
         </div>
       </div>
+
+      <pillar
+        v-for="(pillar, index) in pillars"
+        :key="index"
+        :pillar="pillar"
+        :number="index + 1"
+      />
     </div>
-    <pillar
-      v-for="(pillar, index) in pillars"
-      :key="index"
-      :pillar="pillar"
-      :number="index + 1"
-    />
 
     <page-footer is-clients />
   </div>
@@ -61,6 +64,8 @@ export default {
   data() {
     return {
       activeServiceId: null,
+      animationCounter: -1,
+      titleVisibility: false,
     };
   },
   computed: {
@@ -69,6 +74,10 @@ export default {
     },
     pillars() {
       return this.$store.state.services.pillars || null;
+    },
+    isTitleVisible() {
+      const { services, titleVisibility, animationCounter } = this;
+      return titleVisibility && animationCounter >= services.length;
     },
   },
   async created() {
@@ -81,15 +90,13 @@ export default {
     const { services, pillars } = this;
     if (!services.length) {
       await this.fetchServices();
-      this.animationStep = 1;
-    } else {
-      this.animationStep = services.length + 1;
+      this.showNext();
     }
+    // } else {
+    //   this.animationCounter = services.length;
+    // }
     if (!pillars.length) {
-      await this.fetchPillars();
-      // this.animationStep = 1;
-    } else {
-      // this.animationStep = pillars.length + 1;
+      this.fetchPillars();
     }
   },
   methods: {
@@ -141,6 +148,17 @@ export default {
         }
         this.setActiveServiceId(serviceId);
         this.$router.push(newPath);
+      }
+    },
+    showNext() {
+      this.animationCounter++;
+      console.log(this.animationCounter >= this.services.length);
+    },
+    titleVisibilityChanged(isVisible) {
+      console.log(isVisible, 'title');
+
+      if (isVisible) {
+        this.titleVisibility = isVisible;
       }
     },
   },

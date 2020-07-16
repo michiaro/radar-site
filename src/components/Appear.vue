@@ -29,9 +29,12 @@ export default {
     isVisible(next) {
       if (next) {
         if (this.onNext) {
-          this.onNext();
+          setTimeout(() => this.onNext(), this.delay);
         } else if (!this.isSilent) {
-          setTimeout(() => store.commit('animateNext', { counterKey: this.counterKey }), this.delay);
+          setTimeout(
+            () => store.commit('animateNext', { counterKey: this.counterKey }),
+            this.delay,
+          );
         }
       }
     },
@@ -64,6 +67,12 @@ export default {
 
   &--up {
     transform: translate(0, 3vmax);
+    @at-root ._ready & {
+      transform: translate(0, 0);
+    }
+  }
+  &--right {
+    transform: translate(-3vmax, 0);
     @at-root ._ready & {
       transform: translate(0, 0);
     }

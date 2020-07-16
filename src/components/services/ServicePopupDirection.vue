@@ -90,7 +90,7 @@ import SERVICE_STATE from '@/components/services/servicePopupDirectionState.js';
 
 import simplebar from 'simplebar-vue';
 import 'simplebar/dist/simplebar.min.css';
-import Appear from '@/components/services/Appear.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'ServicePopupDirection',

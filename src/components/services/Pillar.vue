@@ -1,5 +1,13 @@
 <template>
-  <div class="pillar">
+  <div
+    v-observe-visibility="{
+      callback: visibilityChanged,
+      intersection: {
+        threshold: 0.5,
+      },
+    }"
+    class="pillar"
+  >
     <div class="pillar__video-wrapper">
       <video
         ref="video"
@@ -8,39 +16,61 @@
         muted="muted"
         playsinline
         preload="auto"
-        autoplay="autoplay"
       />
     </div>
-    <div class="pillar__number">
-      {{ number }}
+    <div v-if="!isMobile" class="pillar__number">
+      <appear :is-visible="animationCounter >= 0" :on-next="showNext">
+        <div class="appear appear--right">
+          {{ number }}
+        </div>
+      </appear>
     </div>
     <div class="pillar__content">
       <div class="pillar__header">
-        <div class="pillar__mobile-number">
-          {{ number }}
+        <div v-if="isMobile" class="pillar__mobile-number">
+          <appear :is-visible="animationCounter >= 0" :on-next="showNext">
+            <div class="appear appear--right">
+              {{ number }}
+            </div>
+          </appear>
         </div>
         <div class="pillar__header-inner">
           <h2 class="pillar__title">
-            {{ pillar.title }}
+            <appear :is-visible="animationCounter >= 1" :on-next="showNext">
+              <div class="appear appear--up">
+                {{ pillar.title }}
+              </div>
+            </appear>
           </h2>
-          <div
-            class="pillar__description"
-            v-html="glueUpPrepositions(pillar.description)"
-          />
+          <appear :is-visible="animationCounter >= 2" :on-next="showNext">
+            <div
+              class="pillar__description appear appear--up"
+              v-html="glueUpPrepositions(pillar.description)"
+            />
+          </appear>
         </div>
       </div>
-      <div class="pillar__text" v-html="glueUpPrepositions(pillar.content)" />
-      <router-link
-        :to="{
-          name: 'AllWorks',
-          query: {
-            filter: pillar.id,
-          },
-        }"
-        class="pillar__link"
-      >
-        смотреть кейсы
-      </router-link>
+      <div class="pillar__text">
+        <appear :is-visible="animationCounter >= 3" :on-next="showNext">
+          <div
+            class="appear appear--up"
+            v-html="glueUpPrepositions(pillar.content)"
+          />
+        </appear>
+      </div>
+      <appear :is-visible="animationCounter >= 4" :on-next="showNext">
+        <router-link
+          :to="{
+            name: 'AllWorks',
+            query: {
+              filter: pillar.id,
+            },
+          }"
+          class="pillar__link appear appear--up"
+        >
+          смотреть кейсы
+        </router-link>
+      </appear>
     </div>
   </div>
 </template>
@@ -48,9 +78,13 @@
 <script>
 import { glueUpPrepositions } from '@/utils/index.js';
 import { baseURL } from '@/api/index.js';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'Pillar',
+  components: {
+    Appear,
+  },
   props: {
     pillar: {
       type: Object,
@@ -61,13 +95,36 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      animationCounter: -1,
+    };
+  },
   computed: {
     videoURL() {
       return baseURL + '/cockpit/storage/uploads';
     },
+    isMobile() {
+      return this.$store.state.page.isMobile;
+    },
+  },
+  watch: {
+    animationCounter(next) {
+      if (next === 1) {
+        this.$refs.video.play();
+      }
+    },
   },
   methods: {
     glueUpPrepositions,
+    showNext() {
+      this.animationCounter++;
+    },
+    visibilityChanged(isVisible) {
+      if (isVisible) {
+        this.showNext();
+      }
+    },
   },
 };
 </script>
@@ -89,10 +146,7 @@ export default {
   }
 
   &__number {
-    display: none;
-
-    @include from('lg') {
-      display: block;
+    @include from('xl') {
       font-weight: 300;
       font-size: 40.1vmax;
       color: $--color-text;
@@ -122,10 +176,6 @@ export default {
     color: $--color-text;
     line-height: 0.82;
     transform: translateX(-1.3vmax);
-
-    @include from('lg') {
-      display: none;
-    }
   }
   &__header-inner {
   }
@@ -226,6 +276,12 @@ export default {
       transition-duration: $--duration-1000;
       transition-property: transform;
       transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    @at-root ._ready &:after {
+      transform: scaleX(1);
+      transition-delay: $--delay-1000;
     }
 
     &:hover:after {

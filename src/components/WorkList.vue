@@ -10,7 +10,7 @@
 
 <script>
 import WorkItem from '@/components/WorkItem.vue';
-import Appear from '@/components/services/Appear.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'WorkList',
