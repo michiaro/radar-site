@@ -88,17 +88,20 @@
                     :href="common.instagram"
                     target="_blank"
                     class="contact-form__social-link"
-                  >INSTAGRAM</a>
+                    >INSTAGRAM</a
+                  >
                   <a
                     :href="common.facebook"
                     target="_blank"
                     class="contact-form__social-link"
-                  >FACEBOOK</a>
+                    >FACEBOOK</a
+                  >
                   <a
                     :href="common.vk"
                     target="_blank"
                     class="contact-form__social-link"
-                  >VKONTAKTE</a>
+                    >VKONTAKTE</a
+                  >
                 </p>
               </div>
             </div>
@@ -312,11 +315,10 @@ export default {
     transition-property: color;
     transition-duration: $--duration-100;
     transition-timing-function: $--timing-in-out-cubic;
+    margin-right: 16px;
+    margin-bottom: 16px;
 
     & + & {
-      margin-right: 16px;
-      margin-bottom: 16px;
-
       @include from('sm') {
         margin-left: 16px;
         margin-bottom: 0;
