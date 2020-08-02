@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/all-works/friendly" class="work">
+  <router-link :to="`/all-works/${work.slug}`" class="work">
     <div class="work__cover appear appear--up">
       <!-- TODO если видео -->
       <img :src="baseURL + work.cover.path" :alt="work.title" />

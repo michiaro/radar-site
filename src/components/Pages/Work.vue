@@ -38,7 +38,10 @@
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
             <h2 class="work-page__subtitle">Клиент</h2>
             <router-link
-              :to="{ name: 'AllWorks', query: { client: currentWork.client.slug } }"
+              :to="{
+                name: 'AllWorks',
+                query: { client: currentWork.client.slug },
+              }"
               class="work-page__client"
             >
               {{ currentWork.client.title }} —
@@ -115,7 +118,7 @@
       <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
         <router-link
           v-if="!isNextWorkLoading"
-          :to="'/all-works/friendly'"
+          :to="`/all-works/${nextWork.slug}`"
           class="work-page__cross-link cross-link"
         >
           <div class="cross-link__wrapper">
