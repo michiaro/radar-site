@@ -59,23 +59,30 @@ export default {
   align-items: center;
   justify-content: center;
   height: calc(100vh - #{$--header-height});
+  margin: 0 $--gutter;
 
+  &__image {
+    max-width: 100%;
+  }
   &__inner {
     margin-bottom: $--header-height;
   }
   &__title {
     font-weight: normal;
-    font-size: $--font-size-140;
     margin: 2em 0 0.2em;
+    font-size: $--font-size-100;
+    @include from('lg') {
+      font-size: $--font-size-140;
+    }
   }
   &__link {
     font-weight: 500;
-    font-size: $--font-size-140;
     color: $--color-brand;
     display: inline-block;
     position: relative;
-    margin-left: $--page-padding-x;
+    font-size: $--font-size-100;
     @include from('lg') {
+      font-size: $--font-size-140;
       margin-left: 0;
     }
 
