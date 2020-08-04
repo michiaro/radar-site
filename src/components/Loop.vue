@@ -10,7 +10,7 @@
         <router-link :to="{ name: 'AllWorks', query: { client: client.slug } }">
           <img
             class="loop__image"
-            :src="baseURL + client.color_logo.path"
+            :src="baseURL + client.logo.path"
             :alt="client.title"
           />
         </router-link>
@@ -19,7 +19,7 @@
         <router-link :to="{ name: 'AllWorks', query: { client: client.slug } }">
           <img
             class="loop__image"
-            :src="baseURL + client.color_logo.path"
+            :src="baseURL + client.logo.path"
             :alt="client.title"
           />
         </router-link>
@@ -52,6 +52,9 @@ export default {
       const { data } = await getCollectionByKey({
         key: 'clients',
         filter: { isFeatured: true },
+        options: {
+          sort: { _o: 1 },
+        },
       });
       this.clients = data;
     },
