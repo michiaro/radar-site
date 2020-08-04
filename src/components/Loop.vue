@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     animationDuration() {
-      return `animation-duration: ${this.clients.length * 5}s`;
+      return `animation-duration: ${this.clients.length * 1.5}s`;
     },
   },
   created() {
