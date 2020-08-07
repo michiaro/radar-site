@@ -180,7 +180,7 @@ export default {
   box-sizing: border-box;
   background: $--color-gray-200;
   transition-duration: $--duration-500, $--duration-500;
-  transition-timing-function: $--timing-out-spring, $--timing-out-spring;
+  transition-timing-function: $--timing-in-out-spring, $--timing-in-out-spring;
   transition-property: color, background-color;
   width: 100%;
   height: 100%;

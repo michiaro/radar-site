@@ -133,8 +133,8 @@ export default {
 
       opacity: 0;
       transform: translate(0, 3vmax);
-      transition-duration: $--duration-1000, $--duration-1000;
-      transition-timing-function: $--timing-in-circ, $--timing-in-circ;
+      transition-duration: $--duration-2000, $--duration-2000;
+      transition-timing-function: $--timing-in-out-spring, $--timing-in-out-spring;
       transition-property: opacity, transform;
     }
   }
@@ -146,9 +146,6 @@ export default {
   }
 
   &:hover {
-    #{$service}__title {
-      color: $--color-brand;
-    }
     #{$service}__description {
       @include from('xl') {
         opacity: 1;

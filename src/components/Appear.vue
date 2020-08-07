@@ -58,7 +58,7 @@ export default {
 
 .appear {
   transition-duration: $--duration-2000, $--duration-2000;
-  transition-timing-function: $--timing-out-spring, $--timing-out-spring;
+  transition-timing-function: $--timing-in-out-spring, $--timing-in-out-spring;
   transition-property: opacity, transform;
   opacity: 0;
   @at-root ._ready & {

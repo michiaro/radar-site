@@ -3,22 +3,23 @@
     <div class="container">
       <div class="row">
         <h1 v-if="currentClient && client" class="col col-xs-2">Наши работы для {{ client.title }}</h1>
-        <div v-else class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
-          <div v-if="!isFilterLoading" class="filter">
-            <div class="filter__item" :class="getFilterClass(null)" @click="setFilter(null)">
-              Все
+        <div v-else-if="!isFilterLoading" class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
+          <appear :is-visible="isFilterVisible" is-silent>
+            <div class="filter">
+              <div class="filter__item appear appear--duration--500" @click="setFilter(null)">
+                <span class="filter__label" :class="getFilterClass(null)">Все</span>
+              </div>
+              <div
+                v-for="({ slug, title }, index) in filterTags"
+                :key="slug"
+                class="filter__item appear appear--duration--500"
+                :class="'appear--delay-' + (index + 1) * 200"
+                @click="setFilter(slug)"
+              >
+                <span class="filter__label" :class="getFilterClass(slug)">{{ title }}</span>
+              </div>
             </div>
-            <div
-              v-for="{ slug, title } in filterTags"
-              :key="slug"
-              class="filter__item"
-              :class="getFilterClass(slug)"
-              @click="setFilter(slug)"
-            >
-              {{ title }}
-            </div>
-          </div>
-          <div v-if="isFilterLoading" class="filter filter--dummy loading" />
+          </appear>
         </div>
       </div>
       <div class="all-works__list">
@@ -48,19 +49,21 @@
 
 <script>
 import { getCollectionByKey } from '@/api/index.js';
-import WorkList from '@/components/WorkList.vue';
+import Appear from '@/components/Appear.vue';
 import PageFooter from '@/components/PageFooter.vue';
+import WorkList from '@/components/WorkList.vue';
 import { WORKS_TO_LOAD_COUNT } from '@/settings.js';
-
 export default {
   name: 'AllWorks',
   components: {
-    WorkList,
+    Appear,
     PageFooter,
+    WorkList,
   },
   data() {
     return {
       isFilterLoading: false,
+      isFilterVisible: false,
       isWorksLoading: false,
       client: null,
     };
@@ -116,6 +119,11 @@ export default {
       this.fetchWorks({ resetSkip: true });
       this.fetchClient();
     }
+
+    // показываем фильтр примерно после подгрузки четырех работ
+    setTimeout(() => {
+      this.isFilterVisible = true;
+    }, 1000);
   },
   methods: {
     async fetchTags() {
@@ -181,7 +189,7 @@ export default {
       this.client = data[0];
     },
     getFilterClass(filter) {
-      return filter === this.currentFilter ? 'filter__item--active' : false;
+      return filter === this.currentFilter ? 'filter__label--active' : false;
     },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
@@ -248,6 +256,7 @@ export default {
   flex-flow: row wrap;
   padding-bottom: 12px;
   margin: 0 -12px;
+  height: $--font-size-90 * 1.3;
 
   @include from('lg') {
     flex-wrap: nowrap;
@@ -255,27 +264,21 @@ export default {
   }
 
   &__item {
+    padding: 0 12px;
+  }
+
+  &__label {
     font-size: $--font-size-90;
     letter-spacing: $--letter-spacing;
-    color: $--color-text--muted;
     text-transform: lowercase;
     line-height: 1.3;
     cursor: pointer;
     transition: color $--duration-200 $--timing-in-out-cubic;
-    padding: 0 12px;
-
+    color: $--color-text--muted;
     &--active,
     &:hover {
       color: $--color-brand;
     }
-  }
-
-  &--dummy {
-    height: $--font-size-90 * 1.3;
-    background: $--color-text--muted;
-    width: 100%;
-    padding-bottom: 0;
-    margin: 0 0 12px;
   }
 }
 

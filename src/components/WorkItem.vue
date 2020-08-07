@@ -1,13 +1,13 @@
 <template>
   <router-link :to="`/all-works/${work.slug}`" class="work">
-    <div class="work__cover appear appear--up">
+    <div class="work__cover appear appear--up appear--duration-1000">
       <!-- TODO если видео -->
       <img :src="baseURL + work.cover.path" :alt="work.title" />
     </div>
-    <h3 class="work__title appear appear--up appear--delay-300">
-      {{ work.title }}
-    </h3>
-    <p class="work__description appear appear--up appear--delay-600">
+    <div class="appear appear--up appear--duration-1000 appear--delay-300">
+      <h3 class="work__title">{{ work.title }}</h3>
+    </div>
+    <p class="work__description appear appear--up appear--duration-1000 appear--delay-600">
       {{ glueUpPrepositions(work.prescription) }}
     </p>
   </router-link>
@@ -55,8 +55,7 @@ export default {
       width: 100%;
       line-height: 1;
       display: block;
-      transition: transform $--duration-2000 $--timing-in-out-cubic;
-      
+      transition: transform $--duration-2000 $--timing-out-circ;
     }
   }
 
@@ -65,6 +64,7 @@ export default {
     font-weight: normal;
     font-size: $--font-size-120;
     color: $--color-text;
+    transition: color $--duration-1000 $--timing-out-circ;
   }
 
   &__description {

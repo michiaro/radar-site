@@ -71,7 +71,7 @@ export default {
 .fade-up-enter-active,
 .fade-down-leave-active,
 .fade-down-enter-active {
-  transition-timing-function: $--timing-out-spring, $--timing-out-spring;
+  transition-timing-function: $--timing-in-out-spring, $--timing-in-out-spring;
   transition-property: opacity, transform;
 }
 
