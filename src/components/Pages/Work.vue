@@ -99,8 +99,8 @@
         </div>
 
         <div class="row">
-          <div class="col col-xs-2 col-md-1 col-xl-2">
-            <h2 class="work-page__subtitle">
+          <div class="col col-xs-2 col-md-4 col-xl-2">
+            <h2 class="work-page__subtitle work-page__subtitle--team">
               Команда
             </h2>
           </div>
@@ -108,6 +108,7 @@
             v-for="(position, index) in currentWork.credits"
             :key="index"
             class="col col-xs-1 col-md-1 col-xl-2"
+            :class="{ 'col-xl-offset-2': isFifthTeammate(index) }"
           >
             <div class="work-page__position">
               {{ position.value.position }}
@@ -285,6 +286,10 @@ export default {
 
       return path;
     },
+    isFifthTeammate(index) {
+      const order = Number(index) % 5;
+      return order === 0 && index > 0;
+    },
   },
 };
 </script>
@@ -334,8 +339,7 @@ export default {
       margin-top: 1.7vmax;
     }
   }
-  &__subtitle {
-  }
+
   &__client,
   &__task,
   &__social-link,
@@ -356,8 +360,7 @@ export default {
   &__social-link:last-of-type {
     margin-bottom: 3.25vmax;
   }
-  &__subtitle {
-  }
+
   &__service {
     font-size: $--font-size-80;
     line-height: 1.67;
@@ -387,6 +390,14 @@ export default {
     font-size: $--font-size-120;
     margin: 0;
     margin-bottom: 0.65vmax;
+
+    &--team {
+      margin-bottom: 2vmax;
+
+      @include from('xl') {
+        margin-bottom: 0.65vmax;
+      }
+    }
   }
   &__position {
     font-size: $--font-size-80;
@@ -394,14 +405,16 @@ export default {
   }
   &__teammate {
     font-size: $--font-size-80;
-    margin: 0.65vmax 0 1.25vmax;
+    margin: 0.65vmax 0;
+
+    &:last-of-type {
+      margin-bottom: 2vmax;
+    }
   }
   &__next-work {
     font-size: $--font-size-100;
     font-weight: normal;
     margin-top: 5.5vmax;
-  }
-  &__cross-link {
   }
   &__social-link {
     a {
