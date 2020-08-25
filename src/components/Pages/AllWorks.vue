@@ -2,37 +2,52 @@
   <div class="all-works">
     <div class="container">
       <div class="row">
-        <h1 v-if="currentClient && client" class="col col-xs-2">Наши работы для {{ client.title }}</h1>
-        <div v-else-if="!isFilterLoading" class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6">
-          <appear :is-visible="isFilterVisible" is-silent>
-            <div class="filter">
-              <div class="filter__item appear appear--duration--500" @click="setFilter(null)">
-                <span class="filter__label" :class="getFilterClass(null)">Все</span>
+        <div class="col col-xs-2">
+          <h1 v-if="currentClient && client" class="all-works__dummy-title">
+            <p v-if="works.lenght > 0">Наши работы для {{ client.title }}</p>
+            <p v-else>
+              Наши работы для {{ client.title }} <br />
+              скоро появятся.
+            </p>
+          </h1>
+        </div>
+        <div
+          class="col col-xs-2 col-lg-2 col-lg-offset-2 col-xl-6 col-xl-offset-6"
+        >
+          <template v-if="isFilterReady">
+            <appear :is-visible="isFilterVisible" is-silent>
+              <div class="filter">
+                <div
+                  class="filter__item appear appear--duration--500"
+                  @click="setFilter(null)"
+                >
+                  <span class="filter__label" :class="getFilterClass(null)"
+                    >Все</span
+                  >
+                </div>
+                <div
+                  v-for="({ slug, title }, index) in filterTags"
+                  :key="slug"
+                  class="filter__item appear appear--duration--500"
+                  :class="'appear--delay-' + (index + 1) * 200"
+                  @click="setFilter(slug)"
+                >
+                  <span class="filter__label" :class="getFilterClass(slug)">{{
+                    title
+                  }}</span>
+                </div>
               </div>
-              <div
-                v-for="({ slug, title }, index) in filterTags"
-                :key="slug"
-                class="filter__item appear appear--duration--500"
-                :class="'appear--delay-' + (index + 1) * 200"
-                @click="setFilter(slug)"
-              >
-                <span class="filter__label" :class="getFilterClass(slug)">{{ title }}</span>
-              </div>
-            </div>
-          </appear>
+            </appear>
+          </template>
         </div>
       </div>
-      <div class="all-works__list">
-        <template v-if="!isWorksLoading">
+      <div
+        class="all-works__list"
+        :class="{ 'all-works__list--empty': works.length === 0 }"
+      >
+        <template v-if="isWorksReady">
           <work-list ref="workList" :works="works" />
         </template>
-        <div v-else class="row">
-          <div class="col col-xs-2 col-sm-3 col-md-2 col-lg-6 col-2xl-4">
-            <p class="dummy-title">
-              Кейсов по&nbsp;этому направлению пока&nbsp;нет
-            </p>
-          </div>
-        </div>
       </div>
       <div v-if="isLoadMoreVisible" class="row">
         <div class="col col-xs-12">
@@ -62,9 +77,9 @@ export default {
   },
   data() {
     return {
-      isFilterLoading: false,
+      isFilterReady: false,
       isFilterVisible: false,
-      isWorksLoading: false,
+      isWorksReady: false,
       client: null,
     };
   },
@@ -96,7 +111,9 @@ export default {
     currentFilterTitle() {
       const { tags, currentFilter } = this;
 
-      return tags && currentFilter ? tags.find((tag) => tag.slug === currentFilter).title : null;
+      return tags && currentFilter
+        ? tags.find((tag) => tag.slug === currentFilter).title
+        : null;
     },
     currentClient() {
       const clientQuery = this.$route.query.client;
@@ -106,13 +123,16 @@ export default {
   async created() {
     const { tags, works, currentFilter, currentClient } = this;
 
-    if (!tags) {
+    if (!tags && !currentClient) {
       this.fetchTags();
+    } else if (!currentClient) {
+      this.isFilterReady = true;
     }
-    if (!works.length) {
+
+    if (!works.length && !currentClient) {
       await this.fetchWorks();
     } else {
-      // this.animationStep = works.length;
+      this.isWorksReady = true;
     }
 
     if (currentFilter || currentClient) {
@@ -127,9 +147,6 @@ export default {
   },
   methods: {
     async fetchTags() {
-      // убрать подсветку загрузки
-      this.isFilterLoading = true;
-
       const { data } = await getCollectionByKey({
         key: 'tags',
       });
@@ -140,12 +157,10 @@ export default {
         collection: tagsArray,
       });
 
-      this.isFilterLoading = false;
+      this.isFilterReady = true;
     },
     async fetchWorks({ resetSkip } = { resetSkip: false }) {
       const { works, currentFilterTitle, currentClient } = this;
-
-      this.isWorksLoading = true;
 
       let filterSettings = { isPublished: true };
       if (currentFilterTitle) {
@@ -174,7 +189,7 @@ export default {
       this.$store.commit('setWorksContent', { data, reset: resetSkip });
       this.$store.commit('setWorksTotal', { total });
 
-      this.isWorksLoading = false;
+      this.isWorksReady = true;
     },
     async fetchClient() {
       const { currentClient } = this;
@@ -220,8 +235,19 @@ export default {
 @import '~@/styles/shared/_globals.scss';
 
 .all-works {
+  &__dummy-title {
+    font-weight: normal;
+    font-size: $--font-size-300;
+    letter-spacing: $--letter-spacing;
+    color: $--color-text;
+  }
+
   &__list {
     min-height: calc(100vh - #{$--header-height});
+
+    &--empty {
+      min-height: unset;
+    }
   }
 
   &__show-more {
@@ -256,7 +282,8 @@ export default {
   flex-flow: row wrap;
   padding-bottom: 12px;
   margin: 0 -12px;
-  height: $--font-size-90 * 1.3;
+  min-height: $--font-size-140 * 1.3;
+  box-sizing: border-box;
 
   @include from('lg') {
     flex-wrap: nowrap;
@@ -279,20 +306,6 @@ export default {
     &:hover {
       color: $--color-brand;
     }
-  }
-}
-
-.dummy-title {
-  margin: 0;
-
-  font-weight: normal;
-  font-size: 23px;
-  letter-spacing: $--letter-spacing;
-
-  margin-bottom: 62px;
-  @include from('md') {
-    margin-bottom: 104px;
-    font-size: 44px;
   }
 }
 </style>

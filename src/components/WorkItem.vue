@@ -1,13 +1,29 @@
 <template>
   <router-link :to="`/all-works/${work.slug}`" class="work">
     <div class="work__cover appear appear--up appear--duration-1000">
-      <!-- TODO если видео -->
-      <img :src="baseURL + work.cover.path" :alt="work.title" />
+      <video
+        class="work__cover-inner"
+        v-if="isVideoCover"
+        :src="baseURL + work.cover.path"
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        playsinline
+        preload="auto"
+      />
+      <img
+        class="work__cover-inner"
+        v-else
+        :src="baseURL + work.cover.path"
+        :alt="work.title"
+      />
     </div>
     <div class="appear appear--up appear--duration-1000 appear--delay-300">
       <h3 class="work__title">{{ work.title }}</h3>
     </div>
-    <p class="work__description appear appear--up appear--duration-1000 appear--delay-600">
+    <p
+      class="work__description appear appear--up appear--duration-1000 appear--delay-600"
+    >
       {{ glueUpPrepositions(work.prescription) }}
     </p>
   </router-link>
@@ -32,6 +48,18 @@ export default {
       baseURL,
     };
   },
+  computed: {
+    isVideoCover() {
+      const { cover } = this.work;
+      let isVideo = false;
+
+      if (cover.path.includes('.mp4')) {
+        isVideo = true;
+      }
+
+      return isVideo;
+    },
+  },
   methods: {
     glueUpPrepositions,
   },
@@ -50,13 +78,17 @@ export default {
 
   &__cover {
     overflow: hidden;
-    img {
-      max-width: 100%;
-      width: 100%;
-      line-height: 1;
-      display: block;
-      transition: transform $--duration-2000 $--timing-out-circ;
-    }
+  }
+  &__cover-inner {
+    max-width: 100%;
+    line-height: 1;
+    display: block;
+    transition: transform $--duration-2000 $--timing-out-circ;
+
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
   }
 
   &__title {
@@ -75,7 +107,7 @@ export default {
   }
 
   &:hover {
-    #{$block}__cover img {
+    #{$block}__cover #{$block}__cover-inner {
       transform: scale(1.1);
     }
     #{$block}__title {

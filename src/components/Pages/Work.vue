@@ -16,10 +16,14 @@
             v-if="isVideo(currentWork.header.path)"
             class="work-page__header work-page__header--video"
             :src="baseURL + currentWork.header.path"
+            autoplay="autoplay"
+            loop="loop"
+            muted="muted"
+            playsinline
+            preload="auto"
           />
         </div>
       </appear>
-
       <div class="container">
         <div class="row">
           <div class="col col-xs-2 col-md-4 col-xl-6">
@@ -48,6 +52,15 @@
               <div v-observe-visibility="trackVisibility(3)" class="appear appear--up appear--duration-1000">
                 <h2 class="work-page__subtitle">Задача</h2>
                 <div class="work-page__task" v-html="glueUpPrepositions(currentWork.task)" />
+                <div v-if="currentWork.instagram" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-200">
+                  <a :href="currentWork.instagram">Instagram</a>
+                </div>
+                <div v-if="currentWork.vkontakte" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-400">
+                  <a :href="currentWork.vkontakte">Vkontakte</a>
+                </div>
+                <div v-if="currentWork.facebook" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-600">
+                  <a :href="currentWork.facebook">Facebook</a>
+                </div>
               </div>
             </appear>
           </div>
@@ -74,19 +87,14 @@
               <div v-observe-visibility="tagsVisibiliryChanged" class="appear appear--up appear--duration-1000">
                 <div v-if="tags" class="work-page__servces">
                   <h2 class="work-page__subtitle">Услуга</h2>
-                  <router-link
-                    v-for="(tag, index) in currentWork.tags"
-                    :key="index"
-                    class="work-page__service"
-                    :to="{
-                      name: 'AllWorks',
-                      query: {
-                        filter: getFilterTag(tag),
-                      },
-                    }"
-                  >
-                    {{ tag }}
-                  </router-link>
+                  <span v-for="(tag, index) in currentWork.tags" :key="index" class="work-page__service">
+                    <router-link v-if="isTagInFilter(tag)" :to="getFilterLinkPath(tag)">
+                      {{ tag }}
+                    </router-link>
+                    <span v-else>
+                      {{ tag }}
+                    </span>
+                  </span>
                 </div>
               </div>
             </appear>
@@ -113,13 +121,18 @@
             <appear :is-visible="getVisibility(5 + currentWorkLayoutLength)" :on-next="showNext">
               <h2
                 v-observe-visibility="trackVisibility(5 + currentWorkLayoutLength)"
-                class="work-page__subtitle appear appear--up appear--duration-1000"
+                class="work-page__subtitle work-page__subtitle--team appear appear--up appear--duration-1000"
               >
                 Команда
               </h2>
             </appear>
           </div>
-          <div v-for="(position, index) in currentWork.credits" :key="index" class="col col-xs-1 col-md-1 col-xl-2">
+          <div
+            v-for="(position, index) in currentWork.credits"
+            :key="index"
+            class="col col-xs-1 col-md-1 col-xl-2"
+            :class="{ 'col-xl-offset-2': isFifthTeammate(index) }"
+          >
             <appear :is-visible="getVisibility(6 + currentWorkLayoutLength + index)" :on-next="showNext">
               <div
                 v-observe-visibility="trackVisibility(6 + currentWorkLayoutLength + index)"
@@ -315,11 +328,37 @@ export default {
           return Media;
       }
     },
-    getFilterTag(tagTitle) {
+    isTagInFilter(tagTitle) {
       const { tags } = this;
       const tag = tags.find((tag) => tag.title === tagTitle);
-      return tag ? tag.slug : '';
+      if (tag) {
+        return true;
+      }
+      return false;
     },
+    getFilterLinkPath(tagTitle) {
+      const { tags } = this;
+      const tag = tags.find((tag) => tag.title === tagTitle);
+      let path = {
+        name: 'AllWorks',
+      };
+
+      if (tag) {
+        path = {
+          ...path,
+          query: {
+            filter: tag.slug,
+          },
+        };
+      }
+
+      return path;
+    },
+    isFifthTeammate(index) {
+      const order = Number(index) % 5;
+      return order === 0 && index > 0;
+    },
+
     showNext() {
       this.animationCounter++;
     },
@@ -390,10 +429,10 @@ export default {
       margin-top: 1.7vmax;
     }
   }
-  &__subtitle {
-  }
+
   &__client,
   &__task,
+  &__social-link,
   &__client-about {
     font-size: $--font-size-80;
     line-height: 1.67;
@@ -401,19 +440,17 @@ export default {
     margin: 0;
     display: block;
   }
-  &__task {
-    margin-bottom: 1.25vmax;
-  }
   &__client {
     &:hover {
       color: $--color-brand;
     }
   }
-  &__client-about {
+  &__client-about,
+  &__task,
+  &__social-link:last-of-type {
     margin-bottom: 3.25vmax;
   }
-  &__subtitle {
-  }
+
   &__service {
     font-size: $--font-size-80;
     line-height: 1.67;
@@ -429,12 +466,28 @@ export default {
     &:hover {
       color: $--color-brand;
     }
+
+    a {
+      color: inherit;
+    }
+
+    span {
+      color: $--color-text--muted;
+    }
   }
   &__subtitle {
     font-weight: normal;
     font-size: $--font-size-120;
     margin: 0;
     margin-bottom: 0.65vmax;
+
+    &--team {
+      margin-bottom: 2vmax;
+
+      @include from('xl') {
+        margin-bottom: 0.65vmax;
+      }
+    }
   }
   &__position {
     font-size: $--font-size-80;
@@ -442,7 +495,11 @@ export default {
   }
   &__teammate {
     font-size: $--font-size-80;
-    margin: 0.65vmax 0 1.25vmax;
+    margin: 0.65vmax 0;
+
+    &:last-of-type {
+      margin-bottom: 2vmax;
+    }
   }
   &__next-work {
     font-size: $--font-size-100;
@@ -451,6 +508,14 @@ export default {
   }
   &__cross-link {
     overflow: hidden;
+  }
+  &__social-link {
+    a {
+      color: inherit;
+    }
+    &:hover {
+      color: $--color-brand;
+    }
   }
 }
 
