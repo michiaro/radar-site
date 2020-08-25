@@ -39,6 +39,15 @@
               class="work-page__task"
               v-html="glueUpPrepositions(currentWork.task)"
             />
+            <div v-if="currentWork.instagram" class="work-page__social-link">
+              <a :href="currentWork.instagram">Instagram</a>
+            </div>
+            <div v-if="currentWork.vkontakte" class="work-page__social-link">
+              <a :href="currentWork.vkontakte">Vkontakte</a>
+            </div>
+            <div v-if="currentWork.facebook" class="work-page__social-link">
+              <a :href="currentWork.facebook">Facebook</a>
+            </div>
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
             <h2 class="work-page__subtitle">Клиент</h2>
@@ -54,21 +63,23 @@
             <p class="work-page__client-about">
               {{ currentWork.clientAbout }}
             </p>
-            <div v-if="tags" class="work-page__servces">
+            <div v-if="tags" class="work-page__services">
               <h2 class="work-page__subtitle">Услуга</h2>
-              <router-link
+              <span
                 v-for="(tag, index) in currentWork.tags"
                 :key="index"
                 class="work-page__service"
-                :to="{
-                  name: 'AllWorks',
-                  query: {
-                    filter: getFilterTag(tag),
-                  },
-                }"
               >
-                {{ tag }}
-              </router-link>
+                <router-link
+                  v-if="isTagInFilter(tag)"
+                  :to="getFilterLinkPath(tag)"
+                >
+                  {{ tag }}
+                </router-link>
+                <span v-else>
+                  {{ tag }}
+                </span>
+              </span>
             </div>
           </div>
         </div>
@@ -248,9 +259,31 @@ export default {
           return Media;
       }
     },
-    getFilterTag(tagTitle) {
+    isTagInFilter(tagTitle) {
       const { tags } = this;
-      return tags.find((tag) => tag.title === tagTitle).slug;
+      const tag = tags.find((tag) => tag.title === tagTitle);
+      if (tag) {
+        return true;
+      }
+      return false;
+    },
+    getFilterLinkPath(tagTitle) {
+      const { tags } = this;
+      const tag = tags.find((tag) => tag.title === tagTitle);
+      let path = {
+        name: 'AllWorks',
+      };
+
+      if (tag) {
+        path = {
+          ...path,
+          query: {
+            filter: tag.slug,
+          },
+        };
+      }
+
+      return path;
     },
   },
 };
@@ -305,6 +338,7 @@ export default {
   }
   &__client,
   &__task,
+  &__social-link,
   &__client-about {
     font-size: $--font-size-80;
     line-height: 1.67;
@@ -312,15 +346,14 @@ export default {
     margin: 0;
     display: block;
   }
-  &__task {
-    margin-bottom: 1.25vmax;
-  }
   &__client {
     &:hover {
       color: $--color-brand;
     }
   }
-  &__client-about {
+  &__client-about,
+  &__task,
+  &__social-link:last-of-type {
     margin-bottom: 3.25vmax;
   }
   &__subtitle {
@@ -339,6 +372,14 @@ export default {
 
     &:hover {
       color: $--color-brand;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    span {
+      color: $--color-text--muted;
     }
   }
   &__subtitle {
@@ -361,6 +402,14 @@ export default {
     margin-top: 5.5vmax;
   }
   &__cross-link {
+  }
+  &__social-link {
+    a {
+      color: inherit;
+    }
+    &:hover {
+      color: $--color-brand;
+    }
   }
 }
 
