@@ -18,34 +18,23 @@
       <div class="main__bottom">
         <div class="main__services">
           Мы занимаемся
-          <router-link
-            class="main__link link"
-            :to="{ path: '/services', query: { direction: 'branding' } }"
-          >
-            брендингом </router-link
-          >, <br />
-          <router-link
-            class="main__link link"
-            :to="{ path: '/services', query: { direction: 'campaign' } }"
-          >
+          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
+            брендингом
+          </router-link>
+          ,
+          <br />
+          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
             дизайном
           </router-link>
           и
-          <router-link
-            class="main__link link"
-            :to="{ path: '/services', query: { direction: 'digital' } }"
-          >
+          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'digital' } }">
             рекламой
           </router-link>
         </div>
 
         <div class="main__social-media">
-          <a :href="common.instagram" class="social-link" target="_blank"
-            >INSTAGRAM</a
-          >
-          <a :href="common.facebook" class="social-link" target="_blank"
-            >FACEBOOK</a
-          >
+          <a :href="common.instagram" class="social-link" target="_blank">INSTAGRAM</a>
+          <a :href="common.facebook" class="social-link" target="_blank">FACEBOOK</a>
         </div>
       </div>
     </div>
@@ -124,10 +113,6 @@ export default {
     min-width: 100%;
     width: auto;
 
-    @include from('sm') {
-      height: auto;
-      width: 100%;
-    }
     @include from('md') {
       width: auto;
       min-width: 100%;

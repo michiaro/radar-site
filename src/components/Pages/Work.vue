@@ -1,70 +1,95 @@
 <template>
   <div v-if="currentWork" class="work-page">
     <div v-if="!isWorkLoading" class="work-page__inner">
-      <div class="work-page__header-wrapper">
-        <img
-          v-if="!isVideo(currentWork.header.path)"
-          class="work-page__header work-page__header--image"
-          :src="baseURL + currentWork.header.path"
-          :alt="currentWork.title"
-        />
-        <video
-          v-if="isVideo(currentWork.header.path)"
-          class="work-page__header work-page__header--video"
-          :src="baseURL + currentWork.header.path"
-        />
-      </div>
+      <appear :is-visible="getVisibility(0)" :on-next="showNext">
+        <div
+          v-observe-visibility="trackVisibility(0)"
+          class="work-page__header-wrapper appear appear--up appear--duration-2000"
+        >
+          <img
+            v-if="!isVideo(currentWork.header.path)"
+            class="work-page__header work-page__header--image"
+            :src="baseURL + currentWork.header.path"
+            :alt="currentWork.title"
+          />
+          <video
+            v-if="isVideo(currentWork.header.path)"
+            class="work-page__header work-page__header--video"
+            :src="baseURL + currentWork.header.path"
+          />
+        </div>
+      </appear>
 
       <div class="container">
         <div class="row">
           <div class="col col-xs-2 col-md-4 col-xl-6">
-            <h1 class="work-page__title">{{ currentWork.title }}</h1>
+            <appear :is-visible="getVisibility(1)" :on-next="showNext">
+              <h1
+                v-observe-visibility="trackVisibility(1)"
+                class="work-page__title appear appear--up appear--duration-1000"
+              >
+                {{ currentWork.title }}
+              </h1>
+            </appear>
           </div>
         </div>
         <div class="row">
           <div class="col col-xs-2 col-md-4 col-xl-6">
-            <div
-              class="work-page__about work-page__content"
-              v-html="glueUpPrepositions(currentWork.about)"
-            />
+            <appear :is-visible="getVisibility(2)" :on-next="showNext">
+              <div
+                v-observe-visibility="trackVisibility(2)"
+                class="work-page__about work-page__content appear appear--up appear--duration-1000"
+                v-html="glueUpPrepositions(currentWork.about)"
+              />
+            </appear>
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
-            <h2 class="work-page__subtitle">Задача</h2>
-            <div
-              class="work-page__task"
-              v-html="glueUpPrepositions(currentWork.task)"
-            />
+            <appear :is-visible="getVisibility(3)" :on-next="showNext">
+              <div v-observe-visibility="trackVisibility(3)" class="appear appear--up appear--duration-1000">
+                <h2 class="work-page__subtitle">Задача</h2>
+                <div class="work-page__task" v-html="glueUpPrepositions(currentWork.task)" />
+              </div>
+            </appear>
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
-            <h2 class="work-page__subtitle">Клиент</h2>
-            <router-link
-              :to="{
-                name: 'AllWorks',
-                query: { client: currentWork.client.slug },
-              }"
-              class="work-page__client"
-            >
-              {{ currentWork.client.title }} —
-            </router-link>
-            <p class="work-page__client-about">
-              {{ currentWork.clientAbout }}
-            </p>
-            <div v-if="tags" class="work-page__servces">
-              <h2 class="work-page__subtitle">Услуга</h2>
-              <router-link
-                v-for="(tag, index) in currentWork.tags"
-                :key="index"
-                class="work-page__service"
-                :to="{
-                  name: 'AllWorks',
-                  query: {
-                    filter: getFilterTag(tag),
-                  },
-                }"
-              >
-                {{ tag }}
-              </router-link>
-            </div>
+            <appear :is-visible="getVisibility(4)" :on-next="showNext">
+              <div v-observe-visibility="trackVisibility(4)" class="appear appear--up appear--duration-1000">
+                <h2 class="work-page__subtitle">Клиент</h2>
+                <router-link
+                  :to="{
+                    name: 'AllWorks',
+                    query: { client: currentWork.client.slug },
+                  }"
+                  class="work-page__client"
+                >
+                  {{ currentWork.client.title }} —
+                </router-link>
+                <p class="work-page__client-about">
+                  {{ currentWork.clientAbout }}
+                </p>
+              </div>
+            </appear>
+
+            <appear :is-visible="animationCounter >= 5 && isTagsVisible">
+              <div v-observe-visibility="tagsVisibiliryChanged" class="appear appear--up appear--duration-1000">
+                <div v-if="tags" class="work-page__servces">
+                  <h2 class="work-page__subtitle">Услуга</h2>
+                  <router-link
+                    v-for="(tag, index) in currentWork.tags"
+                    :key="index"
+                    class="work-page__service"
+                    :to="{
+                      name: 'AllWorks',
+                      query: {
+                        filter: getFilterTag(tag),
+                      },
+                    }"
+                  >
+                    {{ tag }}
+                  </router-link>
+                </div>
+              </div>
+            </appear>
           </div>
         </div>
 
@@ -75,77 +100,99 @@
             class="col col-xs-2"
             :class="{ 'col-md-2': item.component === 'Text' }"
           >
-            <component
-              :is="getLayoutComponent(item.component)"
-              :settings="item.settings"
-            />
+            <appear :is-visible="getVisibility(5 + index)" :on-next="showNext">
+              <div v-observe-visibility="trackVisibility(5 + index)" class="appear appear--up appear--duration-1000">
+                <component :is="getLayoutComponent(item.component)" :settings="item.settings" />
+              </div>
+            </appear>
           </div>
         </div>
 
         <div class="row">
           <div class="col col-xs-2 col-md-1 col-xl-2">
-            <h2 class="work-page__subtitle">
-              Команда
-            </h2>
+            <appear :is-visible="getVisibility(5 + currentWorkLayoutLength)" :on-next="showNext">
+              <h2
+                v-observe-visibility="trackVisibility(5 + currentWorkLayoutLength)"
+                class="work-page__subtitle appear appear--up appear--duration-1000"
+              >
+                Команда
+              </h2>
+            </appear>
           </div>
-          <div
-            v-for="(position, index) in currentWork.credits"
-            :key="index"
-            class="col col-xs-1 col-md-1 col-xl-2"
-          >
-            <div class="work-page__position">
-              {{ position.value.position }}
-            </div>
-            <div
-              v-for="(teammate, teammateIndex) in position.value.staff"
-              :key="teammateIndex"
-              class="work-page__teammate"
-            >
-              {{ teammate.display }}
-            </div>
+          <div v-for="(position, index) in currentWork.credits" :key="index" class="col col-xs-1 col-md-1 col-xl-2">
+            <appear :is-visible="getVisibility(6 + currentWorkLayoutLength + index)" :on-next="showNext">
+              <div
+                v-observe-visibility="trackVisibility(6 + currentWorkLayoutLength + index)"
+                class="appear appear--up appear--duration-2000"
+              >
+                <div class="work-page__position">
+                  {{ position.value.position }}
+                </div>
+                <div
+                  v-for="(teammate, teammateIndex) in position.value.staff"
+                  :key="teammateIndex"
+                  class="work-page__teammate"
+                >
+                  {{ teammate.display }}
+                </div>
+              </div>
+            </appear>
           </div>
         </div>
 
         <div class="row">
           <div class="col col-xs-2">
-            <h2 class="work-page__next-work">
-              Следующий проект
-            </h2>
+            <appear
+              :is-visible="getVisibility(6 + currentWorkLayoutLength + currentWorkCreditsLength)"
+              :on-next="showNext"
+            >
+              <div
+                v-observe-visibility="trackVisibility(6 + currentWorkLayoutLength + currentWorkCreditsLength)"
+                class="appear appear--up appear--duration-1000"
+              >
+                <h2 class="work-page__next-work">
+                  Следующий проект
+                </h2>
+              </div>
+            </appear>
           </div>
         </div>
       </div>
 
       <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
-        <router-link
-          v-if="!isNextWorkLoading"
-          :to="`/all-works/${nextWork.slug}`"
-          class="work-page__cross-link cross-link"
-        >
-          <div class="cross-link__wrapper">
-            <img
-              v-if="!isVideo(nextWork.header.path)"
-              class="cross-link__cover cross-link__cover--image"
-              :src="baseURL + nextWork.header.path"
-              :alt="nextWork.title"
-            />
-            <video
-              v-if="isVideo(nextWork.header.path)"
-              class="cross-link__cover cross-link__cover--video"
-              :src="baseURL + nextWork.header.path"
-            />
-          </div>
-          <div class="cross-link__content">
-            <div class="container">
-              <div class="row">
-                <div class="col col-xs-2">
-                  <div class="cross-link__title">
-                    {{ nextWork.title }}
+        <appear :is-visible="getVisibility(7 + currentWorkLayoutLength + currentWorkCreditsLength)" :on-next="showNext">
+          <div
+            v-observe-visibility="trackVisibility(7 + currentWorkLayoutLength + currentWorkCreditsLength)"
+            class="appear appear--up appear--duration-2000"
+          >
+            <router-link :to="`/all-works/${nextWork.slug}`" class="work-page__cross-link cross-link">
+              <div class="cross-link__wrapper">
+                <img
+                  v-if="!isVideo(nextWork.header.path)"
+                  class="cross-link__cover cross-link__cover--image"
+                  :src="baseURL + nextWork.header.path"
+                  :alt="nextWork.title"
+                />
+                <video
+                  v-if="isVideo(nextWork.header.path)"
+                  class="cross-link__cover cross-link__cover--video"
+                  :src="baseURL + nextWork.header.path"
+                />
+              </div>
+              <div class="cross-link__content">
+                <div class="container">
+                  <div class="row">
+                    <div class="col col-xs-2">
+                      <div class="cross-link__title">
+                        {{ nextWork.title }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </router-link>
           </div>
-        </router-link>
+        </appear>
       </div>
     </div>
   </div>
@@ -157,6 +204,7 @@ import { glueUpPrepositions, isVideo } from '@/utils/index.js';
 import TextContent from '@/components/work-components/TextContent.vue';
 import PictureArray from '@/components/work-components/PictureArray.vue';
 import Media from '@/components/work-components/Media.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'Work',
@@ -164,6 +212,7 @@ export default {
     TextContent,
     PictureArray,
     Media,
+    Appear,
   },
   data() {
     return {
@@ -173,11 +222,30 @@ export default {
       nextWork: null,
       baseURL,
       tags: null,
+      animationCounter: -1,
+      visibleElements: {},
+      isTagsVisible: false,
     };
   },
   computed: {
     workSlug() {
       return this.$route.params.slug;
+    },
+    currentWorkLayoutLength() {
+      if (this.currentWork) {
+        if (this.currentWork.layout) {
+          return this.currentWork.layout.length;
+        }
+      }
+      return 0;
+    },
+    currentWorkCreditsLength() {
+      if (this.currentWork) {
+        if (this.currentWork.credits) {
+          return this.currentWork.credits.length;
+        }
+      }
+      return 0;
     },
   },
   async created() {
@@ -211,6 +279,10 @@ export default {
       this.currentWork = data[0];
 
       this.isWorkLoading = false;
+      // запускаем анимацию
+      this.$nextTick(() => {
+        this.showNext();
+      });
     },
     async fetchNextWork() {
       const { currentWork } = this;
@@ -245,7 +317,29 @@ export default {
     },
     getFilterTag(tagTitle) {
       const { tags } = this;
-      return tags.find((tag) => tag.title === tagTitle).slug;
+      const tag = tags.find((tag) => tag.title === tagTitle);
+      return tag ? tag.slug : '';
+    },
+    showNext() {
+      this.animationCounter++;
+    },
+    trackVisibility(index) {
+      return (value) => {
+        if (value) {
+          // shallow copy для триггера реактивности
+          this.visibleElements = {
+            ...this.visibleElements,
+            [index]: true,
+          };
+        }
+      };
+    },
+    getVisibility(index) {
+      return this.visibleElements[index] === true && this.animationCounter >= index;
+    },
+    // теги может не быть, и они не должны влиять на флоу показа элементов
+    tagsVisibiliryChanged(isVisible) {
+      this.isTagsVisible = isVisible;
     },
   },
 };
@@ -356,6 +450,7 @@ export default {
     margin-top: 5.5vmax;
   }
   &__cross-link {
+    overflow: hidden;
   }
 }
 
