@@ -1,9 +1,18 @@
 <template>
-  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
+  <div
+    class="service-direction"
+    :class="{ 'service-direction--contrast': isClosed }"
+  >
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <appear :is-visible="animationCounter >= 3 + service.subdivisions.length" is-silent>
-          <button class="close-button close-button--cross appear appear--up" @click.stop="onClose">
+        <appear
+          :is-visible="animationCounter >= 3 + service.subdivisions.length"
+          is-silent
+        >
+          <button
+            class="close-button close-button--cross appear appear--up"
+            @click.stop="onClose"
+          >
             <div class="close-button__cross" />
           </button>
         </appear>
@@ -20,8 +29,13 @@
               </div>
             </transition>
           </div>
-          <div class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3">
-            <appear :is-visible="animationCounter >= 4 + service.subdivisions.length" is-silent>
+          <div
+            class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3"
+          >
+            <appear
+              :is-visible="animationCounter >= 4 + service.subdivisions.length"
+              is-silent
+            >
               <div class="service-direction__button appear appear--up">
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
@@ -32,7 +46,10 @@
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <appear :is-visible="animationCounter >= 1" :counter-key="serviceId">
+            <appear
+              :is-visible="animationCounter >= 1"
+              :counter-key="serviceId"
+            >
               <p class="service-direction__info appear appear--up">
                 {{ glueUpPrepositions(service.info) }}
               </p>
@@ -52,8 +69,13 @@
               </appear>
             </div>
           </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0">
-            <appear :is-visible="animationCounter >= 4 + service.subdivisions.length" is-silent>
+          <div
+            class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0"
+          >
+            <appear
+              :is-visible="animationCounter >= 4 + service.subdivisions.length"
+              is-silent
+            >
               <div class="service-direction__button appear appear--up">
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
@@ -63,7 +85,11 @@
           </div>
         </div>
         <div v-if="works" class="row">
-          <work-list :works="works" :counter-key="serviceId" :counter-modifier="service.subdivisions.length" />
+          <work-list
+            :works="works"
+            :counter-key="serviceId"
+            :counter-modifier="service.subdivisions.length"
+          />
         </div>
       </div>
     </simplebar>
@@ -144,20 +170,16 @@ export default {
           limit: 8,
           sort: { _o: 1 },
         },
+        filter: {
+          isOnServices: true,
+        },
       });
+
+      // TODO filter works by tag
 
       this.works = data;
       this.isWorksLoading = false;
     },
-    // startNext(index) {
-    //   if (this.state !== SERVICE_STATE.OPEN) {
-    //     this.animationStep = 0;
-    //   } else if (index !== undefined) {
-    //     this.animationStep = index;
-    //   } else {
-    //     this.animationStep++;
-    //   }
-    // },
     onClose() {
       this.$emit('close');
       this.$store.commit('resetAnimations', { counterKey: this.serviceId });
