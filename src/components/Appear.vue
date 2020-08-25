@@ -77,6 +77,12 @@ export default {
       transform: translate(0, 0);
     }
   }
+  &--left {
+    transform: translate(3vmax, 0);
+    @at-root ._ready & {
+      transform: translate(0, 0);
+    }
+  }
 
   &--duration-100 {
     transition-duration: $--duration-100;

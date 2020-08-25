@@ -1,57 +1,59 @@
 <template>
   <div class="agency">
     <div class="container">
-      <div v-if="aboutUs" class="row">
+      <div class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">
-          <h1 class="agency__title">
-            {{ aboutUs.title }}
-          </h1>
+          <appear :is-visible="animationCounter >= 0" :on-next="showNext">
+            <h1 class="agency__title appear appear--up">
+              {{ aboutUsData.title }}
+            </h1>
+          </appear>
         </div>
         <div class="col col-xs-2 col-sm-3 col-xl-6">
-          <div class="agency__description">
-            {{ aboutUs.description }}
-          </div>
+          <appear :is-visible="animationCounter >= 1" :on-next="showNext">
+            <div class="agency__description appear appear--up">
+              {{ aboutUsData.description }}
+            </div>
+          </appear>
         </div>
         <div class="col col-xs-2 col-lg-3 col-xl-3 col-xl-offset-3">
-          <div class="agency__logos">
-            <a
-              class="agency__logo"
-              :href="aboutUs.abkrLink"
-              target="_blank"
-            >
-              <img :src="baseURL + aboutUs.abkrLogo.path" alt="АБКР" />
-            </a>
-            <a
-              class="agency__logo"
-              :href="aboutUs.akarLink"
-              target="_blank"
-            >
-              <img :src="baseURL + aboutUs.akarLogo.path" alt="АКАР" />
-            </a>
-            <div class="agency__logo-description">
-              {{ aboutUs.logoDescription }}
+          <appear :is-visible="animationCounter >= 2" :on-next="showNext">
+            <div class="agency__logos">
+              <a
+                class="agency__logo appear appear--left"
+                :href="aboutUsData.abkrLink"
+                target="_blank"
+              >
+                <img :src="baseURL + aboutUsData.abkrLogo.path" alt="АБКР" />
+              </a>
+              <a
+                class="agency__logo appear appear--left appear--delay-400"
+                :href="aboutUsData.akarLink"
+                target="_blank"
+              >
+                <img :src="baseURL + aboutUsData.akarLogo.path" alt="АКАР" />
+              </a>
+              <div
+                class="agency__logo-description appear appear--up appear--delay-600"
+              >
+                {{ aboutUsData.logoDescription }}
+              </div>
             </div>
-          </div>
+          </appear>
         </div>
       </div>
 
-      <div class="row">
-        <template v-if="isLoading">
-          <div
-            v-for="i in 12"
-            :key="i"
-            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
-          >
-            <div class="teammate teammate--dummy loading" />
-          </div>
-        </template>
-        <template v-else-if="team.length !== 0">
-          <div
-            v-for="teammate in team"
-            :key="teammate.slug"
-            class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
-          >
-            <div class="teammate">
+      <div v-if="team.length > 0" class="row">
+        <div
+          v-for="(teammate, index) in team"
+          :key="teammate.slug"
+          class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3"
+        >
+          <appear :on-next="showNext" :is-visible="getVisibility(index)">
+            <div
+              v-observe-visibility="trackVisibility(index)"
+              class="teammate appear appear--up appear--delay-200"
+            >
               <img
                 :src="baseURL + teammate.photo.path"
                 :alt="teammate.name"
@@ -67,10 +69,15 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+          </appear>
+        </div>
+        <div class="col col-xs-2 col-sm-2 col-lg-1 col-xl-3">
+          <appear
+            :on-next="showNext"
+            :is-visible="animationCounter > team.length + 2"
+          >
             <a
-              class="agency__join-us join-us"
+              class="agency__join-us join-us appear appear--up"
               href="https://chelyabinsk.hh.ru/employer/1156087"
               target="_blank"
             >
@@ -82,10 +89,7 @@
                 нашей команды&nbsp;→
               </div>
             </a>
-          </div>
-        </template>
-        <div v-else class="col col-xs-2">
-          Нет данных!
+          </appear>
         </div>
       </div>
     </div>
@@ -99,30 +103,59 @@
 <script>
 import { baseURL, getCollectionByKey } from '@/api/index.js';
 import PageFooter from '@/components/PageFooter.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'Agency',
   components: {
     PageFooter,
+    Appear,
   },
   data() {
     return {
-      isLoading: true,
       team: [],
       baseURL,
+      animationCounter: -1,
+      visibleTeam: {},
+      isStaticDataReady: false,
     };
   },
   computed: {
     aboutUs() {
       return this.$store.state.staticData.singletones.aboutUs;
     },
+    aboutUsData() {
+      const dummyData = {
+        title: '',
+        description: '',
+        abkrLink: '',
+        abkrLogo: { path: '' },
+        akarLink: '',
+        akarLogo: { path: '' },
+        logoDescription: '',
+      };
+      return this.aboutUs || dummyData;
+    },
   },
   created() {
     this.fetchTeam();
   },
+  mounted() {
+    this.$nextTick(() => {
+      if (!this.aboutUs) {
+        const unwatchAboutUs = this.$watch('aboutUs', function(next) {
+          if (next) {
+            this.showNext();
+            unwatchAboutUs();
+          }
+        });
+      } else {
+        this.showNext();
+      }
+    });
+  },
   methods: {
     async fetchTeam() {
-      this.isLoading = true;
       const { data } = await getCollectionByKey({
         key: 'team',
         filter: { inTeam: true },
@@ -131,7 +164,25 @@ export default {
         },
       });
       this.team = data;
-      this.isLoading = false;
+    },
+    showNext() {
+      this.animationCounter++;
+    },
+    trackVisibility(index) {
+      return (value) => {
+        if (value) {
+          // shallow copy для триггера реактивности
+          this.visibleTeam = {
+            ...this.visibleTeam,
+            [index]: true,
+          };
+        }
+      };
+    },
+    getVisibility(index) {
+      return (
+        this.visibleTeam[index] === true && this.animationCounter >= index + 3
+      );
     },
   },
 };
@@ -180,6 +231,8 @@ export default {
     margin-bottom: 52px;
   }
   &__logo {
+    display: inline-block;
+
     & + & {
       margin-left: 26px;
     }
