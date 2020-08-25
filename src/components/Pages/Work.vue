@@ -12,6 +12,11 @@
           v-if="isVideo(currentWork.header.path)"
           class="work-page__header work-page__header--video"
           :src="baseURL + currentWork.header.path"
+          autoplay="autoplay"
+          loop="loop"
+          muted="muted"
+          playsinline
+          preload="auto"
         />
       </div>
 
