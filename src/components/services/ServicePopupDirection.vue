@@ -327,7 +327,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background-color: $--color-brand;
+      background-color: $--color-gray-800;
     }
 
     #{$service-direction}__description {
