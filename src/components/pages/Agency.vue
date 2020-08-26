@@ -4,14 +4,14 @@
       <div class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">
           <appear :is-visible="animationCounter >= 0" :on-next="showNext">
-            <h1 class="agency__title appear appear--up">
+            <h1 class="agency__title appear appear--duration-1000 appear--up">
               {{ aboutUsData.title }}
             </h1>
           </appear>
         </div>
         <div class="col col-xs-2 col-sm-3 col-xl-6">
           <appear :is-visible="animationCounter >= 1" :on-next="showNext">
-            <div class="agency__description appear appear--up">
+            <div class="agency__description appear appear--duration-1000 appear--up">
               {{ aboutUsData.description }}
             </div>
           </appear>
@@ -20,21 +20,21 @@
           <appear :is-visible="animationCounter >= 2" :on-next="showNext">
             <div class="agency__logos">
               <a
-                class="agency__logo appear appear--left"
+                class="agency__logo appear appear--duration-1000 appear--left"
                 :href="aboutUsData.abkrLink"
                 target="_blank"
               >
                 <img :src="baseURL + aboutUsData.abkrLogo.path" alt="АБКР" />
               </a>
               <a
-                class="agency__logo appear appear--left appear--delay-400"
+                class="agency__logo appear appear--duration-1000 appear--left appear--delay-400"
                 :href="aboutUsData.akarLink"
                 target="_blank"
               >
                 <img :src="baseURL + aboutUsData.akarLogo.path" alt="АКАР" />
               </a>
               <div
-                class="agency__logo-description appear appear--up appear--delay-600"
+                class="agency__logo-description appear appear--duration-1000 appear--up appear--delay-600"
               >
                 {{ aboutUsData.logoDescription }}
               </div>
@@ -52,7 +52,7 @@
           <appear :on-next="showNext" :is-visible="getVisibility(index)">
             <div
               v-observe-visibility="trackVisibility(index)"
-              class="teammate appear appear--up appear--delay-200"
+              class="teammate appear appear--duration-1000 appear--up appear--delay-200"
             >
               <img
                 :src="baseURL + teammate.photo.path"

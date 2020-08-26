@@ -3,36 +3,83 @@
     class="header__navigation navigation"
     :class="{ 'navigation--contrast': isMainPage }"
   >
-    <router-link
-      class="navigation__link"
-      :to="{name: 'AllWorks'}"
-      @click.native="onClick"
-    >
-      работы
-    </router-link>
-    <router-link class="navigation__link" :to="{name: 'Services'}" @click.native="onClick">
-      услуги
-    </router-link>
-    <router-link class="navigation__link" :to="{name: 'Agency'}" @click.native="onClick">
-      агентство
-    </router-link>
-    <router-link class="navigation__link" :to="{name: 'Contacts'}" @click.native="onClick">
-      контакты
-    </router-link>
+    <appear :is-visible="animationCounter >= 0" :on-next="showNext">
+      <div class="navigation__link-wrapper appear appear--duration-500">
+        <router-link
+          class="navigation__link"
+          :to="{ name: 'AllWorks' }"
+          @click.native="onClick"
+        >
+          работы
+        </router-link>
+      </div>
+    </appear>
+    <appear :is-visible="animationCounter >= 1" :on-next="showNext">
+      <div class="navigation__link-wrapper appear appear--duration-500">
+        <router-link
+          class="navigation__link"
+          :to="{ name: 'Services' }"
+          @click.native="onClick"
+        >
+          услуги
+        </router-link>
+      </div>
+    </appear>
+    <appear :is-visible="animationCounter >= 2" :on-next="showNext">
+      <div class="navigation__link-wrapper appear appear--duration-500">
+        <router-link
+          class="navigation__link"
+          :to="{ name: 'Agency' }"
+          @click.native="onClick"
+        >
+          агентство
+        </router-link>
+      </div>
+    </appear>
+    <appear :is-visible="animationCounter >= 3" :on-next="showNext">
+      <div class="navigation__link-wrapper appear appear--duration-500">
+        <router-link
+          class="navigation__link"
+          :to="{ name: 'Contacts' }"
+          @click.native="onClick"
+        >
+          контакты
+        </router-link>
+      </div>
+    </appear>
   </nav>
 </template>
 
 <script>
+import Appear from '@/components/Appear.vue';
+
 export default {
   name: 'Navigation',
+  components: { Appear },
+  data() {
+    return {
+      animationCounter: -1,
+    };
+  },
   computed: {
     isMainPage() {
       return this.$route.path === '/';
     },
   },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        // меню появляется после лого
+        this.showNext();
+      }, 500);
+    });
+  },
   methods: {
     onClick() {
       this.$emit('close-menu');
+    },
+    showNext() {
+      this.animationCounter++;
     },
   },
 };

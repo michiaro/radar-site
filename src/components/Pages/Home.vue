@@ -1,40 +1,67 @@
 <template>
   <div class="main">
-    <img class="main__image" :src="backgroundImage" alt="Radar advertising" />
-    <video
-      class="main__video main__video--desktop"
-      autoplay="autoplay"
-      loop="loop"
-      muted="muted"
-      playsinline
-      preload="auto"
-    >
-      <source :src="backgroundVideo" type="video/mp4" />
-    </video>
+    <appear :is-visible="animationCounter >= 0" is-silent :on-next="showNext">
+      <img class="main__image appear appear--duration-1500" :src="backgroundImage" alt="Radar advertising" />
+      <video
+        class="main__video main__video--desktop appear appear--duration-1500"
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        playsinline
+        preload="auto"
+      >
+        <source :src="backgroundVideo" type="video/mp4" />
+      </video>
+    </appear>
     <div class="main__content">
-      <h1 class="main__title">
-        {{ text }}
-      </h1>
+      <appear :is-visible="isTitleVisible" :on-next="showNext" :delay="400">
+        <h1 class="main__title appear appear--up appear--duration-1000">
+          {{ text }}
+        </h1>
+      </appear>
       <div class="main__bottom">
-        <div class="main__services">
-          Мы занимаемся
-          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
-            брендингом
-          </router-link>
-          ,
-          <br />
-          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
-            дизайном
-          </router-link>
-          и
-          <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'digital' } }">
-            рекламой
-          </router-link>
-        </div>
+        <appear :is-visible="animationCounter >= 1" :on-next="showNext">
+          <div class="main__services appear appear--left appear--duration-1500">
+            Мы занимаемся
+            <router-link
+              class="main__link link"
+              :to="{ path: '/services', query: { direction: 'branding' } }"
+            >
+              брендингом
+            </router-link>
+            ,
+            <br />
+            <router-link
+              class="main__link link"
+              :to="{ path: '/services', query: { direction: 'campaign' } }"
+            >
+              дизайном
+            </router-link>
+            и
+            <router-link
+              class="main__link link"
+              :to="{ path: '/services', query: { direction: 'digital' } }"
+            >
+              рекламой
+            </router-link>
+          </div>
+        </appear>
 
         <div class="main__social-media">
-          <a :href="common.instagram" class="social-link" target="_blank">INSTAGRAM</a>
-          <a :href="common.facebook" class="social-link" target="_blank">FACEBOOK</a>
+          <a :href="common.instagram" class="social-link" target="_blank">
+            <appear :is-visible="animationCounter >= 3" :on-next="showNext">
+              <span class="appear appear--right appear--duration-500 appear--duration-1000">
+                INSTAGRAM
+              </span>
+            </appear>
+          </a>
+          <a :href="common.facebook" class="social-link" target="_blank">
+            <appear :is-visible="animationCounter >= 2" :on-next="showNext">
+              <span class="appear appear--right appear--duration-500 appear--duration-1000">
+                FACEBOOK
+              </span>
+            </appear>
+          </a>
         </div>
       </div>
     </div>
@@ -48,12 +75,17 @@ import backgroundImage from '@/images/main-back.jpg';
 import backgroundImageMobile from '@/images/main-back-mobile.jpg';
 
 import { getSingletonByKey } from '@/api/index.js';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'Home',
+  components: {
+    Appear,
+  },
   data() {
     return {
       text: '',
+      animationCounter: -1,
     };
   },
   computed: {
@@ -72,14 +104,29 @@ export default {
     isTablet() {
       return this.$store.state.page.isTablet;
     },
+    isTitleVisible() {
+      const { text, animationCounter } = this;
+      if (text.length > 0) {
+        return animationCounter >= 0;
+      }
+      return false;
+    },
   },
   created() {
     this.getWelcomeText();
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.showNext();
+    });
   },
   methods: {
     async getWelcomeText() {
       const { content } = await getSingletonByKey('welcomeText');
       this.text = content;
+    },
+    showNext() {
+      this.animationCounter++;
     },
   },
 };
@@ -112,6 +159,7 @@ export default {
 
     min-width: 100%;
     width: auto;
+    background: white;
 
     @include from('md') {
       width: auto;
@@ -191,6 +239,11 @@ export default {
   transition-property: color;
   transition-duration: $--duration-100;
   transition-timing-function: $--timing-in-out-cubic;
+  display: inline-block;
+
+  span {
+    display: block;
+  }
 
   & + & {
     margin-left: 54px;

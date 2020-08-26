@@ -22,7 +22,11 @@
         </div>
       </div>
     </div>
-    <logo @click.native="closeMenu" />
+    <appear :is-visible="animationCounter >= 0">
+      <div class="appear appear--duration-500">
+        <logo @click.native="closeMenu" />
+      </div>
+    </appear>
     <button
       v-if="isMobile"
       class="header__burger hamburger hamburger--slider"
@@ -41,12 +45,19 @@
 <script>
 import Logo from '@/components/Logo.vue';
 import Navigation from '@/components/Navigation.vue';
+import Appear from '@/components/Appear.vue';
 
 export default {
   name: 'PageHeader',
   components: {
     Logo,
     Navigation,
+    Appear,
+  },
+  data() {
+    return {
+      animationCounter: -1,
+    };
   },
   computed: {
     isMainPage() {
@@ -59,12 +70,22 @@ export default {
       return this.$store.state.page.isMenuOpen;
     },
   },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.showNext();
+      }, 500);
+    });
+  },
   methods: {
     toggleMenu() {
       this.$store.commit('setMenuOpen', { isMenuOpen: !this.isMenuOpen });
     },
     closeMenu() {
       this.$store.commit('setMenuOpen', { isMenuOpen: false });
+    },
+    showNext() {
+      this.animationCounter++;
     },
   },
 };
@@ -94,5 +115,4 @@ export default {
     background: none;
   }
 }
-
 </style>
