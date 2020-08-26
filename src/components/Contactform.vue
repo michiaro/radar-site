@@ -13,7 +13,7 @@
         <div class="col col-xs-2 col-sm-2 col-lg-6">
           <div class="form__field">
             <input
-              v-model="formData.name"
+              v-model="formData.name.value"
               type="text"
               class="form__input"
               placeholder="Ваше имя"
@@ -23,7 +23,7 @@
         <div class="col col-xs-2 col-sm-2 col-lg-6">
           <div class="form__field">
             <input
-              v-model="formData.contact"
+              v-model="formData.contact.value"
               type="text"
               class="form__input"
               placeholder="E-mail или телефон"
@@ -33,7 +33,7 @@
         <div class="col col-xs-2 col-sm-4 col-lg-12">
           <div class="form__field">
             <textarea
-              v-model="formData.message"
+              v-model="formData.message.value"
               type="text"
               class="form__input form__input--textarea"
               placeholder="Сообщение"
@@ -73,6 +73,21 @@
 <script>
 import { sendForm } from '@/api/index';
 
+const emptyFormData = {
+  name: {
+    value: '',
+    label: 'Имя',
+  },
+  contact: {
+    value: '',
+    label: 'Телефон или email',
+  },
+  message: {
+    value: '',
+    label: 'Сообщение',
+  },
+};
+
 export default {
   name: 'ContactForm',
   props: {
@@ -85,11 +100,7 @@ export default {
     return {
       isFormSent: false,
       isSuccess: false,
-      formData: {
-        name: '',
-        contact: '',
-        message: '',
-      },
+      formData: emptyFormData,
     };
   },
   computed: {
@@ -123,11 +134,7 @@ export default {
 
       if (result === 1) {
         this.isSuccess = true;
-        this.formData = {
-          name: '',
-          contact: '',
-          message: '',
-        };
+        this.formData = emptyFormData;
 
         if (yaCounter1653081) {
           yaCounter1653081.reachGoal('order-submit');
