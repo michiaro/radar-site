@@ -21,7 +21,7 @@
               </div>
             </transition>
             <appear :is-visible="animationCounter >= 1" :counter-key="serviceId">
-              <div class="service-direction__description appear appear--up">
+              <div class="service-direction__description appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
                 {{ glueUpPrepositions(service.description) }}
               </div>
             </appear>
