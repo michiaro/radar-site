@@ -165,7 +165,7 @@ export default {
       if (currentFilterTitle) {
         filterSettings = {
           ...filterSettings,
-          tagsNewField: { $has: currentFilterTitle },
+          tags: { $has: currentFilterTitle },
         };
       }
       if (currentClient) {

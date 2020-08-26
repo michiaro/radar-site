@@ -64,20 +64,15 @@ export default {
   data() {
     return {
       activeServiceId: null,
-      animationCounter: -1,
       titleVisibility: false,
     };
   },
   computed: {
     services() {
-      return this.$store.state.services.content || null;
+      return this.$store.state.services.content || [];
     },
     pillars() {
-      return this.$store.state.services.pillars || null;
-    },
-    isTitleVisible() {
-      const { services, titleVisibility, animationCounter } = this;
-      return titleVisibility && animationCounter >= services.length;
+      return this.$store.state.services.pillars || [];
     },
   },
   async created() {
@@ -87,16 +82,14 @@ export default {
       this.setActiveServiceId(activeServiceId);
     }
 
-    const { services, pillars } = this;
+    const { pillars, services } = this;
+
     if (!services.length) {
-      await this.fetchServices();
-      this.showNext();
+      this.fetchServices();
     }
-    // } else {
-    //   this.animationCounter = services.length;
-    // }
+
     if (!pillars.length) {
-      this.fetchPillars();
+      await this.fetchPillars();
     }
   },
   methods: {
@@ -148,17 +141,6 @@ export default {
         }
         this.setActiveServiceId(serviceId);
         this.$router.push(newPath);
-      }
-    },
-    showNext() {
-      this.animationCounter++;
-      console.log(this.animationCounter >= this.services.length);
-    },
-    titleVisibilityChanged(isVisible) {
-      console.log(isVisible, 'title');
-
-      if (isVisible) {
-        this.titleVisibility = isVisible;
       }
     },
   },

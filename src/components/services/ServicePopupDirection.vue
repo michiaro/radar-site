@@ -155,14 +155,35 @@ export default {
     animationCounter() {
       return this.$store.state.page.animationCounter[this.serviceId];
     },
+    tags() {
+      return this.$store.state.staticData.collections.tags || [];
+    },
+    currentTagTitle() {
+      const { tags, serviceId } = this;
+      const currentTag = tags
+        ? tags.find((tag) => tag.slug === serviceId)
+        : null;
+      return currentTag ? currentTag.title : null;
+    },
   },
-  created() {
+  async created() {
+    const { tags } = this;
+
+    if (!tags.length) {
+      await this.fetchTags();
+    }
     this.fetchWorks();
   },
   methods: {
     glueUpPrepositions,
     async fetchWorks() {
       this.isWorksLoading = true;
+      const { currentTagTitle } = this;
+
+      let filter = { isOnServices: true };
+      if (currentTagTitle) {
+        filter = { ...filter, tags: { $has: currentTagTitle } };
+      }
 
       const { data } = await getCollectionByKey({
         key: 'works',
@@ -170,15 +191,22 @@ export default {
           limit: 8,
           sort: { _o: 1 },
         },
-        filter: {
-          isOnServices: true,
-        },
+        filter,
       });
-
-      // TODO filter works by tag
 
       this.works = data;
       this.isWorksLoading = false;
+    },
+    async fetchTags() {
+      const { data } = await getCollectionByKey({
+        key: 'tags',
+      });
+      const tagsArray = data;
+
+      this.$store.commit('setStaticCollectionData', {
+        title: 'tags',
+        collection: tagsArray,
+      });
     },
     onClose() {
       this.$emit('close');
