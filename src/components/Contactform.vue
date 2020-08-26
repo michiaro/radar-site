@@ -1,70 +1,78 @@
 <template>
-  <form
-    class="form"
-    :class="{ 'form--contrast': contrast }"
-    @submit.prevent="onSubmit"
-  >
-    <h2 class="contact-form__title form__title">
-      Обсудить задачу
+  <div class="form">
+    <form
+      v-if="!isFormSent"
+      class="form__form"
+      :class="{ 'form--contrast': contrast }"
+      @submit.prevent="onSubmit"
+    >
+      <h2 class="contact-form__title form__title">
+        Обсудить задачу
+      </h2>
+      <div class="row">
+        <div class="col col-xs-2 col-sm-2 col-lg-6">
+          <div class="form__field">
+            <input
+              v-model="formData.name"
+              type="text"
+              class="form__input"
+              placeholder="Ваше имя"
+            />
+          </div>
+        </div>
+        <div class="col col-xs-2 col-sm-2 col-lg-6">
+          <div class="form__field">
+            <input
+              v-model="formData.contact"
+              type="text"
+              class="form__input"
+              placeholder="E-mail или телефон"
+            />
+          </div>
+        </div>
+        <div class="col col-xs-2 col-sm-4 col-lg-12">
+          <div class="form__field">
+            <textarea
+              v-model="formData.message"
+              type="text"
+              class="form__input form__input--textarea"
+              placeholder="Сообщение"
+              rows="8"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row row-md-middle">
+        <div class="col col-xs-2 col-sm-2 col-lg-6">
+          <div class="form__field form__terms">
+            Заполняя форму, вы даете согласие на&nbsp;обработку
+            <router-link to="/policy" class="form__link">
+              персональных данных
+            </router-link>
+          </div>
+        </div>
+        <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
+          <div class="form__field">
+            <button
+              class="button"
+              :class="{ 'button--contrast': contrast }"
+              type="submit"
+            >
+              Отправить
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <h2 v-else class="form__result contact-form__title form__title">
+      {{ result }}
     </h2>
-    <div class="row">
-      <div class="col col-xs-2 col-sm-2 col-lg-6">
-        <div class="form__field">
-          <input
-            v-model="formData.name"
-            type="text"
-            class="form__input"
-            placeholder="Ваше имя"
-          />
-        </div>
-      </div>
-      <div class="col col-xs-2 col-sm-2 col-lg-6">
-        <div class="form__field">
-          <input
-            v-model="formData.contact"
-            type="text"
-            class="form__input"
-            placeholder="E-mail или телефон"
-          />
-        </div>
-      </div>
-      <div class="col col-xs-2 col-sm-4 col-lg-12">
-        <div class="form__field">
-          <textarea
-            v-model="formData.message"
-            type="text"
-            class="form__input form__input--textarea"
-            placeholder="Сообщение"
-            rows="8"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row row-md-middle">
-      <div class="col col-xs-2 col-sm-2 col-lg-6">
-        <div class="form__field form__terms">
-          Заполняя форму, вы даете согласие на&nbsp;обработку
-          <router-link to="/policy" class="form__link">
-            персональных данных
-          </router-link>
-        </div>
-      </div>
-      <div class="col col-xs-2 col-sm-2 col-sm-last col-lg-6">
-        <div class="form__field">
-          <button
-            class="button"
-            :class="{ 'button--contrast': contrast }"
-            type="submit"
-          >
-            Отправить
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
+import { sendForm } from '@/api/index';
+
 export default {
   name: 'ContactForm',
   props: {
@@ -76,6 +84,7 @@ export default {
   data() {
     return {
       isFormSent: false,
+      isSuccess: false,
       formData: {
         name: '',
         contact: '',
@@ -83,17 +92,54 @@ export default {
       },
     };
   },
-  methods: {
-    onSubmit() {
-      console.log('submit');
+  computed: {
+    formErrorMessage() {
+      const common = this.$store.state.staticData.singletones.common;
+      return common ? common.formErrorMessage : '';
     },
-    // при успешной отправке формы отправляем событие в метрику,
-    //     if (yaCounter1653081) {
-    //       yaCounter1653081.reachGoal('order-submit');
-    //       return true;
-    //     }
-    //   });
-    // },
+    formSuccessMessage() {
+      const common = this.$store.state.staticData.singletones.common;
+      return common ? common.formSuccessMessage : '';
+    },
+    result() {
+      const {
+        isFormSent,
+        isSuccess,
+        formErrorMessage,
+        formSuccessMessage,
+      } = this;
+
+      if (isFormSent) {
+        return isSuccess ? formSuccessMessage : formErrorMessage;
+      }
+      return '';
+    },
+  },
+  methods: {
+    async onSubmit() {
+      const { formData } = this;
+      const result = await sendForm(formData);
+      this.isFormSent = true;
+
+      if (result === 1) {
+        this.isSuccess = true;
+        this.formData = {
+          name: '',
+          contact: '',
+          message: '',
+        };
+
+        if (yaCounter1653081) {
+          yaCounter1653081.reachGoal('order-submit');
+          return true;
+        }
+      }
+
+      setTimeout(() => {
+        this.isFormSent = false;
+        this.isSuccess = false;
+      }, 4000);
+    },
   },
 };
 </script>

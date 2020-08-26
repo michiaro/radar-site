@@ -32,7 +32,7 @@ async function getSingletonByKey(key) {
 async function sendForm(form) {
   const { data } = await apiClient({
     method: 'post',
-    url: '/order.php',
+    url: '/process.php',
     data: form,
   });
   return data;

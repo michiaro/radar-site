@@ -95,6 +95,8 @@ export default {
   @include from('xl') {
     height: auto;
     margin-bottom: 0;
+    // чтобы экран не прыгал при загрузке страницы
+    min-height: 50vh;
   }
 
   &__content {
