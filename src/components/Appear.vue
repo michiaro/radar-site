@@ -84,6 +84,9 @@ export default {
     }
   }
 
+  &--duration-0 {
+    transition-duration: $--duration-0;
+  }
   &--duration-100 {
     transition-duration: $--duration-100;
   }

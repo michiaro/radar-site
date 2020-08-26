@@ -2,22 +2,18 @@
   <div v-if="services.length" class="services-page">
     <div class="container">
       <div class="row">
-        <div
-          v-for="service in services"
-          :key="service.serviceId"
-          class="col col-xs-2 col-xl-4"
-        >
+        <div v-for="service in services" :key="service.serviceId" class="col col-xs-2 col-xl-4">
           <service-page-direction
-            v-bind="service"
+            :service-id="service.serviceId"
+            :video="service.video"
+            :title="service.title"
+            :description="service.description"
+            :is-open="service.serviceId === activeServiceId"
             @setService="handleClickOnService"
           />
         </div>
       </div>
-      <services-popup
-        :services="services"
-        :active-service-id="activeServiceId"
-        @setService="handleClickOnService"
-      />
+      <services-popup :services="services" :active-service-id="activeServiceId" @setService="handleClickOnService" />
     </div>
 
     <div class="pillars">
@@ -25,19 +21,13 @@
         <div class="row">
           <div class="col col-xs-2 col-lg-3 col-xl-8">
             <h1 class="pillars__title">
-              Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
-              базируется на&nbsp;четырех ключевых опорах:
+              Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход базируется на&nbsp;четырех ключевых опорах:
             </h1>
           </div>
         </div>
       </div>
 
-      <pillar
-        v-for="(pillar, index) in pillars"
-        :key="index"
-        :pillar="pillar"
-        :number="index + 1"
-      />
+      <pillar v-for="(pillar, index) in pillars" :key="index" :pillar="pillar" :number="index + 1" />
     </div>
 
     <page-footer is-clients />

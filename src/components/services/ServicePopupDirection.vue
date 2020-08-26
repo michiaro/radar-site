@@ -1,16 +1,11 @@
 <template>
-  <div
-    class="service-direction"
-    :class="{ 'service-direction--contrast': isClosed }"
-  >
+  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <appear
-          :is-visible="animationCounter >= 3 + service.subdivisions.length"
-          is-silent
-        >
+        <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
           <button
             class="close-button close-button--cross appear appear--up"
+            :class="{ 'appear--duration-0': !isOpen, 'appear--delay-500': isOpen }"
             @click.stop="onClose"
           >
             <div class="close-button__cross" />
@@ -23,20 +18,20 @@
                 <h2 class="service-direction__title">
                   {{ service.title }}
                 </h2>
-                <div class="service-direction__description">
-                  {{ glueUpPrepositions(service.description) }}
-                </div>
               </div>
             </transition>
+            <appear :is-visible="animationCounter >= 1" :counter-key="serviceId">
+              <div class="service-direction__description appear appear--up">
+                {{ glueUpPrepositions(service.description) }}
+              </div>
+            </appear>
           </div>
-          <div
-            class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3"
-          >
-            <appear
-              :is-visible="animationCounter >= 4 + service.subdivisions.length"
-              is-silent
-            >
-              <div class="service-direction__button appear appear--up">
+          <div class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3">
+            <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
+              <div
+                class="service-direction__button appear appear--up"
+                :class="{ 'appear--duration-0': !isOpen, 'appear--delay-1000': isOpen }"
+              >
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
                 </button>
@@ -46,11 +41,8 @@
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <appear
-              :is-visible="animationCounter >= 1"
-              :counter-key="serviceId"
-            >
-              <p class="service-direction__info appear appear--up">
+            <appear :is-visible="animationCounter >= 2" :counter-key="serviceId">
+              <p class="service-direction__info appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
                 {{ glueUpPrepositions(service.info) }}
               </p>
             </appear>
@@ -60,23 +52,21 @@
               <appear
                 v-for="(subdivision, index) in service.subdivisions"
                 :key="index"
-                :is-visible="animationCounter >= 2 + index"
+                :is-visible="animationCounter >= 3 + index"
                 :counter-key="serviceId"
               >
-                <p class="service-direction__subdirection appear appear--up">
+                <p class="service-direction__subdirection appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
                   {{ glueUpPrepositions(subdivision.value.subdivision) }}
                 </p>
               </appear>
             </div>
           </div>
-          <div
-            class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0"
-          >
-            <appear
-              :is-visible="animationCounter >= 4 + service.subdivisions.length"
-              is-silent
-            >
-              <div class="service-direction__button appear appear--up">
+          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0">
+            <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
+              <div
+                class="service-direction__button appear appear--up"
+                :class="{ 'appear--duration-0': !isOpen, 'appear--delay-1000': isOpen }"
+              >
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
                 </button>
@@ -85,11 +75,7 @@
           </div>
         </div>
         <div v-if="works" class="row">
-          <work-list
-            :works="works"
-            :counter-key="serviceId"
-            :counter-modifier="service.subdivisions.length"
-          />
+          <work-list :works="works" :counter-key="serviceId" :counter-modifier="subdivisionCount" />
         </div>
       </div>
     </simplebar>
@@ -139,7 +125,6 @@ export default {
     return {
       isWorksLoading: false,
       works: null,
-      animationStep: 0,
     };
   },
   computed: {
@@ -160,10 +145,11 @@ export default {
     },
     currentTagTitle() {
       const { tags, serviceId } = this;
-      const currentTag = tags
-        ? tags.find((tag) => tag.slug === serviceId)
-        : null;
+      const currentTag = tags ? tags.find((tag) => tag.slug === serviceId) : null;
       return currentTag ? currentTag.title : null;
+    },
+    subdivisionCount() {
+      return this.service.subdivisions.length;
     },
   },
   async created() {
@@ -274,15 +260,6 @@ export default {
     }
   }
 
-  &--contrast {
-    background-color: $--color-gray-900;
-    color: $--color-gray-50;
-
-    #{$service-direction}__main {
-      opacity: 0;
-    }
-  }
-
   &__title {
     font-size: 5vmax;
     line-height: 0.9;
@@ -341,6 +318,29 @@ export default {
 
     @include from('lg') {
       font-size: $--font-size-90;
+    }
+  }
+
+  &--contrast {
+    background-color: $--color-gray-900;
+    color: $--color-gray-50;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $--color-brand;
+    }
+
+    #{$service-direction}__description {
+      transition-duration: $--duration-0;
+      opacity: 0;
+    }
+
+    #{$service-direction}__main {
+      opacity: 0;
+    }
+
+    #{$service-direction}__scroll-container {
+      pointer-events: none;
     }
   }
 }

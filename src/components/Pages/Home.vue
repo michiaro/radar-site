@@ -23,25 +23,16 @@
         <appear :is-visible="animationCounter >= 1" :on-next="showNext">
           <div class="main__services appear appear--left appear--duration-1500">
             Мы занимаемся
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'branding' } }"
-            >
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
               брендингом
             </router-link>
             ,
             <br />
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'campaign' } }"
-            >
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
               дизайном
             </router-link>
             и
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'digital' } }"
-            >
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'digital' } }">
               рекламой
             </router-link>
           </div>
@@ -153,18 +144,10 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
-
-    height: 120%;
-    min-height: 100%;
-
-    min-width: 100%;
-    width: auto;
-    background: white;
-
-    @include from('md') {
-      width: auto;
-      min-width: 100%;
-    }
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   &__content {

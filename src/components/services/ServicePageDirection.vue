@@ -2,16 +2,13 @@
   <div
     ref="serviceNode"
     class="service"
+    :class="{ 'service--open': isOpen }"
     @mouseenter="handleEnter"
     @mouseleave="handleLeave"
     @click="passReference"
   >
     <video
-      ref="video"
-      class="service__video"
-      muted="muted"
-      playsinline
-      preload="auto"
+      ref="video" class="service__video" muted="muted" playsinline preload="auto"
       :loop="isLooped"
     >
       <source :src="videoURL + video.path" type="video/mp4" />
@@ -46,6 +43,10 @@ export default {
     },
     description: {
       type: String,
+      required: true,
+    },
+    isOpen: {
+      type: Boolean,
       required: true,
     },
   },
@@ -85,10 +86,7 @@ export default {
 
   // вписываем все три плашки в один экран по высоте
   // вычитаем высоту шапки, отступы между плашками и от шапки
-  height: calc(
-    (100vh - #{$--header-height} - (#{$--gutter} * 3) - #{$--page-padding-x}) /
-      3
-  );
+  height: calc((100vh - #{$--header-height} - (#{$--gutter} * 3) - #{$--page-padding-x}) / 3);
   margin-bottom: $--gutter;
   overflow: hidden;
 
@@ -152,6 +150,14 @@ export default {
       @include from('xl') {
         opacity: 1;
         transform: translate(0, 0);
+      }
+    }
+  }
+
+  &--open {
+    #{$service}__description {
+      @include from('xl') {
+        transition-duration: $--duration-0, $--duration-0;
       }
     }
   }
