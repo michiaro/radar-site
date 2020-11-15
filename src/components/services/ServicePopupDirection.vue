@@ -174,7 +174,7 @@ export default {
       const { data } = await getCollectionByKey({
         key: 'works',
         options: {
-          limit: 8,
+          limit: 16,
           sort: { _o: 1 },
         },
         filter,

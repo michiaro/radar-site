@@ -7,5 +7,5 @@ export function glueUpPrepositions(string) {
 }
 
 export function isVideo(filePath) {
-  return filePath.includes('.mp4');
+  return filePath.includes('.mp4') || filePath.includes('.MP4');
 }

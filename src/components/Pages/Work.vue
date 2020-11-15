@@ -49,16 +49,31 @@
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
             <appear :is-visible="getVisibility(3)" :on-next="showNext">
-              <div v-observe-visibility="trackVisibility(3)" class="appear appear--up appear--duration-1000">
+              <div
+                v-observe-visibility="trackVisibility(3)"
+                class="appear appear--up appear--duration-1000"
+              >
                 <h2 class="work-page__subtitle">Задача</h2>
-                <div class="work-page__task" v-html="glueUpPrepositions(currentWork.task)" />
-                <div v-if="currentWork.instagram" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-200">
+                <div
+                  class="work-page__task"
+                  v-html="glueUpPrepositions(currentWork.task)"
+                />
+                <div
+                  v-if="currentWork.instagram"
+                  class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-200"
+                >
                   <a :href="currentWork.instagram">Instagram</a>
                 </div>
-                <div v-if="currentWork.vkontakte" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-400">
+                <div
+                  v-if="currentWork.vkontakte"
+                  class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-400"
+                >
                   <a :href="currentWork.vkontakte">Vkontakte</a>
                 </div>
-                <div v-if="currentWork.facebook" class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-600">
+                <div
+                  v-if="currentWork.facebook"
+                  class="work-page__social-link appear appear--up appear--duration-1000 appear--delay-600"
+                >
                   <a :href="currentWork.facebook">Facebook</a>
                 </div>
               </div>
@@ -66,7 +81,10 @@
           </div>
           <div class="col col-xs-2 col-sm-2 col-md-2 col-xl-3">
             <appear :is-visible="getVisibility(4)" :on-next="showNext">
-              <div v-observe-visibility="trackVisibility(4)" class="appear appear--up appear--duration-1000">
+              <div
+                v-observe-visibility="trackVisibility(4)"
+                class="appear appear--up appear--duration-1000"
+              >
                 <h2 class="work-page__subtitle">Клиент</h2>
                 <router-link
                   :to="{
@@ -84,11 +102,21 @@
             </appear>
 
             <appear :is-visible="animationCounter >= 5 && isTagsVisible">
-              <div v-observe-visibility="tagsVisibiliryChanged" class="appear appear--up appear--duration-1000">
+              <div
+                v-observe-visibility="tagsVisibiliryChanged"
+                class="appear appear--up appear--duration-1000"
+              >
                 <div v-if="tags" class="work-page__servces">
                   <h2 class="work-page__subtitle">Услуга</h2>
-                  <span v-for="(tag, index) in currentWork.tags" :key="index" class="work-page__service">
-                    <router-link v-if="isTagInFilter(tag)" :to="getFilterLinkPath(tag)">
+                  <span
+                    v-for="(tag, index) in currentWork.tags"
+                    :key="index"
+                    class="work-page__service"
+                  >
+                    <router-link
+                      v-if="isTagInFilter(tag)"
+                      :to="getFilterLinkPath(tag)"
+                    >
                       {{ tag }}
                     </router-link>
                     <span v-else>
@@ -109,8 +137,14 @@
             :class="{ 'col-md-2': item.component === 'Text' }"
           >
             <appear :is-visible="getVisibility(5 + index)" :on-next="showNext">
-              <div v-observe-visibility="trackVisibility(5 + index)" class="appear appear--up appear--duration-1000">
-                <component :is="getLayoutComponent(item.component)" :settings="item.settings" />
+              <div
+                v-observe-visibility="trackVisibility(5 + index)"
+                class="appear appear--up appear--duration-1000"
+              >
+                <component
+                  :is="getLayoutComponent(item.component)"
+                  :settings="item.settings"
+                />
               </div>
             </appear>
           </div>
@@ -118,9 +152,14 @@
 
         <div class="row">
           <div class="col col-xs-2 col-md-1 col-xl-2">
-            <appear :is-visible="getVisibility(5 + currentWorkLayoutLength)" :on-next="showNext">
+            <appear
+              :is-visible="getVisibility(5 + currentWorkLayoutLength)"
+              :on-next="showNext"
+            >
               <h2
-                v-observe-visibility="trackVisibility(5 + currentWorkLayoutLength)"
+                v-observe-visibility="
+                  trackVisibility(5 + currentWorkLayoutLength)
+                "
                 class="work-page__subtitle work-page__subtitle--team appear appear--up appear--duration-1000"
               >
                 Команда
@@ -133,9 +172,14 @@
             class="col col-xs-1 col-md-1 col-xl-2"
             :class="{ 'col-xl-offset-2': isFifthTeammate(index) }"
           >
-            <appear :is-visible="getVisibility(6 + currentWorkLayoutLength + index)" :on-next="showNext">
+            <appear
+              :is-visible="getVisibility(6 + currentWorkLayoutLength + index)"
+              :on-next="showNext"
+            >
               <div
-                v-observe-visibility="trackVisibility(6 + currentWorkLayoutLength + index)"
+                v-observe-visibility="
+                  trackVisibility(6 + currentWorkLayoutLength + index)
+                "
                 class="appear appear--up appear--duration-2000"
               >
                 <div class="work-page__position">
@@ -156,11 +200,19 @@
         <div class="row">
           <div class="col col-xs-2">
             <appear
-              :is-visible="getVisibility(6 + currentWorkLayoutLength + currentWorkCreditsLength)"
+              :is-visible="
+                getVisibility(
+                  6 + currentWorkLayoutLength + currentWorkCreditsLength,
+                )
+              "
               :on-next="showNext"
             >
               <div
-                v-observe-visibility="trackVisibility(6 + currentWorkLayoutLength + currentWorkCreditsLength)"
+                v-observe-visibility="
+                  trackVisibility(
+                    6 + currentWorkLayoutLength + currentWorkCreditsLength,
+                  )
+                "
                 class="appear appear--up appear--duration-1000"
               >
                 <h2 class="work-page__next-work">
@@ -173,12 +225,26 @@
       </div>
 
       <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
-        <appear :is-visible="getVisibility(7 + currentWorkLayoutLength + currentWorkCreditsLength)" :on-next="showNext">
+        <appear
+          :is-visible="
+            getVisibility(
+              7 + currentWorkLayoutLength + currentWorkCreditsLength,
+            )
+          "
+          :on-next="showNext"
+        >
           <div
-            v-observe-visibility="trackVisibility(7 + currentWorkLayoutLength + currentWorkCreditsLength)"
+            v-observe-visibility="
+              trackVisibility(
+                7 + currentWorkLayoutLength + currentWorkCreditsLength,
+              )
+            "
             class="appear appear--up appear--duration-2000"
           >
-            <router-link :to="`/all-works/${nextWork.slug}`" class="work-page__cross-link cross-link">
+            <router-link
+              :to="`/all-works/${nextWork.slug}`"
+              class="work-page__cross-link cross-link"
+            >
               <div class="cross-link__wrapper">
                 <img
                   v-if="!isVideo(nextWork.header.path)"
@@ -259,6 +325,12 @@ export default {
         }
       }
       return 0;
+    },
+  },
+  watch: {
+    async workSlug() {
+      await this.fetchWork();
+      this.fetchNextWork();
     },
   },
   async created() {
@@ -374,7 +446,9 @@ export default {
       };
     },
     getVisibility(index) {
-      return this.visibleElements[index] === true && this.animationCounter >= index;
+      return (
+        this.visibleElements[index] === true && this.animationCounter >= index
+      );
     },
     // теги может не быть, и они не должны влиять на флоу показа элементов
     tagsVisibiliryChanged(isVisible) {
@@ -415,12 +489,22 @@ export default {
     margin-bottom: 24px;
   }
   &__about {
+    margin-bottom: 28px;
+
+    @include from('xl') {
     margin-bottom: 78px;
+
+    }
   }
   &__content {
     font-weight: normal;
-    font-size: $--font-size-160;
+    line-height: 1.67;
+    font-size: $--font-size-80;
+
+    @include from('xl') {
     line-height: 1.25;
+      font-size: $--font-size-160;
+    }
 
     p {
       margin: 0;
