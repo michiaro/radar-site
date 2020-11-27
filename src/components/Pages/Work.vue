@@ -150,54 +150,56 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col col-xs-2 col-md-1 col-xl-2">
-            <appear
-              :is-visible="getVisibility(5 + currentWorkLayoutLength)"
-              :on-next="showNext"
-            >
-              <h2
-                v-observe-visibility="
-                  trackVisibility(5 + currentWorkLayoutLength)
-                "
-                class="work-page__subtitle work-page__subtitle--team appear appear--up appear--duration-1000"
+        <div class="work-page__team">
+          <div class="row">
+            <div class="col col-xs-2 col-md-1 col-xl-2">
+              <appear
+                :is-visible="getVisibility(5 + currentWorkLayoutLength)"
+                :on-next="showNext"
               >
-                Команда
-              </h2>
-            </appear>
-          </div>
-          <div
-            v-for="(position, index) in currentWork.credits"
-            :key="index"
-            class="col col-xs-1 col-md-1 col-xl-2"
-            :class="{ 'col-xl-offset-2': isFifthTeammate(index) }"
-          >
-            <appear
-              :is-visible="getVisibility(6 + currentWorkLayoutLength + index)"
-              :on-next="showNext"
-            >
-              <div
-                v-observe-visibility="
-                  trackVisibility(6 + currentWorkLayoutLength + index)
-                "
-                class="appear appear--up appear--duration-2000"
-              >
-                <div class="work-page__position">
-                  {{ position.value.position }}
-                </div>
-                <div
-                  v-for="(teammate, teammateIndex) in position.value.staff"
-                  :key="teammateIndex"
-                  class="work-page__teammate"
+                <h2
+                  v-observe-visibility="
+                    trackVisibility(5 + currentWorkLayoutLength)
+                  "
+                  class="work-page__subtitle work-page__subtitle--team appear appear--up appear--duration-1000"
                 >
-                  {{ teammate.display }}
+                  Команда
+                </h2>
+              </appear>
+            </div>
+            <div
+              v-for="(position, index) in currentWork.credits"
+              :key="index"
+              class="col col-xs-1 col-md-1 col-xl-2"
+              :class="{ 'col-xl-offset-2': isFifthTeammate(index) }"
+            >
+              <appear
+                :is-visible="getVisibility(6 + currentWorkLayoutLength + index)"
+                :on-next="showNext"
+              >
+                <div
+                  v-observe-visibility="
+                    trackVisibility(6 + currentWorkLayoutLength + index)
+                  "
+                  class="appear appear--up appear--duration-2000"
+                >
+                  <div class="work-page__position">
+                    {{ position.value.position }}
+                  </div>
+                  <div
+                    v-for="(teammate, teammateIndex) in position.value.staff"
+                    :key="teammateIndex"
+                    class="work-page__teammate"
+                  >
+                    {{ teammate.display }}
+                  </div>
                 </div>
-              </div>
-            </appear>
+              </appear>
+            </div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="nextWork">
           <div class="col col-xs-2">
             <appear
               :is-visible="
@@ -224,7 +226,10 @@
         </div>
       </div>
 
-      <div v-if="!isNextWorkLoading" class="work-page__cross-link cross-link">
+      <div
+        v-if="!isNextWorkLoading && nextWork"
+        class="work-page__cross-link cross-link"
+      >
         <appear
           :is-visible="
             getVisibility(
@@ -492,8 +497,7 @@ export default {
     margin-bottom: 28px;
 
     @include from('xl') {
-    margin-bottom: 78px;
-
+      margin-bottom: 78px;
     }
   }
   &__content {
@@ -502,7 +506,7 @@ export default {
     font-size: $--font-size-80;
 
     @include from('xl') {
-    line-height: 1.25;
+      line-height: 1.25;
       font-size: $--font-size-160;
     }
 
@@ -573,6 +577,11 @@ export default {
       }
     }
   }
+
+  &__team {
+    margin-bottom: 5.5vmax;
+  }
+
   &__position {
     font-size: $--font-size-80;
     color: $--color-text--muted;
@@ -588,7 +597,6 @@ export default {
   &__next-work {
     font-size: $--font-size-100;
     font-weight: normal;
-    margin-top: 5.5vmax;
   }
   &__cross-link {
     overflow: hidden;
