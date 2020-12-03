@@ -1,6 +1,6 @@
 const state = {
-  isMobile: false,
-  isTablet: false,
+  isMobile: true,
+  isTablet: true,
   isMenuOpen: false,
   isFormPopupOpen: false,
   animationCounter: {
