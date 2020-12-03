@@ -4,9 +4,11 @@
       v-if="isVideo(mediaPath)"
       class="work-media__element work-media__element--video"
       :src="mediaPath"
-      autoplay
-      loop
-      muted
+      :autoplay="!isSoundAllowed"
+      :loop="!isSoundAllowed"
+      :muted="!isSoundAllowed"
+      :playsinline="!isSoundAllowed"
+      :controls="isSoundAllowed"
     />
     <img
       v-if="!isVideo(mediaPath)"
@@ -38,6 +40,9 @@ export default {
     mediaPath() {
       const { baseURL, settings } = this;
       return baseURL + settings.media.path;
+    },
+    isSoundAllowed() {
+      return this.settings.isSoundAllowed;
     },
   },
   methods: {

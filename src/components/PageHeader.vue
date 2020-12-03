@@ -8,12 +8,15 @@
         <div class="mobile-menu__bottom-title">Обсудить задачу</div>
         <div class="mobile-menu__bottom-content">
           <div class="mobile-menu__contacts">
-            <a class="mobile-menu__link" href="tel:+79227000100"
-              >+7 (922) 700-01-00</a
+            <a class="mobile-menu__link" href="tel:+79227000100">
+              +7 (922) 700-01-00
+            </a>
+            <a
+              class="mobile-menu__link"
+              href="mailto:mlopatina@radar-online.ru"
             >
-            <a class="mobile-menu__link" href="mailto:mlopatina@radar-online.ru"
-              >mlopatina@radar-online.ru</a
-            >
+              mlopatina@radar-online.ru
+            </a>
           </div>
           <div class="mobile-menu__contact-person">
             <div class="mobile-menu__name">Мария Лопатина</div>
@@ -27,17 +30,21 @@
         <logo @click.native="closeMenu" />
       </div>
     </appear>
-    <button
-      v-if="isMobile"
-      class="header__burger hamburger hamburger--slider"
-      :class="{ 'is-active': isMenuOpen }"
-      type="button"
-      @click="toggleMenu"
-    >
-      <span class="hamburger-box">
-        <span class="hamburger-inner" />
-      </span>
-    </button>
+    <appear :is-visible="animationCounter >= 0">
+      <div class="appear appear--duration-500">
+        <button
+          v-if="isMobile"
+          class="header__burger hamburger hamburger--slider"
+          :class="{ 'is-active': isMenuOpen }"
+          type="button"
+          @click="toggleMenu"
+        >
+          <span class="hamburger-box">
+            <span class="hamburger-inner" />
+          </span>
+        </button>
+      </div>
+    </appear>
     <navigation v-if="!isMobile" />
   </header>
 </template>
@@ -109,6 +116,9 @@ export default {
 
   &__burger {
     padding: 0;
+    @include from('xl') {
+      display: none;
+    }
   }
 
   &--contrast {
