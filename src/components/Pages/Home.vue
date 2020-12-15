@@ -25,8 +25,7 @@
             Мы занимаемся
             <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
               брендингом
-            </router-link>
-            ,
+            </router-link>,
             <br />
             <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
               дизайном
