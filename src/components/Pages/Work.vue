@@ -103,7 +103,7 @@
 
             <appear :is-visible="animationCounter >= 5 && isTagsVisible">
               <div
-                v-observe-visibility="tagsVisibiliryChanged"
+                v-observe-visibility="tagsVisibilityChanged"
                 class="appear appear--up appear--duration-1000"
               >
                 <div v-if="tags" class="work-page__servces">
@@ -456,8 +456,10 @@ export default {
       );
     },
     // теги может не быть, и они не должны влиять на флоу показа элементов
-    tagsVisibiliryChanged(isVisible) {
-      this.isTagsVisible = isVisible;
+    tagsVisibilityChanged(isVisible) {
+      if (!this.isTagsVisible) {
+        this.isTagsVisible = isVisible;
+      }
     },
   },
 };
