@@ -147,7 +147,6 @@ export default {
 
     &.router-link-active {
       color: $--color-brand;
-      cursor: unset;
 
       @include from('xl') {
         color: $--color-text;
