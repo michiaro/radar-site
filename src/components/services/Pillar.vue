@@ -152,14 +152,19 @@ export default {
       color: $--color-text;
       line-height: 0.82;
 
+      min-width: 16.6%;
       flex-basis: 16.6%;
+      margin-right: 4%;
       transform: translateX(-3.4vmax);
     }
   }
   &__content {
     flex-basis: 100%;
+    width: 100%;
+    
     @include from('lg') {
       flex-basis: 40%;
+      width: 40%;
     }
   }
 
