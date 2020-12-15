@@ -11,7 +11,9 @@
         </div>
         <div class="col col-xs-2 col-sm-3 col-xl-6">
           <appear :is-visible="animationCounter >= 1" :on-next="showNext">
-            <div class="agency__description appear appear--duration-1000 appear--up">
+            <div
+              class="agency__description appear appear--duration-1000 appear--up"
+            >
               {{ aboutUsData.description }}
             </div>
           </appear>
@@ -81,12 +83,14 @@
               href="https://chelyabinsk.hh.ru/employer/1156087"
               target="_blank"
             >
-              <h2 class="join-us__title">
-                вакансии
-              </h2>
-              <div class="join-us__description">
-                Стать частью <br />
-                нашей команды&nbsp;→
+              <div class="join-us__panel">
+                <h2 class="join-us__title">
+                  вакансии
+                </h2>
+                <div class="join-us__description">
+                  Стать частью <br />
+                  нашей команды&nbsp;→
+                </div>
               </div>
             </a>
           </appear>
@@ -252,22 +256,19 @@ export default {
 }
 
 .join-us {
+  display: block;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
 
-  display: block;
-  min-height: 380px;
-
-  padding: 24px 16px 16px;
+  padding-bottom: calc(114% - 8px);
 
   border: 4px solid $--color-text;
   border-radius: 12px;
   letter-spacing: $--letter-spacing;
   color: $--color-text;
   transition: all 0.5s ease-in-out;
-  max-height: 100%;
-  height: calc(100% - 20px);
+
   font-size: 22px;
   @include from('xl') {
     font-size: 30px;
@@ -279,15 +280,26 @@ export default {
     color: $--color-text--contrast;
   }
 
+  &__panel {
+    position: absolute;
+    box-sizing: border-box;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    padding: 24px 16px 16px;
+  }
+
   &__title {
     margin: 0;
     margin-bottom: 86px;
     font-weight: normal;
-    font-size: 22px;
-    @include from('xl') {
-      font-size: 30px;
-    }
   }
+
   &__description {
   }
 }
