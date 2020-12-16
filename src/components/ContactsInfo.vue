@@ -62,22 +62,22 @@
                 <p class="contact-form__text">
                   <a
                     class="contact-form__link"
-                    :href="`tel:+${contactInfo.contactPhone}`"
+                    :href="`tel:+${getContactInfoByKey('contactPhone')}`"
                   >
-                    {{ formatPhone(contactInfo.contactPhone) }}
+                    {{ formatPhone(getContactInfoByKey('contactPhone')) }}
                   </a>
                   <br />
                   <a
                     class="contact-form__link"
-                    :href="`mailto:${contactInfo.contactEmail}`"
+                    :href="`mailto:${getContactInfoByKey('contactEmail')}`"
                   >
-                    {{ contactInfo.contactEmail }}
+                    {{ getContactInfoByKey('contactEmail') }}
                   </a>
                 </p>
                 <p class="contact-form__text contact-form__person">
-                  {{ contactInfo.name }}
+                  {{ getContactInfoByKey('name') }}
                   <br />
-                  {{ contactInfo.position }}
+                  {{ getContactInfoByKey('position') }}
                 </p>
               </div>
             </div>
