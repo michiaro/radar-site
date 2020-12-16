@@ -141,7 +141,7 @@ export default {
   box-sizing: border-box;
 
   @include from('lg') {
-    height: 100vh;
+    min-height: 100vh;
     flex-wrap: nowrap;
   }
 
@@ -161,7 +161,7 @@ export default {
   &__content {
     flex-basis: 100%;
     width: 100%;
-    
+
     @include from('lg') {
       flex-basis: 40%;
       width: 40%;
