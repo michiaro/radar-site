@@ -4,8 +4,9 @@
       <div class="row">
         <div class="col col-xs-2 col-sm-4 col-xl-6">
           <h1 class="contact-form__title">Контакты</h1>
+
           <div class="row">
-            <div class="col col-xs-2 col-sm-2 col-lg-6">
+            <div class="col col-xs-2">
               <div class="contact-form__section">
                 <div class="contact-form__subtitle">
                   <button
@@ -27,6 +28,13 @@
                     Челябинск
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-xs-2 col-sm-2 col-lg-6">
+              <div class="contact-form__section contact-form__section--top">
                 <p
                   class="contact-form__text contact-form__content"
                   :class="{
@@ -57,8 +65,7 @@
               </div>
             </div>
             <div class="col col-xs-2 col-sm-2 col-xl-6">
-              <div class="contact-form__section">
-                <h2 class="contact-form__subtitle">Заказ</h2>
+              <div class="contact-form__section contact-form__section--top">
                 <p class="contact-form__text">
                   <a
                     class="contact-form__link"
@@ -163,7 +170,9 @@ export default {
       if (phone) {
         const match = phone.match(/^(\d)(\d{3})(\d{3})(\d{2})(\d{2})$/);
         if (match) {
-          return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
+          return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${
+            match[5]
+          }`;
         }
         return null;
       }
@@ -221,9 +230,17 @@ export default {
     margin: 30px 0;
     line-height: 1.2;
 
+    &--top {
+      margin-top: 0;
+    }
+
     font-size: 22px;
     @include from('md') {
       font-size: 26px;
+    }
+
+    p {
+      margin-top: 0;
     }
   }
 

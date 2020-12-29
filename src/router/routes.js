@@ -13,7 +13,7 @@ const routes = [
     component: Home,
     name: 'Home',
     meta: {
-      title: 'Radar Advertising',
+      title: 'Radar',
       metaTags: [
         {
           name: 'description',
@@ -25,7 +25,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising',
+          content: 'Radar',
         },
         {
           name: 'og:url',
@@ -39,7 +39,7 @@ const routes = [
     component: AllWorks,
     name: 'AllWorks',
     meta: {
-      title: 'Radar Advertising, Работы',
+      title: 'Radar, Работы',
       metaTags: [
         {
           name: 'description',
@@ -51,7 +51,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Работы',
+          content: 'Radar, Работы',
         },
         {
           name: 'og:url',
@@ -65,7 +65,7 @@ const routes = [
     component: Agency,
     name: 'Agency',
     meta: {
-      title: 'Radar Advertising, Агентство',
+      title: 'Radar, Агентство',
       metaTags: [
         {
           name: 'description',
@@ -77,7 +77,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Агентство',
+          content: 'Radar, Агентство',
         },
         {
           name: 'og:url',
@@ -91,7 +91,7 @@ const routes = [
     component: Contacts,
     name: 'Contacts',
     meta: {
-      title: 'Radar Advertising, Контакты',
+      title: 'Radar, Контакты',
       metaTags: [
         {
           name: 'description',
@@ -105,7 +105,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Контакты',
+          content: 'Radar, Контакты',
         },
         {
           name: 'og:url',
@@ -119,21 +119,21 @@ const routes = [
     component: Services,
     name: 'Services',
     meta: {
-      title: 'Radar Advertising, Услуги',
+      title: 'Radar, Услуги',
       metaTags: [
         {
           name: 'description',
           content:
-            'Коммуникационное агентство RADAR Advertising, направления работы',
+            'Коммуникационное агентство RADAR, направления работы',
         },
         {
           property: 'og:description',
           content:
-            'Коммуникационное агентство RADAR Advertising, направления работы',
+            'Коммуникационное агентство RADAR, направления работы',
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Услуги',
+          content: 'Radar, Услуги',
         },
         {
           name: 'og:url',
@@ -147,7 +147,7 @@ const routes = [
     component: Policy,
     name: 'Policy',
     meta: {
-      title: 'Radar Advertising, Политика конфиденциальности',
+      title: 'Radar, Политика конфиденциальности',
       metaTags: [
         {
           name: 'description',
@@ -159,7 +159,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Политика конфиденциальности',
+          content: 'Radar, Политика конфиденциальности',
         },
         {
           name: 'og:url',
@@ -173,7 +173,7 @@ const routes = [
     component: ErrorPage,
     name: 'ErrorPage',
     meta: {
-      title: 'Radar Advertising, Страница не существует',
+      title: 'Radar, Страница не существует',
       metaTags: [
         {
           name: 'description',
@@ -185,7 +185,7 @@ const routes = [
         },
         {
           name: 'og:title',
-          content: 'Radar Advertising, Страница не существует',
+          content: 'Radar, Страница не существует',
         },
         {
           name: 'og:url',
@@ -206,7 +206,7 @@ const routes = [
     component: Work,
     name: 'Work',
     meta: {
-      title: 'Radar Advertising, Работы',
+      title: 'Radar, Работы',
     },
   },
   { path: '*', redirect: { name: 'ErrorPage' } },

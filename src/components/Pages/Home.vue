@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <appear :is-visible="animationCounter >= 0" is-silent :on-next="showNext">
-      <img class="main__image appear appear--duration-1500" :src="backgroundImage" alt="Radar advertising" />
+      <img class="main__image appear appear--duration-1500" :src="backgroundImage" alt="Radar" />
       <video
         class="main__video main__video--desktop appear appear--duration-1500"
         autoplay="autoplay"
@@ -27,11 +27,11 @@
               брендингом
             </router-link>,
             <br />
-            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
               дизайном
             </router-link>
             и
-            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'digital' } }">
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
               рекламой
             </router-link>
           </div>

@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col col-xs-2">
             <h1 v-if="currentClient && client" class="all-works__dummy-title">
-              <p v-if="works.lenght > 0">Наши работы для {{ client.title }}</p>
+              <p v-if="works.length > 0">Наши работы для {{ client.title }}</p>
               <p v-else>
                 Наши работы для {{ client.title }} <br />
                 скоро появятся.

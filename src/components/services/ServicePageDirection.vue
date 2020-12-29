@@ -181,11 +181,13 @@ export default {
   }
 
   &__bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: none;
 
     @include from('xl') {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       opacity: 0;
       transform: translate(0, 3vmax);
       transition-delay: $--delay-0;
