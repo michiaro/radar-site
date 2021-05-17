@@ -184,6 +184,9 @@ export default {
       align-items: flex-end;
     }
   }
+  &__social-media {
+    margin-right: 104px; // for callibri widget
+  }
   &__services {
     font-size: 22px;
     line-height: 1.3;
