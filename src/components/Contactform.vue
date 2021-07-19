@@ -133,6 +133,7 @@ export default {
       this.isFormSent = true;
 
       if (result === 1) {
+        document.dispatchEvent(new Event('form-submit-success'));
         this.isSuccess = true;
         this.formData = emptyFormData;
 

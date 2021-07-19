@@ -11,6 +11,8 @@ import 'normalize.css';
 import '@/styles/main.scss';
 import '@/fonts/gerbera.css';
 
+import './fbq';
+
 import App from './App.vue';
 // import LazyLoadDirective from './directives/LazyLoadDirective';
 

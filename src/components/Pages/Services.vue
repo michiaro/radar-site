@@ -2,7 +2,7 @@
   <div v-if="services.length" class="services-page">
     <div class="container">
       <div class="row">
-        <div v-for="service in services" :key="service.serviceId" class="col col-xs-2 col-xl-4">
+        <div v-for="service in services" :key="service.serviceId" :data-item-event="'services-'+service.serviceId" @click="triggerEvent('services-'+service.serviceId)" class="col col-xs-2 col-xl-4">
           <service-page-direction
             :service-id="service.serviceId"
             :video="service.video"
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <pillar v-for="(pillar, index) in pillars" :key="index" :pillar="pillar" :number="index + 1" />
+      <pillar v-for="(pillar, index) in pillars" :key="index" :data-item-event="'pillars-'+pillar.id" :pillar="pillar" :number="index + 1" />
     </div>
 
     <page-footer is-clients />
@@ -57,6 +57,12 @@ export default {
       titleVisibility: false,
     };
   },
+  beforeRouteLeave(to, from, next) {
+    if ('filter' in to.query){
+      this.triggerEvent('pillars-'+to.query.filter);
+    }
+    next(true);
+  },
   computed: {
     services() {
       return this.$store.state.services.content || [];
@@ -83,6 +89,9 @@ export default {
     }
   },
   methods: {
+    triggerEvent(event) {
+      document.dispatchEvent(new Event(event));
+    },
     async fetchServices() {
       const { data } = await getCollectionByKey({
         key: 'Services',
