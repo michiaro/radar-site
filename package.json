@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "google-maps": "^3.3.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "normalize": "^0.3.1",
     "normalize.css": "^8.0.1",
     "pug": "^2.0.3",
