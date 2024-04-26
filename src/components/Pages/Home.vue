@@ -1,11 +1,7 @@
 <template>
   <div class="main">
     <appear :is-visible="animationCounter >= 0" is-silent :on-next="showNext">
-      <img
-        class="main__image appear appear--duration-1500"
-        :src="backgroundImage"
-        alt="Radar"
-      />
+      <img class="main__image appear appear--duration-1500" :src="backgroundImage" alt="Radar" />
       <video
         class="main__video main__video--desktop appear appear--duration-1500"
         autoplay="autoplay"
@@ -27,36 +23,32 @@
         <appear :is-visible="animationCounter >= 1" :on-next="showNext">
           <div class="main__services appear appear--left appear--duration-1500">
             Мы занимаемся
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'branding' } }"
-            >
-              брендингом </router-link
-            >,
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
+              брендингом
+            </router-link>,
             <br />
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'branding' } }"
-            >
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'branding' } }">
               дизайном
             </router-link>
             и
-            <router-link
-              class="main__link link"
-              :to="{ path: '/services', query: { direction: 'campaign' } }"
-            >
+            <router-link class="main__link link" :to="{ path: '/services', query: { direction: 'campaign' } }">
               рекламой
             </router-link>
           </div>
         </appear>
 
         <div class="main__social-media">
-          <a :href="common.vk" class="social-link" target="_blank">
+          <a :href="common.instagram" class="social-link" target="_blank">
+            <appear :is-visible="animationCounter >= 3" :on-next="showNext">
+              <span class="appear appear--right appear--duration-500 appear--duration-1000">
+                INSTAGRAM
+              </span>
+            </appear>
+          </a>
+          <a :href="common.facebook" class="social-link" target="_blank">
             <appear :is-visible="animationCounter >= 2" :on-next="showNext">
-              <span
-                class="appear appear--right appear--duration-500 appear--duration-1000"
-              >
-                VK
+              <span class="appear appear--right appear--duration-500 appear--duration-1000">
+                FACEBOOK
               </span>
             </appear>
           </a>
@@ -67,22 +59,22 @@
 </template>
 
 <script>
-import video from "@/video/main-video.mp4";
-import videoMobile from "@/video/main-video-mobile.mp4";
-import backgroundImage from "@/images/main-back.jpg";
-import backgroundImageMobile from "@/images/main-back-mobile.jpg";
+import video from '@/video/main-video.mp4';
+import videoMobile from '@/video/main-video-mobile.mp4';
+import backgroundImage from '@/images/main-back.jpg';
+import backgroundImageMobile from '@/images/main-back-mobile.jpg';
 
-import { getSingletonByKey } from "@/api/index.js";
-import Appear from "@/components/Appear.vue";
+import { getSingletonByKey } from '@/api/index.js';
+import Appear from '@/components/Appear.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     Appear,
   },
   data() {
     return {
-      text: "",
+      text: '',
       animationCounter: -1,
     };
   },
@@ -120,7 +112,7 @@ export default {
   },
   methods: {
     async getWelcomeText() {
-      const { content } = await getSingletonByKey("welcomeText");
+      const { content } = await getSingletonByKey('welcomeText');
       this.text = content;
     },
     showNext() {
@@ -131,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/styles/shared/_globals.scss";
+@import '@/styles/shared/_globals.scss';
 
 .main {
   position: fixed;
@@ -161,7 +153,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding: 124px 20px 20px;
-    @include from("xl") {
+    @include from('xl') {
       padding: 16vh 34px 34px;
     }
 
@@ -173,19 +165,19 @@ export default {
     margin: 0;
     font-weight: normal;
     font-size: 30px;
-    @include from("sm") {
+    @include from('sm') {
       font-size: 70px;
       width: 80%;
       margin-right: 10vw;
     }
-    @include from("xl") {
+    @include from('xl') {
       font-size: 90px;
       margin-right: 40vw;
       max-width: 1130px;
     }
   }
   &__bottom {
-    @include from("xl") {
+    @include from('xl') {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
@@ -193,13 +185,13 @@ export default {
     }
   }
   &__social-media {
-    // margin-right: 104px; // for callibri widget - hidden now
+    margin-right: 104px; // for callibri widget
   }
   &__services {
     font-size: 22px;
     line-height: 1.3;
     margin-bottom: 115px;
-    @include from("xl") {
+    @include from('xl') {
       margin-bottom: 0;
     }
   }
@@ -208,7 +200,7 @@ export default {
     display: inline-block;
     position: relative;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       right: 0;
