@@ -61,6 +61,11 @@
                 :alt="teammate.name"
                 class="teammate__photo"
               />
+              <img
+                :src="baseURL + teammate.hoverPhoto.path"
+                :alt="teammate.name"
+                class="teammate__hover-photo"
+              />
               <div class="teammate__overlay" />
               <div class="teammate__summary">
                 <div class="teammate__name">
@@ -84,9 +89,7 @@
               target="_blank"
             >
               <div class="join-us__panel">
-                <h2 class="join-us__title">
-                  вакансии
-                </h2>
+                <h2 class="join-us__title">вакансии</h2>
                 <div class="join-us__description">
                   Стать частью <br />
                   нашей команды&nbsp;→
@@ -105,12 +108,12 @@
 </template>
 
 <script>
-import { baseURL, getCollectionByKey } from '@/api/index.js';
-import PageFooter from '@/components/PageFooter.vue';
-import Appear from '@/components/Appear.vue';
+import { baseURL, getCollectionByKey } from "@/api/index.js";
+import PageFooter from "@/components/PageFooter.vue";
+import Appear from "@/components/Appear.vue";
 
 export default {
-  name: 'Agency',
+  name: "Agency",
   components: {
     PageFooter,
     Appear,
@@ -130,13 +133,13 @@ export default {
     },
     aboutUsData() {
       const dummyData = {
-        title: '',
-        description: '',
-        abkrLink: '',
-        abkrLogo: { path: '' },
-        akarLink: '',
-        akarLogo: { path: '' },
-        logoDescription: '',
+        title: "",
+        description: "",
+        abkrLink: "",
+        abkrLogo: { path: "" },
+        akarLink: "",
+        akarLogo: { path: "" },
+        logoDescription: "",
       };
       return this.aboutUs || dummyData;
     },
@@ -147,7 +150,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (!this.aboutUs) {
-        const unwatchAboutUs = this.$watch('aboutUs', function(next) {
+        const unwatchAboutUs = this.$watch("aboutUs", function (next) {
           if (next) {
             this.showNext();
             unwatchAboutUs();
@@ -161,7 +164,7 @@ export default {
   methods: {
     async fetchTeam() {
       const { data } = await getCollectionByKey({
-        key: 'team',
+        key: "team",
         filter: { inTeam: true },
         options: {
           sort: { _o: 1 },
@@ -193,12 +196,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/styles/shared/_globals.scss';
+@import "@/styles/shared/_globals.scss";
 
 .agency {
   padding-top: $--page-padding-y-xs;
 
-  @include from('lg') {
+  @include from("lg") {
     padding-top: $--page-padding-y-lg;
   }
 
@@ -207,27 +210,27 @@ export default {
     font-size: 23px;
     font-weight: normal;
 
-    @include from('md') {
+    @include from("md") {
       font-size: 44px;
     }
-    @include from('lg') {
+    @include from("lg") {
       margin: 0 200px 40px 0;
     }
-    @include from('xl') {
+    @include from("xl") {
       margin: 0 80px 86px 0;
     }
   }
   &__description {
     margin-bottom: 44px;
     font-size: 18px;
-    @include from('md') {
+    @include from("md") {
       font-size: 26px;
       margin-right: 50px;
     }
-    @include from('lg') {
+    @include from("lg") {
       margin-bottom: 50px;
     }
-    @include from('xl') {
+    @include from("xl") {
       margin-bottom: 102px;
     }
   }
@@ -246,10 +249,10 @@ export default {
     font-size: 18px;
   }
   &__clients {
-    @include from('md') {
+    @include from("md") {
       margin-top: 48px;
     }
-    @include from('xl') {
+    @include from("xl") {
       margin-top: 78px;
     }
   }
@@ -270,7 +273,7 @@ export default {
   transition: all 0.5s ease-in-out;
 
   font-size: 22px;
-  @include from('xl') {
+  @include from("xl") {
     font-size: 30px;
   }
 
@@ -315,7 +318,7 @@ export default {
   &--dummy {
     background: $--color-text--muted;
     &:after {
-      content: '';
+      content: "";
       display: block;
       padding-bottom: 114.54%;
     }
@@ -325,11 +328,24 @@ export default {
     width: 100%;
     display: block;
   }
+  &__hover-photo {
+    width: 100%;
+    display: none;
+  }
+
+  &:hover {
+    #{$teammate}__photo {
+      display: none;
+    }
+    #{$teammate}__hover-photo {
+      display: block;
+    }
+  }
 
   $overlay-height: 100px;
 
   &__overlay {
-    @include from('xl') {
+    @include from("xl") {
       position: absolute;
       left: 0;
       bottom: 0;
@@ -344,7 +360,7 @@ export default {
   }
 
   &__summary {
-    @include from('xl') {
+    @include from("xl") {
       position: absolute;
       left: 0;
       bottom: 0;
@@ -366,7 +382,7 @@ export default {
     margin-top: 8px;
     font-size: $--font-size-90;
     color: $--color-text;
-    @include from('xl') {
+    @include from("xl") {
       margin-top: 0;
       font-size: $--font-size-140;
     }
@@ -376,13 +392,13 @@ export default {
     margin: 3px 0;
     font-size: $--font-size-80;
     color: $--color-text--muted;
-    @include from('xl') {
+    @include from("xl") {
       margin-top: 8px;
       color: $--color-text;
     }
   }
 
-  @include from('xl') {
+  @include from("xl") {
     &:hover {
       #{$teammate}__overlay {
         transform: translateY(0);
