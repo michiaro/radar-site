@@ -52,14 +52,14 @@
                     class="contact-form__link"
                     :href="`tel:+${getContactInfoByKey('phone')}`"
                   >
-                    {{ formatPhone(getContactInfoByKey('phone')) }}
+                    {{ formatPhone(getContactInfoByKey("phone")) }}
                   </a>
                   <br />
                   <a
                     class="contact-form__link"
                     :href="`mailto:${getContactInfoByKey('email')}`"
                   >
-                    {{ getContactInfoByKey('email') }}
+                    {{ getContactInfoByKey("email") }}
                   </a>
                 </p>
               </div>
@@ -71,20 +71,20 @@
                     class="contact-form__link"
                     :href="`tel:+${getContactInfoByKey('contactPhone')}`"
                   >
-                    {{ formatPhone(getContactInfoByKey('contactPhone')) }}
+                    {{ formatPhone(getContactInfoByKey("contactPhone")) }}
                   </a>
                   <br />
                   <a
                     class="contact-form__link"
                     :href="`mailto:${getContactInfoByKey('contactEmail')}`"
                   >
-                    {{ getContactInfoByKey('contactEmail') }}
+                    {{ getContactInfoByKey("contactEmail") }}
                   </a>
                 </p>
                 <p class="contact-form__text contact-form__person">
-                  {{ getContactInfoByKey('name') }}
+                  {{ getContactInfoByKey("name") }}
                   <br />
-                  {{ getContactInfoByKey('position') }}
+                  {{ getContactInfoByKey("position") }}
                 </p>
               </div>
             </div>
@@ -92,12 +92,12 @@
               <div class="contact-form__section">
                 <p class="contact-form__social">
                   <a
-                    :href="common.instagram"
+                    :href="common.vk"
                     target="_blank"
                     class="contact-form__social-link"
-                    >INSTAGRAM</a
+                    >VK</a
                   >
-                  <a
+                  <!-- <a
                     :href="common.facebook"
                     target="_blank"
                     class="contact-form__social-link"
@@ -108,7 +108,7 @@
                     target="_blank"
                     class="contact-form__social-link"
                     >VKONTAKTE</a
-                  >
+                  > -->
                 </p>
               </div>
             </div>
@@ -123,11 +123,11 @@
 </template>
 
 <script>
-import { getSingletonByKey } from '@/api/index.js';
-import ContactForm from '@/components/ContactForm.vue';
+import { getSingletonByKey } from "@/api/index.js";
+import ContactForm from "@/components/ContactForm.vue";
 
 export default {
-  name: 'ContactsInfo',
+  name: "ContactsInfo",
   components: {
     ContactForm,
   },
@@ -139,7 +139,7 @@ export default {
   },
   data() {
     return {
-      currentCity: 'moscow',
+      currentCity: "moscow",
       contactInfo: {},
       isContactContentAnimated: false,
     };
@@ -164,14 +164,14 @@ export default {
   methods: {
     changeCity(city) {
       this.currentCity = city;
-      this.$emit('change-city', city);
+      this.$emit("change-city", city);
     },
     async getContactInfo() {
-      this.contactInfo = await getSingletonByKey('locations');
+      this.contactInfo = await getSingletonByKey("locations");
     },
     getContactInfoByKey(key) {
       const { contactInfo, currentCity } = this;
-      const keyByCity = currentCity + '_' + key;
+      const keyByCity = currentCity + "_" + key;
       return contactInfo[keyByCity];
     },
     formatPhone(phone) {
@@ -198,7 +198,7 @@ export default {
 
         setTimeout(() => {
           this.currentCity = city;
-          this.$emit('change-city', city);
+          this.$emit("change-city", city);
         }, 240); // меняем город во время анимации
       }
     },
@@ -207,7 +207,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .contact-form {
   $block: &;
@@ -220,14 +220,14 @@ export default {
     font-weight: normal;
 
     margin-bottom: 34px;
-    @include from('md') {
+    @include from("md") {
       max-width: 100%;
       margin-bottom: 70px;
     }
-    @include from('lg') {
+    @include from("lg") {
       font-size: $--font-size-200;
     }
-    @include from('xl') {
+    @include from("xl") {
       margin-bottom: 100px;
     }
   }
@@ -241,7 +241,7 @@ export default {
     }
 
     font-size: 22px;
-    @include from('md') {
+    @include from("md") {
       font-size: 26px;
     }
 
@@ -270,7 +270,7 @@ export default {
     transition-timing-function: $--timing-in-out-cubic;
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       right: 0;
@@ -305,7 +305,7 @@ export default {
   &__subtitle {
     margin: 0;
     margin-bottom: 20px;
-    @include from('lg') {
+    @include from("lg") {
       margin-bottom: 66px;
     }
     font-size: $--font-size-100;
@@ -324,10 +324,10 @@ export default {
     margin-top: 40px;
     flex-wrap: wrap;
 
-    @include from('sm') {
+    @include from("sm") {
       flex-wrap: nowrap;
     }
-    @include from('xl') {
+    @include from("xl") {
       margin-top: 0;
     }
   }
@@ -342,13 +342,13 @@ export default {
     margin-bottom: 16px;
 
     & + & {
-      @include from('sm') {
+      @include from("sm") {
         margin-left: 16px;
         margin-bottom: 0;
       }
     }
 
-    @include from('md') {
+    @include from("md") {
       font-size: 22px;
     }
 
