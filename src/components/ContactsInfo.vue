@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="col col-xs-2 col-sm-4 col-xl-6">
-          <contact-form :contrast="contrast" />
+          <contact-form :contrast="contrast" :indented="true" />
         </div>
       </div>
     </div>

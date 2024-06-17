@@ -1,5 +1,11 @@
 <template>
-  <div :class="['form', { 'form--error': displayError }]">
+  <div
+    :class="[
+      'form',
+      { 'form--error': displayError },
+      { 'form--indented': indented },
+    ]"
+  >
     <form
       v-if="!isFormSent"
       class="form__form"
@@ -119,6 +125,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    indented: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
@@ -199,13 +209,16 @@ export default {
 .form {
   $form: &;
 
-  margin-top: 72px;
-  @include from("lg") {
-    margin-top: 106px;
+  &--indented {
+    margin-top: 72px;
+    @include from("lg") {
+      margin-top: 106px;
+    }
+    @include from("xl") {
+      margin-top: 0;
+    }
   }
-  @include from("xl") {
-    margin-top: 0;
-  }
+
   &__title {
     max-width: 60%;
     margin-bottom: 34px;

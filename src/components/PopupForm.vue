@@ -19,23 +19,23 @@
 </template>
 
 <script>
-import ContactForm from '@/components/ContactForm.vue';
+import ContactForm from "@/components/ContactForm.vue";
 
 export default {
-  name: 'PopupForm',
+  name: "PopupForm",
   components: {
     ContactForm,
   },
   methods: {
     onClose() {
-      this.$store.commit('setPopupFormOpen', { isFormPopupOpen: false });
+      this.$store.commit("setPopupFormOpen", { isFormPopupOpen: false });
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .popup-form {
   position: fixed;
@@ -44,8 +44,16 @@ export default {
   right: 0;
   bottom: 0;
   background-color: $--color-background;
-  padding-top: 8.5vmax;
+  padding: 6.5vh 0;
   z-index: 2;
+
+  @media screen and (max-width: 1200px) {
+    overflow-x: scroll;
+  }
+
+  @media screen and (min-width: 1200px) {
+    padding-top: 10.5vh;
+  }
 
   &__inner {
     position: relative;
