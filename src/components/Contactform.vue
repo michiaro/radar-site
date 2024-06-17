@@ -143,16 +143,11 @@ export default {
       const common = this.$store.state.staticData.singletones.common;
       return common ? common.formErrorMessage : "";
     },
-    formSuccessMessage() {
-      const common = this.$store.state.staticData.singletones.common;
-      return common ? common.formSuccessMessage : "";
-    },
     result() {
-      const { isFormSent, isSuccess, formErrorMessage, formSuccessMessage } =
-        this;
+      const { isFormSent, isSuccess, formErrorMessage } = this;
 
       if (isFormSent) {
-        return isSuccess ? formSuccessMessage : formErrorMessage;
+        return isSuccess ? this.goToThankyouPage() : formErrorMessage;
       }
       return "";
     },
@@ -198,6 +193,11 @@ export default {
     },
     resetError() {
       this.displayError = false;
+    },
+    goToThankyouPage() {
+      this.$router.push({
+        path: "/thankyou",
+      });
     },
   },
 };

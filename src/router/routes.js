@@ -6,6 +6,7 @@ import Contacts from '@/components/pages/Contacts.vue';
 import Policy from '@/components/pages/Policy.vue';
 import ErrorPage from '@/components/pages/ErrorPage.vue';
 import Work from '@/components/pages/Work.vue';
+import Thankyou from '@/components/pages/Thankyou.vue';
 
 const routes = [
   {
@@ -164,6 +165,32 @@ const routes = [
         {
           name: 'og:url',
           content: 'https://radar-online.ru/policy',
+        },
+      ],
+    },
+  },
+  {
+    path: '/thankyou',
+    component: Thankyou,
+    name: 'Thankyou',
+    meta: {
+      title: 'Radar, Ваше сообщение отправлено',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'Ваше сообщение успешно отправлено.',
+        },
+        {
+          property: 'og:description',
+          content: 'Ваше сообщение успешно отправлено.',
+        },
+        {
+          name: 'og:title',
+          content: 'Radar, Ваше сообщение отправлено',
+        },
+        {
+          name: 'og:url',
+          content: 'https://radar-online.ru/thankyou',
         },
       ],
     },
