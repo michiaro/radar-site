@@ -6,3 +6,5 @@ export const WORKS_TO_LOAD_COUNT = 16;
 export const baseURL = 'https://radar-online.ru/';
 
 export const GOOGLE_MAP_API_KEY = 'AIzaSyDOqBvzLNS1rtiSoAdiUyRkZIRx_FUjjjA';
+
+export const RECAPCHA_SITE_KEY = '6Ldl5v8pAAAAAM5TGQHm-BKgxRSXbynM1C57wNMt';

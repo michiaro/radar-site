@@ -13,41 +13,50 @@
       @submit.prevent="validate"
     >
       <h2 class="contact-form__title form__title">Связаться с&nbsp;нами</h2>
-      <div class="row">
-        <div
-          v-for="(field, key) in formData"
-          :key="key"
-          :class="[
-            'col col-xs-2 ',
-            { 'col-sm-2 col-lg-6': key !== 'message' },
-            { 'col-sm-4 col-lg-12': key === 'message' },
-          ]"
-        >
-          <div class="form__field">
-            <input
-              v-if="key !== 'message'"
-              v-model="formData[key].value"
-              type="text"
-              class="form__input"
-              :placeholder="field.label"
-              :required="field.required"
-              @input="resetError"
-            />
-            <div v-if="field.required" class="form__input-error">
-              обязательное поле
-            </div>
 
-            <textarea
-              v-if="key === 'message'"
-              v-model="formData[key].value"
-              type="text"
-              class="form__input form__input--textarea"
-              placeholder="Чем мы можем быть вам полезны?"
-              rows="8"
-            />
+      <div class="form__fileds-block">
+        <div class="row">
+          <div
+            v-for="(field, key) in formData"
+            :key="key"
+            :class="[
+              'col col-xs-2 ',
+              { 'col-sm-2 col-lg-6': key !== 'message' },
+              { 'col-sm-4 col-lg-12': key === 'message' },
+            ]"
+          >
+            <div class="form__field">
+              <input
+                v-if="key !== 'message'"
+                v-model="formData[key].value"
+                type="text"
+                class="form__input"
+                :placeholder="field.label"
+                :required="field.required"
+                @input="resetError"
+              />
+              <div v-if="field.required" class="form__input-error">
+                обязательное поле
+              </div>
+
+              <textarea
+                v-if="key === 'message'"
+                v-model="formData[key].value"
+                type="text"
+                class="form__input form__input--textarea"
+                placeholder="Чем мы можем быть вам полезны?"
+                rows="8"
+              />
+            </div>
           </div>
         </div>
+
+        <!-- recapcha -->
+        <div class="form__recapcha">
+          <div class="g-recaptcha" :data-sitekey="recapchaKey" />
+        </div>
       </div>
+
       <div class="row row-md-middle">
         <div class="col col-xs-2 col-sm-2 col-lg-6">
           <div class="form__field form__terms">
@@ -74,11 +83,15 @@
     <h2 v-else class="form__result contact-form__title form__title">
       {{ result }}
     </h2>
+
+    <!-- recapcha errors -->
+    <div id="recaptchaError" class="text-danger" />
   </div>
 </template>
 
 <script>
 import { sendForm } from "@/api/index";
+import { RECAPCHA_SITE_KEY } from "@/settings.js";
 
 const emptyFormData = {
   name: {
@@ -136,6 +149,7 @@ export default {
       isSuccess: false,
       formData: emptyFormData,
       displayError: false,
+      recapchaKey: RECAPCHA_SITE_KEY,
     };
   },
   computed: {
@@ -188,7 +202,16 @@ export default {
       this.displayError = isError;
 
       if (!this.displayError) {
-        this.onSubmit();
+        console.log("grecaptcha", grecaptcha);
+        grecaptcha.ready(() => {
+          grecaptcha
+            .execute(this.recapchaKey, { action: "submit" })
+            .then((token) => {
+              // Add your logic to submit to your backend server here.
+              console.log("recapcha succesefull", "token", token);
+              this.onSubmit();
+            });
+        });
       }
     },
     resetError() {
@@ -263,6 +286,22 @@ export default {
     &--textarea {
       resize: vertical;
       height: auto;
+    }
+  }
+
+  &__fileds-block {
+    position: relative;
+  }
+
+  &__recapcha {
+    position: absolute;
+    bottom: 1.2vmax;
+    left: 0.2vmax;
+    z-index: 1;
+
+    @include from("xl") {
+      right: 0;
+      left: auto;
     }
   }
 
