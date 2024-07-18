@@ -240,6 +240,10 @@ export default {
   &__logo {
     display: inline-block;
 
+    img {
+      max-height: 69px;
+    }
+
     & + & {
       margin-left: 26px;
     }
