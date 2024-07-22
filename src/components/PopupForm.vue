@@ -10,7 +10,7 @@
             >
               <div class="close-button__cross" />
             </button>
-            <contact-form />
+            <contact-form :popup="true" />
           </div>
         </div>
       </div>

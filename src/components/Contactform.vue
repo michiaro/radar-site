@@ -53,7 +53,11 @@
 
         <!-- recapcha -->
         <div class="form__recapcha">
-          <div class="g-recaptcha" :data-sitekey="recapchaKey" />
+          <div
+            :id="popup ? 'popup-recapcha' : 'recapcha'"
+            class="g-recaptcha"
+            :data-sitekey="recapchaKey"
+          />
         </div>
       </div>
 
@@ -142,6 +146,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    popup: {
+      type: Boolean,
+      reqired: false,
+    },
   },
   data() {
     return {
@@ -151,6 +159,17 @@ export default {
       displayError: false,
       recapchaKey: RECAPCHA_SITE_KEY,
     };
+  },
+  mounted() {
+    if (this.popup) {
+      grecaptcha.render("popup-recapcha", {
+        sitekey: this.recapchaKey,
+      });
+    } else {
+      grecaptcha.render("recapcha", {
+        sitekey: this.recapchaKey,
+      });
+    }
   },
   computed: {
     formErrorMessage() {
@@ -186,6 +205,7 @@ export default {
       setTimeout(() => {
         this.isFormSent = false;
         this.isSuccess = false;
+        grecaptcha.reset();
       }, 4000);
     },
     validate() {
