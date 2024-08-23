@@ -60,6 +60,15 @@
               </span>
             </appear>
           </a>
+          <a :href="common.telegram" class="social-link" target="_blank">
+            <appear :is-visible="animationCounter >= 3" :on-next="showNext">
+              <span
+                class="appear appear--right appear--duration-500 appear--duration-1000"
+              >
+                TELEGRAM
+              </span>
+            </appear>
+          </a>
         </div>
       </div>
     </div>

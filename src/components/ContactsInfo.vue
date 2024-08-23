@@ -97,18 +97,12 @@
                     class="contact-form__social-link"
                     >VK</a
                   >
-                  <!-- <a
-                    :href="common.facebook"
-                    target="_blank"
-                    class="contact-form__social-link"
-                    >FACEBOOK</a
-                  >
                   <a
-                    :href="common.vk"
+                    :href="common.telegram"
                     target="_blank"
                     class="contact-form__social-link"
-                    >VKONTAKTE</a
-                  > -->
+                    >TELEGRAM</a
+                  >
                 </p>
               </div>
             </div>
@@ -319,7 +313,7 @@ export default {
 
   &__social {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     margin: 0;
     margin-top: 40px;
     flex-wrap: wrap;
