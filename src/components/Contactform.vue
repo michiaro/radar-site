@@ -52,13 +52,13 @@
         </div>
 
         <!-- recapcha -->
-        <div class="form__recapcha">
+        <!-- <div class="form__recapcha">
           <div
             :id="popup ? 'popup-recapcha' : 'recapcha'"
             class="g-recaptcha"
             :data-sitekey="recapchaKey"
           />
-        </div>
+        </div> -->
       </div>
 
       <div class="row row-md-middle">
@@ -161,15 +161,19 @@ export default {
     };
   },
   mounted() {
-    if (this.popup) {
-      grecaptcha.render("popup-recapcha", {
-        sitekey: this.recapchaKey,
-      });
-    } else {
-      grecaptcha.render("recapcha", {
-        sitekey: this.recapchaKey,
-      });
-    }
+    // if (this.popup) {
+    //   grecaptcha.ready(() => { 
+    //     grecaptcha.render("popup-recapcha", {
+    //       sitekey: this.recapchaKey,
+    //     });
+    //   });
+    // } else {
+    //   grecaptcha.ready(() => { 
+    //     grecaptcha.render("recapcha", {
+    //       sitekey: this.recapchaKey,
+    //     });
+    //   });
+    // }
   },
   computed: {
     formErrorMessage() {
@@ -205,7 +209,7 @@ export default {
       setTimeout(() => {
         this.isFormSent = false;
         this.isSuccess = false;
-        grecaptcha.reset();
+        // grecaptcha.reset();
       }, 4000);
     },
     validate() {
@@ -222,16 +226,15 @@ export default {
       this.displayError = isError;
 
       if (!this.displayError) {
-        console.log("grecaptcha", grecaptcha);
-        grecaptcha.ready(() => {
-          grecaptcha
-            .execute(this.recapchaKey, { action: "submit" })
-            .then((token) => {
-              // Add your logic to submit to your backend server here.
-              console.log("recapcha succesefull", "token", token);
+        // console.log("grecaptcha", grecaptcha);
+        // grecaptcha.ready(() => {
+        //   grecaptcha
+        //     .execute(this.recapchaKey, { action: "submit" })
+        //     .then((token) => {
+              // console.log("recapcha succesefull", "token", token);
               this.onSubmit();
-            });
-        });
+        //     });
+        // });
       }
     },
     resetError() {
