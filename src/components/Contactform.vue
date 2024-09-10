@@ -76,7 +76,6 @@
               class="button"
               :class="{ 'button--contrast': contrast }"
               type="submit"
-              @click="validate"
             >
               Отправить
             </button>
@@ -162,13 +161,13 @@ export default {
   },
   mounted() {
     // if (this.popup) {
-    //   grecaptcha.ready(() => { 
+    //   grecaptcha.ready(() => {
     //     grecaptcha.render("popup-recapcha", {
     //       sitekey: this.recapchaKey,
     //     });
     //   });
     // } else {
-    //   grecaptcha.ready(() => { 
+    //   grecaptcha.ready(() => {
     //     grecaptcha.render("recapcha", {
     //       sitekey: this.recapchaKey,
     //     });
@@ -213,6 +212,8 @@ export default {
       }, 4000);
     },
     validate() {
+      console.log("validate");
+
       let isError = false;
       for (const key in this.formData) {
         if (Object.hasOwnProperty.call(this.formData, key)) {
@@ -231,8 +232,8 @@ export default {
         //   grecaptcha
         //     .execute(this.recapchaKey, { action: "submit" })
         //     .then((token) => {
-              // console.log("recapcha succesefull", "token", token);
-              this.onSubmit();
+        // console.log("recapcha succesefull", "token", token);
+        this.onSubmit();
         //     });
         // });
       }
