@@ -119,8 +119,8 @@ const emptyFormData = {
   },
   email: {
     value: "",
-    label: "Электронная почта",
-    required: false,
+    label: "Электронная почта*",
+    required: true,
   },
   city: {
     value: "",
