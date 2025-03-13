@@ -199,12 +199,52 @@
           </div>
         </div>
 
+        <appear
+          :is-visible="
+            getVisibility(
+              6 + currentWorkLayoutLength + currentWorkCreditsLength
+            )
+          "
+          :on-next="showNext"
+        >
+          <div
+            v-observe-visibility="
+              trackVisibility(
+                6 + currentWorkLayoutLength + currentWorkCreditsLength
+              )
+            "
+            class="appear appear--up appear--duration-1000"
+          >
+            <div class="work-page__contact-us contact-us">
+              <div class="row row-xs-middle">
+                <div class="col col-xs-2 col-lg-2 col-xl-6">
+                  <div class="contact-us__title">
+                    Время менять российский рынок
+                  </div>
+                  <div class="contact-us__text">
+                    Напишите, чем мы можем быть полезны для вас.
+                  </div>
+                </div>
+                <div class="col col-xs-2 col-lg-2 col-xl-6">
+                  <button
+                    type="button"
+                    class="contact-us__button button button--contrast"
+                    @click="openPopupForm"
+                  >
+                    Обсудить задачу
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </appear>
+
         <div class="row" v-if="nextWork">
           <div class="col col-xs-2">
             <appear
               :is-visible="
                 getVisibility(
-                  6 + currentWorkLayoutLength + currentWorkCreditsLength,
+                  7 + currentWorkLayoutLength + currentWorkCreditsLength
                 )
               "
               :on-next="showNext"
@@ -212,14 +252,12 @@
               <div
                 v-observe-visibility="
                   trackVisibility(
-                    6 + currentWorkLayoutLength + currentWorkCreditsLength,
+                    7 + currentWorkLayoutLength + currentWorkCreditsLength
                   )
                 "
                 class="appear appear--up appear--duration-1000"
               >
-                <h2 class="work-page__next-work">
-                  Следующий проект
-                </h2>
+                <h2 class="work-page__next-work">Следующий проект</h2>
               </div>
             </appear>
           </div>
@@ -233,7 +271,7 @@
         <appear
           :is-visible="
             getVisibility(
-              7 + currentWorkLayoutLength + currentWorkCreditsLength,
+              7 + currentWorkLayoutLength + currentWorkCreditsLength
             )
           "
           :on-next="showNext"
@@ -241,7 +279,7 @@
           <div
             v-observe-visibility="
               trackVisibility(
-                7 + currentWorkLayoutLength + currentWorkCreditsLength,
+                7 + currentWorkLayoutLength + currentWorkCreditsLength
               )
             "
             class="appear appear--up appear--duration-2000"
@@ -283,15 +321,15 @@
 </template>
 
 <script>
-import { baseURL, getCollectionByKey } from '@/api/index.js';
-import { glueUpPrepositions, isVideo } from '@/utils/index.js';
-import TextContent from '@/components/work-components/TextContent.vue';
-import PictureArray from '@/components/work-components/PictureArray.vue';
-import Media from '@/components/work-components/Media.vue';
-import Appear from '@/components/Appear.vue';
+import { baseURL, getCollectionByKey } from "@/api/index.js";
+import { glueUpPrepositions, isVideo } from "@/utils/index.js";
+import TextContent from "@/components/work-components/TextContent.vue";
+import PictureArray from "@/components/work-components/PictureArray.vue";
+import Media from "@/components/work-components/Media.vue";
+import Appear from "@/components/Appear.vue";
 
 export default {
-  name: 'Work',
+  name: "Work",
   components: {
     TextContent,
     PictureArray,
@@ -359,7 +397,7 @@ export default {
       this.isWorkLoading = true;
 
       const { data } = await getCollectionByKey({
-        key: 'works',
+        key: "works",
         filter: {
           slug: workSlug,
         },
@@ -379,7 +417,7 @@ export default {
       this.isNextWorkLoading = true;
 
       const { data } = await getCollectionByKey({
-        key: 'works',
+        key: "works",
         filter: {
           _o: currentWork._o + 1,
         },
@@ -391,17 +429,17 @@ export default {
     },
     async fetchTags() {
       const { data } = await getCollectionByKey({
-        key: 'tags',
+        key: "tags",
       });
       this.tags = data;
     },
     getLayoutComponent(layoutItem) {
       switch (layoutItem) {
-        case 'Text':
+        case "Text":
           return TextContent;
-        case 'PictureArray':
+        case "PictureArray":
           return PictureArray;
-        case 'Media':
+        case "Media":
           return Media;
       }
     },
@@ -417,7 +455,7 @@ export default {
       const { tags } = this;
       const tag = tags.find((tag) => tag.title === tagTitle);
       let path = {
-        name: 'AllWorks',
+        name: "AllWorks",
       };
 
       if (tag) {
@@ -461,12 +499,15 @@ export default {
         this.isTagsVisible = isVisible;
       }
     },
+    openPopupForm() {
+      this.$store.commit("setPopupFormOpen", { isFormPopupOpen: true });
+    },
   },
 };
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .work-page {
   letter-spacing: $--letter-spacing;
@@ -498,7 +539,7 @@ export default {
   &__about {
     margin-bottom: 28px;
 
-    @include from('xl') {
+    @include from("xl") {
       margin-bottom: 78px;
     }
   }
@@ -507,7 +548,7 @@ export default {
     line-height: 1.67;
     font-size: $--font-size-80;
 
-    @include from('xl') {
+    @include from("xl") {
       line-height: 1.25;
       font-size: $--font-size-160;
     }
@@ -574,14 +615,15 @@ export default {
     &--team {
       margin-bottom: 2vmax;
 
-      @include from('xl') {
+      @include from("xl") {
         margin-bottom: 0.65vmax;
       }
     }
   }
 
   &__team {
-    margin-bottom: 5.5vmax;
+    // margin-bottom: 5.5vmax;
+    margin-bottom: 2.5vmax;
   }
 
   &__position {
@@ -609,6 +651,109 @@ export default {
     }
     &:hover {
       color: $--color-brand;
+    }
+  }
+
+  &__contact-us {
+    margin-bottom: 2vmax;
+  }
+}
+
+.contact-us {
+  background: $--color-text;
+  border-radius: 80px;
+  padding: 3.3vmax;
+
+  @include from("sm") {
+    border-radius: 100px;
+    padding: 5.3vmax;
+  }
+  @include from("xxl") {
+    padding: 100px;
+    border-radius: 200px;
+  }
+
+  &__title {
+    color: $--color-gray-50;
+    text-align: center;
+
+    font-size: 26px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+
+    @include from("sm") {
+      line-height: 1;
+      margin-bottom: 0;
+      font-size: 24px;
+    }
+    @include from("md") {
+      font-size: 28px;
+    }
+    @include from("lg") {
+      font-size: 24px;
+    }
+    @include from("xl") {
+      font-size: 28px;
+    }
+    @include from("xxl") {
+      font-size: 38px;
+    }
+    @include from("xxxl") {
+      font-size: 42px;
+    }
+  }
+  &__text {
+    text-align: center;
+    color: $--color-gray-500;
+    font-weight: 300;
+    line-height: 1.5;
+    font-size: 16px;
+
+    @include from("sm") {
+      font-size: 16px;
+    }
+    @include from("md") {
+      font-size: 18px;
+    }
+    @include from("lg") {
+      font-size: 16px;
+    }
+    @include from("xl") {
+      font-size: 18px;
+    }
+    @include from("xxl") {
+      font-size: 24px;
+    }
+    @include from("xxxl") {
+      font-size: 26px;
+    }
+  }
+  &__button {
+    display: block;
+    width: 94%;
+    color: $--color-text;
+
+    margin: auto;
+    max-width: 80%;
+    margin-top: 2vmax;
+
+    @include to("xxl") {
+      height: 52px !important;
+      font-size: 18px !important;
+    }
+    @include from("sm") {
+      max-width: 70%;
+    }
+    @include from("lg") {
+      margin: 0;
+      max-width: 94%;
+    }
+    @include from("xxl") {
+      height: 76px;
+      font-size: 22px;
+    }
+    @include from("xxxl") {
+      max-width: 752px;
     }
   }
 }
@@ -644,7 +789,7 @@ export default {
   &__title {
     font-weight: normal;
     font-size: $--font-size-250;
-    @include from('lg') {
+    @include from("lg") {
       font-size: $--font-size-360;
     }
 

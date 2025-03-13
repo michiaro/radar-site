@@ -43,7 +43,7 @@
   &--contrast {
     background-color: $--color-background;
     border-color: $--color-background;
-    color: $--color-text--muted;
+    color: $--color-text;
 
     #{$button}--quiet {
       background-color: transparent;
