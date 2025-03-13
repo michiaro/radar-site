@@ -27,7 +27,7 @@
           >
             <div class="form__field">
               <input
-                v-if="key !== 'message'"
+                v-if="key !== 'message' && key !== 'phone'"
                 v-model="formData[key].value"
                 type="text"
                 class="form__input"
@@ -35,6 +35,16 @@
                 :required="field.required"
                 @input="resetError"
               />
+              <the-mask
+                v-if="key === 'phone'"
+                v-model="formData[key].value"
+                mask="+7 (###) ###-##-##"
+                masked
+                type="tel"
+                class="form__input"
+                placeholder="+7 (999) 999-99-99"
+              />
+
               <div v-if="field.required" class="form__input-error">
                 обязательное поле
               </div>
@@ -95,6 +105,7 @@
 <script>
 import { sendForm } from "@/api/index";
 import { RECAPCHA_SITE_KEY } from "@/settings.js";
+import { TheMask } from "vue-the-mask";
 
 const emptyFormData = {
   name: {
@@ -136,6 +147,9 @@ const emptyFormData = {
 
 export default {
   name: "ContactForm",
+  components: {
+    TheMask,
+  },
   props: {
     contrast: {
       type: Boolean,
@@ -159,6 +173,20 @@ export default {
       recapchaKey: RECAPCHA_SITE_KEY,
     };
   },
+  computed: {
+    formErrorMessage() {
+      const common = this.$store.state.staticData.singletones.common;
+      return common ? common.formErrorMessage : "";
+    },
+    result() {
+      const { isFormSent, isSuccess, formErrorMessage } = this;
+
+      if (isFormSent) {
+        return isSuccess ? this.goToThankyouPage() : formErrorMessage;
+      }
+      return "";
+    },
+  },
   mounted() {
     // if (this.popup) {
     //   grecaptcha.ready(() => {
@@ -173,20 +201,6 @@ export default {
     //     });
     //   });
     // }
-  },
-  computed: {
-    formErrorMessage() {
-      const common = this.$store.state.staticData.singletones.common;
-      return common ? common.formErrorMessage : "";
-    },
-    result() {
-      const { isFormSent, isSuccess, formErrorMessage } = this;
-
-      if (isFormSent) {
-        return isSuccess ? this.goToThankyouPage() : formErrorMessage;
-      }
-      return "";
-    },
   },
   methods: {
     async onSubmit() {
@@ -212,8 +226,6 @@ export default {
       }, 4000);
     },
     validate() {
-      console.log("validate");
-
       let isError = false;
       for (const key in this.formData) {
         if (Object.hasOwnProperty.call(this.formData, key)) {
@@ -226,7 +238,7 @@ export default {
 
       this.displayError = isError;
 
-      if (!this.displayError) {
+      if (!isError) {
         // console.log("grecaptcha", grecaptcha);
         // grecaptcha.ready(() => {
         //   grecaptcha
