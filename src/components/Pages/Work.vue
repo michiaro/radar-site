@@ -661,7 +661,7 @@ export default {
 
 .contact-us {
   background: $--color-text;
-  border-radius: 80px;
+  border-radius: 40px;
   padding: 3.3vmax;
 
   @include from("sm") {
