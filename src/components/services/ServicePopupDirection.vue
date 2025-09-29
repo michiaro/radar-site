@@ -1,11 +1,20 @@
 <template>
-  <div class="service-direction" :class="{ 'service-direction--contrast': isClosed }">
+  <div
+    class="service-direction"
+    :class="{ 'service-direction--contrast': isClosed }"
+  >
     <simplebar class="service-direction__scroll-container">
       <div class="service-direction__main">
-        <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
+        <appear
+          :is-visible="animationCounter >= 3 + subdivisionCount"
+          is-silent
+        >
           <button
             class="close-button close-button--cross appear appear--up"
-            :class="{ 'appear--duration-0': !isOpen, 'appear--delay-500': isOpen }"
+            :class="{
+              'appear--duration-0': !isOpen,
+              'appear--delay-500': isOpen,
+            }"
             @click.stop="onClose"
           >
             <div class="close-button__cross" />
@@ -20,17 +29,31 @@
                 </h2>
               </div>
             </transition>
-            <appear :is-visible="animationCounter >= 1" :counter-key="serviceId">
-              <div class="service-direction__description appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
+            <appear
+              :is-visible="animationCounter >= 1"
+              :counter-key="serviceId"
+            >
+              <div
+                class="service-direction__description appear appear--up"
+                :class="{ 'appear--duration-0': !isOpen }"
+              >
                 {{ glueUpPrepositions(service.description) }}
               </div>
             </appear>
           </div>
-          <div class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3">
-            <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
+          <div
+            class="col col-xs-0 col-sm-0 col-md-0 col-lg-0 col-xl-4 col-2xl-3"
+          >
+            <appear
+              :is-visible="animationCounter >= 3 + subdivisionCount"
+              is-silent
+            >
               <div
                 class="service-direction__button appear appear--up"
-                :class="{ 'appear--duration-0': !isOpen, 'appear--delay-1000': isOpen }"
+                :class="{
+                  'appear--duration-0': !isOpen,
+                  'appear--delay-1000': isOpen,
+                }"
               >
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
@@ -41,8 +64,14 @@
         </div>
         <div class="row">
           <div class="col col-xs-2 col-lg-2 col-xl-5">
-            <appear :is-visible="animationCounter >= 2" :counter-key="serviceId">
-              <p class="service-direction__info appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
+            <appear
+              :is-visible="animationCounter >= 2"
+              :counter-key="serviceId"
+            >
+              <p
+                class="service-direction__info appear appear--up"
+                :class="{ 'appear--duration-0': !isOpen }"
+              >
                 {{ glueUpPrepositions(service.info) }}
               </p>
             </appear>
@@ -55,17 +84,28 @@
                 :is-visible="animationCounter >= 3 + index"
                 :counter-key="serviceId"
               >
-                <p class="service-direction__subdirection appear appear--up" :class="{ 'appear--duration-0': !isOpen }">
+                <p
+                  class="service-direction__subdirection appear appear--up"
+                  :class="{ 'appear--duration-0': !isOpen }"
+                >
                   {{ glueUpPrepositions(subdivision.value.subdivision) }}
                 </p>
               </appear>
             </div>
           </div>
-          <div class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0">
-            <appear :is-visible="animationCounter >= 3 + subdivisionCount" is-silent>
+          <div
+            class="col col-xs-2 col-sm-2 col-lg-2 col-xl-0 col-2xl-0 col-3xl-0"
+          >
+            <appear
+              :is-visible="animationCounter >= 3 + subdivisionCount"
+              is-silent
+            >
               <div
                 class="service-direction__button appear appear--up"
-                :class="{ 'appear--duration-0': !isOpen, 'appear--delay-1000': isOpen }"
+                :class="{
+                  'appear--duration-0': !isOpen,
+                  'appear--delay-1000': isOpen,
+                }"
               >
                 <button class="button button--quiet" @click="openPopupForm">
                   Обсудить задачу
@@ -75,7 +115,11 @@
           </div>
         </div>
         <div v-if="works" class="row">
-          <work-list :works="works" :counter-key="serviceId" :counter-modifier="subdivisionCount" />
+          <work-list
+            :works="works"
+            :counter-key="serviceId"
+            :counter-modifier="subdivisionCount"
+          />
         </div>
       </div>
     </simplebar>
@@ -95,17 +139,17 @@
 </template>
 
 <script>
-import WorkList from '@/components/WorkList.vue';
-import { glueUpPrepositions } from '@/utils/index.js';
-import { getCollectionByKey } from '@/api/index.js';
-import SERVICE_STATE from '@/components/services/servicePopupDirectionState.js';
+import WorkList from "@/components/WorkList.vue";
+import { glueUpPrepositions } from "@/utils/index.js";
+import { getCollectionByKey } from "@/api/index.js";
+import SERVICE_STATE from "@/components/services/servicePopupDirectionState.js";
 
-import simplebar from 'simplebar-vue';
-import 'simplebar/dist/simplebar.min.css';
-import Appear from '@/components/Appear.vue';
+import simplebar from "simplebar-vue";
+import "simplebar/dist/simplebar.min.css";
+import Appear from "@/components/Appear.vue";
 
 export default {
-  name: 'ServicePopupDirection',
+  name: "ServicePopupDirection",
   components: {
     WorkList,
     simplebar,
@@ -145,7 +189,9 @@ export default {
     },
     currentTagTitle() {
       const { tags, serviceId } = this;
-      const currentTag = tags ? tags.find((tag) => tag.slug === serviceId) : null;
+      const currentTag = tags
+        ? tags.find((tag) => tag.slug === serviceId)
+        : null;
       return currentTag ? currentTag.title : null;
     },
     subdivisionCount() {
@@ -172,7 +218,7 @@ export default {
       }
 
       const { data } = await getCollectionByKey({
-        key: 'works',
+        key: "works",
         options: {
           limit: 16,
           sort: { _o: 1 },
@@ -185,29 +231,29 @@ export default {
     },
     async fetchTags() {
       const { data } = await getCollectionByKey({
-        key: 'tags',
+        key: "tags",
       });
       const tagsArray = data;
 
-      this.$store.commit('setStaticCollectionData', {
-        title: 'tags',
+      this.$store.commit("setStaticCollectionData", {
+        title: "tags",
         collection: tagsArray,
       });
     },
     onClose() {
-      this.$emit('close');
-      this.$store.commit('resetAnimations', { counterKey: this.serviceId });
-      this.$store.commit('setPopupFormOpen', { isFormPopupOpen: false });
+      this.$emit("close");
+      this.$store.commit("resetAnimations", { counterKey: this.serviceId });
+      this.$store.commit("setPopupFormOpen", { isFormPopupOpen: false });
     },
     openPopupForm() {
-      this.$store.commit('setPopupFormOpen', { isFormPopupOpen: true });
+      this.$store.commit("setPopupFormOpen", { isFormPopupOpen: true });
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .service-direction {
   $service-direction: &;
@@ -243,7 +289,7 @@ export default {
     white-space: nowrap;
     color: $--color-gray-50;
     font-size: 2.3vmax;
-    @include from('xl') {
+    @include from("xl") {
       right: 0;
       transform: rotate(-90deg) translate(0, -15%);
       transform-origin: right center;
@@ -266,7 +312,7 @@ export default {
     font-weight: normal;
     letter-spacing: $--letter-spacing;
     margin: 0;
-    @include from('xl') {
+    @include from("xl") {
       font-size: 4vmax;
     }
   }
@@ -277,14 +323,14 @@ export default {
     margin-bottom: 22px;
     margin-top: 1.5vmax;
 
-    @include from('lg') {
+    @include from("lg") {
       margin-bottom: 100px;
       font-size: 36px;
     }
   }
   &__button {
     margin-bottom: 22px;
-    @include from('xl') {
+    @include from("xl") {
       margin-bottom: 0;
       margin-top: 8px;
     }
@@ -296,14 +342,14 @@ export default {
     margin: 0;
     margin-bottom: 22px;
 
-    @include from('xl') {
+    @include from("xl") {
       margin-bottom: 0;
     }
   }
   &__subdirections {
     margin-bottom: 28px;
 
-    @include from('lg') {
+    @include from("lg") {
       margin-bottom: 54px;
     }
   }
@@ -316,7 +362,7 @@ export default {
     margin: 0;
     margin-top: 6px;
 
-    @include from('lg') {
+    @include from("lg") {
       font-size: $--font-size-90;
     }
   }
@@ -375,11 +421,20 @@ export default {
     }
   }
 
+  &--contrast {
+    #{$close-button}__cross {
+      &:before,
+      &:after {
+        background: $--color-background;
+      }
+    }
+  }
+
   &--plus-transition {
     position: absolute;
     bottom: 3.25vmax;
     right: 3.25vmax;
-    @include from('xl') {
+    @include from("xl") {
       left: 3.25vmax;
     }
   }
@@ -397,7 +452,7 @@ export default {
     height: 0;
     &:before,
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       height: 2px;
       left: -$cross-size;
