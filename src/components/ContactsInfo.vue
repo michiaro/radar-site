@@ -403,6 +403,24 @@ export default {
     #{$block}__person {
       color: $--color-text--muted;
     }
+
+    .social-link {
+      &__icon {
+        path {
+          fill: $--color-text--contrast;
+        }
+      }
+
+      &:hover {
+        color: $--color-brand;
+
+        #{$block}__icon {
+          path {
+            fill: $--color-brand;
+          }
+        }
+      }
+    }
   }
 }
 
