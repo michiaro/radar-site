@@ -237,7 +237,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/shared/_globals.scss";
 
 .contact-form {
