@@ -123,21 +123,21 @@ const emptyFormData = {
     label: "Компания",
     required: false,
   },
-  jobTitle: {
-    value: "",
-    label: "Должность",
-    required: false,
-  },
+  //jobTitle: {
+  //  value: "",
+  //  label: "Должность",
+  //  required: false,
+  //},
   email: {
     value: "",
     label: "Электронная почта*",
     required: true,
   },
-  city: {
-    value: "",
-    label: "Город",
-    required: false,
-  },
+  //city: {
+  //  value: "",
+  //  label: "Город",
+  //  required: false,
+  //},
   message: {
     value: "",
     label: "Сообщение",
