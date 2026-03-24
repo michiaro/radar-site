@@ -7,11 +7,16 @@ import Policy from '@/components/pages/Policy.vue';
 import ErrorPage from '@/components/pages/ErrorPage.vue';
 import Work from '@/components/pages/Work.vue';
 import Thankyou from '@/components/pages/Thankyou.vue';
+import ConfirmYourAge from '@/components/pages/ConfirmYourAge.vue';
+import PageHeader from '@/components/PageHeader.vue';
 
 const routes = [
   {
     path: '/',
-    component: Home,
+    components: {
+      header: PageHeader,
+      default: Home,
+    },
     name: 'Home',
     meta: {
       title: 'Radar',
@@ -37,7 +42,10 @@ const routes = [
   },
   {
     path: '/all-works',
-    component: AllWorks,
+    components: {
+      header: PageHeader,
+      default: AllWorks,
+    },
     name: 'AllWorks',
     meta: {
       title: 'Radar, Работы',
@@ -63,7 +71,10 @@ const routes = [
   },
   {
     path: '/agency',
-    component: Agency,
+    components: {
+      header: PageHeader,
+      default: Agency,
+    },
     name: 'Agency',
     meta: {
       title: 'Radar, Агентство',
@@ -89,7 +100,10 @@ const routes = [
   },
   {
     path: '/contacts',
-    component: Contacts,
+    components: {
+      header: PageHeader,
+      default: Contacts,
+    },
     name: 'Contacts',
     meta: {
       title: 'Radar, Контакты',
@@ -117,7 +131,10 @@ const routes = [
   },
   {
     path: '/services',
-    component: Services,
+    components: {
+      header: PageHeader,
+      default: Services,
+    },
     name: 'Services',
     meta: {
       title: 'Radar, Услуги',
@@ -145,7 +162,10 @@ const routes = [
   },
   {
     path: '/policy',
-    component: Policy,
+    components: {
+      header: PageHeader,
+      default: Policy,
+    },
     name: 'Policy',
     meta: {
       title: 'Radar, Политика конфиденциальности',
@@ -171,7 +191,10 @@ const routes = [
   },
   {
     path: '/thankyou',
-    component: Thankyou,
+    components: {
+      header: PageHeader,
+      default: Thankyou,
+    },
     name: 'Thankyou',
     meta: {
       title: 'Radar, Ваше сообщение отправлено',
@@ -197,7 +220,10 @@ const routes = [
   },
   {
     path: '/404',
-    component: ErrorPage,
+    components: {
+      header: PageHeader,
+      default: ErrorPage,
+    },
     name: 'ErrorPage',
     meta: {
       title: 'Radar, Страница не существует',
@@ -230,10 +256,21 @@ const routes = [
   },
   {
     path: '/all-works/:slug',
-    component: Work,
+    components: {
+      header: PageHeader,
+      default: Work,
+    },
     name: 'Work',
     meta: {
       title: 'Radar, Работы',
+    },
+  },
+  {
+    path: '/confirm-your-age',
+    component: ConfirmYourAge,
+    name: 'ConfirmYourAge',
+    meta: {
+      title: 'Подтвердите, что вам больше 18 лет',
     },
   },
   { path: '*', redirect: { name: 'ErrorPage' } },

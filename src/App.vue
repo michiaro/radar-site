@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <page-header />
+  <div>
+    <router-view name="header" />
     <router-view />
 
     <popup-form v-if="isPopupFormOpen" />
@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import PageHeader from '@/components/PageHeader.vue';
-import PopupForm from '@/components/PopupForm.vue';
+import PageHeader from "@/components/PageHeader.vue";
+import PopupForm from "@/components/PopupForm.vue";
 
-import { getStaticData } from '@/api/index.js';
-import { DESKTOP_SIZE, TABLET_SIZE } from '@/settings.js';
+import { getStaticData } from "@/api/index.js";
+import { DESKTOP_SIZE, TABLET_SIZE } from "@/settings.js";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     PageHeader,
     PopupForm,
@@ -28,34 +28,34 @@ export default {
   mounted() {
     this.$nextTick(async () => {
       const { isUpdated, lastUpdated, singletones } = await getStaticData(
-        lastUpdated,
+        lastUpdated
       );
 
       if (isUpdated) {
-        this.$store.commit('setStaticData', { lastUpdated, singletones });
+        this.$store.commit("setStaticData", { lastUpdated, singletones });
       }
 
-      window.addEventListener('resize', this.handleResize);
+      window.addEventListener("resize", this.handleResize);
       this.handleResize();
     });
   },
   methods: {
     handleResize() {
       const isTablet = window.innerWidth <= TABLET_SIZE;
-      this.$store.commit('setIsTablet', { isTablet });
+      this.$store.commit("setIsTablet", { isTablet });
 
       const isMobile = window.innerWidth <= DESKTOP_SIZE;
-      this.$store.commit('setIsMobile', { isMobile });
+      this.$store.commit("setIsMobile", { isMobile });
 
       const isMenuOpen = window.innerWidth >= DESKTOP_SIZE;
-      this.$store.commit('setMenuOpen', { isMenuOpen });
+      this.$store.commit("setMenuOpen", { isMenuOpen });
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import '@/styles/shared/_globals.scss';
+@import "@/styles/shared/_globals.scss";
 
 [v-cloak] {
   display: none;

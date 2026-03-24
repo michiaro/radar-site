@@ -1,5 +1,5 @@
 <template>
-  <div class="all-works">
+  <div class="page all-works">
     <div class="all-works__main">
       <div class="container">
         <div class="row">
@@ -62,13 +62,13 @@
 </template>
 
 <script>
-import { getCollectionByKey } from '@/api/index.js';
-import Appear from '@/components/Appear.vue';
-import PageFooter from '@/components/PageFooter.vue';
-import WorkList from '@/components/WorkList.vue';
-import { WORKS_TO_LOAD_COUNT } from '@/settings.js';
+import { getCollectionByKey } from "@/api/index.js";
+import Appear from "@/components/Appear.vue";
+import PageFooter from "@/components/PageFooter.vue";
+import WorkList from "@/components/WorkList.vue";
+import { WORKS_TO_LOAD_COUNT } from "@/settings.js";
 export default {
-  name: 'AllWorks',
+  name: "AllWorks",
   components: {
     Appear,
     PageFooter,
@@ -147,12 +147,12 @@ export default {
   methods: {
     async fetchTags() {
       const { data } = await getCollectionByKey({
-        key: 'tags',
+        key: "tags",
       });
       const tagsArray = data;
 
-      this.$store.commit('setStaticCollectionData', {
-        title: 'tags',
+      this.$store.commit("setStaticCollectionData", {
+        title: "tags",
         collection: tagsArray,
       });
 
@@ -171,12 +171,12 @@ export default {
       if (currentClient) {
         filterSettings = {
           ...filterSettings,
-          'client.display': currentClient,
+          "client.display": currentClient,
         };
       }
 
       const { data, total } = await getCollectionByKey({
-        key: 'works',
+        key: "works",
         filter: filterSettings,
         options: {
           limit: WORKS_TO_LOAD_COUNT,
@@ -185,8 +185,8 @@ export default {
         },
       });
 
-      this.$store.commit('setWorksContent', { data, reset: resetSkip });
-      this.$store.commit('setWorksTotal', { total });
+      this.$store.commit("setWorksContent", { data, reset: resetSkip });
+      this.$store.commit("setWorksTotal", { total });
 
       this.isWorksReady = true;
     },
@@ -194,7 +194,7 @@ export default {
       const { currentClient } = this;
 
       const { data } = await getCollectionByKey({
-        key: 'clients',
+        key: "clients",
         filter: {
           slug: currentClient,
         },
@@ -203,23 +203,23 @@ export default {
       this.client = data[0];
     },
     getFilterClass(filter) {
-      return filter === this.currentFilter ? 'filter__label--active' : false;
+      return filter === this.currentFilter ? "filter__label--active" : false;
     },
     setFilter(tag) {
       if (this.currentFilter !== tag) {
         // обнуляем счетчик анимаций
-        this.$store.commit('resetAnimations', { counterKey: 'page' });
+        this.$store.commit("resetAnimations", { counterKey: "page" });
 
         if (this.$refs.workList) {
           this.$refs.workList.resetVisibility();
         }
 
         this.$router.push({
-          path: '/all-works',
+          path: "/all-works",
           query: tag ? { filter: tag } : {},
         });
 
-        this.$store.commit('setWorksFilter', {
+        this.$store.commit("setWorksFilter", {
           filter: tag,
         });
 
@@ -231,7 +231,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .all-works {
   &__dummy-title {
@@ -258,7 +258,7 @@ export default {
 
     margin-top: 28px;
 
-    @include from('md') {
+    @include from("md") {
       font-size: $--font-size-180;
     }
 
@@ -280,7 +280,7 @@ export default {
   min-height: $--font-size-140 * 1.3;
   box-sizing: border-box;
 
-  @include from('lg') {
+  @include from("lg") {
     flex-wrap: nowrap;
     justify-content: space-between;
   }

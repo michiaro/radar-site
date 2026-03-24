@@ -1,8 +1,14 @@
 <template>
-  <div v-if="services.length" class="services-page">
+  <div v-if="services.length" class="page services-page">
     <div class="container">
       <div class="row">
-        <div v-for="service in services" :key="service.serviceId" :data-item-event="'services-'+service.serviceId" @click="triggerEvent('services-'+service.serviceId)" class="col col-xs-2 col-xl-4">
+        <div
+          v-for="service in services"
+          :key="service.serviceId"
+          :data-item-event="'services-' + service.serviceId"
+          @click="triggerEvent('services-' + service.serviceId)"
+          class="col col-xs-2 col-xl-4"
+        >
           <service-page-direction
             :service-id="service.serviceId"
             :video="service.video"
@@ -13,7 +19,11 @@
           />
         </div>
       </div>
-      <services-popup :services="services" :active-service-id="activeServiceId" @setService="handleClickOnService" />
+      <services-popup
+        :services="services"
+        :active-service-id="activeServiceId"
+        @setService="handleClickOnService"
+      />
     </div>
 
     <div class="pillars">
@@ -21,13 +31,20 @@
         <div class="row">
           <div class="col col-xs-2 col-lg-3 col-xl-8">
             <h1 class="pillars__title">
-              Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход базируется на&nbsp;четырех ключевых опорах:
+              Мы комплексно подходим к&nbsp;решению задач, наш&nbsp;подход
+              базируется на&nbsp;четырех ключевых опорах:
             </h1>
           </div>
         </div>
       </div>
 
-      <pillar v-for="(pillar, index) in pillars" :key="index" :data-item-event="'pillars-'+pillar.id" :pillar="pillar" :number="index + 1" />
+      <pillar
+        v-for="(pillar, index) in pillars"
+        :key="index"
+        :data-item-event="'pillars-' + pillar.id"
+        :pillar="pillar"
+        :number="index + 1"
+      />
     </div>
 
     <page-footer is-clients />
@@ -35,16 +52,16 @@
 </template>
 
 <script>
-import animateScrollTo from 'animated-scroll-to';
-import PageFooter from '@/components/PageFooter.vue';
-import ServicePageDirection from '@/components/services/ServicePageDirection.vue';
-import ServicesPopup from '@/components/services/ServicesPopup.vue';
-import Pillar from '@/components/services/Pillar.vue';
-import { easeOutSin } from '@/utils/easings.js';
-import { getCollectionByKey } from '@/api/index.js';
+import animateScrollTo from "animated-scroll-to";
+import PageFooter from "@/components/PageFooter.vue";
+import ServicePageDirection from "@/components/services/ServicePageDirection.vue";
+import ServicesPopup from "@/components/services/ServicesPopup.vue";
+import Pillar from "@/components/services/Pillar.vue";
+import { easeOutSin } from "@/utils/easings.js";
+import { getCollectionByKey } from "@/api/index.js";
 
 export default {
-  name: 'Services',
+  name: "Services",
   components: {
     PageFooter,
     ServicePageDirection,
@@ -58,8 +75,8 @@ export default {
     };
   },
   beforeRouteLeave(to, from, next) {
-    if ('filter' in to.query){
-      this.triggerEvent('pillars-'+to.query.filter);
+    if ("filter" in to.query) {
+      this.triggerEvent("pillars-" + to.query.filter);
     }
     next(true);
   },
@@ -94,14 +111,14 @@ export default {
     },
     async fetchServices() {
       const { data } = await getCollectionByKey({
-        key: 'Services',
+        key: "Services",
         filter: { isPublished: true },
         options: {
           sort: { _o: 1 },
         },
       });
 
-      this.$store.commit('setServicesContent', { data });
+      this.$store.commit("setServicesContent", { data });
     },
     async setActiveServiceId(serviceId) {
       const isScrolled = await animateScrollTo(0, {
@@ -115,19 +132,19 @@ export default {
     },
     async fetchPillars() {
       const { data } = await getCollectionByKey({
-        key: 'pillars',
+        key: "pillars",
         options: {
           sort: { _o: 1 },
         },
       });
 
-      this.$store.commit('setPillarsContent', { data });
+      this.$store.commit("setPillarsContent", { data });
     },
     handleClickOnService(serviceId) {
       const currentServiceId = this.$route.query.direction;
 
       let newPath = {
-        path: '/services',
+        path: "/services",
       };
       if (serviceId !== currentServiceId) {
         if (serviceId) {
@@ -147,7 +164,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .services-page {
   padding-top: $--page-padding-x;

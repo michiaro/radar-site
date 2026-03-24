@@ -1,5 +1,5 @@
 <template>
-  <div class="thankyou-page">
+  <div class="page thankyou-page">
     <div class="thankyou-page__inner">
       <appear :is-visible="animationCounter >= 0" :on-next="showNext">
         <div class="appear appear--up">

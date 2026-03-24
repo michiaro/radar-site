@@ -1,5 +1,5 @@
 <template>
-  <div class="agency">
+  <div class="page agency">
     <div class="container">
       <div class="row">
         <div class="col col-xs-2 col-lg-4 col-xl-8">

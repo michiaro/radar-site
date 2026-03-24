@@ -1,7 +1,7 @@
 import Router from 'vue-router';
 import routes from './routes.js';
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   scrollBehavior(to) {
     if (to.hash) {
@@ -21,3 +21,5 @@ export default new Router({
   // scrollGuard,
   // metaGuard,
 });
+
+export default router;

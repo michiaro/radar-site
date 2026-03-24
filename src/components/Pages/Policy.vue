@@ -1,5 +1,5 @@
 <template>
-  <div class="policy">
+  <div class="page policy">
     <div class="container">
       <div class="col col-xs-2 col-xl-8">
         <div class="policy__content" v-html="policy" />
@@ -11,17 +11,17 @@
 </template>
 
 <script>
-import { getSingletonByKey } from '@/api/index.js';
-import PageFooter from '@/components/PageFooter.vue';
+import { getSingletonByKey } from "@/api/index.js";
+import PageFooter from "@/components/PageFooter.vue";
 
 export default {
-  name: 'Policy',
+  name: "Policy",
   components: {
     PageFooter,
   },
   data() {
     return {
-      policy: '',
+      policy: "",
     };
   },
   created() {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async getPolicyContent() {
-      const { text } = await getSingletonByKey('policy');
+      const { text } = await getSingletonByKey("policy");
       this.policy = text;
     },
   },

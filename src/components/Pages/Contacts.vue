@@ -1,26 +1,26 @@
 <template>
-  <div class="contacts">
+  <div class="page contacts">
     <contacts-info @change-city="onChangeCity" />
     <google-map ref="map" :current-city="currentCity" />
   </div>
 </template>
 
 <script>
-import GoogleMap from '@/components/GoogleMap.vue';
-import ContactsInfo from '@/components/ContactsInfo.vue';
+import GoogleMap from "@/components/GoogleMap.vue";
+import ContactsInfo from "@/components/ContactsInfo.vue";
 
 export default {
-  name: 'Contacts',
+  name: "Contacts",
   components: {
     GoogleMap,
     ContactsInfo,
   },
   data() {
     return {
-      name: '',
-      contact: '',
-      message: '',
-      currentCity: 'moscow',
+      name: "",
+      contact: "",
+      message: "",
+      currentCity: "moscow",
     };
   },
   methods: {
@@ -33,12 +33,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/shared/_globals.scss';
+@import "~@/styles/shared/_globals.scss";
 
 .contacts {
   padding-top: $--page-padding-y-xs;
 
-  @include from('lg') {
+  @include from("lg") {
     padding-top: $--page-padding-y-lg;
   }
 }

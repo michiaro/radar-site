@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentWork" class="work-page">
+  <div v-if="currentWork" class="page work-page">
     <div v-if="!isWorkLoading" class="work-page__inner">
       <appear :is-visible="getVisibility(0)" :on-next="showNext">
         <div
@@ -369,6 +369,9 @@ export default {
       }
       return 0;
     },
+    isUserAdult() {
+      return this.$store.state.user.isAdult;
+    },
   },
   watch: {
     async workSlug() {
@@ -383,6 +386,22 @@ export default {
     // load next work
 
     await this.fetchWork();
+
+    if (this.currentWork.isMatureContentIncluded && !this.isUserAdult) {
+      return this.$router.push({
+        path: "/confirm-your-age",
+        query: {
+          page: this.currentWork.slug,
+        },
+      });
+    }
+
+    this.isWorkLoading = false;
+    // запускаем анимацию
+    this.$nextTick(() => {
+      this.showNext();
+    });
+
     this.fetchNextWork();
 
     if (!tags) {
@@ -405,12 +424,6 @@ export default {
       });
 
       this.currentWork = data[0];
-
-      this.isWorkLoading = false;
-      // запускаем анимацию
-      this.$nextTick(() => {
-        this.showNext();
-      });
     },
     async fetchNextWork() {
       const { currentWork } = this;

@@ -1,5 +1,5 @@
 <template>
-  <div class="error-page">
+  <div class="page error-page">
     <div class="error-page__inner">
       <appear :is-visible="animationCounter >= 0" :on-next="showNext">
         <div class="appear appear--up">
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import Appear from '@/components/Appear.vue';
-import image from '@/images/404.png';
+import Appear from "@/components/Appear.vue";
+import image from "@/images/404.png";
 
 export default {
-  name: 'ErrorPage',
+  name: "ErrorPage",
   components: {
     Appear,
   },
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/styles/shared/_globals.scss';
+@import "@/styles/shared/_globals.scss";
 
 .error-page {
   display: flex;
@@ -71,7 +71,7 @@ export default {
     font-weight: normal;
     margin: 2em 0 0.2em;
     font-size: $--font-size-100;
-    @include from('lg') {
+    @include from("lg") {
       font-size: $--font-size-140;
     }
   }
@@ -81,13 +81,13 @@ export default {
     display: inline-block;
     position: relative;
     font-size: $--font-size-100;
-    @include from('lg') {
+    @include from("lg") {
       font-size: $--font-size-140;
       margin-left: 0;
     }
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       right: 0;
